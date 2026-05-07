@@ -51,6 +51,35 @@ function Index() {
         </div>
       </section>
 
+      {/* How it works */}
+      <section className="bg-background py-14 px-5">
+        <div className="max-w-md mx-auto bg-white rounded-3xl p-8 sm:p-10 relative">
+          <img src={iconStep1} alt="" className="absolute top-4 right-4 h-12 w-12 object-contain" />
+          <img src={iconStep2} alt="" className="absolute bottom-4 left-4 h-12 w-12 object-contain" />
+          <h2 className="font-display text-4xl text-plum text-center mb-8">How it works</h2>
+          <div className="space-y-7 text-center">
+            <div>
+              <h3 className="font-display text-2xl text-plum mb-2">Step 1</h3>
+              <p className="text-sm text-foreground/80 max-w-[260px] mx-auto leading-snug">
+                Select your kinks and establish your limits.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-display text-2xl text-plum mb-2">Step 2</h3>
+              <p className="text-sm text-foreground/80 max-w-[260px] mx-auto leading-snug">
+                Plan your scene down to the last detail, you and your play partner will get clear on exactly what is expected.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-display text-2xl text-plum mb-2">Step 3</h3>
+              <p className="text-sm text-foreground/80 max-w-[260px] mx-auto leading-snug">
+                Share with your partner and use the scene card to play safely and clearly.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features section — pink */}
       <section className="bg-pinkbg py-14 px-5">
         <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-12">
