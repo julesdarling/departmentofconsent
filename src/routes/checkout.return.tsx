@@ -73,7 +73,11 @@ function CheckoutReturn() {
                 : "Subscription is taking longer than expected. Please refresh in a moment."}
           </p>
           <div className="pt-2 flex justify-center">
-            <CloudButton to="/onboarding">{syncing ? "Just a sec…" : "Add new scene"}</CloudButton>
+            {syncing ? (
+              <CloudButton onClick={() => {}}>Just a sec…</CloudButton>
+            ) : (
+              <CloudButton to="/onboarding">Add new scene</CloudButton>
+            )}
           </div>
         </Sticker>
       </div>
