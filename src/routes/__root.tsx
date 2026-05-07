@@ -75,10 +75,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Department of Consent" },
       { name: "description", content: "A consent app for kink negotiation: pickup play, first-time partners, and ongoing partners." },
       { property: "og:title", content: "Department of Consent" },
-      { property: "og:description", content: "Negotiate kinks, share limits, play safer." },
+      { property: "og:description", content: "A consent app for kink negotiation: pickup play, first-time partners, and ongoing partners." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Department of Consent" },
+      { name: "twitter:description", content: "A consent app for kink negotiation: pickup play, first-time partners, and ongoing partners." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c42adca6-f65d-4dbc-ab6b-ffbfffeef518/id-preview-578be68b--15ab37e4-d182-4b0c-9e0e-40cd725ec663.lovable.app-1778171285666.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c42adca6-f65d-4dbc-ab6b-ffbfffeef518/id-preview-578be68b--15ab37e4-d182-4b0c-9e0e-40cd725ec663.lovable.app-1778171285666.png" },
     ],
     links: [
       {
