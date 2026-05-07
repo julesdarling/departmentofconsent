@@ -111,7 +111,7 @@ function NewSession() {
         {step === 0 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-xl text-plum">Who & when</h2>
-            <Field label="Partner name or handle">
+            <Field label="Play partner name or handle">
               <Input value={partnerHandle} onChange={(e) => setPartnerHandle(e.target.value)} placeholder="How you'll remember them" />
             </Field>
             <Field label="Date of play">
