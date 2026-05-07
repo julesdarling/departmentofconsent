@@ -119,7 +119,15 @@ function JoinPage() {
           <Sticker className="text-center space-y-3">
             <h1 className="font-display text-2xl text-plum">Thank you ♡</h1>
             <p className="text-sm text-muted-foreground">
-              Your side has been shared with {ownerName}.
+              Your side has been shared with {ownerName}. Below is the full plan for the scene.
+            </p>
+            <div className="pt-1">
+              <Button asChild>
+                <Link to="/scene/$token" params={{ token }}>View & share scene recap</Link>
+              </Button>
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              The recap has its own permalink anyone in the scene can open.
             </p>
           </Sticker>
 
