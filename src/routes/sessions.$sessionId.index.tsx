@@ -128,7 +128,7 @@ function SessionDetail() {
           {partners.map((ps, i) => (
             <VisionBlock
               key={i}
-              name={`${(ps.name?.trim() || `Partner ${i + 1}`)}'s vision for the night`}
+              name={`${(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the night`}
               side={ps}
               kinkMap={kinkMap}
             />
@@ -141,7 +141,7 @@ function SessionDetail() {
             a={o.ratings || {}}
             b={ps.ratings || {}}
             kinkMap={kinkMap}
-            partnerName={ps.name || `User ${i + 2}`}
+            partnerName={ps.name || `Play partner ${i + 1}`}
           />
         ))}
 
