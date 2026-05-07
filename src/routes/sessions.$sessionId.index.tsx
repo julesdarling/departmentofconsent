@@ -145,6 +145,39 @@ function SessionDetail() {
           />
         ))}
 
+        {partners.length > 0 && partners.some((ps) => ps.hardLimits?.trim() || ps.softLimits?.trim()) && (
+          <Sticker className="space-y-4">
+            <div className="font-display text-lg text-plum">Play partner limits</div>
+            {partners.map((ps, i) => {
+              const name = ps.name?.trim() || `Play partner ${i + 1}`;
+              if (!ps.hardLimits?.trim() && !ps.softLimits?.trim()) return null;
+              return (
+                <div key={i} className="space-y-2 border-b border-border/40 pb-3 last:border-0 last:pb-0">
+                  <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{name}</div>
+                  {ps.hardLimits?.trim() && (
+                    <div>
+                      <div className="text-[10px] uppercase tracking-wider text-no font-semibold mb-1">Hard limits</div>
+                      <div className="text-sm whitespace-pre-wrap">{ps.hardLimits}</div>
+                    </div>
+                  )}
+                  {ps.softLimits?.trim() && (
+                    <div>
+                      <div className="text-[10px] uppercase tracking-wider text-maybe font-semibold mb-1">Soft limits</div>
+                      <div className="text-sm whitespace-pre-wrap">{ps.softLimits}</div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </Sticker>
+        )}
+
+        <div className="flex justify-center">
+          <Button asChild variant="outline">
+            <Link to="/scene/$token" params={{ token: session.shareToken }}>View shareable scene recap</Link>
+          </Button>
+        </div>
+
         <Sticker className="space-y-3">
           <div className="font-display text-lg text-plum">Your side</div>
           <SideDetail title="Setting" value={o.setting} />
