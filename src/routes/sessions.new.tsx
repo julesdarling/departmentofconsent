@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
@@ -10,15 +10,12 @@ import { Progress } from "@/components/ui/progress";
 import {
   useProfile,
   useRatings,
-  useKinks,
   useSessions,
   newSession,
   type SessionSide,
-  type Rating,
 } from "@/lib/storage";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/sessions/new")({
   head: () => ({ meta: [{ title: "New session — Department of Consent" }] }),
@@ -27,19 +24,15 @@ export const Route = createFileRoute("/sessions/new")({
 
 const STEPS = [
   "Partner",
-  "Logistics",
-  "The scene",
+  "Scene & logistics",
   "Privacy & sex",
-  "Safewords",
-  "Yes / Maybe / No",
-  "Aftercare",
+  "For tonight",
   "Review",
 ];
 
 function NewSession() {
   const [profile] = useProfile();
   const [ratings] = useRatings();
-  const [kinks] = useKinks();
   const [, setSessions] = useSessions();
   const navigate = useNavigate();
 
@@ -51,18 +44,6 @@ function NewSession() {
 
   const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => ({ ...p, [k]: v }));
-
-  const setKinkRating = (id: string, r: Rating) =>
-    setSide((p) => ({ ...p, ratings: { ...p.ratings, [id]: r } }));
-
-  const grouped = useMemo(() => {
-    const m = new Map<string, typeof kinks>();
-    for (const k of kinks) {
-      if (!m.has(k.category)) m.set(k.category, []);
-      m.get(k.category)!.push(k);
-    }
-    return Array.from(m.entries());
-  }, [kinks]);
 
   const save = (status: "draft" | "shared" = "shared") => {
     const final = {
@@ -98,26 +79,27 @@ function NewSession() {
             <Field label="Date of play">
               <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
             </Field>
+            <p className="text-xs text-muted-foreground">
+              We'll use your saved profile, kinks, safewords and aftercare as the starting point.
+              You can tweak anything that's different for tonight in the next steps.
+            </p>
           </Sticker>
         )}
 
         {step === 1 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Logistics & safety</h2>
-            <Field label="Do you have healthcare?">
-              <Input value={side.healthcare} onChange={(e) => update("healthcare", e.target.value)} />
-            </Field>
-            <Field label="Emergency contact (name + how to reach them)">
-              <Textarea value={side.emergencyContact} onChange={(e) => update("emergencyContact", e.target.value)} rows={2} />
-            </Field>
-            <Field label="Dynamics with other partners to be aware of?">
-              <Textarea value={side.partnerDynamics} onChange={(e) => update("partnerDynamics", e.target.value)} rows={2} />
+            <h2 className="font-display text-xl text-plum">Scene & logistics</h2>
+            <Field label="Setting (where is it happening?)">
+              <Input value={side.setting} onChange={(e) => update("setting", e.target.value)} />
             </Field>
             <Field label="Time constraints">
               <Input value={side.timeConstraints} onChange={(e) => update("timeConstraints", e.target.value)} placeholder="e.g. need to leave by 10pm" />
             </Field>
-            <Field label="Medical concerns">
-              <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} />
+            <Field label="Music">
+              <Input value={side.music} onChange={(e) => update("music", e.target.value)} />
+            </Field>
+            <Field label="Dress (what do you want to wear?)">
+              <Input value={side.dress} onChange={(e) => update("dress", e.target.value)} />
             </Field>
             <Field label="Substances during play">
               <Textarea value={side.substances} onChange={(e) => update("substances", e.target.value)} placeholder="What, how much, when" rows={2} />
@@ -126,41 +108,26 @@ function NewSession() {
               <Label className="text-sm">Substance use is a hard limit for me</Label>
               <Switch checked={side.substancesHardLimit} onCheckedChange={(v) => update("substancesHardLimit", v)} />
             </div>
-          </Sticker>
-        )}
-
-        {step === 2 && (
-          <Sticker className="space-y-4">
-            <h2 className="font-display text-xl text-plum">The scene</h2>
-            <Field label="Setting (where is it happening?)">
-              <Input value={side.setting} onChange={(e) => update("setting", e.target.value)} />
+            <Field label="Medical concerns specific to tonight">
+              <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, on my period, new meds..." />
             </Field>
-            <Field label="Music">
-              <Input value={side.music} onChange={(e) => update("music", e.target.value)} />
+            <Field label="Other partners / dynamics to be aware of">
+              <Textarea value={side.partnerDynamics} onChange={(e) => update("partnerDynamics", e.target.value)} rows={2} />
             </Field>
-            <Field label="Dress (what do you want to wear?)">
-              <Input value={side.dress} onChange={(e) => update("dress", e.target.value)} />
-            </Field>
-            <Field label="What you want to be called">
-              <Input value={side.callMe} onChange={(e) => update("callMe", e.target.value)} />
-            </Field>
-            <Field label="What you don't want to be called">
-              <Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} />
-            </Field>
-            <Field label="Intentions / feelings — how do you want to feel?">
+            <Field label="Intentions — how do you want to feel?">
               <Textarea value={side.intentions} onChange={(e) => update("intentions", e.target.value)} rows={3} />
             </Field>
             <Field label="What does it look like when you're having a good time?">
               <Textarea value={side.goodTime} onChange={(e) => update("goodTime", e.target.value)} rows={2} />
             </Field>
-            <Field label="What does it look like when you're having a bad time?">
+            <Field label="…and a bad time?">
               <Textarea value={side.badTime} onChange={(e) => update("badTime", e.target.value)} rows={2} />
             </Field>
           </Sticker>
         )}
 
-        {step === 3 && (
-          <Sticker variant="coral" className="space-y-4">
+        {step === 2 && (
+          <Sticker className="space-y-4">
             <h2 className="font-display text-xl text-plum">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it after?">
               <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
@@ -171,80 +138,39 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 4 && (
-          <Sticker className="space-y-3">
-            <h2 className="font-display text-xl text-plum">Safewords</h2>
-            <p className="text-xs text-muted-foreground">Edit if this scene needs different signals.</p>
-            <Textarea value={side.safewords} onChange={(e) => update("safewords", e.target.value)} rows={14} className="font-mono text-xs" />
-          </Sticker>
-        )}
-
-        {step === 5 && (
-          <div className="space-y-4">
-            <Sticker variant="coral">
-              <h2 className="font-display text-xl text-plum">Lightning round ✨</h2>
-              <p className="text-xs text-muted-foreground mt-1">
-                Tap-through. These start from your kinks library — adjust for tonight.
-              </p>
-            </Sticker>
-            {grouped.map(([cat, items]) => (
-              <Sticker key={cat} className="space-y-1">
-                <div className="font-display text-base font-semibold text-coral mb-1">{cat}</div>
-                {items.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between gap-2 py-2 border-b border-border/50 last:border-0">
-                    <div className="text-sm flex-1 min-w-0 truncate">{item.name}</div>
-                    <div className="flex gap-1">
-                      {(["yes", "maybe", "no"] as Rating[]).map((r) => (
-                        <button
-                          key={r}
-                          onClick={() => setKinkRating(item.id, r)}
-                          className={cn(
-                            "h-7 px-2.5 rounded-full text-xs font-semibold border-2 transition capitalize",
-                            side.ratings[item.id] === r
-                              ? r === "yes" ? "bg-yes/20 border-yes"
-                              : r === "maybe" ? "bg-maybe/20 border-maybe"
-                              : "bg-no/20 border-no"
-                              : "border-border/60 text-muted-foreground"
-                          )}
-                        >
-                          {r}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </Sticker>
-            ))}
-            <Sticker className="space-y-3">
-              <Field label="Any other actions you want?">
-                <Textarea value={side.actions} onChange={(e) => update("actions", e.target.value)} rows={3} />
-              </Field>
-              <Field label="Hard limits (No)">
-                <Textarea value={side.hardLimits} onChange={(e) => update("hardLimits", e.target.value)} rows={2} />
-              </Field>
-              <Field label="Soft limits (Maybe)">
-                <Textarea value={side.softLimits} onChange={(e) => update("softLimits", e.target.value)} rows={2} />
-              </Field>
-              <Field label="Enthusiastic Yes">
-                <Textarea value={side.yesList} onChange={(e) => update("yesList", e.target.value)} rows={2} />
-              </Field>
-            </Sticker>
-          </div>
-        )}
-
-        {step === 6 && (
+        {step === 3 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Aftercare</h2>
-            <Field label="What do you need afterward?">
-              <Textarea value={side.aftercare} onChange={(e) => update("aftercare", e.target.value)} rows={5} placeholder="Cuddles, water, snacks, alone time, a check-in tomorrow..." />
+            <h2 className="font-display text-xl text-plum">For tonight</h2>
+            <p className="text-xs text-muted-foreground">
+              Your saved kinks ratings are already attached.{" "}
+              <Link to="/kinks" className="underline text-coral">Edit your kinks library</Link>{" "}
+              if you need to. Below: only what's different about tonight.
+            </p>
+            <Field label="Names you want to be called tonight (override)">
+              <Input value={side.callMe} onChange={(e) => update("callMe", e.target.value)} placeholder={profile.callMe || "from your profile"} />
             </Field>
-            <Field label="Brainstorming space (anything else)">
-              <Textarea value={side.brainstorm} onChange={(e) => update("brainstorm", e.target.value)} rows={4} />
+            <Field label="Off-limits names tonight (override)">
+              <Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} placeholder={profile.dontCallMe || "from your profile"} />
+            </Field>
+            <Field label="Extra hard limits for this scene">
+              <Textarea value={side.hardLimits} onChange={(e) => update("hardLimits", e.target.value)} rows={2} />
+            </Field>
+            <Field label="Soft limits / Maybes for this scene">
+              <Textarea value={side.softLimits} onChange={(e) => update("softLimits", e.target.value)} rows={2} />
+            </Field>
+            <Field label="Enthusiastic Yes for tonight">
+              <Textarea value={side.yesList} onChange={(e) => update("yesList", e.target.value)} rows={2} />
+            </Field>
+            <Field label="Anything else to brainstorm">
+              <Textarea value={side.brainstorm} onChange={(e) => update("brainstorm", e.target.value)} rows={3} />
+            </Field>
+            <Field label="Aftercare — anything different from your default?">
+              <Textarea value={side.aftercare} onChange={(e) => update("aftercare", e.target.value)} rows={3} placeholder={profile.defaultAftercare || "from your profile"} />
             </Field>
           </Sticker>
         )}
 
-        {step === 7 && (
+        {step === 4 && (
           <Sticker className="space-y-3 text-center">
             <h2 className="font-display text-2xl text-plum">All set ♡</h2>
             <p className="text-sm text-muted-foreground">
