@@ -138,7 +138,7 @@ function NewSession() {
             <div className="space-y-2">
               <Label className="doc-label">Pick what you're craving tonight</Label>
               <p className="text-xs text-muted-foreground">
-                From your kink list (yes & maybes). Tap to add. Your partner will see what overlaps.
+                From your kink list (yes & maybes). Tap to add. Your play partner will see what overlaps.
               </p>
               {interestedKinks.length === 0 ? (
                 <p className="text-xs text-muted-foreground italic">
