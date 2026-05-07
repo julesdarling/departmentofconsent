@@ -10,14 +10,16 @@ import { Progress } from "@/components/ui/progress";
 import {
   useProfile,
   useRatings,
+  useKinks,
   useSessionIndex,
   newSession,
   type SessionSide,
 } from "@/lib/storage";
 import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/sessions/new")({
@@ -27,6 +29,7 @@ export const Route = createFileRoute("/sessions/new")({
 
 const STEPS = [
   "Partner",
+  "Tonight's vision",
   "Scene & logistics",
   "Privacy & sex",
   "For tonight",
@@ -36,6 +39,7 @@ const STEPS = [
 function NewSession() {
   const [profile] = useProfile();
   const [ratings] = useRatings();
+  const [kinks] = useKinks();
   const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
 
@@ -48,6 +52,17 @@ function NewSession() {
 
   const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => ({ ...p, [k]: v }));
+
+  const interestedKinks = useMemo(
+    () => kinks.filter((k) => ratings[k.id] === "yes" || ratings[k.id] === "maybe"),
+    [kinks, ratings]
+  );
+
+  const toggleKink = (id: string) =>
+    setSide((p) => {
+      const has = p.selectedKinks.includes(id);
+      return { ...p, selectedKinks: has ? p.selectedKinks.filter((x) => x !== id) : [...p.selectedKinks, id] };
+    });
 
   const save = async (status: "draft" | "shared" = "shared") => {
     setSaving(true);
@@ -108,6 +123,52 @@ function NewSession() {
         )}
 
         {step === 1 && (
+          <Sticker className="space-y-4">
+            <h2 className="font-display text-xl text-plum">Tonight's vision</h2>
+            <Field label="What are you imagining for this scene?">
+              <Textarea
+                value={side.vision}
+                onChange={(e) => update("vision", e.target.value)}
+                rows={5}
+                placeholder="Soft and slow… rough and bratty… a long bondage tease… set the mood in your own words."
+              />
+            </Field>
+            <div className="space-y-2">
+              <Label className="font-display text-sm text-plum">Pick what you're craving tonight</Label>
+              <p className="text-xs text-muted-foreground">
+                From your kink list (yes & maybes). Tap to add. Your partner will see what overlaps.
+              </p>
+              {interestedKinks.length === 0 ? (
+                <p className="text-xs text-muted-foreground italic">
+                  Rate some kinks on your <Link to="/kinks" className="underline text-coral">kinks page</Link> to pick from them here.
+                </p>
+              ) : (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {interestedKinks.map((k) => {
+                    const selected = side.selectedKinks.includes(k.id);
+                    return (
+                      <button
+                        key={k.id}
+                        type="button"
+                        onClick={() => toggleKink(k.id)}
+                        className={cn(
+                          "text-sm px-3 py-1.5 rounded-full border-2 transition",
+                          selected
+                            ? "bg-yes/30 border-yes text-plum font-semibold"
+                            : "border-border/60 text-muted-foreground hover:border-primary/50"
+                        )}
+                      >
+                        {selected ? "✓ " : "+ "}{k.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </Sticker>
+        )}
+
+        {step === 2 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-xl text-plum">Scene & logistics</h2>
             <Field label="Setting (where is it happening?)">
@@ -147,7 +208,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 2 && (
+        {step === 3 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-xl text-plum">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it after?">
@@ -159,7 +220,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 3 && (
+        {step === 4 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-xl text-plum">For tonight</h2>
             <p className="text-xs text-muted-foreground">
@@ -191,7 +252,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 4 && (
+        {step === 5 && (
           <Sticker className="space-y-3 text-center">
             <h2 className="font-display text-2xl text-plum">All set ♡</h2>
             <p className="text-sm text-muted-foreground">
