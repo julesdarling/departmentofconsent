@@ -61,7 +61,7 @@ function SessionDetail() {
 
   const o = session.ownerSide;
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
-  const ownerName = o.name || "User 1";
+  const ownerName = o.name?.trim() || "Creator";
 
   const yesItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
   const maybeItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
@@ -120,14 +120,13 @@ function SessionDetail() {
         {/* Visions per participant */}
         <Sticker variant="coral" className="space-y-4">
           <div className="text-center">
-            <div className="text-4xl">✨</div>
             <div className="font-display text-2xl font-semibold text-plum">Tonight's vision</div>
           </div>
           <VisionBlock name={`${ownerName}'s vision for the night`} side={o} kinkMap={kinkMap} />
           {partners.map((ps, i) => (
             <VisionBlock
               key={i}
-              name={`${ps.name || `User ${i + 2}`}'s vision for the night`}
+              name={`${(ps.name?.trim() || `Partner ${i + 1}`)}'s vision for the night`}
               side={ps}
               kinkMap={kinkMap}
             />
@@ -187,9 +186,12 @@ function SessionDetail() {
           <SideDetail title="Brainstorm" value={o.brainstorm} />
         </Sticker>
 
-        <Button variant="outline" onClick={remove} className="w-full rounded-full text-destructive border-destructive/40">
-          <Trash2 className="h-4 w-4 mr-1" /> Delete session
-        </Button>
+        <button
+          onClick={remove}
+          className="w-full bg-white text-destructive border-2 border-destructive/40 hover:bg-destructive/5 transition px-4 py-3 font-semibold text-sm flex items-center justify-center gap-2"
+        >
+          <Trash2 className="h-4 w-4" /> Delete session
+        </button>
       </div>
     </Layout>
   );
