@@ -14,13 +14,126 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      play_sessions: {
+        Row: {
+          aftercare_completed: Json
+          created_at: string
+          date: string
+          id: string
+          owner_side: Json
+          partner_handle: string
+          partner_side: Json | null
+          reflection: string | null
+          share_token: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          aftercare_completed?: Json
+          created_at?: string
+          date?: string
+          id?: string
+          owner_side?: Json
+          partner_handle?: string
+          partner_side?: Json | null
+          reflection?: string | null
+          share_token: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          aftercare_completed?: Json
+          created_at?: string
+          date?: string
+          id?: string
+          owner_side?: Json
+          partner_handle?: string
+          partner_side?: Json | null
+          reflection?: string | null
+          share_token?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_play_session: {
+        Args: {
+          p_date: string
+          p_owner_side: Json
+          p_partner_handle: string
+          p_share_token: string
+          p_status: string
+        }
+        Returns: {
+          aftercare_completed: Json
+          created_at: string
+          date: string
+          id: string
+          owner_side: Json
+          partner_handle: string
+          partner_side: Json | null
+          reflection: string | null
+          share_token: string
+          status: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "play_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      delete_play_session: { Args: { p_token: string }; Returns: undefined }
+      get_play_session: {
+        Args: { p_token: string }
+        Returns: {
+          aftercare_completed: Json
+          created_at: string
+          date: string
+          id: string
+          owner_side: Json
+          partner_handle: string
+          partner_side: Json | null
+          reflection: string | null
+          share_token: string
+          status: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "play_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      update_play_session: {
+        Args: { p_patch: Json; p_token: string }
+        Returns: {
+          aftercare_completed: Json
+          created_at: string
+          date: string
+          id: string
+          owner_side: Json
+          partner_handle: string
+          partner_side: Json | null
+          reflection: string | null
+          share_token: string
+          status: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "play_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
