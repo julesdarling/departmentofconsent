@@ -22,9 +22,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/sessions/new")({
   head: () => ({ meta: [{ title: "New session — Department of Consent" }] }),
-  component: NewSession,
+  component: () => <RequireAuth><NewSession /></RequireAuth>,
 });
 
 const STEPS = [

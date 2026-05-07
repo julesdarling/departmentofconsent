@@ -4,10 +4,11 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useSessionIndex } from "@/lib/storage";
 import { Plus, Calendar, Sparkles } from "lucide-react";
+import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/sessions/")({
   head: () => ({ meta: [{ title: "Sessions — Department of Consent" }] }),
-  component: SessionsList,
+  component: () => <RequireAuth><SessionsList /></RequireAuth>,
 });
 
 function SessionsList() {
