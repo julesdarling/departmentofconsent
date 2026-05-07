@@ -28,6 +28,7 @@ function JoinPage() {
   const { token } = Route.useParams();
   const [profile] = useProfile();
   const [kinks] = useKinks();
+  const [savedRatings] = useRatings();
   const [, setIndex] = useSessionIndex();
   // no navigate needed – guests see a thank-you instead
   const { session, error, addPartner } = useCloudSession(token);
@@ -38,9 +39,11 @@ function JoinPage() {
 
   useEffect(() => {
     if (session && !side) {
-      setSide(session.partnerSide ?? emptySide(profile));
+      // Pre-fill with the user's saved profile + ratings if they have any
+      const initial = session.partnerSide ?? emptySide(profile, savedRatings);
+      setSide(initial);
     }
-  }, [session, side, profile]);
+  }, [session, side, profile, savedRatings]);
 
   const grouped = useMemo(() => {
     const m = new Map<string, typeof kinks>();
