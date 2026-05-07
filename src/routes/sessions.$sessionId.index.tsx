@@ -83,7 +83,7 @@ function SessionDetail() {
         </div>
 
         <Sticker className="text-center space-y-3">
-          <div className="font-display text-lg text-plum">Share with your partner</div>
+          <div className="font-display text-lg text-plum">Share with your play partner</div>
           <div className="flex justify-center bg-card p-3 rounded-xl">
             <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
           </div>
@@ -92,11 +92,13 @@ function SessionDetail() {
             {copied ? "Copied!" : shareUrl}
           </button>
           <p className="text-xs text-muted-foreground">
-            Anyone with this link can fill out the partner side. They'll see your side once they submit.
+            Anyone with this link can fill out the play partner side. They'll see your side once they submit.
           </p>
-          <Button variant="ghost" size="sm" className="rounded-full text-xs" onClick={refresh}>
-            <RefreshCw className="h-3 w-3 mr-1" /> Check for partner's reply
-          </Button>
+          <div className="flex justify-center pt-2">
+            <Button variant="outline" size="sm" onClick={refresh}>
+              <RefreshCw className="h-3 w-3 mr-1" /> Check for play partner's reply
+            </Button>
+          </div>
         </Sticker>
 
         <div className="grid grid-cols-3 gap-2">
