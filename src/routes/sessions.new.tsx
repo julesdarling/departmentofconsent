@@ -10,14 +10,16 @@ import { Progress } from "@/components/ui/progress";
 import {
   useProfile,
   useRatings,
+  useKinks,
   useSessionIndex,
   newSession,
   type SessionSide,
 } from "@/lib/storage";
 import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/sessions/new")({
@@ -27,6 +29,7 @@ export const Route = createFileRoute("/sessions/new")({
 
 const STEPS = [
   "Partner",
+  "Tonight's vision",
   "Scene & logistics",
   "Privacy & sex",
   "For tonight",
