@@ -21,7 +21,7 @@ function ScenePage() {
 
   const o = session.ownerSide;
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
-  const ownerName = o.name || "User 1";
+  const ownerName = o.name?.trim() || "Creator";
 
   return (
     <Layout>
