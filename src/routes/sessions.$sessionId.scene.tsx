@@ -20,6 +20,8 @@ function ScenePage() {
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
 
   const o = session.ownerSide;
+  const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
+  const ownerName = o.name || "User 1";
 
   return (
     <Layout>
@@ -28,6 +30,27 @@ function ScenePage() {
           <h1 className="font-display text-3xl font-semibold text-plum">In-scene card</h1>
           <p className="text-sm text-muted-foreground">{session.partnerHandle} · {session.date}</p>
         </div>
+
+        {(o.vision || partners.some((p) => p.vision)) && (
+          <Sticker className="space-y-3">
+            {o.vision && (
+              <div>
+                <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
+                  {ownerName}'s vision for the night
+                </div>
+                <p className="text-sm whitespace-pre-wrap">{o.vision}</p>
+              </div>
+            )}
+            {partners.map((ps, i) => ps.vision && (
+              <div key={i}>
+                <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
+                  {(ps.name || `User ${i + 2}`)}'s vision for the night
+                </div>
+                <p className="text-sm whitespace-pre-wrap">{ps.vision}</p>
+              </div>
+            ))}
+          </Sticker>
+        )}
 
         <Sticker variant="coral" className="space-y-1">
           <div className="text-[10px] uppercase tracking-wider text-coral font-bold">Safewords</div>
