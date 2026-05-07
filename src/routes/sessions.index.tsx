@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useSessions } from "@/lib/storage";
+import { useSessionIndex } from "@/lib/storage";
 import { Plus, Calendar, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/sessions/")({
@@ -10,15 +10,8 @@ export const Route = createFileRoute("/sessions/")({
   component: SessionsList,
 });
 
-const STATUS_LABELS: Record<string, { label: string; cls: string }> = {
-  draft: { label: "Draft", cls: "bg-muted text-muted-foreground" },
-  shared: { label: "Shared", cls: "bg-maybe/20 text-foreground" },
-  agreed: { label: "Agreed", cls: "bg-yes/20 text-foreground" },
-  completed: { label: "Completed", cls: "bg-blush text-plum" },
-};
-
 function SessionsList() {
-  const [sessions] = useSessions();
+  const [sessions] = useSessionIndex();
   const sorted = [...sessions].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
@@ -46,29 +39,26 @@ function SessionsList() {
         )}
 
         <div className="space-y-3">
-          {sorted.map((s) => {
-            const status = STATUS_LABELS[s.status];
-            return (
-              <Link key={s.id} to="/sessions/$sessionId" params={{ sessionId: s.id }}>
-                <Sticker className="hover:scale-[1.01] transition-transform">
-                  <div className="flex justify-between items-start gap-3">
-                    <div className="min-w-0">
-                      <div className="font-display text-lg font-semibold text-plum truncate">
-                        {s.partnerHandle || "Untitled session"}
-                      </div>
-                      <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                        <Calendar className="h-3 w-3" />
-                        {s.date}
-                      </div>
+          {sorted.map((s) => (
+            <Link key={s.shareToken} to="/sessions/$sessionId" params={{ sessionId: s.shareToken }}>
+              <Sticker className="hover:scale-[1.01] transition-transform">
+                <div className="flex justify-between items-start gap-3">
+                  <div className="min-w-0">
+                    <div className="font-display text-lg font-semibold text-plum truncate">
+                      {s.partnerHandle || "Untitled session"}
                     </div>
-                    <span className={`text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-semibold ${status.cls}`}>
-                      {status.label}
-                    </span>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
+                      <Calendar className="h-3 w-3" />
+                      {s.date}
+                    </div>
                   </div>
-                </Sticker>
-              </Link>
-            );
-          })}
+                  <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-semibold bg-blush text-plum">
+                    {s.role === "partner" ? "Joined" : "Owner"}
+                  </span>
+                </div>
+              </Sticker>
+            </Link>
+          ))}
         </div>
       </div>
     </Layout>

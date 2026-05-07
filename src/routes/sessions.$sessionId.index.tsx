@@ -2,9 +2,11 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useSessions, useKinks } from "@/lib/storage";
+import { useKinks, useSessionIndex } from "@/lib/storage";
+import { useCloudSession } from "@/lib/useCloudSession";
+import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
-import { Copy, Flame, Heart, Trash2 } from "lucide-react";
+import { Copy, Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 
 export const Route = createFileRoute("/sessions/$sessionId/")({
@@ -13,20 +15,25 @@ export const Route = createFileRoute("/sessions/$sessionId/")({
 });
 
 function SessionDetail() {
-  const { sessionId } = Route.useParams();
-  const [sessions, setSessions] = useSessions();
+  const { sessionId } = Route.useParams(); // shareToken
+  const [, setIndex] = useSessionIndex();
   const [kinks] = useKinks();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
+  const { session, error, refresh } = useCloudSession(sessionId);
 
-  const session = sessions.find((s) => s.id === sessionId);
   const kinkMap = useMemo(() => Object.fromEntries(kinks.map((k) => [k.id, k.name])), [kinks]);
+
+  if (session === undefined) {
+    return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
+  }
 
   if (!session) {
     return (
       <Layout>
         <Sticker className="text-center space-y-3">
           <p>Session not found.</p>
+          {error && <p className="text-xs text-muted-foreground">{error}</p>}
           <Button asChild><Link to="/sessions">Back</Link></Button>
         </Sticker>
       </Layout>
@@ -44,18 +51,19 @@ function SessionDetail() {
     setTimeout(() => setCopied(false), 1500);
   };
 
-  const remove = () => {
-    if (!confirm("Delete this session?")) return;
-    setSessions((p) => p.filter((s) => s.id !== sessionId));
+  const remove = async () => {
+    if (!confirm("Delete this session? This wipes it from the server too.")) return;
+    await apiDeleteSession(session.shareToken);
+    setIndex((p) => p.filter((s) => s.shareToken !== session.shareToken));
     navigate({ to: "/sessions" });
   };
 
   const o = session.ownerSide;
   const p = session.partnerSide;
 
-  const yesItems = Object.entries(o.ratings).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
-  const maybeItems = Object.entries(o.ratings).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
-  const noItems = Object.entries(o.ratings).filter(([, r]) => r === "no").map(([id]) => kinkMap[id] || id);
+  const yesItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
+  const maybeItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
+  const noItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "no").map(([id]) => kinkMap[id] || id);
 
   return (
     <Layout>
@@ -77,13 +85,16 @@ function SessionDetail() {
           <div className="flex justify-center bg-card p-3 rounded-xl">
             <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
           </div>
-          <button onClick={copy} className="text-xs flex items-center gap-1 mx-auto text-muted-foreground hover:text-primary">
-            <Copy className="h-3 w-3" />
+          <button onClick={copy} className="text-xs flex items-center gap-1 mx-auto text-muted-foreground hover:text-primary break-all">
+            <Copy className="h-3 w-3 shrink-0" />
             {copied ? "Copied!" : shareUrl}
           </button>
           <p className="text-xs text-muted-foreground">
-            They'll fill their own side. Then you'll see both side-by-side.
+            Anyone with this link can fill out the partner side. They'll see your side once they submit.
           </p>
+          <Button variant="ghost" size="sm" className="rounded-full text-xs" onClick={refresh}>
+            <RefreshCw className="h-3 w-3 mr-1" /> Check for partner's reply
+          </Button>
         </Sticker>
 
         <div className="grid grid-cols-2 gap-3">
@@ -105,7 +116,7 @@ function SessionDetail() {
             <p className="text-xs text-muted-foreground">
               {p.name || "Your partner"} has filled their side.
             </p>
-            <Compare a={o.ratings} b={p.ratings} kinkMap={kinkMap} />
+            <Compare a={o.ratings || {}} b={p.ratings || {}} kinkMap={kinkMap} />
           </Sticker>
         )}
 

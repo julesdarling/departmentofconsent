@@ -217,8 +217,19 @@ export function useRatings() {
   return useStored<KinkRatings>(KEY_RATINGS, {});
 }
 
-export function useSessions() {
-  return useStored<PlaySession[]>(KEY_SESSIONS, []);
+// Local index of sessions this device has created/joined.
+// The actual session content lives in the cloud, keyed by share_token.
+export interface SessionIndexEntry {
+  id: string;
+  shareToken: string;
+  partnerHandle: string;
+  date: string;
+  createdAt: string;
+  role: "owner" | "partner";
+}
+
+export function useSessionIndex() {
+  return useStored<SessionIndexEntry[]>(KEY_SESSIONS, []);
 }
 
 export function getParticipantId(): string {
