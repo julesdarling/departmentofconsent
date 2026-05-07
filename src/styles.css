@@ -68,7 +68,7 @@
 :root {
   --radius: 1.25rem;
 
-  --background: oklch(from #FFF2EC l c h);
+  --background: oklch(0.965 0.018 50);
   --foreground: oklch(0.22 0.04 20);
 
   --card: oklch(0.99 0.01 30);
@@ -100,7 +100,7 @@
   --pinkbg: oklch(0.945 0.04 5);         /* pink page section */
   --coral: oklch(0.66 0.23 22);          /* coral-red border */
   --plum: oklch(0.22 0.04 20);           /* near-black text */
-  --cream: oklch(from #FFF2EC l c h);
+  --cream: oklch(0.965 0.018 50);
   --mint: oklch(0.78 0.12 165);          /* CTA mint/teal */
 
   --yes: oklch(0.78 0.12 165);
