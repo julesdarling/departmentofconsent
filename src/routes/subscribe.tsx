@@ -43,8 +43,6 @@ function SubscribePage() {
           </p>
         </div>
 
-        <PricingCard />
-
         {!checkoutOpen ? (
           <div className="flex justify-center">
             <Button size="lg" onClick={() => setCheckoutOpen(true)}>
@@ -61,6 +59,8 @@ function SubscribePage() {
             />
           </Sticker>
         )}
+
+        <PricingCard />
       </div>
     </Layout>
   );
