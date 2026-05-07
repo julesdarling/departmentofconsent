@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useCloudSession } from "@/lib/useCloudSession";
+import bunnyIcon from "@/assets/icon-bunny-cuddle.png";
 
 import { RequireAuth } from "@/components/RequireAuth";
 
