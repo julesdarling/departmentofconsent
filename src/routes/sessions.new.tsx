@@ -134,7 +134,7 @@ function NewSession() {
               />
             </Field>
             <div className="space-y-2">
-              <Label className="font-display text-sm text-plum">Pick what you're craving tonight</Label>
+              <Label className="doc-label">Pick what you're craving tonight</Label>
               <p className="text-xs text-muted-foreground">
                 From your kink list (yes & maybes). Tap to add. Your partner will see what overlaps.
               </p>
@@ -293,7 +293,7 @@ function NewSession() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label className="font-display text-sm text-plum">{label}</Label>
+      <Label className="doc-label">{label}</Label>
       {children}
     </div>
   );

@@ -11,15 +11,17 @@ export function Layout({ children, fullBleed = false }: { children: React.ReactN
 
   return (
     <div className="min-h-screen grain bg-background flex flex-col">
-      <header className="absolute top-0 right-0 z-40 p-4">
-        <button
-          aria-label="Open menu"
-          onClick={() => setOpen(true)}
-          className="w-11 h-11 rounded-full border-2 border-coral bg-blush grid place-items-center text-coral hover:bg-pinkbg transition"
-        >
-          <Menu className="h-5 w-5" />
-        </button>
-      </header>
+      {isHome && (
+        <header className="absolute top-0 right-0 z-40 p-4">
+          <button
+            aria-label="Open menu"
+            onClick={() => setOpen(true)}
+            className="w-11 h-11 rounded-full border-2 border-coral bg-blush grid place-items-center text-coral hover:bg-pinkbg transition"
+          >
+            <Menu className="h-5 w-5" />
+          </button>
+        </header>
+      )}
 
       <main className={fullBleed ? "flex-1" : `flex-1 max-w-2xl w-full mx-auto px-5 pt-20 ${isHome ? "pb-10" : "pb-28"}`}>
         {children}
