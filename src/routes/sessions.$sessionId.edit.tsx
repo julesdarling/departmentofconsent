@@ -142,7 +142,7 @@ function EditScene() {
             <Switch checked={side.substancesHardLimit} onCheckedChange={(v) => u("substancesHardLimit", v)} />
           </div>
           <Field label="Medical concerns"><Textarea value={side.medicalConcerns} onChange={(e) => u("medicalConcerns", e.target.value)} rows={2} /></Field>
-          <Field label="Other partners / dynamics"><Textarea value={side.partnerDynamics} onChange={(e) => u("partnerDynamics", e.target.value)} rows={2} /></Field>
+          <Field label="Other play partners / dynamics"><Textarea value={side.partnerDynamics} onChange={(e) => u("partnerDynamics", e.target.value)} rows={2} /></Field>
           <Field label="Intentions"><Textarea value={side.intentions} onChange={(e) => u("intentions", e.target.value)} rows={3} /></Field>
           <Field label="Good time looks like"><Textarea value={side.goodTime} onChange={(e) => u("goodTime", e.target.value)} rows={2} /></Field>
           <Field label="Bad time looks like"><Textarea value={side.badTime} onChange={(e) => u("badTime", e.target.value)} rows={2} /></Field>
