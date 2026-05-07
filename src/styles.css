@@ -199,8 +199,10 @@
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    padding: 1rem 2.25rem;
-    min-width: 220px;
+    padding: 1.1rem 2.25rem;
+    width: 280px;
+    min-width: 280px;
+    height: 64px;
     color: white;
     font-weight: 600;
     font-size: 1rem;
@@ -214,6 +216,12 @@
     text-align: center;
     line-height: 1.1;
     transition: filter 0.3s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+  .cloud-btn > span {
+    display: inline-block;
+    width: 95%;
+    white-space: nowrap;
   }
   .cloud-btn:hover {
     filter: hue-rotate(-120deg) saturate(1.3);
