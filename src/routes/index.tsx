@@ -30,7 +30,7 @@ function Index() {
       <section className="relative">
         <div className="relative w-full aspect-[3/4] sm:aspect-[16/10] max-h-[640px] overflow-hidden">
           <img src={heroImg} alt="Friends laughing in a soft pile, joyful and intimate" className="w-full h-full object-cover" />
-          <div className="absolute top-4 left-4 right-20 max-w-[260px]">
+          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-32 sm:w-40">
             <img src={wordmark} alt="Dept of Consent" className="w-full" />
           </div>
         </div>
