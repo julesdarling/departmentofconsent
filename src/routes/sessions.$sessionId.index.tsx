@@ -300,88 +300,30 @@ function Compare({
   );
 }
 
-function VisionOverlap({
-  owner,
-  partner,
+function VisionBlock({
+  name,
+  side,
   kinkMap,
-  partnerName,
 }: {
-  owner: SessionSide;
-  partner: SessionSide;
+  name: string;
+  side: SessionSide;
   kinkMap: Record<string, string>;
-  partnerName: string;
 }) {
-  const ownerSet = new Set(owner.selectedKinks || []);
-  const partnerSet = new Set(partner.selectedKinks || []);
-  const overlap = [...ownerSet].filter((id) => partnerSet.has(id));
-  const ownerOnly = [...ownerSet].filter((id) => !partnerSet.has(id));
-  const partnerOnly = [...partnerSet].filter((id) => !ownerSet.has(id));
-
+  if (!side.vision && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
   return (
-    <Sticker variant="coral" className="space-y-4">
-      <div className="text-center space-y-1">
-        <div className="text-4xl">✨</div>
-        <div className="font-display text-2xl font-semibold text-plum">Tonight's vision</div>
-      </div>
-
-      {(owner.vision || partner.vision) && (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {owner.vision && (
-            <div className="bg-card/60 rounded-xl p-3">
-              <div className="text-[10px] uppercase tracking-wider text-coral font-bold mb-1">You</div>
-              <p className="text-sm whitespace-pre-wrap">{owner.vision}</p>
-            </div>
-          )}
-          {partner.vision && (
-            <div className="bg-card/60 rounded-xl p-3">
-              <div className="text-[10px] uppercase tracking-wider text-coral font-bold mb-1">{partnerName}</div>
-              <p className="text-sm whitespace-pre-wrap">{partner.vision}</p>
-            </div>
-          )}
+    <div className="bg-card/60 rounded-xl p-3 space-y-2">
+      <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{name}</div>
+      {side.vision && <p className="text-sm whitespace-pre-wrap">{side.vision}</p>}
+      {side.selectedKinks?.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 pt-1">
+          {side.selectedKinks.map((id) => (
+            <span key={id} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">
+              {kinkMap[id] || id}
+            </span>
+          ))}
         </div>
       )}
-
-      {overlap.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-yes mb-1">💚 Both craving</div>
-          <div className="flex flex-wrap gap-1.5">
-            {overlap.map((id) => (
-              <span key={id} className="text-sm font-medium bg-yes/25 text-plum px-3 py-1.5 rounded-full border border-yes/40">
-                {kinkMap[id] || id}
-              </span>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {(ownerOnly.length > 0 || partnerOnly.length > 0) && (
-        <div className="grid gap-3 sm:grid-cols-2 text-xs">
-          {ownerOnly.length > 0 && (
-            <div>
-              <div className="font-semibold uppercase text-muted-foreground mb-1">Only you picked</div>
-              <div className="flex flex-wrap gap-1">
-                {ownerOnly.map((id) => (
-                  <span key={id} className="bg-maybe/20 px-2 py-0.5 rounded-full">{kinkMap[id] || id}</span>
-                ))}
-              </div>
-            </div>
-          )}
-          {partnerOnly.length > 0 && (
-            <div>
-              <div className="font-semibold uppercase text-muted-foreground mb-1">Only {partnerName} picked</div>
-              <div className="flex flex-wrap gap-1">
-                {partnerOnly.map((id) => (
-                  <span key={id} className="bg-maybe/20 px-2 py-0.5 rounded-full">{kinkMap[id] || id}</span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      {overlap.length === 0 && !owner.vision && !partner.vision && (
-        <p className="text-xs text-center text-muted-foreground">No tonight-specific picks yet.</p>
-      )}
-    </Sticker>
+    </div>
   );
+}
 }
