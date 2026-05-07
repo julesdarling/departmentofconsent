@@ -187,10 +187,18 @@
     cursor: pointer;
     text-align: center;
     line-height: 1.1;
+    transition: filter 0.3s ease, transform 0.2s ease;
+  }
+  .cloud-btn:hover {
+    filter: hue-rotate(-35deg) saturate(1.1);
+    transform: translateY(-1px);
   }
   .cloud-btn[data-variant="outline"] {
     background-image: url("/button_outline.svg");
     color: var(--color-coral);
+  }
+  .cloud-btn[data-variant="outline"]:hover {
+    filter: hue-rotate(25deg) saturate(1.15);
   }
 
   .grain::before {
