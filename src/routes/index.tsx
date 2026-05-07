@@ -73,7 +73,7 @@ function Index() {
             <div>
               <h3 className="font-display text-2xl text-plum mb-2">Step 3</h3>
               <p className="text-sm text-foreground/80 max-w-[260px] mx-auto leading-snug">
-                Share with your partner and use the scene card to play safely and clearly.
+                Share with your play partner and use the scene card to play safely and clearly.
               </p>
             </div>
           </div>
