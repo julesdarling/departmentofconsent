@@ -24,7 +24,7 @@ const schema = z.object({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -34,6 +34,27 @@ function AuthPage() {
       if (data.session) navigate({ to: REDIRECT_AFTER_AUTH });
     });
   }, [navigate]);
+
+  const sendReset = async () => {
+    const emailParsed = z.string().trim().email().max(255).safeParse(email);
+    if (!emailParsed.success) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(emailParsed.data, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      toast.success("Password reset email sent. Check your inbox.");
+      setMode("signin");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not send reset email");
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const submit = async () => {
     const parsed = schema.safeParse({ email, password });
