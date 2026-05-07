@@ -87,17 +87,17 @@ function KinksPage() {
 
   return (
     <Layout>
-      <div className="space-y-5">
-        <div>
-          <h1 className="font-display text-3xl font-semibold text-plum">Your kinks & limits</h1>
-          <p className="text-sm text-muted-foreground mt-1">
+      <div className="space-y-6">
+        <div className="text-center pt-2">
+          <h1 className="font-display text-5xl text-foreground tracking-tight">Your kinks & limits</h1>
+          <p className="text-sm text-muted-foreground mt-2">
             Tap to rate. This becomes the starting point for every new session.
           </p>
         </div>
 
         {grouped.map(([cat, items]) => (
           <Sticker key={cat} className="space-y-1">
-            <div className="font-display text-lg font-semibold text-coral mb-1">{cat}</div>
+            <div className="doc-label text-coral mb-2">{cat}</div>
             {items.map((item) => (
               <KinkRow
                 key={item.id}
@@ -110,8 +110,8 @@ function KinksPage() {
           </Sticker>
         ))}
 
-        <Sticker variant="coral" className="space-y-3">
-          <div className="font-display text-lg font-semibold text-plum">Add your own ✿</div>
+        <Sticker className="space-y-3">
+          <div className="doc-label">Add your own</div>
           <Input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="e.g. wax play, sensory deprivation hood" />
           <Input value={newCat} onChange={(e) => setNewCat(e.target.value)} placeholder="Category" />
           <Button onClick={addCustom} className="w-full rounded-full">
@@ -119,9 +119,11 @@ function KinksPage() {
           </Button>
         </Sticker>
 
-        <Button asChild size="lg" className="w-full rounded-full font-semibold">
-          <Link to="/sessions/new">Start a new session →</Link>
-        </Button>
+        <div className="flex justify-center pt-2">
+          <Link to="/sessions/new" className="cloud-btn cloud-btn-fluid">
+            <span>Start a new session</span>
+          </Link>
+        </div>
       </div>
     </Layout>
   );
