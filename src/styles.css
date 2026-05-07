@@ -157,14 +157,39 @@
 
 @layer utilities {
   .sticker {
-    background: var(--color-card);
-    border: 2px solid var(--color-coral);
+    background: #ffffff;
+    border: 0;
     border-radius: var(--radius-2xl);
   }
   .sticker-coral {
-    background: var(--color-card);
-    border: 2px solid var(--color-coral);
+    background: #ffffff;
+    border: 0;
     border-radius: var(--radius-2xl);
+  }
+  .doc-input {
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid oklch(0.88 0.02 30);
+    border-radius: 0.6rem;
+    padding: 0.7rem 0.9rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--color-foreground);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .doc-input::placeholder { color: oklch(0.65 0.03 20); }
+  .doc-input:focus {
+    outline: none;
+    border-color: var(--color-coral);
+    box-shadow: 0 0 0 3px oklch(0.66 0.23 22 / 0.15);
+  }
+  .doc-label {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--color-foreground);
+    display: block;
+    margin-bottom: 0.45rem;
   }
 
   /* Cloud-shaped button — uses provided SVG backgrounds */

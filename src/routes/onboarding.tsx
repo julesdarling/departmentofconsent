@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
+import { CloudButton } from "@/components/CloudButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -23,12 +24,12 @@ function Onboarding() {
 
   return (
     <Layout>
-      <div className="space-y-5">
-        <div className="text-center">
-          <h1 className="font-display text-3xl font-semibold text-plum">
-            Tell us about you ♡
+      <div className="space-y-6">
+        <div className="text-center pt-2">
+          <h1 className="font-display text-5xl text-foreground tracking-tight">
+            Tell us about you
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-muted-foreground mt-2">
             Saved on this device. You can change anything later.
           </p>
         </div>
@@ -48,12 +49,12 @@ function Onboarding() {
           </Field>
         </Sticker>
 
-        <Sticker variant="coral" className="space-y-4">
-          <Field label="Healthcare access">
-            <Input value={draft.healthcare} onChange={(e) => update("healthcare", e.target.value)} placeholder="e.g. yes, insured / urgent care nearby" />
+        <Sticker className="space-y-4">
+          <Field label="In case something goes wrong, do you have health care?">
+            <Input value={draft.healthcare} onChange={(e) => update("healthcare", e.target.value)} placeholder="yes, insured / specify hospital" />
           </Field>
           <Field label="Emergency contact">
-            <Textarea value={draft.emergencyContact} onChange={(e) => update("emergencyContact", e.target.value)} placeholder="Name, relationship, phone" rows={2} />
+            <Input value={draft.emergencyContact} onChange={(e) => update("emergencyContact", e.target.value)} placeholder="Name and phone" />
           </Field>
           <Field label="Default aftercare needs">
             <Textarea value={draft.defaultAftercare} onChange={(e) => update("defaultAftercare", e.target.value)} placeholder="Cuddles, water, snacks, alone time, check-in tomorrow..." rows={3} />
@@ -61,21 +62,22 @@ function Onboarding() {
         </Sticker>
 
         <Sticker className="space-y-2">
-          <Label className="font-display text-base text-plum">Your default safewords</Label>
-          <p className="text-xs text-muted-foreground">Pre-filled with a common set. Edit to taste.</p>
-          <Textarea value={draft.defaultSafewords} onChange={(e) => update("defaultSafewords", e.target.value)} rows={10} className="font-mono text-xs" />
+          <div className="doc-label">Your default safewords</div>
+          <p className="text-xs text-muted-foreground -mt-1">Pre-filled with a common set. Edit to taste.</p>
+          <Textarea value={draft.defaultSafewords} onChange={(e) => update("defaultSafewords", e.target.value)} rows={14} className="font-mono text-xs" />
         </Sticker>
 
-        <Button
-          size="lg"
-          className="w-full rounded-full font-semibold"
-          onClick={() => {
-            setProfile(draft);
-            navigate({ to: "/kinks" });
-          }}
-        >
-          Save & continue to kinks →
-        </Button>
+        <div className="flex justify-center pt-2">
+          <CloudButton
+            onClick={() => {
+              setProfile(draft);
+              navigate({ to: "/kinks" });
+            }}
+            className="cloud-btn-fluid"
+          >
+            Save and continue
+          </CloudButton>
+        </div>
       </div>
     </Layout>
   );
@@ -84,7 +86,7 @@ function Onboarding() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label className="font-display text-sm text-plum">{label}</Label>
+      <Label className="doc-label">{label}</Label>
       {children}
     </div>
   );

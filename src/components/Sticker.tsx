@@ -13,7 +13,7 @@ export function Sticker({
     <div
       className={cn(
         variant === "coral" ? "sticker-coral" : "sticker",
-        "p-5",
+        "p-6",
         className
       )}
     >
