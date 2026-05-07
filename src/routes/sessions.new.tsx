@@ -195,7 +195,7 @@ function NewSession() {
             <Field label="Medical concerns specific to tonight">
               <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, on my period, new meds..." />
             </Field>
-            <Field label="Other partners / dynamics to be aware of">
+            <Field label="Other play partners / dynamics to be aware of">
               <Textarea value={side.partnerDynamics} onChange={(e) => update("partnerDynamics", e.target.value)} rows={2} />
             </Field>
             <Field label="Intentions — how do you want to feel?">
