@@ -120,35 +120,58 @@ function AuthPage() {
             <Label className="doc-label">Email</Label>
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" />
           </div>
-          <div className="space-y-1.5">
-            <Label className="doc-label">Password</Label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
-          </div>
+          {mode !== "forgot" && (
+            <div className="space-y-1.5">
+              <Label className="doc-label">Password</Label>
+              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+            </div>
+          )}
 
           <div className="flex flex-col items-center gap-3 pt-2">
-            <CloudButton onClick={submit} className="cloud-btn-fluid">
-              {busy ? "..." : mode === "signin" ? "Sign in" : "Create account & subscribe"}
-            </CloudButton>
-            <CloudButton onClick={google} variant="outline" className="cloud-btn-fluid">
-              Continue with Google
-            </CloudButton>
+            {mode === "forgot" ? (
+              <CloudButton onClick={sendReset} className="cloud-btn-fluid">
+                {busy ? "..." : "Send reset link"}
+              </CloudButton>
+            ) : (
+              <>
+                <CloudButton onClick={submit} className="cloud-btn-fluid">
+                  {busy ? "..." : mode === "signin" ? "Sign in" : "Create account & subscribe"}
+                </CloudButton>
+                <CloudButton onClick={google} variant="outline" className="cloud-btn-fluid">
+                  Continue with Google
+                </CloudButton>
+              </>
+            )}
           </div>
 
-          <div className="text-center text-sm pt-2">
-            {mode === "signin" ? (
+          <div className="text-center text-sm pt-2 space-y-1">
+            {mode === "signin" && (
               <>
-                New here?{" "}
-                <button className="underline text-coral" onClick={() => setMode("signup")}>
-                  Create an account
-                </button>
+                <div>
+                  New here?{" "}
+                  <button className="underline text-coral" onClick={() => setMode("signup")}>
+                    Create an account
+                  </button>
+                </div>
+                <div>
+                  <button className="underline text-coral text-xs" onClick={() => setMode("forgot")}>
+                    Forgot password?
+                  </button>
+                </div>
               </>
-            ) : (
+            )}
+            {mode === "signup" && (
               <>
                 Have an account?{" "}
                 <button className="underline text-coral" onClick={() => setMode("signin")}>
                   Sign in
                 </button>
               </>
+            )}
+            {mode === "forgot" && (
+              <button className="underline text-coral" onClick={() => setMode("signin")}>
+                ← Back to sign in
+              </button>
             )}
           </div>
           <div className="text-center text-xs text-muted-foreground">
