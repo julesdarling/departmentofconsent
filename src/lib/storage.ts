@@ -53,6 +53,9 @@ export interface SessionSide {
   penetrativeSex: string;
   // safewords
   safewords: string;
+  // tonight's vision
+  vision: string;
+  selectedKinks: string[];
   // free text
   actions: string;
   hardLimits: string;
@@ -265,6 +268,8 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings): SessionSide
     privacy: "",
     penetrativeSex: "",
     safewords: profile?.defaultSafewords ?? DEFAULT_SAFEWORDS,
+    vision: "",
+    selectedKinks: [],
     actions: "",
     hardLimits: "",
     softLimits: "",
