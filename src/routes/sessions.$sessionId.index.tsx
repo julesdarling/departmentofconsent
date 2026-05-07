@@ -60,7 +60,8 @@ function SessionDetail() {
   };
 
   const o = session.ownerSide;
-  const p = session.partnerSide;
+  const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
+  const ownerName = o.name || "User 1";
 
   const yesItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
   const maybeItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
