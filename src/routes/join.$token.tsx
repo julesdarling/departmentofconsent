@@ -57,7 +57,7 @@ function JoinPage() {
         <Sticker className="text-center space-y-3">
           <h1 className="font-display text-2xl text-plum">Session not found</h1>
           <p className="text-sm text-muted-foreground">
-            This invite link doesn't match anything. Ask your partner to share it again.
+            This invite link doesn't match anything. Ask your play partner to share it again.
           </p>
           {error && <p className="text-xs text-muted-foreground">{error}</p>}
         </Sticker>
