@@ -51,6 +51,14 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
   );
 }
 
+function MenuLink({ to, onClose, children }: { to: string; onClose: () => void; children: React.ReactNode }) {
+  return (
+    <Link to={to} onClick={onClose} className="w-full max-w-sm">
+      <div className="cloud-btn" data-variant="outline"><span>{children}</span></div>
+    </Link>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-plum text-cream text-center py-8 px-4 text-sm">
