@@ -17,10 +17,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as SessionsIndexRouteImport } from './routes/sessions.index'
 import { Route as SessionsNewRouteImport } from './routes/sessions.new'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
+import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as SessionsSessionIdIndexRouteImport } from './routes/sessions.$sessionId.index'
 import { Route as SessionsSessionIdSceneRouteImport } from './routes/sessions.$sessionId.scene'
 import { Route as SessionsSessionIdEditRouteImport } from './routes/sessions.$sessionId.edit'
 import { Route as SessionsSessionIdAftercareRouteImport } from './routes/sessions.$sessionId.aftercare'
+import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
@@ -62,6 +64,11 @@ const JoinTokenRoute = JoinTokenRouteImport.update({
   path: '/join/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutReturnRoute = CheckoutReturnRouteImport.update({
+  id: '/checkout/return',
+  path: '/checkout/return',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SessionsSessionIdIndexRoute = SessionsSessionIdIndexRouteImport.update({
   id: '/sessions/$sessionId/',
   path: '/sessions/$sessionId/',
@@ -83,6 +90,12 @@ const SessionsSessionIdAftercareRoute =
     path: '/sessions/$sessionId/aftercare',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicPaymentsWebhookRoute =
+  ApiPublicPaymentsWebhookRouteImport.update({
+    id: '/api/public/payments/webhook',
+    path: '/api/public/payments/webhook',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -90,6 +103,7 @@ export interface FileRoutesByFullPath {
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
   '/settings': typeof SettingsRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/sessions/new': typeof SessionsNewRoute
   '/sessions/': typeof SessionsIndexRoute
@@ -97,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/sessions/$sessionId/edit': typeof SessionsSessionIdEditRoute
   '/sessions/$sessionId/scene': typeof SessionsSessionIdSceneRoute
   '/sessions/$sessionId/': typeof SessionsSessionIdIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -104,6 +119,7 @@ export interface FileRoutesByTo {
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
   '/settings': typeof SettingsRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/sessions/new': typeof SessionsNewRoute
   '/sessions': typeof SessionsIndexRoute
@@ -111,6 +127,7 @@ export interface FileRoutesByTo {
   '/sessions/$sessionId/edit': typeof SessionsSessionIdEditRoute
   '/sessions/$sessionId/scene': typeof SessionsSessionIdSceneRoute
   '/sessions/$sessionId': typeof SessionsSessionIdIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -119,6 +136,7 @@ export interface FileRoutesById {
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
   '/settings': typeof SettingsRoute
+  '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/sessions/new': typeof SessionsNewRoute
   '/sessions/': typeof SessionsIndexRoute
@@ -126,6 +144,7 @@ export interface FileRoutesById {
   '/sessions/$sessionId/edit': typeof SessionsSessionIdEditRoute
   '/sessions/$sessionId/scene': typeof SessionsSessionIdSceneRoute
   '/sessions/$sessionId/': typeof SessionsSessionIdIndexRoute
+  '/api/public/payments/webhook': typeof ApiPublicPaymentsWebhookRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -135,6 +154,7 @@ export interface FileRouteTypes {
     | '/kinks'
     | '/onboarding'
     | '/settings'
+    | '/checkout/return'
     | '/join/$token'
     | '/sessions/new'
     | '/sessions/'
@@ -142,6 +162,7 @@ export interface FileRouteTypes {
     | '/sessions/$sessionId/edit'
     | '/sessions/$sessionId/scene'
     | '/sessions/$sessionId/'
+    | '/api/public/payments/webhook'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -149,6 +170,7 @@ export interface FileRouteTypes {
     | '/kinks'
     | '/onboarding'
     | '/settings'
+    | '/checkout/return'
     | '/join/$token'
     | '/sessions/new'
     | '/sessions'
@@ -156,6 +178,7 @@ export interface FileRouteTypes {
     | '/sessions/$sessionId/edit'
     | '/sessions/$sessionId/scene'
     | '/sessions/$sessionId'
+    | '/api/public/payments/webhook'
   id:
     | '__root__'
     | '/'
@@ -163,6 +186,7 @@ export interface FileRouteTypes {
     | '/kinks'
     | '/onboarding'
     | '/settings'
+    | '/checkout/return'
     | '/join/$token'
     | '/sessions/new'
     | '/sessions/'
@@ -170,6 +194,7 @@ export interface FileRouteTypes {
     | '/sessions/$sessionId/edit'
     | '/sessions/$sessionId/scene'
     | '/sessions/$sessionId/'
+    | '/api/public/payments/webhook'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,6 +203,7 @@ export interface RootRouteChildren {
   KinksRoute: typeof KinksRoute
   OnboardingRoute: typeof OnboardingRoute
   SettingsRoute: typeof SettingsRoute
+  CheckoutReturnRoute: typeof CheckoutReturnRoute
   JoinTokenRoute: typeof JoinTokenRoute
   SessionsNewRoute: typeof SessionsNewRoute
   SessionsIndexRoute: typeof SessionsIndexRoute
@@ -185,6 +211,7 @@ export interface RootRouteChildren {
   SessionsSessionIdEditRoute: typeof SessionsSessionIdEditRoute
   SessionsSessionIdSceneRoute: typeof SessionsSessionIdSceneRoute
   SessionsSessionIdIndexRoute: typeof SessionsSessionIdIndexRoute
+  ApiPublicPaymentsWebhookRoute: typeof ApiPublicPaymentsWebhookRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -245,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JoinTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout/return': {
+      id: '/checkout/return'
+      path: '/checkout/return'
+      fullPath: '/checkout/return'
+      preLoaderRoute: typeof CheckoutReturnRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sessions/$sessionId/': {
       id: '/sessions/$sessionId/'
       path: '/sessions/$sessionId'
@@ -273,6 +307,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SessionsSessionIdAftercareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/payments/webhook': {
+      id: '/api/public/payments/webhook'
+      path: '/api/public/payments/webhook'
+      fullPath: '/api/public/payments/webhook'
+      preLoaderRoute: typeof ApiPublicPaymentsWebhookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -282,6 +323,7 @@ const rootRouteChildren: RootRouteChildren = {
   KinksRoute: KinksRoute,
   OnboardingRoute: OnboardingRoute,
   SettingsRoute: SettingsRoute,
+  CheckoutReturnRoute: CheckoutReturnRoute,
   JoinTokenRoute: JoinTokenRoute,
   SessionsNewRoute: SessionsNewRoute,
   SessionsIndexRoute: SessionsIndexRoute,
@@ -289,6 +331,7 @@ const rootRouteChildren: RootRouteChildren = {
   SessionsSessionIdEditRoute: SessionsSessionIdEditRoute,
   SessionsSessionIdSceneRoute: SessionsSessionIdSceneRoute,
   SessionsSessionIdIndexRoute: SessionsSessionIdIndexRoute,
+  ApiPublicPaymentsWebhookRoute: ApiPublicPaymentsWebhookRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
