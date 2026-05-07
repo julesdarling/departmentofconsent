@@ -344,9 +344,11 @@ function JoinPage() {
           <Field label="Aftercare needs"><Textarea value={side.aftercare} onChange={(e) => updateField("aftercare", e.target.value)} rows={3} /></Field>
         </Sticker>
 
-        <Button size="lg" disabled={submitting} className="w-full rounded-full font-semibold" onClick={submit}>
-          {submitting ? "Submitting..." : "Submit my side ♡"}
-        </Button>
+        <div className="flex justify-center pt-2">
+          <Button disabled={submitting} onClick={submit}>
+            {submitting ? "Submitting..." : "Submit my side ♡"}
+          </Button>
+        </div>
       </div>
     </Layout>
   );
