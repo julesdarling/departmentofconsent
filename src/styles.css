@@ -97,7 +97,7 @@
   --ring: oklch(0.66 0.23 22);
 
   --blush: oklch(0.93 0.045 5);          /* soft pink card */
-  --pinkbg: oklch(0.945 0.04 5);         /* pink page section */
+  --pinkbg: oklch(0.965 0.018 50);       /* matches cream background */
   --coral: oklch(0.66 0.23 22);          /* coral-red border */
   --plum: oklch(0.22 0.04 20);           /* near-black text */
   --cream: oklch(0.965 0.018 50);
@@ -190,7 +190,7 @@
     transition: filter 0.3s ease, transform 0.2s ease;
   }
   .cloud-btn:hover {
-    filter: hue-rotate(-35deg) saturate(1.1);
+    filter: hue-rotate(-120deg) saturate(1.3);
     transform: translateY(-1px);
   }
   .cloud-btn[data-variant="outline"] {
@@ -198,7 +198,7 @@
     color: var(--color-coral);
   }
   .cloud-btn[data-variant="outline"]:hover {
-    filter: hue-rotate(25deg) saturate(1.15);
+    filter: hue-rotate(120deg) saturate(1.4);
   }
 
   .grain::before {
