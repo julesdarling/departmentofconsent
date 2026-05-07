@@ -9,6 +9,7 @@ import {
   useProfile,
   useSessionIndex,
   emptySide,
+  useRatings,
   type SessionSide,
   type Rating,
 } from "@/lib/storage";
@@ -16,6 +17,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a session" }] }),
