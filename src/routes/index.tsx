@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { CloudButton } from "@/components/CloudButton";
 import { useProfile } from "@/lib/storage";
 import heroImg from "@/assets/hero.jpg";
-import wordmark from "@/assets/wordmark.png";
+import wordmark from "@/assets/logo.svg";
 import iconWhip from "@/assets/icon-whip.png";
 import iconHearts from "@/assets/icon-hearts.png";
 import iconChecklist from "@/assets/icon-checklist.png";
