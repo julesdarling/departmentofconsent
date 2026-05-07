@@ -123,6 +123,52 @@ function NewSession() {
         )}
 
         {step === 1 && (
+          <Sticker className="space-y-4">
+            <h2 className="font-display text-xl text-plum">Tonight's vision</h2>
+            <Field label="What are you imagining for this scene?">
+              <Textarea
+                value={side.vision}
+                onChange={(e) => update("vision", e.target.value)}
+                rows={5}
+                placeholder="Soft and slow… rough and bratty… a long bondage tease… set the mood in your own words."
+              />
+            </Field>
+            <div className="space-y-2">
+              <Label className="font-display text-sm text-plum">Pick what you're craving tonight</Label>
+              <p className="text-xs text-muted-foreground">
+                From your kink list (yes & maybes). Tap to add. Your partner will see what overlaps.
+              </p>
+              {interestedKinks.length === 0 ? (
+                <p className="text-xs text-muted-foreground italic">
+                  Rate some kinks on your <Link to="/kinks" className="underline text-coral">kinks page</Link> to pick from them here.
+                </p>
+              ) : (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {interestedKinks.map((k) => {
+                    const selected = side.selectedKinks.includes(k.id);
+                    return (
+                      <button
+                        key={k.id}
+                        type="button"
+                        onClick={() => toggleKink(k.id)}
+                        className={cn(
+                          "text-sm px-3 py-1.5 rounded-full border-2 transition",
+                          selected
+                            ? "bg-yes/30 border-yes text-plum font-semibold"
+                            : "border-border/60 text-muted-foreground hover:border-primary/50"
+                        )}
+                      >
+                        {selected ? "✓ " : "+ "}{k.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </Sticker>
+        )}
+
+        {step === 2 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-xl text-plum">Scene & logistics</h2>
             <Field label="Setting (where is it happening?)">
