@@ -39,7 +39,7 @@ function SessionsList() {
           </Sticker>
         )}
 
-        <div className="space-y-3">
+        <div className="space-y-5">
           {sorted.map((s) => (
             <Link key={s.shareToken} to="/sessions/$sessionId" params={{ sessionId: s.shareToken }}>
               <Sticker className="hover:scale-[1.01] transition-transform">
@@ -54,7 +54,7 @@ function SessionsList() {
                     </div>
                   </div>
                   <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full font-semibold bg-blush text-plum">
-                    {s.role === "partner" ? "Joined" : "Owner"}
+                    {s.role === "partner" ? "Joined" : "Creator"}
                   </span>
                 </div>
               </Sticker>

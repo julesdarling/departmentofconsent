@@ -269,20 +269,24 @@ function NewSession() {
           </Sticker>
         )}
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col items-center gap-2">
           {step < STEPS.length - 1 && (
             <Button
-              className="rounded-full w-full"
-              onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
+              onClick={() => {
+                setStep((s) => Math.min(STEPS.length - 1, s + 1));
+                if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
               Next <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           )}
           <Button
             variant="outline"
-            className="rounded-full w-full"
             disabled={step === 0}
-            onClick={() => setStep((s) => Math.max(0, s - 1))}
+            onClick={() => {
+              setStep((s) => Math.max(0, s - 1));
+              if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
           >
             <ChevronLeft className="h-4 w-4 mr-1" /> Back
           </Button>

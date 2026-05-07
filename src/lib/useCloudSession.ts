@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { apiGetSession, apiUpdateSession } from "./sessionsApi";
+import { apiGetSession, apiUpdateSession, apiAddPartnerSide } from "./sessionsApi";
 import type { PlaySession, SessionSide } from "./storage";
 
 export function useCloudSession(token: string | undefined) {
@@ -41,5 +41,15 @@ export function useCloudSession(token: string | undefined) {
     [token]
   );
 
-  return { session, error, refresh, update } as const;
+  const addPartner = useCallback(
+    async (side: SessionSide) => {
+      if (!token) return;
+      const updated = await apiAddPartnerSide(token, side);
+      setSession(updated);
+      return updated;
+    },
+    [token]
+  );
+
+  return { session, error, refresh, update, addPartner } as const;
 }

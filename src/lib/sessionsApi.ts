@@ -9,6 +9,7 @@ type Row = {
   status: string;
   owner_side: unknown;
   partner_side: unknown;
+  partner_sides: unknown;
   reflection: string | null;
   aftercare_completed: unknown;
   created_at: string;
@@ -16,6 +17,9 @@ type Row = {
 };
 
 function rowToSession(row: Row): PlaySession {
+  const list = (row.partner_sides as SessionSide[] | null) ?? [];
+  const legacy = (row.partner_side ?? undefined) as SessionSide | undefined;
+  const merged = list.length > 0 ? list : legacy ? [legacy] : [];
   return {
     id: row.id,
     shareToken: row.share_token,
@@ -24,7 +28,8 @@ function rowToSession(row: Row): PlaySession {
     createdAt: row.created_at,
     status: row.status as PlaySession["status"],
     ownerSide: row.owner_side as SessionSide,
-    partnerSide: (row.partner_side ?? undefined) as SessionSide | undefined,
+    partnerSide: legacy,
+    partnerSides: merged,
     reflection: row.reflection ?? undefined,
     aftercareCompleted: (row.aftercare_completed as string[]) ?? [],
   };
@@ -57,6 +62,7 @@ type Patch = Partial<{
   status: string;
   owner_side: SessionSide;
   partner_side: SessionSide | null;
+  partner_sides: SessionSide[];
   reflection: string | null;
   aftercare_completed: string[];
 }>;
@@ -65,6 +71,15 @@ export async function apiUpdateSession(token: string, patch: Patch): Promise<Pla
   const { data, error } = await supabase.rpc("update_play_session", {
     p_token: token,
     p_patch: patch as never,
+  });
+  if (error) throw error;
+  return rowToSession(data as unknown as Row);
+}
+
+export async function apiAddPartnerSide(token: string, side: SessionSide): Promise<PlaySession> {
+  const { data, error } = await supabase.rpc("add_partner_side", {
+    p_token: token,
+    p_side: side as never,
   });
   if (error) throw error;
   return rowToSession(data as unknown as Row);

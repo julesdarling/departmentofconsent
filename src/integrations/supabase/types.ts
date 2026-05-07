@@ -23,6 +23,7 @@ export type Database = {
           owner_side: Json
           partner_handle: string
           partner_side: Json | null
+          partner_sides: Json
           reflection: string | null
           share_token: string
           status: string
@@ -36,6 +37,7 @@ export type Database = {
           owner_side?: Json
           partner_handle?: string
           partner_side?: Json | null
+          partner_sides?: Json
           reflection?: string | null
           share_token: string
           status?: string
@@ -49,6 +51,7 @@ export type Database = {
           owner_side?: Json
           partner_handle?: string
           partner_side?: Json | null
+          partner_sides?: Json
           reflection?: string | null
           share_token?: string
           status?: string
@@ -154,6 +157,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_partner_side: {
+        Args: { p_side: Json; p_token: string }
+        Returns: {
+          aftercare_completed: Json
+          created_at: string
+          date: string
+          id: string
+          owner_side: Json
+          partner_handle: string
+          partner_side: Json | null
+          partner_sides: Json
+          reflection: string | null
+          share_token: string
+          status: string
+          updated_at: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "play_sessions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       create_play_session: {
         Args: {
           p_date: string
@@ -170,6 +196,7 @@ export type Database = {
           owner_side: Json
           partner_handle: string
           partner_side: Json | null
+          partner_sides: Json
           reflection: string | null
           share_token: string
           status: string
@@ -193,6 +220,7 @@ export type Database = {
           owner_side: Json
           partner_handle: string
           partner_side: Json | null
+          partner_sides: Json
           reflection: string | null
           share_token: string
           status: string
@@ -219,6 +247,7 @@ export type Database = {
           owner_side: Json
           partner_handle: string
           partner_side: Json | null
+          partner_sides: Json
           reflection: string | null
           share_token: string
           status: string
