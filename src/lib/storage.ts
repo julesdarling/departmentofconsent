@@ -78,6 +78,7 @@ export interface PlaySession {
   status: SessionStatus;
   ownerSide: SessionSide;
   partnerSide?: SessionSide;
+  partnerSides?: SessionSide[];
   reflection?: string;
   aftercareCompleted?: string[];
 }
