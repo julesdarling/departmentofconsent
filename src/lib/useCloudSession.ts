@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { apiGetSession, apiUpdateSession } from "./sessionsApi";
+import { apiGetSession, apiUpdateSession, apiAddPartnerSide } from "./sessionsApi";
 import type { PlaySession, SessionSide } from "./storage";
 
 export function useCloudSession(token: string | undefined) {
