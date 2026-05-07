@@ -1,10 +1,11 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { Link } from "@tanstack/react-router";
 import { useProfile, emptyProfile } from "@/lib/storage";
-import { Trash2 } from "lucide-react";
+import { Trash2, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/useAuth";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({ meta: [{ title: "Profile & settings" }] }),
@@ -13,11 +14,18 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsPage() {
   const [profile, setProfile] = useProfile();
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
 
   const wipe = () => {
     if (!confirm("Erase everything stored on this device? This cannot be undone.")) return;
     localStorage.clear();
     window.location.href = "/";
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate({ to: "/auth" });
   };
 
   return (
@@ -35,6 +43,16 @@ function SettingsPage() {
           <Row label="Default aftercare" value={profile.defaultAftercare} />
           <Button asChild className="w-full rounded-full mt-2"><Link to="/onboarding">Edit profile</Link></Button>
         </Sticker>
+
+        {user && (
+          <Sticker className="space-y-2">
+            <div className="font-display text-base text-plum">Account</div>
+            <p className="text-xs text-muted-foreground">Signed in as {user.email}</p>
+            <Button variant="outline" onClick={handleLogout} className="w-full rounded-full">
+              <LogOut className="h-4 w-4 mr-1" /> Log out
+            </Button>
+          </Sticker>
+        )}
 
         <Sticker variant="coral" className="space-y-2">
           <div className="font-display text-base text-plum">Your data</div>
