@@ -1,11 +1,25 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
 import { useProfile, emptyProfile } from "@/lib/storage";
-import { Trash2, LogOut } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useAuth } from "@/lib/useAuth";
+import { useSubscription } from "@/lib/useSubscription";
+import { useServerFn } from "@tanstack/react-start";
+import { deleteOwnAccount } from "@/lib/account.functions";
+import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/settings")({
   head: () => ({ meta: [{ title: "Profile & settings" }] }),
@@ -15,7 +29,19 @@ export const Route = createFileRoute("/settings")({
 function SettingsPage() {
   const [profile, setProfile] = useProfile();
   const { signOut, user } = useAuth();
+  const { isActive } = useSubscription();
   const navigate = useNavigate();
+  const deleteFn = useServerFn(deleteOwnAccount);
+
+  const [showCancel, setShowCancel] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate({ to: "/auth" });
+  };
 
   const wipe = () => {
     if (!confirm("Erase everything stored on this device? This cannot be undone.")) return;
@@ -23,9 +49,17 @@ function SettingsPage() {
     window.location.href = "/";
   };
 
-  const handleLogout = async () => {
-    await signOut();
-    navigate({ to: "/auth" });
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await deleteFn();
+      try { localStorage.clear(); } catch { /* ignore */ }
+      await supabase.auth.signOut();
+      window.location.href = "/";
+    } catch (err) {
+      alert((err as Error).message || "Could not delete account.");
+      setDeleting(false);
+    }
   };
 
   return (
@@ -41,32 +75,118 @@ function SettingsPage() {
           <Row label="Healthcare" value={profile.healthcare} />
           <Row label="Emergency contact" value={profile.emergencyContact} />
           <Row label="Default aftercare" value={profile.defaultAftercare} />
-          <Button asChild className="w-full rounded-full mt-2"><Link to="/onboarding">Edit profile</Link></Button>
+          <div className="flex justify-center pt-2">
+            <Button asChild><Link to="/onboarding">Edit profile</Link></Button>
+          </div>
         </Sticker>
-
-        {user && (
-          <Sticker className="space-y-2">
-            <div className="font-display text-base text-plum">Account</div>
-            <p className="text-xs text-muted-foreground">Signed in as {user.email}</p>
-            <Button variant="outline" onClick={handleLogout} className="w-full rounded-full">
-              <LogOut className="h-4 w-4 mr-1" /> Log out
-            </Button>
-          </Sticker>
-        )}
 
         <Sticker variant="coral" className="space-y-2">
           <div className="font-display text-base text-plum">Your data</div>
           <p className="text-xs text-muted-foreground">
             Everything is stored on this device only. No accounts, no servers, no analytics on your sensitive content.
           </p>
-          <Button variant="outline" onClick={() => setProfile(emptyProfile)} className="w-full rounded-full">
-            Reset profile
-          </Button>
-          <Button variant="outline" onClick={wipe} className="w-full rounded-full text-destructive border-destructive/40">
-            <Trash2 className="h-4 w-4 mr-1" /> Erase everything
-          </Button>
+          <div className="flex flex-col items-center gap-2 pt-2">
+            <Button variant="outline" onClick={() => setProfile(emptyProfile)}>
+              Reset profile
+            </Button>
+            <Button variant="outline" onClick={wipe}>
+              <Trash2 className="h-4 w-4 mr-1" /> Erase device data
+            </Button>
+          </div>
         </Sticker>
+
+        {user && (
+          <Sticker className="space-y-3 text-center">
+            <div className="font-display text-base text-plum">Account</div>
+            <p className="text-xs text-muted-foreground">Signed in as {user.email}</p>
+            <div className="flex flex-col items-center gap-3 pt-2">
+              <button
+                onClick={handleLogout}
+                className="text-sm text-coral underline underline-offset-4 hover:opacity-80"
+              >
+                Log out
+              </button>
+              <button
+                onClick={() => setShowCancel(true)}
+                className="text-sm text-coral underline underline-offset-4 hover:opacity-80"
+              >
+                Cancel my subscription
+              </button>
+              <button
+                onClick={() => { setConfirmText(""); setShowDelete(true); }}
+                className="text-sm font-semibold text-destructive underline underline-offset-4 hover:opacity-80"
+              >
+                Delete my account
+              </button>
+            </div>
+          </Sticker>
+        )}
       </div>
+
+      {/* Cancel subscription walkthrough */}
+      <AlertDialog open={showCancel} onOpenChange={setShowCancel}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel your subscription</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                {isActive ? (
+                  <>
+                    <p>To cancel your subscription:</p>
+                    <ol className="list-decimal pl-5 space-y-1.5">
+                      <li>Email <span className="font-semibold">support@departmentofconsent.com</span> from the address you used to sign up.</li>
+                      <li>Include the subject line "Cancel subscription".</li>
+                      <li>We'll cancel and confirm via email within 1–2 business days.</li>
+                    </ol>
+                    <p className="text-xs text-muted-foreground">
+                      You'll keep access through the end of your current billing period.
+                    </p>
+                  </>
+                ) : (
+                  <p>You don't currently have an active subscription on this account.</p>
+                )}
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete account confirmation */}
+      <AlertDialog open={showDelete} onOpenChange={(o) => { setShowDelete(o); if (!o) setConfirmText(""); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-destructive">Delete your account?</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p>
+                  This permanently deletes your account, profile, and on-device data. Active
+                  subscriptions are not automatically refunded — cancel first if needed.
+                </p>
+                <p>Type <span className="font-mono font-bold">DELETE</span> to confirm.</p>
+                <input
+                  className="doc-input"
+                  value={confirmText}
+                  onChange={(e) => setConfirmText(e.target.value)}
+                  placeholder="DELETE"
+                />
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={confirmText !== "DELETE" || deleting}
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleting ? "Deleting…" : "Delete account"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Layout>
   );
 }

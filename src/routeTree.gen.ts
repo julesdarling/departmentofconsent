@@ -18,6 +18,7 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SessionsIndexRouteImport } from './routes/sessions.index'
 import { Route as SessionsNewRouteImport } from './routes/sessions.new'
+import { Route as SceneTokenRouteImport } from './routes/scene.$token'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as CheckoutReturnRouteImport } from './routes/checkout.return'
 import { Route as SessionsSessionIdIndexRouteImport } from './routes/sessions.$sessionId.index'
@@ -71,6 +72,11 @@ const SessionsNewRoute = SessionsNewRouteImport.update({
   path: '/sessions/new',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SceneTokenRoute = SceneTokenRouteImport.update({
+  id: '/scene/$token',
+  path: '/scene/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const JoinTokenRoute = JoinTokenRouteImport.update({
   id: '/join/$token',
   path: '/join/$token',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
+  '/scene/$token': typeof SceneTokenRoute
   '/sessions/new': typeof SessionsNewRoute
   '/sessions/': typeof SessionsIndexRoute
   '/sessions/$sessionId/aftercare': typeof SessionsSessionIdAftercareRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
+  '/scene/$token': typeof SceneTokenRoute
   '/sessions/new': typeof SessionsNewRoute
   '/sessions': typeof SessionsIndexRoute
   '/sessions/$sessionId/aftercare': typeof SessionsSessionIdAftercareRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
+  '/scene/$token': typeof SceneTokenRoute
   '/sessions/new': typeof SessionsNewRoute
   '/sessions/': typeof SessionsIndexRoute
   '/sessions/$sessionId/aftercare': typeof SessionsSessionIdAftercareRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/subscribe'
     | '/checkout/return'
     | '/join/$token'
+    | '/scene/$token'
     | '/sessions/new'
     | '/sessions/'
     | '/sessions/$sessionId/aftercare'
@@ -194,6 +204,7 @@ export interface FileRouteTypes {
     | '/subscribe'
     | '/checkout/return'
     | '/join/$token'
+    | '/scene/$token'
     | '/sessions/new'
     | '/sessions'
     | '/sessions/$sessionId/aftercare'
@@ -212,6 +223,7 @@ export interface FileRouteTypes {
     | '/subscribe'
     | '/checkout/return'
     | '/join/$token'
+    | '/scene/$token'
     | '/sessions/new'
     | '/sessions/'
     | '/sessions/$sessionId/aftercare'
@@ -231,6 +243,7 @@ export interface RootRouteChildren {
   SubscribeRoute: typeof SubscribeRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   JoinTokenRoute: typeof JoinTokenRoute
+  SceneTokenRoute: typeof SceneTokenRoute
   SessionsNewRoute: typeof SessionsNewRoute
   SessionsIndexRoute: typeof SessionsIndexRoute
   SessionsSessionIdAftercareRoute: typeof SessionsSessionIdAftercareRoute
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SessionsNewRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/scene/$token': {
+      id: '/scene/$token'
+      path: '/scene/$token'
+      fullPath: '/scene/$token'
+      preLoaderRoute: typeof SceneTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/join/$token': {
       id: '/join/$token'
       path: '/join/$token'
@@ -367,6 +387,7 @@ const rootRouteChildren: RootRouteChildren = {
   SubscribeRoute: SubscribeRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   JoinTokenRoute: JoinTokenRoute,
+  SceneTokenRoute: SceneTokenRoute,
   SessionsNewRoute: SessionsNewRoute,
   SessionsIndexRoute: SessionsIndexRoute,
   SessionsSessionIdAftercareRoute: SessionsSessionIdAftercareRoute,

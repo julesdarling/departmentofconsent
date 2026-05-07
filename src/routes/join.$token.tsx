@@ -9,6 +9,7 @@ import {
   useProfile,
   useSessionIndex,
   emptySide,
+  useRatings,
   type SessionSide,
   type Rating,
 } from "@/lib/storage";
@@ -16,6 +17,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a session" }] }),
@@ -26,6 +28,7 @@ function JoinPage() {
   const { token } = Route.useParams();
   const [profile] = useProfile();
   const [kinks] = useKinks();
+  const [savedRatings] = useRatings();
   const [, setIndex] = useSessionIndex();
   // no navigate needed – guests see a thank-you instead
   const { session, error, addPartner } = useCloudSession(token);
@@ -36,9 +39,11 @@ function JoinPage() {
 
   useEffect(() => {
     if (session && !side) {
-      setSide(session.partnerSide ?? emptySide(profile));
+      // Pre-fill with the user's saved profile + ratings if they have any
+      const initial = session.partnerSide ?? emptySide(profile, savedRatings);
+      setSide(initial);
     }
-  }, [session, side, profile]);
+  }, [session, side, profile, savedRatings]);
 
   const grouped = useMemo(() => {
     const m = new Map<string, typeof kinks>();
@@ -114,7 +119,15 @@ function JoinPage() {
           <Sticker className="text-center space-y-3">
             <h1 className="font-display text-2xl text-plum">Thank you ♡</h1>
             <p className="text-sm text-muted-foreground">
-              Your side has been shared with {ownerName}.
+              Your side has been shared with {ownerName}. Below is the full plan for the scene.
+            </p>
+            <div className="pt-1">
+              <Button asChild>
+                <Link to="/scene/$token" params={{ token }}>View & share scene recap</Link>
+              </Button>
+            </div>
+            <p className="text-[11px] text-muted-foreground">
+              The recap has its own permalink anyone in the scene can open.
             </p>
           </Sticker>
 
@@ -191,6 +204,29 @@ function JoinPage() {
             Fill out your side — they'll see what matches.
           </p>
         </Sticker>
+
+        {(session.ownerSide.hardLimits?.trim() || session.ownerSide.softLimits?.trim()) && (
+          <Sticker className="space-y-3">
+            <h2 className="font-display text-lg text-plum">
+              {session.ownerSide.name?.trim() || "Their"} limits
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              These are the limits they shared. Please respect them as you fill out your side.
+            </p>
+            {session.ownerSide.hardLimits?.trim() && (
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-no font-semibold mb-1">Hard limits</div>
+                <div className="text-sm whitespace-pre-wrap">{session.ownerSide.hardLimits}</div>
+              </div>
+            )}
+            {session.ownerSide.softLimits?.trim() && (
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-maybe font-semibold mb-1">Soft limits</div>
+                <div className="text-sm whitespace-pre-wrap">{session.ownerSide.softLimits}</div>
+              </div>
+            )}
+          </Sticker>
+        )}
 
         <Sticker variant="coral" className="space-y-3">
           <h2 className="font-display text-lg text-plum">Your side</h2>
@@ -316,9 +352,11 @@ function JoinPage() {
           <Field label="Aftercare needs"><Textarea value={side.aftercare} onChange={(e) => updateField("aftercare", e.target.value)} rows={3} /></Field>
         </Sticker>
 
-        <Button size="lg" disabled={submitting} className="w-full rounded-full font-semibold" onClick={submit}>
-          {submitting ? "Submitting..." : "Submit my side ♡"}
-        </Button>
+        <div className="flex justify-center pt-2">
+          <Button disabled={submitting} onClick={submit}>
+            {submitting ? "Submitting..." : "Submit my side ♡"}
+          </Button>
+        </div>
       </div>
     </Layout>
   );
