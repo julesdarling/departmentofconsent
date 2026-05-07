@@ -10,6 +10,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { z } from "zod";
 import { PricingCard } from "@/components/PricingCard";
+const REDIRECT_AFTER_AUTH = "/subscribe";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "Sign in — Department of Consent" }] }),
@@ -30,7 +31,7 @@ function AuthPage() {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) navigate({ to: "/onboarding" });
+      if (data.session) navigate({ to: REDIRECT_AFTER_AUTH });
     });
   }, [navigate]);
 
@@ -46,14 +47,14 @@ function AuthPage() {
         const { error } = await supabase.auth.signUp({
           email: parsed.data.email,
           password: parsed.data.password,
-          options: { emailRedirectTo: `${window.location.origin}/onboarding` },
+          options: { emailRedirectTo: `${window.location.origin}${REDIRECT_AFTER_AUTH}` },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
       } else {
         const { error } = await supabase.auth.signInWithPassword(parsed.data);
         if (error) throw error;
-        navigate({ to: "/onboarding" });
+        navigate({ to: REDIRECT_AFTER_AUTH });
       }
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Something went wrong");
@@ -65,14 +66,14 @@ function AuthPage() {
   const google = async () => {
     setBusy(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + "/onboarding",
+      redirect_uri: window.location.origin + REDIRECT_AFTER_AUTH,
     });
     if (result.error) {
       toast.error("Google sign-in failed");
       setBusy(false);
       return;
     }
-    if (!result.redirected) navigate({ to: "/onboarding" });
+    if (!result.redirected) navigate({ to: REDIRECT_AFTER_AUTH });
   };
 
   return (
@@ -101,7 +102,7 @@ function AuthPage() {
 
           <div className="flex flex-col items-center gap-3 pt-2">
             <CloudButton onClick={submit} className="cloud-btn-fluid">
-              {busy ? "..." : mode === "signin" ? "Sign in" : "Create account"}
+              {busy ? "..." : mode === "signin" ? "Sign in" : "Create account & subscribe"}
             </CloudButton>
             <CloudButton onClick={google} variant="outline" className="cloud-btn-fluid">
               Continue with Google
