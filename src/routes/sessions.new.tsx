@@ -39,6 +39,7 @@ const STEPS = [
 function NewSession() {
   const [profile] = useProfile();
   const [ratings] = useRatings();
+  const [kinks] = useKinks();
   const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
 
@@ -51,6 +52,17 @@ function NewSession() {
 
   const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => ({ ...p, [k]: v }));
+
+  const interestedKinks = useMemo(
+    () => kinks.filter((k) => ratings[k.id] === "yes" || ratings[k.id] === "maybe"),
+    [kinks, ratings]
+  );
+
+  const toggleKink = (id: string) =>
+    setSide((p) => {
+      const has = p.selectedKinks.includes(id);
+      return { ...p, selectedKinks: has ? p.selectedKinks.filter((x) => x !== id) : [...p.selectedKinks, id] };
+    });
 
   const save = async (status: "draft" | "shared" = "shared") => {
     setSaving(true);
