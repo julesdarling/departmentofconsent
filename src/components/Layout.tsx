@@ -1,6 +1,7 @@
-import { Link, useLocation } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { Menu, X, Home, ListChecks, Heart, User } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/lib/useAuth";
 
 
 export function Layout({ children, fullBleed = false }: { children: React.ReactNode; fullBleed?: boolean }) {
@@ -32,6 +33,8 @@ export function Layout({ children, fullBleed = false }: { children: React.ReactN
 }
 
 function MenuOverlay({ onClose }: { onClose: () => void }) {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
   return (
     <div
       className="fixed inset-0 z-50 bg-blush flex flex-col"
@@ -51,6 +54,21 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
         <MenuLink to="/sessions/new" onClose={onClose}>New session</MenuLink>
         <MenuLink to="/kinks" onClose={onClose}>My kinks</MenuLink>
         <MenuLink to="/onboarding" onClose={onClose}>Profile</MenuLink>
+        {user ? (
+          <button
+            onClick={async (e) => {
+              e.stopPropagation();
+              await signOut();
+              onClose();
+              navigate({ to: "/" });
+            }}
+            className="flex justify-center w-full"
+          >
+            <div className="cloud-btn cloud-btn-fluid" data-variant="outline"><span>Sign out</span></div>
+          </button>
+        ) : (
+          <MenuLink to="/auth" onClose={onClose}>Sign in</MenuLink>
+        )}
       </div>
     </div>
   );

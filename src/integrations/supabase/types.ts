@@ -56,6 +56,51 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          call_me: string
+          created_at: string
+          default_aftercare: string
+          default_safewords: string
+          dont_call_me: string
+          emergency_contact: string
+          healthcare: string
+          id: string
+          name: string
+          pronouns: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          call_me?: string
+          created_at?: string
+          default_aftercare?: string
+          default_safewords?: string
+          dont_call_me?: string
+          emergency_contact?: string
+          healthcare?: string
+          id?: string
+          name?: string
+          pronouns?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          call_me?: string
+          created_at?: string
+          default_aftercare?: string
+          default_safewords?: string
+          dont_call_me?: string
+          emergency_contact?: string
+          healthcare?: string
+          id?: string
+          name?: string
+          pronouns?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
