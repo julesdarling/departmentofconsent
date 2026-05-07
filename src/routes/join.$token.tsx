@@ -187,7 +187,7 @@ function JoinPage() {
             You've been invited to negotiate ♡
           </h1>
           <p className="text-sm text-muted-foreground">
-            {session.ownerSide.name || "Your partner"} wants to plan a scene with you on {session.date}.
+            {session.ownerSide.name || "Your play partner"} wants to plan a scene with you on {session.date}.
             Fill out your side — they'll see what matches.
           </p>
         </Sticker>
