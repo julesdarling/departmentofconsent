@@ -1,10 +1,12 @@
-import { Link } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { Menu, X, Home, ListChecks, Heart, User } from "lucide-react";
 import { useState } from "react";
 
 
 export function Layout({ children, fullBleed = false }: { children: React.ReactNode; fullBleed?: boolean }) {
   const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isHome = pathname === "/";
 
   return (
     <div className="min-h-screen grain bg-background flex flex-col">
@@ -18,11 +20,11 @@ export function Layout({ children, fullBleed = false }: { children: React.ReactN
         </button>
       </header>
 
-      <main className={fullBleed ? "flex-1" : "flex-1 max-w-2xl w-full mx-auto px-5 pt-20 pb-10"}>
+      <main className={fullBleed ? "flex-1" : `flex-1 max-w-2xl w-full mx-auto px-5 pt-20 ${isHome ? "pb-10" : "pb-28"}`}>
         {children}
       </main>
 
-      <Footer />
+      {isHome ? <Footer /> : <BottomNav />}
 
       {open && <MenuOverlay onClose={() => setOpen(false)} />}
     </div>
@@ -31,11 +33,14 @@ export function Layout({ children, fullBleed = false }: { children: React.ReactN
 
 function MenuOverlay({ onClose }: { onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-50 bg-blush flex flex-col">
+    <div
+      className="fixed inset-0 z-50 bg-blush flex flex-col"
+      onClick={onClose}
+    >
       <div className="flex justify-end p-4">
         <button
           aria-label="Close menu"
-          onClick={onClose}
+          onClick={(e) => { e.stopPropagation(); onClose(); }}
           className="w-11 h-11 rounded-full border-2 border-coral bg-blush grid place-items-center text-coral"
         >
           <X className="h-5 w-5" />
@@ -53,9 +58,40 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
 
 function MenuLink({ to, onClose, children }: { to: string; onClose: () => void; children: React.ReactNode }) {
   return (
-    <Link to={to} onClick={onClose} className="w-full max-w-sm">
-      <div className="cloud-btn" data-variant="outline"><span>{children}</span></div>
+    <Link
+      to={to}
+      onClick={(e) => { e.stopPropagation(); onClose(); }}
+      className="flex justify-center w-full"
+    >
+      <div className="cloud-btn cloud-btn-fluid" data-variant="outline"><span>{children}</span></div>
     </Link>
+  );
+}
+
+function BottomNav() {
+  const items = [
+    { to: "/", label: "Home", Icon: Home },
+    { to: "/sessions", label: "Scenes", Icon: ListChecks },
+    { to: "/kinks", label: "Kinks", Icon: Heart },
+    { to: "/onboarding", label: "Profile", Icon: User },
+  ] as const;
+  return (
+    <nav className="fixed bottom-0 inset-x-0 z-40 bg-blush border-t-2 border-coral">
+      <ul className="max-w-2xl mx-auto grid grid-cols-4">
+        {items.map(({ to, label, Icon }) => (
+          <li key={to}>
+            <Link
+              to={to}
+              className="flex flex-col items-center justify-center gap-1 py-3 text-coral text-xs"
+              activeProps={{ className: "flex flex-col items-center justify-center gap-1 py-3 text-coral text-xs font-semibold" }}
+            >
+              <Icon className="h-5 w-5" />
+              <span>{label}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
 
