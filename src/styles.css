@@ -200,6 +200,13 @@
   .cloud-btn[data-variant="outline"]:hover {
     filter: hue-rotate(120deg) saturate(1.4);
   }
+  /* Fluid variant — scales with viewport, used in the menu overlay */
+  .cloud-btn-fluid {
+    width: clamp(220px, 70vw, 420px);
+    min-width: 0;
+    padding: clamp(0.9rem, 3.2vw, 1.6rem) clamp(2rem, 6vw, 3.5rem);
+    font-size: clamp(1rem, 2.6vw, 1.4rem);
+  }
 
   .grain::before {
     content: "";
