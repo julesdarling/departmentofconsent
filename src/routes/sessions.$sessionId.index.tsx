@@ -111,13 +111,12 @@ function SessionDetail() {
         </div>
 
         {p && (
-          <Sticker variant="coral" className="space-y-2">
-            <div className="font-display text-lg text-plum">Compare sides</div>
-            <p className="text-xs text-muted-foreground">
-              {p.name || "Your partner"} has filled their side.
-            </p>
-            <Compare a={o.ratings || {}} b={p.ratings || {}} kinkMap={kinkMap} />
-          </Sticker>
+          <Compare
+            a={o.ratings || {}}
+            b={p.ratings || {}}
+            kinkMap={kinkMap}
+            partnerName={p.name || "Your partner"}
+          />
         )}
 
         <Sticker className="space-y-3">
