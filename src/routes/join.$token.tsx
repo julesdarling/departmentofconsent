@@ -28,10 +28,11 @@ function JoinPage() {
   const [kinks] = useKinks();
   const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
-  const { session, error, update } = useCloudSession(token);
+  const { session, error, addPartner } = useCloudSession(token);
 
   const [side, setSide] = useState<SessionSide | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (session && !side) {
