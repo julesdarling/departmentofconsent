@@ -332,3 +332,13 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     </div>
   );
 }
+
+function Detail({ title, value }: { title: string; value: string }) {
+  if (!value?.trim()) return null;
+  return (
+    <div className="border-b border-border/40 pb-2">
+      <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{title}</div>
+      <div className="text-sm whitespace-pre-wrap">{value}</div>
+    </div>
+  );
+}
