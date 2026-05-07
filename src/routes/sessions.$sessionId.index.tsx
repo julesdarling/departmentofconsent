@@ -184,46 +184,92 @@ function Compare({
   a,
   b,
   kinkMap,
+  partnerName,
 }: {
   a: Record<string, string>;
   b: Record<string, string>;
   kinkMap: Record<string, string>;
+  partnerName: string;
 }) {
   const allIds = Array.from(new Set([...Object.keys(a), ...Object.keys(b)]));
   const mutualYes: string[] = [];
+  const curious: string[] = []; // yes+maybe or maybe+maybe
   const conflicts: string[] = [];
   const negotiate: string[] = [];
   for (const id of allIds) {
     const ra = a[id], rb = b[id];
-    if (ra === "yes" && rb === "yes") mutualYes.push(kinkMap[id] || id);
-    else if (ra === "no" || rb === "no") conflicts.push(kinkMap[id] || id);
-    else if (ra === "maybe" || rb === "maybe") negotiate.push(kinkMap[id] || id);
+    const name = kinkMap[id] || id;
+    if (ra === "yes" && rb === "yes") mutualYes.push(name);
+    else if (ra === "no" || rb === "no") conflicts.push(name);
+    else if (
+      (ra === "yes" && rb === "maybe") ||
+      (ra === "maybe" && rb === "yes") ||
+      (ra === "maybe" && rb === "maybe")
+    ) curious.push(name);
+    else if (ra === "maybe" || rb === "maybe") negotiate.push(name);
   }
+
   return (
-    <div className="space-y-2 text-sm">
-      {mutualYes.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-yes mb-1">💚 Mutual Yes</div>
-          <div className="flex flex-wrap gap-1">
-            {mutualYes.map((n) => <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>)}
-          </div>
+    <div className="space-y-4">
+      {/* HERO: mutual yes — the positive overlap */}
+      <Sticker variant="coral" className="space-y-3 text-center">
+        <div className="text-5xl">💖</div>
+        <div className="font-display text-2xl font-semibold text-plum">
+          {mutualYes.length > 0
+            ? `${mutualYes.length} mutual yes${mutualYes.length === 1 ? "" : "es"}`
+            : "No mutual yeses yet"}
         </div>
+        <p className="text-xs text-muted-foreground">
+          You and {partnerName} both said yes to these.
+        </p>
+        {mutualYes.length > 0 && (
+          <div className="flex flex-wrap gap-2 justify-center pt-1">
+            {mutualYes.map((n) => (
+              <span
+                key={n}
+                className="text-sm font-medium bg-yes/25 text-plum px-3 py-1.5 rounded-full border border-yes/40"
+              >
+                💚 {n}
+              </span>
+            ))}
+          </div>
+        )}
+      </Sticker>
+
+      {curious.length > 0 && (
+        <Sticker className="space-y-2">
+          <div className="font-display text-lg text-plum">✨ Curious to explore together</div>
+          <p className="text-xs text-muted-foreground">
+            At least one of you is a yes, the other a maybe — worth a chat.
+          </p>
+          <div className="flex flex-wrap gap-1 pt-1">
+            {curious.map((n) => (
+              <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>
+            ))}
+          </div>
+        </Sticker>
       )}
-      {conflicts.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-no mb-1">🛑 Hard limit from one side</div>
-          <div className="flex flex-wrap gap-1">
-            {conflicts.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
-          </div>
-        </div>
-      )}
-      {negotiate.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-maybe mb-1">💛 Discuss</div>
-          <div className="flex flex-wrap gap-1">
-            {negotiate.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
-          </div>
-        </div>
+
+      {(negotiate.length > 0 || conflicts.length > 0) && (
+        <Sticker className="space-y-3">
+          <div className="font-display text-lg text-plum">Negotiate</div>
+          {negotiate.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold uppercase text-maybe mb-1">💛 Discuss</div>
+              <div className="flex flex-wrap gap-1">
+                {negotiate.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
+              </div>
+            </div>
+          )}
+          {conflicts.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold uppercase text-no mb-1">🛑 Hard limit from one side</div>
+              <div className="flex flex-wrap gap-1">
+                {conflicts.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
+              </div>
+            </div>
+          )}
+        </Sticker>
       )}
     </div>
   );
