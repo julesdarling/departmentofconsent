@@ -179,7 +179,7 @@
     font-weight: 600;
     font-size: 1.05rem;
     letter-spacing: 0.01em;
-    background-image: url("/src/assets/button_fill.svg");
+    background-image: url("/button_fill.svg");
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -189,7 +189,7 @@
     line-height: 1.1;
   }
   .cloud-btn[data-variant="outline"] {
-    background-image: url("/src/assets/button_outline.svg");
+    background-image: url("/button_outline.svg");
     color: var(--color-coral);
   }
 
