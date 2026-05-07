@@ -111,12 +111,37 @@ function SessionDetail() {
         </div>
 
         {p && (
+          <VisionOverlap
+            owner={o}
+            partner={p}
+            kinkMap={kinkMap}
+            partnerName={p.name || "Your partner"}
+          />
+        )}
+
+        {p && (
           <Compare
             a={o.ratings || {}}
             b={p.ratings || {}}
             kinkMap={kinkMap}
             partnerName={p.name || "Your partner"}
           />
+        )}
+
+        {!p && (o.vision || o.selectedKinks.length > 0) && (
+          <Sticker variant="coral" className="space-y-2">
+            <div className="font-display text-lg text-plum">Your vision for tonight</div>
+            {o.vision && <p className="text-sm whitespace-pre-wrap">{o.vision}</p>}
+            {o.selectedKinks.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {o.selectedKinks.map((id) => (
+                  <span key={id} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">
+                    {kinkMap[id] || id}
+                  </span>
+                ))}
+              </div>
+            )}
+          </Sticker>
         )}
 
         <Sticker className="space-y-3">
