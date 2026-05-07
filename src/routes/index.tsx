@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { CloudButton } from "@/components/CloudButton";
 import { useProfile } from "@/lib/storage";
+import { useAuth } from "@/lib/useAuth";
 import heroImg from "@/assets/hero.jpg";
 import wordmark from "@/assets/logo.svg";
 import iconWhip from "@/assets/icon-whip.png";
@@ -21,8 +22,9 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const [profile] = useProfile();
+  const { user } = useAuth();
   const hasProfile = !!profile.name;
-  const startTo = hasProfile ? "/sessions/new" : "/onboarding";
+  const startTo = !user ? "/auth" : hasProfile ? "/sessions/new" : "/onboarding";
 
   return (
     <Layout fullBleed>
