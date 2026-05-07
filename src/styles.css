@@ -199,11 +199,11 @@
     align-items: center;
     justify-content: center;
     gap: 0.4rem;
-    padding: 0.7rem 1.6rem;
-    min-width: 0;
+    padding: 1rem 2.25rem;
+    min-width: 220px;
     color: white;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;
     letter-spacing: 0.01em;
     background-image: url("/button_fill.svg");
     background-size: 100% 100%;
