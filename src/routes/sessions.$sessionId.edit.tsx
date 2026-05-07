@@ -86,7 +86,7 @@ function EditScene() {
         </div>
 
         <Sticker className="space-y-4">
-          <Field label="Partner name or handle">
+          <Field label="Play partner name or handle">
             <Input value={partnerHandle} onChange={(e) => setPartnerHandle(e.target.value)} />
           </Field>
           <Field label="Date of play">
