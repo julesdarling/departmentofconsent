@@ -17,7 +17,7 @@ function BottomNav() {
     { to: "/", label: "Home", Icon: Home },
     { to: "/sessions", label: "Scenes", Icon: ListChecks },
     { to: "/kinks", label: "Kinks", Icon: Heart },
-    { to: "/onboarding", label: "Profile", Icon: User },
+    { to: "/settings", label: "Profile", Icon: User },
   ] as const;
   return (
     <nav className="fixed bottom-4 left-4 right-4 z-40 bg-white rounded-full shadow-lg max-w-md mx-auto">
