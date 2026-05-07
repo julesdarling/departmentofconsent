@@ -269,23 +269,23 @@ function NewSession() {
           </Sticker>
         )}
 
-        <div className="flex justify-between gap-2">
-          <Button
-            variant="outline"
-            className="rounded-full"
-            disabled={step === 0}
-            onClick={() => setStep((s) => Math.max(0, s - 1))}
-          >
-            <ChevronLeft className="h-4 w-4 mr-1" /> Back
-          </Button>
+        <div className="flex flex-col gap-2">
           {step < STEPS.length - 1 && (
             <Button
-              className="rounded-full ml-auto"
+              className="rounded-full w-full"
               onClick={() => setStep((s) => Math.min(STEPS.length - 1, s + 1))}
             >
               Next <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           )}
+          <Button
+            variant="outline"
+            className="rounded-full w-full"
+            disabled={step === 0}
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" /> Back
+          </Button>
         </div>
       </div>
     </Layout>
