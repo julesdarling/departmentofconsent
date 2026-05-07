@@ -228,24 +228,20 @@
   .cloud-btn-outline:hover {
     filter: hue-rotate(120deg) saturate(1.4);
   }
-  .cloud-btn-lg {
-    padding: 1.1rem 2.75rem;
-    min-width: 240px;
-    font-size: 1.05rem;
+  .cloud-btn-lg,
+  .cloud-btn-cta,
+  .cloud-btn-fluid {
+    padding: 1.25rem 3rem;
+    min-width: 260px;
+    font-size: 1.15rem;
   }
   .cloud-btn-sm {
-    padding: 0.4rem 1rem;
-    font-size: 0.78rem;
+    padding: 0.5rem 1.2rem;
+    min-width: 0;
+    font-size: 0.8rem;
   }
   .cloud-btn-block {
     width: 100%;
-  }
-  /* Fluid variant — scales with viewport, used in the menu overlay */
-  .cloud-btn-fluid {
-    width: clamp(220px, 70vw, 420px);
-    min-width: 0;
-    padding: clamp(0.9rem, 3.2vw, 1.6rem) clamp(2rem, 6vw, 3.5rem);
-    font-size: clamp(1rem, 2.6vw, 1.4rem);
   }
 
   .grain::before {
