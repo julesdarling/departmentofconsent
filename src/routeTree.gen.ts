@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as KinksRouteImport } from './routes/kinks'
@@ -24,6 +25,11 @@ import { Route as SessionsSessionIdEditRouteImport } from './routes/sessions.$se
 import { Route as SessionsSessionIdAftercareRouteImport } from './routes/sessions.$sessionId.aftercare'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
+const SubscribeRoute = SubscribeRouteImport.update({
+  id: '/subscribe',
+  path: '/subscribe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -103,6 +109,7 @@ export interface FileRoutesByFullPath {
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
   '/settings': typeof SettingsRoute
+  '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/sessions/new': typeof SessionsNewRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
   '/settings': typeof SettingsRoute
+  '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/sessions/new': typeof SessionsNewRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
   '/settings': typeof SettingsRoute
+  '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/sessions/new': typeof SessionsNewRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/kinks'
     | '/onboarding'
     | '/settings'
+    | '/subscribe'
     | '/checkout/return'
     | '/join/$token'
     | '/sessions/new'
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/kinks'
     | '/onboarding'
     | '/settings'
+    | '/subscribe'
     | '/checkout/return'
     | '/join/$token'
     | '/sessions/new'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/kinks'
     | '/onboarding'
     | '/settings'
+    | '/subscribe'
     | '/checkout/return'
     | '/join/$token'
     | '/sessions/new'
@@ -203,6 +215,7 @@ export interface RootRouteChildren {
   KinksRoute: typeof KinksRoute
   OnboardingRoute: typeof OnboardingRoute
   SettingsRoute: typeof SettingsRoute
+  SubscribeRoute: typeof SubscribeRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   JoinTokenRoute: typeof JoinTokenRoute
   SessionsNewRoute: typeof SessionsNewRoute
@@ -216,6 +229,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/subscribe': {
+      id: '/subscribe'
+      path: '/subscribe'
+      fullPath: '/subscribe'
+      preLoaderRoute: typeof SubscribeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/settings': {
       id: '/settings'
       path: '/settings'
@@ -323,6 +343,7 @@ const rootRouteChildren: RootRouteChildren = {
   KinksRoute: KinksRoute,
   OnboardingRoute: OnboardingRoute,
   SettingsRoute: SettingsRoute,
+  SubscribeRoute: SubscribeRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   JoinTokenRoute: JoinTokenRoute,
   SessionsNewRoute: SessionsNewRoute,
@@ -336,3 +357,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
