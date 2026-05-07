@@ -8,10 +8,11 @@ import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
 import { Copy, Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/sessions/$sessionId/")({
   head: () => ({ meta: [{ title: "Session — Department of Consent" }] }),
-  component: SessionDetail,
+  component: () => <RequireAuth><SessionDetail /></RequireAuth>,
 });
 
 function SessionDetail() {
@@ -97,13 +98,18 @@ function SessionDetail() {
           </Button>
         </Sticker>
 
-        <div className="grid grid-cols-2 gap-3">
-          <Button asChild variant="outline" className="rounded-full">
-            <Link to="/sessions/$sessionId/scene" params={{ sessionId }}>
-              <Flame className="h-4 w-4 mr-1" /> Scene card
+        <div className="grid grid-cols-3 gap-2">
+          <Button asChild variant="outline" size="sm">
+            <Link to="/sessions/$sessionId/edit" params={{ sessionId }}>
+              Edit
             </Link>
           </Button>
-          <Button asChild variant="outline" className="rounded-full">
+          <Button asChild variant="outline" size="sm">
+            <Link to="/sessions/$sessionId/scene" params={{ sessionId }}>
+              <Flame className="h-4 w-4 mr-1" /> Scene
+            </Link>
+          </Button>
+          <Button asChild variant="outline" size="sm">
             <Link to="/sessions/$sessionId/aftercare" params={{ sessionId }}>
               <Heart className="h-4 w-4 mr-1" /> Aftercare
             </Link>

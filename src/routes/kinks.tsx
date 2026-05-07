@@ -9,9 +9,11 @@ import { Plus, X } from "lucide-react";
 import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/kinks")({
   head: () => ({ meta: [{ title: "Your kinks & limits — Department of Consent" }] }),
-  component: KinksPage,
+  component: () => <RequireAuth><KinksPage /></RequireAuth>,
 });
 
 const RATINGS: { value: Rating; label: string; cls: string }[] = [

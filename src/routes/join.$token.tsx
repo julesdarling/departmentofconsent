@@ -147,7 +147,7 @@ function JoinPage() {
             />
           </Field>
           <div className="space-y-2">
-            <Label className="font-display text-sm text-plum">Pick what you're craving tonight</Label>
+            <Label className="doc-label">Pick what you're craving tonight</Label>
             <p className="text-xs text-muted-foreground">From your kink list (yes & maybes).</p>
             <div className="flex flex-wrap gap-2 pt-1">
               {kinks
@@ -249,7 +249,7 @@ function JoinPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label className="font-display text-sm text-plum">{label}</Label>
+      <Label className="doc-label">{label}</Label>
       {children}
     </div>
   );

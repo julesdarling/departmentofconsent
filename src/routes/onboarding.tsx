@@ -9,9 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useProfile } from "@/lib/storage";
 import { useState } from "react";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/onboarding")({
   head: () => ({ meta: [{ title: "Set up your profile — Department of Consent" }] }),
-  component: Onboarding,
+  component: () => <RequireAuth><Onboarding /></RequireAuth>,
 });
 
 function Onboarding() {

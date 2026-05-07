@@ -22,9 +22,11 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/sessions/new")({
   head: () => ({ meta: [{ title: "New session — Department of Consent" }] }),
-  component: NewSession,
+  component: () => <RequireAuth><NewSession /></RequireAuth>,
 });
 
 const STEPS = [
@@ -134,7 +136,7 @@ function NewSession() {
               />
             </Field>
             <div className="space-y-2">
-              <Label className="font-display text-sm text-plum">Pick what you're craving tonight</Label>
+              <Label className="doc-label">Pick what you're craving tonight</Label>
               <p className="text-xs text-muted-foreground">
                 From your kink list (yes & maybes). Tap to add. Your partner will see what overlaps.
               </p>
@@ -293,7 +295,7 @@ function NewSession() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label className="font-display text-sm text-plum">{label}</Label>
+      <Label className="doc-label">{label}</Label>
       {children}
     </div>
   );

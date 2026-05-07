@@ -198,11 +198,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1.1rem 2.75rem;
-    min-width: 240px;
+    gap: 0.4rem;
+    padding: 0.7rem 1.6rem;
+    min-width: 0;
     color: white;
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     letter-spacing: 0.01em;
     background-image: url("/button_fill.svg");
     background-size: 100% 100%;
@@ -218,12 +219,26 @@
     filter: hue-rotate(-120deg) saturate(1.3);
     transform: translateY(-1px);
   }
-  .cloud-btn[data-variant="outline"] {
+  .cloud-btn[data-variant="outline"],
+  .cloud-btn-outline {
     background-image: url("/button_outline.svg");
     color: var(--color-coral);
   }
-  .cloud-btn[data-variant="outline"]:hover {
+  .cloud-btn[data-variant="outline"]:hover,
+  .cloud-btn-outline:hover {
     filter: hue-rotate(120deg) saturate(1.4);
+  }
+  .cloud-btn-lg {
+    padding: 1.1rem 2.75rem;
+    min-width: 240px;
+    font-size: 1.05rem;
+  }
+  .cloud-btn-sm {
+    padding: 0.4rem 1rem;
+    font-size: 0.78rem;
+  }
+  .cloud-btn-block {
+    width: 100%;
   }
   /* Fluid variant — scales with viewport, used in the menu overlay */
   .cloud-btn-fluid {

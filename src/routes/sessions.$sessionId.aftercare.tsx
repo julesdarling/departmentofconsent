@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
@@ -7,14 +7,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useCloudSession } from "@/lib/useCloudSession";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/sessions/$sessionId/aftercare")({
   head: () => ({ meta: [{ title: "Aftercare" }] }),
-  component: AftercarePage,
+  component: () => <RequireAuth><AftercarePage /></RequireAuth>,
 });
 
 function AftercarePage() {
   const { sessionId } = Route.useParams();
   const { session, update } = useCloudSession(sessionId);
+  const navigate = useNavigate();
 
   if (session === undefined) return <Layout><Sticker>Loading…</Sticker></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
@@ -63,10 +66,16 @@ function AftercarePage() {
           />
         </Sticker>
 
-        <Button onClick={() => update({ status: "completed" })} className="w-full rounded-full">
+        <Button
+          onClick={async () => {
+            await update({ status: "completed" });
+            navigate({ to: "/sessions" });
+          }}
+          className="w-full"
+        >
           Mark session completed
         </Button>
-        <Button asChild variant="outline" className="w-full rounded-full">
+        <Button asChild variant="outline" className="w-full">
           <Link to="/sessions/$sessionId" params={{ sessionId }}>← Back</Link>
         </Button>
       </div>

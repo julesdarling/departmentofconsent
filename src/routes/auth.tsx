@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { z } from "zod";
+import { PricingCard } from "@/components/PricingCard";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "Sign in — Department of Consent" }] }),
@@ -85,6 +86,8 @@ function AuthPage() {
             {mode === "signin" ? "Sign in to access your scenes." : "Sign up to save your profile and scenes."}
           </p>
         </div>
+
+        <PricingCard />
 
         <Sticker className="space-y-4">
           <div className="space-y-1.5">
