@@ -208,7 +208,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 2 && (
+        {step === 3 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-xl text-plum">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it after?">
@@ -220,7 +220,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 3 && (
+        {step === 4 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-xl text-plum">For tonight</h2>
             <p className="text-xs text-muted-foreground">
@@ -252,7 +252,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 4 && (
+        {step === 5 && (
           <Sticker className="space-y-3 text-center">
             <h2 className="font-display text-2xl text-plum">All set ♡</h2>
             <p className="text-sm text-muted-foreground">
