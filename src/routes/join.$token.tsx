@@ -77,10 +77,7 @@ function JoinPage() {
     if (!side) return;
     setSubmitting(true);
     try {
-      await update({
-        partner_side: { ...side, filledAt: new Date().toISOString() },
-        status: "agreed",
-      });
+      await addPartner({ ...side, filledAt: new Date().toISOString() });
       setIndex((prev) =>
         prev.some((s) => s.shareToken === token)
           ? prev
@@ -96,11 +93,28 @@ function JoinPage() {
               },
             ]
       );
-      navigate({ to: "/sessions/$sessionId", params: { sessionId: token } });
+      setSubmitted(true);
+      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
       setSubmitting(false);
     }
   };
+
+  if (submitted) {
+    return (
+      <Layout>
+        <Sticker className="text-center space-y-3">
+          <h1 className="font-display text-2xl text-plum">Thank you ♡</h1>
+          <p className="text-sm text-muted-foreground">
+            Your side has been shared with {session.ownerSide.name || "the creator"}.
+          </p>
+          <p className="text-xs text-muted-foreground">
+            You can close this tab — they'll see your responses next time they open the session.
+          </p>
+        </Sticker>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
