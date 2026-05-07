@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { useAuth } from "@/lib/useAuth";
@@ -7,7 +7,6 @@ export function useSubscription() {
   const { user, loading: authLoading } = useAuth();
   const [checkedUserId, setCheckedUserId] = useState<string | null>(null);
   const [isActive, setIsActive] = useState(false);
-  const fetchingFor = useRef<string | null>(null);
 
   useEffect(() => {
     if (authLoading) return;
@@ -16,8 +15,6 @@ export function useSubscription() {
       setCheckedUserId("__none__");
       return;
     }
-    if (fetchingFor.current === user.id) return;
-    fetchingFor.current = user.id;
     let cancelled = false;
     const fetchSub = async () => {
       const { data } = await supabase
@@ -56,9 +53,6 @@ export function useSubscription() {
     };
   }, [user, authLoading]);
 
-  // Synchronously loading when: auth still loading, OR we have a user but
-  // haven't completed a fetch for THIS user id yet. Prevents the flash where
-  // a freshly-authenticated user briefly looks like an unsubscribed one.
   const loading = authLoading || (!!user && checkedUserId !== user.id);
 
   return { isActive, loading };
