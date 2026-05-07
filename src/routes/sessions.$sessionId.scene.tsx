@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useSessions } from "@/lib/storage";
+import { useCloudSession } from "@/lib/useCloudSession";
 import { Phone } from "lucide-react";
 
 export const Route = createFileRoute("/sessions/$sessionId/scene")({
@@ -12,9 +12,9 @@ export const Route = createFileRoute("/sessions/$sessionId/scene")({
 
 function ScenePage() {
   const { sessionId } = Route.useParams();
-  const [sessions] = useSessions();
-  const session = sessions.find((s) => s.id === sessionId);
+  const { session } = useCloudSession(sessionId);
 
+  if (session === undefined) return <Layout><Sticker>Loading…</Sticker></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
 
   const o = session.ownerSide;
@@ -33,7 +33,7 @@ function ScenePage() {
         </Sticker>
 
         {o.hardLimits && (
-          <Sticker className="border-no" >
+          <Sticker className="border-no">
             <div className="text-[10px] uppercase tracking-wider text-no font-bold mb-1">Hard limits</div>
             <div className="text-base whitespace-pre-wrap font-semibold">{o.hardLimits}</div>
           </Sticker>

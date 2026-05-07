@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useSessions } from "@/lib/storage";
+import { useCloudSession } from "@/lib/useCloudSession";
 
 export const Route = createFileRoute("/sessions/$sessionId/aftercare")({
   head: () => ({ meta: [{ title: "Aftercare" }] }),
@@ -14,9 +14,9 @@ export const Route = createFileRoute("/sessions/$sessionId/aftercare")({
 
 function AftercarePage() {
   const { sessionId } = Route.useParams();
-  const [sessions, setSessions] = useSessions();
-  const session = sessions.find((s) => s.id === sessionId);
+  const { session, update } = useCloudSession(sessionId);
 
+  if (session === undefined) return <Layout><Sticker>Loading…</Sticker></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
 
   const items = session.ownerSide.aftercare
@@ -26,26 +26,10 @@ function AftercarePage() {
   const completed = session.aftercareCompleted ?? [];
 
   const toggle = (item: string) => {
-    setSessions((p) =>
-      p.map((s) =>
-        s.id === sessionId
-          ? {
-              ...s,
-              aftercareCompleted: completed.includes(item)
-                ? completed.filter((c) => c !== item)
-                : [...completed, item],
-            }
-          : s
-      )
-    );
-  };
-
-  const updateReflection = (text: string) => {
-    setSessions((p) => p.map((s) => (s.id === sessionId ? { ...s, reflection: text } : s)));
-  };
-
-  const markCompleted = () => {
-    setSessions((p) => p.map((s) => (s.id === sessionId ? { ...s, status: "completed" } : s)));
+    const next = completed.includes(item)
+      ? completed.filter((c) => c !== item)
+      : [...completed, item];
+    update({ aftercare_completed: next });
   };
 
   return (
@@ -71,11 +55,17 @@ function AftercarePage() {
 
         <Sticker variant="coral" className="space-y-2">
           <Label className="font-display text-base text-plum">Private reflection</Label>
-          <p className="text-xs text-muted-foreground">Just for you. How was it? What to remember next time?</p>
-          <Textarea value={session.reflection ?? ""} onChange={(e) => updateReflection(e.target.value)} rows={6} />
+          <p className="text-xs text-muted-foreground">How was it? What to remember next time?</p>
+          <Textarea
+            value={session.reflection ?? ""}
+            onChange={(e) => update({ reflection: e.target.value })}
+            rows={6}
+          />
         </Sticker>
 
-        <Button onClick={markCompleted} className="w-full rounded-full">Mark session completed</Button>
+        <Button onClick={() => update({ status: "completed" })} className="w-full rounded-full">
+          Mark session completed
+        </Button>
         <Button asChild variant="outline" className="w-full rounded-full">
           <Link to="/sessions/$sessionId" params={{ sessionId }}>← Back</Link>
         </Button>

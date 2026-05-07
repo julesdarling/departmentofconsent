@@ -6,15 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  useSessions,
   useProfile,
+  useSessionIndex,
   emptySide,
-  getParticipantId,
   type SessionSide,
   type Rating,
 } from "@/lib/storage";
 import { useEffect, useMemo, useState } from "react";
 import { useKinks } from "@/lib/storage";
+import { useCloudSession } from "@/lib/useCloudSession";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/join/$token")({
@@ -24,22 +24,18 @@ export const Route = createFileRoute("/join/$token")({
 
 function JoinPage() {
   const { token } = Route.useParams();
-  const [sessions, setSessions] = useSessions();
   const [profile] = useProfile();
   const [kinks] = useKinks();
+  const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
+  const { session, error, update } = useCloudSession(token);
 
-  const session = sessions.find((s) => s.shareToken === token);
   const [side, setSide] = useState<SessionSide | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (session && !side) {
-      // existing partner side or fresh
-      if (session.partnerSide && session.partnerSide.participantId === getParticipantId()) {
-        setSide(session.partnerSide);
-      } else {
-        setSide(emptySide(profile));
-      }
+      setSide(session.partnerSide ?? emptySide(profile));
     }
   }, [session, side, profile]);
 
@@ -52,15 +48,17 @@ function JoinPage() {
     return Array.from(m.entries());
   }, [kinks]);
 
+  if (session === undefined) return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
+
   if (!session) {
     return (
       <Layout>
         <Sticker className="text-center space-y-3">
           <h1 className="font-display text-2xl text-plum">Session not found</h1>
           <p className="text-sm text-muted-foreground">
-            This link may have been opened on a different device than the one that created the session.
-            Right now sessions live on each device, so the host needs to open this link on their phone, or you both need an account (coming soon).
+            This invite link doesn't match anything. Ask your partner to share it again.
           </p>
+          {error && <p className="text-xs text-muted-foreground">{error}</p>}
         </Sticker>
       </Layout>
     );
@@ -68,21 +66,39 @@ function JoinPage() {
 
   if (!side) return null;
 
-  const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
+  const updateField = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => (p ? { ...p, [k]: v } : p));
 
   const setRating = (id: string, r: Rating) =>
     setSide((p) => (p ? { ...p, ratings: { ...p.ratings, [id]: r } } : p));
 
-  const submit = () => {
-    setSessions((prev) =>
-      prev.map((s) =>
-        s.shareToken === token
-          ? { ...s, partnerSide: { ...side, filledAt: new Date().toISOString() }, status: "agreed" }
-          : s
-      )
-    );
-    navigate({ to: "/sessions/$sessionId", params: { sessionId: session.id } });
+  const submit = async () => {
+    if (!side) return;
+    setSubmitting(true);
+    try {
+      await update({
+        partner_side: { ...side, filledAt: new Date().toISOString() },
+        status: "agreed",
+      });
+      setIndex((prev) =>
+        prev.some((s) => s.shareToken === token)
+          ? prev
+          : [
+              ...prev,
+              {
+                id: session.id,
+                shareToken: token,
+                partnerHandle: session.ownerSide.name || "Invite",
+                date: session.date,
+                createdAt: new Date().toISOString(),
+                role: "partner",
+              },
+            ]
+      );
+      navigate({ to: "/sessions/$sessionId", params: { sessionId: token } });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -101,37 +117,37 @@ function JoinPage() {
         <Sticker variant="coral" className="space-y-3">
           <h2 className="font-display text-lg text-plum">Your side</h2>
           <Field label="Your name / handle">
-            <Input value={side.name} onChange={(e) => update("name", e.target.value)} />
+            <Input value={side.name} onChange={(e) => updateField("name", e.target.value)} />
           </Field>
           <Field label="Pronouns">
-            <Input value={side.pronouns} onChange={(e) => update("pronouns", e.target.value)} />
+            <Input value={side.pronouns} onChange={(e) => updateField("pronouns", e.target.value)} />
           </Field>
           <Field label="Healthcare?">
-            <Input value={side.healthcare} onChange={(e) => update("healthcare", e.target.value)} />
+            <Input value={side.healthcare} onChange={(e) => updateField("healthcare", e.target.value)} />
           </Field>
           <Field label="Emergency contact">
-            <Textarea value={side.emergencyContact} onChange={(e) => update("emergencyContact", e.target.value)} rows={2} />
+            <Textarea value={side.emergencyContact} onChange={(e) => updateField("emergencyContact", e.target.value)} rows={2} />
           </Field>
           <Field label="Medical concerns">
-            <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} />
+            <Textarea value={side.medicalConcerns} onChange={(e) => updateField("medicalConcerns", e.target.value)} rows={2} />
           </Field>
           <Field label="Substances">
-            <Textarea value={side.substances} onChange={(e) => update("substances", e.target.value)} rows={2} />
+            <Textarea value={side.substances} onChange={(e) => updateField("substances", e.target.value)} rows={2} />
           </Field>
         </Sticker>
 
         <Sticker className="space-y-3">
           <h2 className="font-display text-lg text-plum">The scene</h2>
-          <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => update("callMe", e.target.value)} /></Field>
-          <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} /></Field>
-          <Field label="Intentions / how you want to feel"><Textarea value={side.intentions} onChange={(e) => update("intentions", e.target.value)} rows={3} /></Field>
-          <Field label="Privacy preferences"><Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={3} /></Field>
-          <Field label="Penetrative sex?"><Textarea value={side.penetrativeSex} onChange={(e) => update("penetrativeSex", e.target.value)} rows={2} /></Field>
+          <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => updateField("callMe", e.target.value)} /></Field>
+          <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => updateField("dontCallMe", e.target.value)} /></Field>
+          <Field label="Intentions / how you want to feel"><Textarea value={side.intentions} onChange={(e) => updateField("intentions", e.target.value)} rows={3} /></Field>
+          <Field label="Privacy preferences"><Textarea value={side.privacy} onChange={(e) => updateField("privacy", e.target.value)} rows={3} /></Field>
+          <Field label="Penetrative sex?"><Textarea value={side.penetrativeSex} onChange={(e) => updateField("penetrativeSex", e.target.value)} rows={2} /></Field>
         </Sticker>
 
         <Sticker variant="coral" className="space-y-2">
           <h2 className="font-display text-lg text-plum">Your safewords</h2>
-          <Textarea value={side.safewords} onChange={(e) => update("safewords", e.target.value)} rows={10} className="font-mono text-xs" />
+          <Textarea value={side.safewords} onChange={(e) => updateField("safewords", e.target.value)} rows={10} className="font-mono text-xs" />
         </Sticker>
 
         <Sticker className="space-y-3">
@@ -167,14 +183,14 @@ function JoinPage() {
         </Sticker>
 
         <Sticker variant="coral" className="space-y-3">
-          <Field label="Hard limits"><Textarea value={side.hardLimits} onChange={(e) => update("hardLimits", e.target.value)} rows={2} /></Field>
-          <Field label="Soft limits"><Textarea value={side.softLimits} onChange={(e) => update("softLimits", e.target.value)} rows={2} /></Field>
-          <Field label="Enthusiastic Yes"><Textarea value={side.yesList} onChange={(e) => update("yesList", e.target.value)} rows={2} /></Field>
-          <Field label="Aftercare needs"><Textarea value={side.aftercare} onChange={(e) => update("aftercare", e.target.value)} rows={3} /></Field>
+          <Field label="Hard limits"><Textarea value={side.hardLimits} onChange={(e) => updateField("hardLimits", e.target.value)} rows={2} /></Field>
+          <Field label="Soft limits"><Textarea value={side.softLimits} onChange={(e) => updateField("softLimits", e.target.value)} rows={2} /></Field>
+          <Field label="Enthusiastic Yes"><Textarea value={side.yesList} onChange={(e) => updateField("yesList", e.target.value)} rows={2} /></Field>
+          <Field label="Aftercare needs"><Textarea value={side.aftercare} onChange={(e) => updateField("aftercare", e.target.value)} rows={3} /></Field>
         </Sticker>
 
-        <Button size="lg" className="w-full rounded-full font-semibold" onClick={submit}>
-          Submit my side ♡
+        <Button size="lg" disabled={submitting} className="w-full rounded-full font-semibold" onClick={submit}>
+          {submitting ? "Submitting..." : "Submit my side ♡"}
         </Button>
       </div>
     </Layout>
