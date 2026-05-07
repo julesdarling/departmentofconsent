@@ -137,6 +137,55 @@ function JoinPage() {
         </Sticker>
 
         <Sticker className="space-y-3">
+          <h2 className="font-display text-lg text-plum">Tonight's vision</h2>
+          <Field label="What are you imagining for this scene?">
+            <Textarea
+              value={side.vision}
+              onChange={(e) => updateField("vision", e.target.value)}
+              rows={5}
+              placeholder="Set the mood in your own words…"
+            />
+          </Field>
+          <div className="space-y-2">
+            <Label className="font-display text-sm text-plum">Pick what you're craving tonight</Label>
+            <p className="text-xs text-muted-foreground">From your kink list (yes & maybes).</p>
+            <div className="flex flex-wrap gap-2 pt-1">
+              {kinks
+                .filter((k) => side.ratings[k.id] === "yes" || side.ratings[k.id] === "maybe")
+                .map((k) => {
+                  const selected = side.selectedKinks.includes(k.id);
+                  return (
+                    <button
+                      key={k.id}
+                      type="button"
+                      onClick={() =>
+                        setSide((p) =>
+                          p
+                            ? {
+                                ...p,
+                                selectedKinks: selected
+                                  ? p.selectedKinks.filter((x) => x !== k.id)
+                                  : [...p.selectedKinks, k.id],
+                              }
+                            : p
+                        )
+                      }
+                      className={cn(
+                        "text-sm px-3 py-1.5 rounded-full border-2 transition",
+                        selected
+                          ? "bg-yes/30 border-yes text-plum font-semibold"
+                          : "border-border/60 text-muted-foreground"
+                      )}
+                    >
+                      {selected ? "✓ " : "+ "}{k.name}
+                    </button>
+                  );
+                })}
+            </div>
+          </div>
+        </Sticker>
+
+        <Sticker className="space-y-3">
           <h2 className="font-display text-lg text-plum">The scene</h2>
           <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => updateField("callMe", e.target.value)} /></Field>
           <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => updateField("dontCallMe", e.target.value)} /></Field>
