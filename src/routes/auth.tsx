@@ -102,14 +102,18 @@ function AuthPage() {
       <div className="space-y-6">
         <div className="text-center pt-2">
           <h1 className="font-display text-5xl text-foreground tracking-tight">
-            {mode === "signin" ? "Welcome back" : "Create your account"}
+            {mode === "signin" ? "Welcome back" : mode === "signup" ? "Create your account" : "Reset password"}
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
-            {mode === "signin" ? "Sign in to access your scenes." : "Sign up to save your profile and scenes."}
+            {mode === "signin"
+              ? "Sign in to access your scenes."
+              : mode === "signup"
+                ? "Sign up to save your profile and scenes."
+                : "Enter your email and we'll send you a reset link."}
           </p>
         </div>
 
-        <PricingCard />
+        {mode !== "forgot" && <PricingCard />}
 
         <Sticker className="space-y-4">
           <div className="space-y-1.5">
