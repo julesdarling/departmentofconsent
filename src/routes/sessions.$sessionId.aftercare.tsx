@@ -7,9 +7,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useCloudSession } from "@/lib/useCloudSession";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/sessions/$sessionId/aftercare")({
   head: () => ({ meta: [{ title: "Aftercare" }] }),
-  component: AftercarePage,
+  component: () => <RequireAuth><AftercarePage /></RequireAuth>,
 });
 
 function AftercarePage() {

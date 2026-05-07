@@ -8,10 +8,11 @@ import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
 import { Copy, Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/sessions/$sessionId/")({
   head: () => ({ meta: [{ title: "Session — Department of Consent" }] }),
-  component: SessionDetail,
+  component: () => <RequireAuth><SessionDetail /></RequireAuth>,
 });
 
 function SessionDetail() {

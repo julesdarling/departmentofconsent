@@ -5,9 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { Phone } from "lucide-react";
 
+import { RequireAuth } from "@/components/RequireAuth";
+
 export const Route = createFileRoute("/sessions/$sessionId/scene")({
   head: () => ({ meta: [{ title: "In-scene reference" }] }),
-  component: ScenePage,
+  component: () => <RequireAuth><ScenePage /></RequireAuth>,
 });
 
 function ScenePage() {
