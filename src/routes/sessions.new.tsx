@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,15 @@ import { Progress } from "@/components/ui/progress";
 import {
   useProfile,
   useRatings,
-  useSessions,
+  useSessionIndex,
   newSession,
   type SessionSide,
 } from "@/lib/storage";
+import { Link } from "@tanstack/react-router";
+import { apiCreateSession } from "@/lib/sessionsApi";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/sessions/new")({
   head: () => ({ meta: [{ title: "New session — Department of Consent" }] }),
@@ -33,7 +36,7 @@ const STEPS = [
 function NewSession() {
   const [profile] = useProfile();
   const [ratings] = useRatings();
-  const [, setSessions] = useSessions();
+  const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
 
   const [session] = useState(() => newSession(profile, ratings));
@@ -41,20 +44,38 @@ function NewSession() {
   const [date, setDate] = useState(session.date);
   const [side, setSide] = useState<SessionSide>(session.ownerSide);
   const [step, setStep] = useState(0);
+  const [saving, setSaving] = useState(false);
 
   const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => ({ ...p, [k]: v }));
 
-  const save = (status: "draft" | "shared" = "shared") => {
-    const final = {
-      ...session,
-      partnerHandle,
-      date,
-      status,
-      ownerSide: { ...side, filledAt: new Date().toISOString() },
-    };
-    setSessions((p) => [...p, final]);
-    navigate({ to: "/sessions/$sessionId", params: { sessionId: final.id } });
+  const save = async (status: "draft" | "shared" = "shared") => {
+    setSaving(true);
+    try {
+      const created = await apiCreateSession({
+        shareToken: session.shareToken,
+        partnerHandle,
+        date,
+        status,
+        ownerSide: { ...side, filledAt: new Date().toISOString() },
+      });
+      setIndex((p) => [
+        ...p,
+        {
+          id: created.id,
+          shareToken: created.shareToken,
+          partnerHandle: created.partnerHandle,
+          date: created.date,
+          createdAt: created.createdAt,
+          role: "owner",
+        },
+      ]);
+      navigate({ to: "/sessions/$sessionId", params: { sessionId: created.shareToken } });
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not save session");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const pct = ((step + 1) / STEPS.length) * 100;
@@ -176,10 +197,10 @@ function NewSession() {
             <p className="text-sm text-muted-foreground">
               Save your side and get a share link + QR for {partnerHandle || "your partner"} to fill out theirs.
             </p>
-            <Button size="lg" className="w-full rounded-full font-semibold" onClick={() => save("shared")}>
-              Save & get share link
+            <Button size="lg" disabled={saving} className="w-full rounded-full font-semibold" onClick={() => save("shared")}>
+              {saving ? "Saving..." : "Save & get share link"}
             </Button>
-            <Button size="lg" variant="outline" className="w-full rounded-full" onClick={() => save("draft")}>
+            <Button size="lg" disabled={saving} variant="outline" className="w-full rounded-full" onClick={() => save("draft")}>
               Save as draft
             </Button>
           </Sticker>
