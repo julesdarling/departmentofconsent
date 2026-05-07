@@ -9,6 +9,8 @@ import iconWhip from "@/assets/icon-whip.png";
 import iconHearts from "@/assets/icon-hearts.png";
 import iconChecklist from "@/assets/icon-checklist.png";
 import iconBunnies from "@/assets/icon-bunnies.png";
+import iconStep1 from "@/assets/icon-step1.png";
+import iconStep2 from "@/assets/icon-step2.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
