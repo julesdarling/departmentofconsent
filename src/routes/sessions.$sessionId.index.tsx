@@ -120,14 +120,13 @@ function SessionDetail() {
         {/* Visions per participant */}
         <Sticker variant="coral" className="space-y-4">
           <div className="text-center">
-            <div className="text-4xl">✨</div>
             <div className="font-display text-2xl font-semibold text-plum">Tonight's vision</div>
           </div>
           <VisionBlock name={`${ownerName}'s vision for the night`} side={o} kinkMap={kinkMap} />
           {partners.map((ps, i) => (
             <VisionBlock
               key={i}
-              name={`${ps.name || `User ${i + 2}`}'s vision for the night`}
+              name={`${(ps.name?.trim() || `Partner ${i + 1}`)}'s vision for the night`}
               side={ps}
               kinkMap={kinkMap}
             />
