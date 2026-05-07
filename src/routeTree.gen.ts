@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as KinksRouteImport } from './routes/kinks'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -33,6 +34,11 @@ const SubscribeRoute = SubscribeRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/subscribe': typeof SubscribeRoute
   '/checkout/return': typeof CheckoutReturnRoute
@@ -162,6 +171,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/kinks'
     | '/onboarding'
+    | '/reset-password'
     | '/settings'
     | '/subscribe'
     | '/checkout/return'
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/kinks'
     | '/onboarding'
+    | '/reset-password'
     | '/settings'
     | '/subscribe'
     | '/checkout/return'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/kinks'
     | '/onboarding'
+    | '/reset-password'
     | '/settings'
     | '/subscribe'
     | '/checkout/return'
@@ -214,6 +226,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   KinksRoute: typeof KinksRoute
   OnboardingRoute: typeof OnboardingRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
   SubscribeRoute: typeof SubscribeRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
@@ -241,6 +254,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -342,6 +362,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   KinksRoute: KinksRoute,
   OnboardingRoute: OnboardingRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
   SubscribeRoute: SubscribeRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,

@@ -24,7 +24,7 @@ const schema = z.object({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
@@ -34,6 +34,27 @@ function AuthPage() {
       if (data.session) navigate({ to: REDIRECT_AFTER_AUTH });
     });
   }, [navigate]);
+
+  const sendReset = async () => {
+    const emailParsed = z.string().trim().email().max(255).safeParse(email);
+    if (!emailParsed.success) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(emailParsed.data, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (error) throw error;
+      toast.success("Password reset email sent. Check your inbox.");
+      setMode("signin");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Could not send reset email");
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const submit = async () => {
     const parsed = schema.safeParse({ email, password });
@@ -81,49 +102,76 @@ function AuthPage() {
       <div className="space-y-6">
         <div className="text-center pt-2">
           <h1 className="font-display text-5xl text-foreground tracking-tight">
-            {mode === "signin" ? "Welcome back" : "Create your account"}
+            {mode === "signin" ? "Welcome back" : mode === "signup" ? "Create your account" : "Reset password"}
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
-            {mode === "signin" ? "Sign in to access your scenes." : "Sign up to save your profile and scenes."}
+            {mode === "signin"
+              ? "Sign in to access your scenes."
+              : mode === "signup"
+                ? "Sign up to save your profile and scenes."
+                : "Enter your email and we'll send you a reset link."}
           </p>
         </div>
 
-        <PricingCard />
+        {mode !== "forgot" && <PricingCard />}
 
         <Sticker className="space-y-4">
           <div className="space-y-1.5">
             <Label className="doc-label">Email</Label>
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" />
           </div>
-          <div className="space-y-1.5">
-            <Label className="doc-label">Password</Label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
-          </div>
+          {mode !== "forgot" && (
+            <div className="space-y-1.5">
+              <Label className="doc-label">Password</Label>
+              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+            </div>
+          )}
 
           <div className="flex flex-col items-center gap-3 pt-2">
-            <CloudButton onClick={submit} className="cloud-btn-fluid">
-              {busy ? "..." : mode === "signin" ? "Sign in" : "Create account & subscribe"}
-            </CloudButton>
-            <CloudButton onClick={google} variant="outline" className="cloud-btn-fluid">
-              Continue with Google
-            </CloudButton>
+            {mode === "forgot" ? (
+              <CloudButton onClick={sendReset} className="cloud-btn-fluid">
+                {busy ? "..." : "Send reset link"}
+              </CloudButton>
+            ) : (
+              <>
+                <CloudButton onClick={submit} className="cloud-btn-fluid">
+                  {busy ? "..." : mode === "signin" ? "Sign in" : "Create account & subscribe"}
+                </CloudButton>
+                <CloudButton onClick={google} variant="outline" className="cloud-btn-fluid">
+                  Continue with Google
+                </CloudButton>
+              </>
+            )}
           </div>
 
-          <div className="text-center text-sm pt-2">
-            {mode === "signin" ? (
+          <div className="text-center text-sm pt-2 space-y-1">
+            {mode === "signin" && (
               <>
-                New here?{" "}
-                <button className="underline text-coral" onClick={() => setMode("signup")}>
-                  Create an account
-                </button>
+                <div>
+                  New here?{" "}
+                  <button className="underline text-coral" onClick={() => setMode("signup")}>
+                    Create an account
+                  </button>
+                </div>
+                <div>
+                  <button className="underline text-coral text-xs" onClick={() => setMode("forgot")}>
+                    Forgot password?
+                  </button>
+                </div>
               </>
-            ) : (
+            )}
+            {mode === "signup" && (
               <>
                 Have an account?{" "}
                 <button className="underline text-coral" onClick={() => setMode("signin")}>
                   Sign in
                 </button>
               </>
+            )}
+            {mode === "forgot" && (
+              <button className="underline text-coral" onClick={() => setMode("signin")}>
+                ← Back to sign in
+              </button>
             )}
           </div>
           <div className="text-center text-xs text-muted-foreground">
