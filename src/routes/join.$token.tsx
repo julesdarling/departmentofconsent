@@ -197,6 +197,29 @@ function JoinPage() {
           </p>
         </Sticker>
 
+        {(session.ownerSide.hardLimits?.trim() || session.ownerSide.softLimits?.trim()) && (
+          <Sticker className="space-y-3">
+            <h2 className="font-display text-lg text-plum">
+              {session.ownerSide.name?.trim() || "Their"} limits
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              These are the limits they shared. Please respect them as you fill out your side.
+            </p>
+            {session.ownerSide.hardLimits?.trim() && (
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-no font-semibold mb-1">Hard limits</div>
+                <div className="text-sm whitespace-pre-wrap">{session.ownerSide.hardLimits}</div>
+              </div>
+            )}
+            {session.ownerSide.softLimits?.trim() && (
+              <div>
+                <div className="text-[10px] uppercase tracking-wider text-maybe font-semibold mb-1">Soft limits</div>
+                <div className="text-sm whitespace-pre-wrap">{session.ownerSide.softLimits}</div>
+              </div>
+            )}
+          </Sticker>
+        )}
+
         <Sticker variant="coral" className="space-y-3">
           <h2 className="font-display text-lg text-plum">Your side</h2>
           <Field label="Your name / handle">
