@@ -15,6 +15,7 @@ export function useSubscription() {
       return;
     }
     let cancelled = false;
+    setLoading(true);
     const fetchSub = async () => {
       const { data } = await supabase
         .from("subscriptions")
