@@ -83,7 +83,7 @@ function SessionDetail() {
         </div>
 
         <Sticker className="text-center space-y-3">
-          <div className="font-display text-lg text-plum">Share with your partner</div>
+          <div className="font-display text-lg text-plum">Share with your play partner</div>
           <div className="flex justify-center bg-card p-3 rounded-xl">
             <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
           </div>
@@ -92,11 +92,13 @@ function SessionDetail() {
             {copied ? "Copied!" : shareUrl}
           </button>
           <p className="text-xs text-muted-foreground">
-            Anyone with this link can fill out the partner side. They'll see your side once they submit.
+            Anyone with this link can fill out the play partner side. They'll see your side once they submit.
           </p>
-          <Button variant="ghost" size="sm" className="rounded-full text-xs" onClick={refresh}>
-            <RefreshCw className="h-3 w-3 mr-1" /> Check for partner's reply
-          </Button>
+          <div className="flex justify-center pt-2">
+            <Button variant="outline" size="sm" onClick={refresh}>
+              <RefreshCw className="h-3 w-3 mr-1" /> Check for play partner's reply
+            </Button>
+          </div>
         </Sticker>
 
         <div className="grid grid-cols-3 gap-2">
@@ -126,7 +128,7 @@ function SessionDetail() {
           {partners.map((ps, i) => (
             <VisionBlock
               key={i}
-              name={`${(ps.name?.trim() || `Partner ${i + 1}`)}'s vision for the night`}
+              name={`${(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the night`}
               side={ps}
               kinkMap={kinkMap}
             />
@@ -139,7 +141,7 @@ function SessionDetail() {
             a={o.ratings || {}}
             b={ps.ratings || {}}
             kinkMap={kinkMap}
-            partnerName={ps.name || `User ${i + 2}`}
+            partnerName={ps.name || `Play partner ${i + 1}`}
           />
         ))}
 
@@ -186,12 +188,11 @@ function SessionDetail() {
           <SideDetail title="Brainstorm" value={o.brainstorm} />
         </Sticker>
 
-        <button
-          onClick={remove}
-          className="w-full bg-white text-destructive border-2 border-destructive/40 hover:bg-destructive/5 transition px-4 py-3 font-semibold text-sm flex items-center justify-center gap-2"
-        >
-          <Trash2 className="h-4 w-4" /> Delete session
-        </button>
+        <div className="flex justify-center pt-2">
+          <Button variant="outline" onClick={remove}>
+            <Trash2 className="h-4 w-4 mr-1" /> Delete session
+          </Button>
+        </div>
       </div>
     </Layout>
   );

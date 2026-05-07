@@ -57,7 +57,7 @@ function JoinPage() {
         <Sticker className="text-center space-y-3">
           <h1 className="font-display text-2xl text-plum">Session not found</h1>
           <p className="text-sm text-muted-foreground">
-            This invite link doesn't match anything. Ask your partner to share it again.
+            This invite link doesn't match anything. Ask your play partner to share it again.
           </p>
           {error && <p className="text-xs text-muted-foreground">{error}</p>}
         </Sticker>
@@ -101,17 +101,80 @@ function JoinPage() {
   };
 
   if (submitted) {
+    const o = session.ownerSide;
+    const ownerName = o.name?.trim() || "the creator";
+    const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
+    const yesItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
+    const maybeItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
+    const noItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "no").map(([id]) => kinkMap[id] || id);
+
     return (
       <Layout>
-        <Sticker className="text-center space-y-3">
-          <h1 className="font-display text-2xl text-plum">Thank you ♡</h1>
-          <p className="text-sm text-muted-foreground">
-            Your side has been shared with {session.ownerSide.name || "the creator"}.
-          </p>
-          <p className="text-xs text-muted-foreground">
-            You can close this tab — they'll see your responses next time they open the session.
-          </p>
-        </Sticker>
+        <div className="space-y-5">
+          <Sticker className="text-center space-y-3">
+            <h1 className="font-display text-2xl text-plum">Thank you ♡</h1>
+            <p className="text-sm text-muted-foreground">
+              Your side has been shared with {ownerName}.
+            </p>
+          </Sticker>
+
+          {(o.vision || (o.selectedKinks && o.selectedKinks.length > 0)) && (
+            <Sticker variant="coral" className="space-y-3">
+              <div className="text-center font-display text-2xl font-semibold text-plum">Tonight's vision</div>
+              <div className="bg-card/60 rounded-xl p-3 space-y-2">
+                <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{ownerName}'s vision for the night</div>
+                {o.vision && <p className="text-sm whitespace-pre-wrap">{o.vision}</p>}
+                {o.selectedKinks?.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {o.selectedKinks.map((id) => (
+                      <span key={id} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{kinkMap[id] || id}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Sticker>
+          )}
+
+          <Sticker className="space-y-3">
+            <div className="font-display text-lg text-plum">{ownerName}'s side</div>
+            <Detail title="Setting" value={o.setting} />
+            <Detail title="Music" value={o.music} />
+            <Detail title="Dress" value={o.dress} />
+            <Detail title="Call me" value={o.callMe} />
+            <Detail title="Don't call me" value={o.dontCallMe} />
+            <Detail title="Intentions" value={o.intentions} />
+            <Detail title="Privacy" value={o.privacy} />
+            <Detail title="Penetrative sex" value={o.penetrativeSex} />
+            {yesItems.length > 0 && (
+              <div>
+                <div className="text-xs font-semibold uppercase text-yes mt-3 mb-1">Yes</div>
+                <div className="flex flex-wrap gap-1">
+                  {yesItems.map((n) => <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>)}
+                </div>
+              </div>
+            )}
+            {maybeItems.length > 0 && (
+              <div>
+                <div className="text-xs font-semibold uppercase text-maybe mt-3 mb-1">Maybe</div>
+                <div className="flex flex-wrap gap-1">
+                  {maybeItems.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
+                </div>
+              </div>
+            )}
+            {noItems.length > 0 && (
+              <div>
+                <div className="text-xs font-semibold uppercase text-no mt-3 mb-1">Hard No</div>
+                <div className="flex flex-wrap gap-1">
+                  {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
+                </div>
+              </div>
+            )}
+            <Detail title="Hard limits" value={o.hardLimits} />
+            <Detail title="Soft limits" value={o.softLimits} />
+            <Detail title="Enthusiastic Yes" value={o.yesList} />
+            <Detail title="Aftercare" value={o.aftercare} />
+          </Sticker>
+        </div>
       </Layout>
     );
   }
@@ -124,7 +187,7 @@ function JoinPage() {
             You've been invited to negotiate ♡
           </h1>
           <p className="text-sm text-muted-foreground">
-            {session.ownerSide.name || "Your partner"} wants to plan a scene with you on {session.date}.
+            {session.ownerSide.name || "Your play partner"} wants to plan a scene with you on {session.date}.
             Fill out your side — they'll see what matches.
           </p>
         </Sticker>
@@ -266,6 +329,16 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     <div className="space-y-1.5">
       <Label className="doc-label">{label}</Label>
       {children}
+    </div>
+  );
+}
+
+function Detail({ title, value }: { title: string; value: string }) {
+  if (!value?.trim()) return null;
+  return (
+    <div className="border-b border-border/40 pb-2">
+      <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{title}</div>
+      <div className="text-sm whitespace-pre-wrap">{value}</div>
     </div>
   );
 }

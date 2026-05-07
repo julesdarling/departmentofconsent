@@ -12,7 +12,7 @@ export function PricingCard() {
       <ul className="space-y-1.5 text-sm">
         {[
           "Unlimited saved scenes",
-          "Partner share links + QR",
+          "Play partner share links + QR",
           "In-scene safeword card",
           "Aftercare checklist + reflections",
           "Encrypted cloud sync across devices",

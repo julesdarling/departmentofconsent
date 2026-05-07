@@ -44,7 +44,7 @@ function ScenePage() {
             {partners.map((ps, i) => ps.vision && (
               <div key={i}>
                 <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
-                  {(ps.name?.trim() || `Partner ${i + 1}`)}'s vision for the night
+                  {(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the night
                 </div>
                 <p className="text-sm whitespace-pre-wrap">{ps.vision}</p>
               </div>

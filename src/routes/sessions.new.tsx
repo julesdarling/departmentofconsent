@@ -30,7 +30,7 @@ export const Route = createFileRoute("/sessions/new")({
 });
 
 const STEPS = [
-  "Partner",
+  "Play partner",
   "Tonight's vision",
   "Scene & logistics",
   "Privacy & sex",
@@ -111,7 +111,7 @@ function NewSession() {
         {step === 0 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-xl text-plum">Who & when</h2>
-            <Field label="Partner name or handle">
+            <Field label="Play partner name or handle">
               <Input value={partnerHandle} onChange={(e) => setPartnerHandle(e.target.value)} placeholder="How you'll remember them" />
             </Field>
             <Field label="Date of play">
@@ -138,7 +138,7 @@ function NewSession() {
             <div className="space-y-2">
               <Label className="doc-label">Pick what you're craving tonight</Label>
               <p className="text-xs text-muted-foreground">
-                From your kink list (yes & maybes). Tap to add. Your partner will see what overlaps.
+                From your kink list (yes & maybes). Tap to add. Your play partner will see what overlaps.
               </p>
               {interestedKinks.length === 0 ? (
                 <p className="text-xs text-muted-foreground italic">
@@ -195,7 +195,7 @@ function NewSession() {
             <Field label="Medical concerns specific to tonight">
               <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, on my period, new meds..." />
             </Field>
-            <Field label="Other partners / dynamics to be aware of">
+            <Field label="Other play partners / dynamics to be aware of">
               <Textarea value={side.partnerDynamics} onChange={(e) => update("partnerDynamics", e.target.value)} rows={2} />
             </Field>
             <Field label="Intentions — how do you want to feel?">
