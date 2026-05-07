@@ -186,9 +186,12 @@ function SessionDetail() {
           <SideDetail title="Brainstorm" value={o.brainstorm} />
         </Sticker>
 
-        <Button variant="outline" onClick={remove} className="w-full rounded-full text-destructive border-destructive/40">
-          <Trash2 className="h-4 w-4 mr-1" /> Delete session
-        </Button>
+        <button
+          onClick={remove}
+          className="w-full bg-white text-destructive border-2 border-destructive/40 hover:bg-destructive/5 transition px-4 py-3 font-semibold text-sm flex items-center justify-center gap-2"
+        >
+          <Trash2 className="h-4 w-4" /> Delete session
+        </button>
       </div>
     </Layout>
   );
