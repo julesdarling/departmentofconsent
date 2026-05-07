@@ -20,7 +20,6 @@ const RATINGS: { value: Rating; label: string; cls: string }[] = [
   { value: "yes", label: "Yes", cls: "bg-yes/20 text-foreground border-yes" },
   { value: "maybe", label: "Maybe", cls: "bg-maybe/20 text-foreground border-maybe" },
   { value: "no", label: "No", cls: "bg-no/20 text-foreground border-no" },
-  { value: "unsure", label: "?", cls: "bg-muted text-muted-foreground border-border" },
 ];
 
 function KinkRow({
