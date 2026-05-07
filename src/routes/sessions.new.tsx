@@ -30,7 +30,7 @@ export const Route = createFileRoute("/sessions/new")({
 });
 
 const STEPS = [
-  "Partner",
+  "Play partner",
   "Tonight's vision",
   "Scene & logistics",
   "Privacy & sex",
