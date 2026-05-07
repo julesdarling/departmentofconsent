@@ -117,39 +117,32 @@ function SessionDetail() {
           </Button>
         </div>
 
-        {p && (
-          <VisionOverlap
-            owner={o}
-            partner={p}
-            kinkMap={kinkMap}
-            partnerName={p.name || "Your partner"}
-          />
-        )}
+        {/* Visions per participant */}
+        <Sticker variant="coral" className="space-y-4">
+          <div className="text-center">
+            <div className="text-4xl">✨</div>
+            <div className="font-display text-2xl font-semibold text-plum">Tonight's vision</div>
+          </div>
+          <VisionBlock name={`${ownerName}'s vision for the night`} side={o} kinkMap={kinkMap} />
+          {partners.map((ps, i) => (
+            <VisionBlock
+              key={i}
+              name={`${ps.name || `User ${i + 2}`}'s vision for the night`}
+              side={ps}
+              kinkMap={kinkMap}
+            />
+          ))}
+        </Sticker>
 
-        {p && (
+        {partners.map((ps, i) => (
           <Compare
+            key={i}
             a={o.ratings || {}}
-            b={p.ratings || {}}
+            b={ps.ratings || {}}
             kinkMap={kinkMap}
-            partnerName={p.name || "Your partner"}
+            partnerName={ps.name || `User ${i + 2}`}
           />
-        )}
-
-        {!p && (o.vision || o.selectedKinks.length > 0) && (
-          <Sticker variant="coral" className="space-y-2">
-            <div className="font-display text-lg text-plum">Your vision for tonight</div>
-            {o.vision && <p className="text-sm whitespace-pre-wrap">{o.vision}</p>}
-            {o.selectedKinks.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {o.selectedKinks.map((id) => (
-                  <span key={id} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">
-                    {kinkMap[id] || id}
-                  </span>
-                ))}
-              </div>
-            )}
-          </Sticker>
-        )}
+        ))}
 
         <Sticker className="space-y-3">
           <div className="font-display text-lg text-plum">Your side</div>
