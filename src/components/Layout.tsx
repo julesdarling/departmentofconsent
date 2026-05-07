@@ -42,18 +42,10 @@ function MenuOverlay({ onClose }: { onClose: () => void }) {
         </button>
       </div>
       <div className="flex-1 flex flex-col items-center justify-center gap-6 px-6 -mt-10">
-        <CloudButton variant="outline" to="/sessions" className="w-full max-w-sm">
-          <span onClick={onClose}>Saved scenes</span>
-        </CloudButton>
-        <CloudButton variant="outline" to="/sessions/new" className="w-full max-w-sm">
-          <span onClick={onClose}>New session</span>
-        </CloudButton>
-        <CloudButton variant="outline" to="/kinks" className="w-full max-w-sm">
-          <span onClick={onClose}>My kinks</span>
-        </CloudButton>
-        <CloudButton variant="outline" to="/onboarding" className="w-full max-w-sm">
-          <span onClick={onClose}>Profile</span>
-        </CloudButton>
+        <MenuLink to="/sessions" onClose={onClose}>Saved scenes</MenuLink>
+        <MenuLink to="/sessions/new" onClose={onClose}>New session</MenuLink>
+        <MenuLink to="/kinks" onClose={onClose}>My kinks</MenuLink>
+        <MenuLink to="/onboarding" onClose={onClose}>Profile</MenuLink>
       </div>
     </div>
   );
