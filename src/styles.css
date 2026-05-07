@@ -167,74 +167,30 @@
     border-radius: var(--radius-2xl);
   }
 
-  /* Cloud-shaped button — scalloped edges via SVG mask */
+  /* Cloud-shaped button — uses provided SVG backgrounds */
   .cloud-btn {
-    --cloud-fill: var(--color-mint);
-    --cloud-stroke: var(--color-coral);
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 1.25rem 2.5rem;
+    padding: 1.1rem 2.75rem;
+    min-width: 240px;
     color: white;
-    font-weight: 700;
-    font-size: 1.125rem;
-    background: transparent;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    background-image: url("/button_fill.svg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
     border: 0;
     cursor: pointer;
-    isolation: isolate;
-  }
-  .cloud-btn > * {
-    position: relative;
-    z-index: 2;
-  }
-  .cloud-btn::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: var(--cloud-fill);
-    -webkit-mask: var(--cloud-mask);
-            mask: var(--cloud-mask);
-    -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
-    -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-  }
-  .cloud-btn {
-    --cloud-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'><path d='M30,50 C30,30 45,18 65,22 C70,8 95,8 102,20 C112,8 135,10 140,22 C150,8 175,10 180,24 C190,10 215,12 220,26 C232,12 258,14 262,28 C275,14 300,18 304,30 C320,20 345,30 348,46 C368,46 378,62 368,76 C376,90 358,98 342,90 C334,96 318,94 312,84 C300,96 278,94 272,82 C262,94 240,92 234,80 C222,92 200,90 196,80 C184,92 162,90 158,80 C146,90 124,90 120,80 C108,92 88,90 84,80 C72,90 50,86 48,72 C32,72 22,58 30,50 Z' fill='black'/></svg>");
+    text-align: center;
+    line-height: 1.1;
   }
   .cloud-btn[data-variant="outline"] {
-    --cloud-fill: var(--color-pinkbg);
+    background-image: url("/button_outline.svg");
     color: var(--color-coral);
-  }
-  .cloud-btn[data-variant="outline"]::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: var(--cloud-stroke);
-    -webkit-mask: var(--cloud-mask);
-            mask: var(--cloud-mask);
-    -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
-  }
-  .cloud-btn[data-variant="outline"]::before {
-    inset: 3px;
-  }
-  .cloud-btn[data-variant="mint"]::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background: var(--cloud-stroke);
-    -webkit-mask: var(--cloud-mask);
-            mask: var(--cloud-mask);
-    -webkit-mask-size: 100% 100%;
-            mask-size: 100% 100%;
-  }
-  .cloud-btn[data-variant="mint"]::before {
-    inset: 3px;
   }
 
   .grain::before {
