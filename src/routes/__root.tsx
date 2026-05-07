@@ -82,8 +82,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Department of Consent" },
       { name: "twitter:description", content: "A consent app for kink negotiation: pickup play, first-time partners, and ongoing partners." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c42adca6-f65d-4dbc-ab6b-ffbfffeef518/id-preview-578be68b--15ab37e4-d182-4b0c-9e0e-40cd725ec663.lovable.app-1778171285666.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/c42adca6-f65d-4dbc-ab6b-ffbfffeef518/id-preview-578be68b--15ab37e4-d182-4b0c-9e0e-40cd725ec663.lovable.app-1778171285666.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp" },
     ],
     links: [
       {
