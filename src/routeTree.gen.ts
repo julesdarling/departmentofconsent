@@ -19,6 +19,7 @@ import { Route as SessionsNewRouteImport } from './routes/sessions.new'
 import { Route as JoinTokenRouteImport } from './routes/join.$token'
 import { Route as SessionsSessionIdIndexRouteImport } from './routes/sessions.$sessionId.index'
 import { Route as SessionsSessionIdSceneRouteImport } from './routes/sessions.$sessionId.scene'
+import { Route as SessionsSessionIdEditRouteImport } from './routes/sessions.$sessionId.edit'
 import { Route as SessionsSessionIdAftercareRouteImport } from './routes/sessions.$sessionId.aftercare'
 
 const SettingsRoute = SettingsRouteImport.update({
@@ -71,6 +72,11 @@ const SessionsSessionIdSceneRoute = SessionsSessionIdSceneRouteImport.update({
   path: '/sessions/$sessionId/scene',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SessionsSessionIdEditRoute = SessionsSessionIdEditRouteImport.update({
+  id: '/sessions/$sessionId/edit',
+  path: '/sessions/$sessionId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SessionsSessionIdAftercareRoute =
   SessionsSessionIdAftercareRouteImport.update({
     id: '/sessions/$sessionId/aftercare',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/sessions/new': typeof SessionsNewRoute
   '/sessions/': typeof SessionsIndexRoute
   '/sessions/$sessionId/aftercare': typeof SessionsSessionIdAftercareRoute
+  '/sessions/$sessionId/edit': typeof SessionsSessionIdEditRoute
   '/sessions/$sessionId/scene': typeof SessionsSessionIdSceneRoute
   '/sessions/$sessionId/': typeof SessionsSessionIdIndexRoute
 }
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/sessions/new': typeof SessionsNewRoute
   '/sessions': typeof SessionsIndexRoute
   '/sessions/$sessionId/aftercare': typeof SessionsSessionIdAftercareRoute
+  '/sessions/$sessionId/edit': typeof SessionsSessionIdEditRoute
   '/sessions/$sessionId/scene': typeof SessionsSessionIdSceneRoute
   '/sessions/$sessionId': typeof SessionsSessionIdIndexRoute
 }
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   '/sessions/new': typeof SessionsNewRoute
   '/sessions/': typeof SessionsIndexRoute
   '/sessions/$sessionId/aftercare': typeof SessionsSessionIdAftercareRoute
+  '/sessions/$sessionId/edit': typeof SessionsSessionIdEditRoute
   '/sessions/$sessionId/scene': typeof SessionsSessionIdSceneRoute
   '/sessions/$sessionId/': typeof SessionsSessionIdIndexRoute
 }
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/sessions/new'
     | '/sessions/'
     | '/sessions/$sessionId/aftercare'
+    | '/sessions/$sessionId/edit'
     | '/sessions/$sessionId/scene'
     | '/sessions/$sessionId/'
   fileRoutesByTo: FileRoutesByTo
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/sessions/new'
     | '/sessions'
     | '/sessions/$sessionId/aftercare'
+    | '/sessions/$sessionId/edit'
     | '/sessions/$sessionId/scene'
     | '/sessions/$sessionId'
   id:
@@ -156,6 +167,7 @@ export interface FileRouteTypes {
     | '/sessions/new'
     | '/sessions/'
     | '/sessions/$sessionId/aftercare'
+    | '/sessions/$sessionId/edit'
     | '/sessions/$sessionId/scene'
     | '/sessions/$sessionId/'
   fileRoutesById: FileRoutesById
@@ -170,6 +182,7 @@ export interface RootRouteChildren {
   SessionsNewRoute: typeof SessionsNewRoute
   SessionsIndexRoute: typeof SessionsIndexRoute
   SessionsSessionIdAftercareRoute: typeof SessionsSessionIdAftercareRoute
+  SessionsSessionIdEditRoute: typeof SessionsSessionIdEditRoute
   SessionsSessionIdSceneRoute: typeof SessionsSessionIdSceneRoute
   SessionsSessionIdIndexRoute: typeof SessionsSessionIdIndexRoute
 }
@@ -246,6 +259,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SessionsSessionIdSceneRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sessions/$sessionId/edit': {
+      id: '/sessions/$sessionId/edit'
+      path: '/sessions/$sessionId/edit'
+      fullPath: '/sessions/$sessionId/edit'
+      preLoaderRoute: typeof SessionsSessionIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sessions/$sessionId/aftercare': {
       id: '/sessions/$sessionId/aftercare'
       path: '/sessions/$sessionId/aftercare'
@@ -266,9 +286,20 @@ const rootRouteChildren: RootRouteChildren = {
   SessionsNewRoute: SessionsNewRoute,
   SessionsIndexRoute: SessionsIndexRoute,
   SessionsSessionIdAftercareRoute: SessionsSessionIdAftercareRoute,
+  SessionsSessionIdEditRoute: SessionsSessionIdEditRoute,
   SessionsSessionIdSceneRoute: SessionsSessionIdSceneRoute,
   SessionsSessionIdIndexRoute: SessionsSessionIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
