@@ -75,8 +75,8 @@ function KinkRow({
             className={cn(
               "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
               direction === d.value
-                ? "bg-coral/15 border-coral text-coral"
-                : "border-border/60 text-muted-foreground hover:border-coral/50"
+                ? "bg-yes/20 border-yes text-foreground"
+                : "border-border/60 text-muted-foreground hover:border-yes/50"
             )}
           >
             {d.label}
