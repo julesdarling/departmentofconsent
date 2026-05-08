@@ -78,7 +78,7 @@ function NewSession() {
     try {
       const created = await apiCreateSession({
         shareToken: session.shareToken,
-        partnerHandle,
+        partnerHandle: "",
         date,
         status,
         ownerSide: { ...side, filledAt: new Date().toISOString() },
