@@ -382,7 +382,7 @@ export function getParticipantId(): string {
   return id;
 }
 
-export function emptySide(profile?: Profile, ratings?: KinkRatings): SessionSide {
+export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?: KinkDirections): SessionSide {
   return {
     participantId: getParticipantId(),
     name: profile?.name ?? "",
@@ -414,10 +414,11 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings): SessionSide
     aftercare: profile?.defaultAftercare ?? "",
     brainstorm: "",
     ratings: ratings ? { ...ratings } : {},
+    directions: directions ? { ...directions } : {},
   };
 }
 
-export function newSession(profile: Profile, ratings: KinkRatings, partnerHandle = ""): PlaySession {
+export function newSession(profile: Profile, ratings: KinkRatings, partnerHandle = "", directions?: KinkDirections): PlaySession {
   return {
     id: nanoid(12),
     shareToken: nanoid(16),
@@ -425,7 +426,7 @@ export function newSession(profile: Profile, ratings: KinkRatings, partnerHandle
     date: new Date().toISOString().slice(0, 10),
     createdAt: new Date().toISOString(),
     status: "draft",
-    ownerSide: emptySide(profile, ratings),
+    ownerSide: emptySide(profile, ratings, directions),
     aftercareCompleted: [],
   };
 }
