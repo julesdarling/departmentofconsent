@@ -235,12 +235,21 @@ function NewSession() {
         {step === 2 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum">Privacy & sex</h2>
-            <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
-              <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
-            </Field>
-            <Field label="Penetrative sex during the scene?">
-              <Textarea value={side.penetrativeSex} onChange={(e) => update("penetrativeSex", e.target.value)} rows={2} placeholder="Yes / no / conditions" />
-            </Field>
+            <YesNoMaybe
+              label="Photos / videos during the scene?"
+              value={side.privacy}
+              onChange={(v) => update("privacy", v)}
+            />
+            <YesNoMaybe
+              label="Talking about it with others after?"
+              value={side.talkingAfter || ""}
+              onChange={(v) => update("talkingAfter", v)}
+            />
+            <YesNoMaybe
+              label="Penetrative sex during the scene?"
+              value={side.penetrativeSex}
+              onChange={(v) => update("penetrativeSex", v)}
+            />
           </Sticker>
         )}
 
@@ -367,6 +376,34 @@ export function DirectionRow({
             )}
           >
             {d.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function YesNoMaybe({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  const opts: { v: string; cls: string }[] = [
+    { v: "yes", cls: "bg-yes/20 border-yes" },
+    { v: "maybe", cls: "bg-maybe/20 border-maybe" },
+    { v: "no", cls: "bg-no/20 border-no" },
+  ];
+  return (
+    <div className="space-y-1.5">
+      <Label className="doc-label">{label}</Label>
+      <div className="flex gap-2">
+        {opts.map((o) => (
+          <button
+            key={o.v}
+            type="button"
+            onClick={() => onChange(o.v)}
+            className={cn(
+              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
+              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {o.v}
           </button>
         ))}
       </div>

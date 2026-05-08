@@ -51,6 +51,7 @@ export interface SessionSide {
   goodTime: string;
   badTime: string;
   privacy: string;
+  talkingAfter?: string;
   penetrativeSex: string;
   safewords: string;
   vision: string;
