@@ -7,6 +7,8 @@ import { useAuth } from "@/lib/useAuth";
 // ===== Types =====
 
 export type Rating = "yes" | "maybe" | "no" | "unsure";
+export type Direction = "give" | "receive" | "both";
+export type KinkDirections = Record<string, Direction>;
 
 export interface Profile {
   name: string;
@@ -84,8 +86,6 @@ export const DEFAULT_KINKS: KinkItem[] = [
   // Intimacy
   { id: "k_handstuff", name: "Hand stuff", category: "Intimacy" },
   { id: "k_kissing", name: "Kissing", category: "Intimacy" },
-  { id: "k_oral_give", name: "Oral (giving)", category: "Intimacy" },
-  { id: "k_oral_recv", name: "Oral (receiving)", category: "Intimacy" },
   { id: "k_cock_sucking", name: "Cock sucking", category: "Intimacy" },
   { id: "k_pussy_eating", name: "Pussy eating", category: "Intimacy" },
   { id: "k_fucking", name: "Fucking", category: "Intimacy" },
