@@ -30,8 +30,8 @@ function JoinPage() {
   const [profile] = useProfile();
   const [kinks] = useKinks();
   const [savedRatings] = useRatings();
-  
-  // no navigate needed – guests see a thank-you instead
+  const navigate = useNavigate();
+
   const { session, error, addPartner } = useCloudSession(token);
 
   const [side, setSide] = useState<SessionSide | null>(null);
