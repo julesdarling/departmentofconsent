@@ -42,14 +42,18 @@ const STEPS = [
 function NewSession() {
   const [profile] = useProfile();
   const [ratings, setRatings] = useRatings();
+  const [directions] = useDirections();
   const [kinks, setKinks] = useKinks();
   const navigate = useNavigate();
 
-  const [session] = useState(() => newSession(profile, ratings));
+  const [session] = useState(() => newSession(profile, ratings, "", directions));
   const [date, setDate] = useState(session.date);
   const [side, setSide] = useState<SessionSide>(session.ownerSide);
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
+
+  const setDirection = (id: string, d: Direction) =>
+    setSide((p) => ({ ...p, directions: { ...(p.directions || {}), [id]: d } }));
 
   const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => ({ ...p, [k]: v }));
