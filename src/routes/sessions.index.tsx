@@ -30,7 +30,7 @@ function SessionsList() {
         </div>
 
         {isLoading && (
-          <div className="flex justify-center py-10"><WhipLoader /></div>
+          <div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div>
         )}
 
         {!isLoading && sorted.length === 0 && (
