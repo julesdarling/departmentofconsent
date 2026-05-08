@@ -501,7 +501,7 @@ function KinkBlock({
   onDirection: (d: Direction) => void;
 }) {
   return (
-    <div className="rounded-2xl border border-border/40 p-3 space-y-2 bg-card/40">
+    <div className="rounded-2xl border border-border/40 p-3 bg-card/40">
       <div className="flex items-center justify-between gap-2">
         <div className="text-sm font-medium flex items-center gap-2 min-w-0">
           <span className="truncate">{name}</span>
@@ -511,9 +511,7 @@ function KinkBlock({
             </span>
           )}
         </div>
-      </div>
-      <div className="flex items-center justify-between gap-2 flex-wrap">
-        <div className="flex gap-1">
+        <div className="flex gap-1 shrink-0">
           {(["yes", "maybe", "no"] as Rating[]).map((r) => (
             <button
               key={r}
@@ -529,21 +527,6 @@ function KinkBlock({
               )}
             >
               {r}
-            </button>
-          ))}
-        </div>
-        <div className="inline-flex rounded-full border border-border/60 overflow-hidden">
-          {(["give", "receive", "both"] as Direction[]).map((d) => (
-            <button
-              key={d}
-              type="button"
-              onClick={() => onDirection(d)}
-              className={cn(
-                "h-7 px-2.5 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0 capitalize",
-                direction === d ? "bg-yes/20 text-foreground" : "text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {DIRECTION_LABELS[d]}
             </button>
           ))}
         </div>
