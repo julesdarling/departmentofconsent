@@ -57,7 +57,7 @@ function SettingsPage() {
   return (
     <Layout>
       <div className="space-y-5">
-        <h1 className="font-display text-3xl font-semibold text-plum">Profile</h1>
+        <h1 className="font-display text-3xl font-semibold text-plum text-center">Profile</h1>
 
         <Sticker className="space-y-2">
           <Row label="Name" value={profile.name} />
