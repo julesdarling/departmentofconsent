@@ -474,7 +474,7 @@ export function useMySessions() {
     queryFn: async (): Promise<SessionSummary[]> => {
       const { data, error } = await supabase.rpc("list_my_play_sessions");
       if (error) throw error;
-      const rows = (data ?? []) as Array<{
+      const rows = (data ?? []) as unknown as Array<{
         id: string;
         share_token: string;
         partner_handle: string;
