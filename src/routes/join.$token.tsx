@@ -444,3 +444,30 @@ function Detail({ title, value }: { title: string; value: string }) {
     </div>
   );
 }
+
+function RateRow({ name, value, onChange }: { name: string; value: Rating | undefined; onChange: (r: Rating) => void }) {
+  return (
+    <div className="flex items-center justify-between gap-2 py-1.5 border-b border-border/40 last:border-0">
+      <div className="text-sm flex-1 min-w-0 truncate">{name}</div>
+      <div className="flex gap-1">
+        {(["yes", "maybe", "no"] as Rating[]).map((r) => (
+          <button
+            key={r}
+            type="button"
+            onClick={() => onChange(r)}
+            className={cn(
+              "h-7 px-2.5 rounded-full text-xs font-semibold border-2 transition capitalize",
+              value === r
+                ? r === "yes" ? "bg-yes/20 border-yes"
+                : r === "maybe" ? "bg-maybe/20 border-maybe"
+                : "bg-no/20 border-no"
+                : "border-border/60 text-muted-foreground"
+            )}
+          >
+            {r}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
