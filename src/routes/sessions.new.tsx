@@ -246,11 +246,11 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 1 && (
+        {step === 4 && (
           <Sticker className="space-y-3 text-center">
             <h2 className="font-display text-2xl text-plum">All set</h2>
             <p className="text-sm text-muted-foreground">
-              Save your side and get a share link + QR for {partnerHandle || "your partner"} to fill out theirs.
+              Save your side and get a share link + QR for your partner to fill out theirs.
             </p>
             <Button size="lg" disabled={saving} className="cloud-btn-fluid" onClick={() => save("shared")}>
               {saving ? "Saving..." : "Save & get share link"}
