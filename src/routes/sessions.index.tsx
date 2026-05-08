@@ -24,8 +24,8 @@ function SessionsList() {
   return (
     <Layout>
       <div className="space-y-5">
-        <div>
-          <h1 className="font-display text-3xl text-plum">Scenes</h1>
+        <div className="text-center">
+          <h1 className="font-display text-5xl text-plum">Scenes</h1>
           <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
         </div>
 
