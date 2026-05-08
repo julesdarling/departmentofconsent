@@ -20,6 +20,7 @@ import { useMemo, useState } from "react";
 import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { CloudButton } from "@/components/CloudButton";
 
 import { RequireAuth } from "@/components/RequireAuth";
 
