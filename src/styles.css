@@ -284,3 +284,23 @@
     z-index: 100;
   }
 }
+
+@layer utilities {
+  .whip-loader {
+    background-repeat: no-repeat;
+    background-size: 400% 200%;
+    background-position: 0% 0%;
+    animation: whip-loop 0.9s steps(1) infinite;
+  }
+  @keyframes whip-loop {
+    0%    { background-position: 0%   0%; }
+    12.5% { background-position: 33.333% 0%; }
+    25%   { background-position: 66.666% 0%; }
+    37.5% { background-position: 100% 0%; }
+    50%   { background-position: 0%   100%; }
+    62.5% { background-position: 33.333% 100%; }
+    75%   { background-position: 66.666% 100%; }
+    87.5% { background-position: 100% 100%; }
+    100%  { background-position: 0%   0%; }
+  }
+}
