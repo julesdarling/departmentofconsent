@@ -18,7 +18,6 @@ export function Layout({ children, fullBleed = false, showFooter = false }: { ch
 
 function BottomNav() {
   const items = [
-    { to: "/", label: "Home", Icon: Home },
     { to: "/sessions", label: "Scenes", Icon: ListChecks },
     { to: "/kinks", label: "Kinks", Icon: Heart },
     { to: "/settings", label: "Profile", Icon: User },
