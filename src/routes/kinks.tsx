@@ -60,7 +60,7 @@ function KinkRow({
               key={r.value}
               onClick={() => onSetRating(r.value)}
               className={cn(
-                "h-7 min-w-7 px-2 rounded-full text-xs font-semibold border-2 transition",
+                "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
                 rating === r.value ? r.cls : "border-border/60 text-muted-foreground hover:border-primary/50"
               )}
             >
