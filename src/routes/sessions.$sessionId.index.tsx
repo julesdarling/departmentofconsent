@@ -9,11 +9,11 @@ import { QRCodeSVG } from "qrcode.react";
 import { Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
 import { CloudButton } from "@/components/CloudButton";
 import { useMemo, useState } from "react";
-import { RequireAuth } from "@/components/RequireAuth";
+import { useAuth } from "@/lib/useAuth";
 
 export const Route = createFileRoute("/sessions/$sessionId/")({
   head: () => ({ meta: [{ title: "Scene — Department of Consent" }] }),
-  component: () => <RequireAuth><SessionDetail /></RequireAuth>,
+  component: SessionDetail,
 });
 
 function SessionDetail() {
@@ -24,6 +24,8 @@ function SessionDetail() {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { session, error, refresh } = useCloudSession(sessionId);
+  const { user } = useAuth();
+  const isOwner = !!user;
 
   const kinkMap = useMemo(() => Object.fromEntries(kinks.map((k) => [k.id, k.name])), [kinks]);
 
@@ -83,25 +85,27 @@ function SessionDetail() {
           </span>
         </div>
 
-        <Sticker className="text-center space-y-3">
-          <div className="font-display text-lg text-plum">Share with your play partner</div>
-          <div className="flex justify-center bg-card p-3 rounded-xl">
-            <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
-          </div>
-          <div className="flex justify-center pt-1">
-            <CloudButton variant="mint" onClick={copy}>
-              {copied ? "Copied!" : "Copy link to share"}
-            </CloudButton>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            Anyone with this link can fill out the play partner side. They'll see your side once they submit.
-          </p>
-          <div className="flex justify-center pt-2">
-            <button onClick={refresh} className="text-sm text-link underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
-              <RefreshCw className="h-3 w-3" /> Check for play partner's reply
-            </button>
-          </div>
-        </Sticker>
+        {isOwner && (
+          <Sticker className="text-center space-y-3">
+            <div className="font-display text-lg text-plum">Share with your play partner</div>
+            <div className="flex justify-center bg-card p-3 rounded-xl">
+              <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
+            </div>
+            <div className="flex justify-center pt-1">
+              <CloudButton variant="mint" onClick={copy}>
+                {copied ? "Copied!" : "Copy link to share"}
+              </CloudButton>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Anyone with this link can fill out the play partner side. They'll see your side once they submit.
+            </p>
+            <div className="flex justify-center pt-2">
+              <button onClick={refresh} className="text-sm text-link underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
+                <RefreshCw className="h-3 w-3" /> Check for play partner's reply
+              </button>
+            </div>
+          </Sticker>
+        )}
 
         <div className="flex flex-col items-center gap-2">
           <CloudButton variant="outline" to={`/sessions/${sessionId}/scene`}>
@@ -198,17 +202,21 @@ function SessionDetail() {
           <SideDetail title="Brainstorm" value={o.brainstorm} />
         </Sticker>
 
-        <div className="flex justify-center pt-2">
-          <button onClick={remove} className="text-sm text-destructive underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
-            <Trash2 className="h-4 w-4" /> Delete scene
-          </button>
-        </div>
+        {isOwner && (
+          <>
+            <div className="flex justify-center pt-2">
+              <button onClick={remove} className="text-sm text-destructive underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
+                <Trash2 className="h-4 w-4" /> Delete scene
+              </button>
+            </div>
 
-        <div className="flex justify-center">
-          <Link to="/sessions/$sessionId/edit" params={{ sessionId }} className="text-sm text-link underline underline-offset-4 hover:opacity-80">
-            Edit scene
-          </Link>
-        </div>
+            <div className="flex justify-center">
+              <Link to="/sessions/$sessionId/edit" params={{ sessionId }} className="text-sm text-link underline underline-offset-4 hover:opacity-80">
+                Edit scene
+              </Link>
+            </div>
+          </>
+        )}
       </div>
     </Layout>
   );

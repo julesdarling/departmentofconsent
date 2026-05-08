@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
@@ -30,8 +30,8 @@ function JoinPage() {
   const [profile] = useProfile();
   const [kinks] = useKinks();
   const [savedRatings] = useRatings();
-  
-  // no navigate needed – guests see a thank-you instead
+  const navigate = useNavigate();
+
   const { session, error, addPartner } = useCloudSession(token);
 
   const [side, setSide] = useState<SessionSide | null>(null);
@@ -89,7 +89,7 @@ function JoinPage() {
     try {
       await addPartner({ ...side, filledAt: new Date().toISOString() });
       setSubmitted(true);
-      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+      navigate({ to: "/sessions/$sessionId", params: { sessionId: token } });
     } finally {
       setSubmitting(false);
     }
