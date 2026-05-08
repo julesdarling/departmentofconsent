@@ -87,7 +87,7 @@ function SessionDetail() {
 
         {isOwner && (
           <Sticker className="text-center space-y-3">
-            <div className="font-display text-lg text-plum">Share with your play partner</div>
+            <div className="font-display text-2xl text-plum text-center">Share with your play partner</div>
             <div className="flex justify-center bg-card p-3 rounded-xl">
               <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
             </div>
@@ -154,7 +154,7 @@ function SessionDetail() {
         ))}
 
         <Sticker className="space-y-3">
-          <div className="font-display text-lg text-plum">Your side</div>
+          <div className="font-display text-2xl text-plum text-center">Your side</div>
           <SideDetail title="Setting" value={o.setting} />
           <SideDetail title="Music" value={o.music} />
           <SideDetail title="Dress" value={o.dress} />
@@ -289,7 +289,7 @@ function Compare({
 
       {curious.length > 0 && (
         <Sticker className="space-y-2">
-          <div className="font-display text-lg text-plum">Curious to explore together</div>
+          <div className="font-display text-2xl text-plum text-center">Curious to explore together</div>
           <p className="text-xs text-muted-foreground">
             At least one of you is a yes, the other a maybe — worth a chat.
           </p>
@@ -303,7 +303,7 @@ function Compare({
 
       {(negotiate.length > 0 || conflicts.length > 0 || agreedSelected.length > 0) && (
         <Sticker className="space-y-3">
-          <div className="font-display text-lg text-plum">Negotiate</div>
+          <div className="font-display text-2xl text-plum text-center">Negotiate</div>
           {agreedSelected.length > 0 && (
             <div>
               <div className="text-xs font-semibold uppercase text-yes mb-1">Both want to play</div>
@@ -379,7 +379,7 @@ function FullSideBlock({
 
   return (
     <Sticker variant="coral" className="space-y-3">
-      <div className="font-display text-lg text-plum">{title}</div>
+      <div className="font-display text-2xl text-plum text-center">{title}</div>
       <SideDetail title="Vision" value={side.vision} />
       <SideDetail title="Date & time of play" value={side.timeOfPlay} />
       <SideDetail title="Setting" value={side.setting} />
