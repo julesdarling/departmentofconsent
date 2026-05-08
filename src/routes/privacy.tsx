@@ -28,13 +28,13 @@ function PrivacyPage() {
         <ul className="list-disc pl-5 space-y-1.5">
           <li><strong>Account info:</strong> email address and authentication tokens used to sign you in.</li>
           <li><strong>Profile content:</strong> name/handle, pronouns, names you do and don't like, healthcare and emergency contact info, default safewords and aftercare needs.</li>
-          <li><strong>Kink ratings, scenes, and partner replies:</strong> the limits, scenes, and shared sessions you create or receive.</li>
+          <li><strong>Kink ratings, scenes, and partner replies:</strong> the limits, scenes, and shared scenes you create or receive.</li>
           <li><strong>Subscription status:</strong> whether you have an active paid plan (handled by our payment processor; we do not store your card).</li>
         </ul>
 
         <h2 className="font-display text-2xl text-plum pt-4">Where it lives</h2>
         <p>
-          Your account, profile, kink ratings, scenes, and shared session data
+          Your account, profile, kink ratings, scenes, and shared scene data
           are stored in our secure cloud database so you can sign in from any
           device and share scenes with play partners. Some preferences (like
           dismissing the cookie banner) are kept on your device in local storage.

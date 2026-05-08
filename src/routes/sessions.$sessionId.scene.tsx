@@ -4,6 +4,7 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCloudSession } from "@/lib/useCloudSession";
+import { useProfile } from "@/lib/storage";
 import { Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/sessions/$sessionId/scene")({
 function ScenePage() {
   const { sessionId } = Route.useParams();
   const { session, update } = useCloudSession(sessionId);
+  const [profile] = useProfile();
   const [notes, setNotes] = useState("");
   const [savedNotes, setSavedNotes] = useState("");
   const [saving, setSaving] = useState(false);
@@ -33,7 +35,7 @@ function ScenePage() {
 
   const o = session.ownerSide;
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
-  const ownerName = o.name?.trim() || "Creator";
+  const ownerName = o.name?.trim() || profile?.name?.trim() || "Unnamed";
 
   const participants = [
     { name: ownerName, pronouns: o.pronouns, role: "Creator" },
@@ -70,9 +72,9 @@ function ScenePage() {
           <ul className="space-y-1">
             {participants.map((p, i) => (
               <li key={i} className="text-sm">
+                <span className="text-muted-foreground">{p.role} · </span>
                 <span className="font-semibold text-plum">{p.name}</span>
                 {p.pronouns && <span className="text-muted-foreground"> · {p.pronouns}</span>}
-                <span className="text-muted-foreground"> · {p.role}</span>
               </li>
             ))}
           </ul>
@@ -142,7 +144,7 @@ function ScenePage() {
 
         <div className="flex justify-center pt-2">
           <Button asChild variant="outline" className="rounded-full">
-            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back to session</Link>
+            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back to scene</Link>
           </Button>
         </div>
       </div>

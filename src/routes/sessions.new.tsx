@@ -24,7 +24,7 @@ import { toast } from "sonner";
 import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/sessions/new")({
-  head: () => ({ meta: [{ title: "New session — Department of Consent" }] }),
+  head: () => ({ meta: [{ title: "New scene — Department of Consent" }] }),
   component: () => <RequireAuth><NewSession /></RequireAuth>,
 });
 
@@ -87,7 +87,7 @@ function NewSession() {
       });
       navigate({ to: "/sessions/$sessionId", params: { sessionId: created.shareToken } });
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "Could not save session");
+      toast.error(e instanceof Error ? e.message : "Could not save scene");
     } finally {
       setSaving(false);
     }

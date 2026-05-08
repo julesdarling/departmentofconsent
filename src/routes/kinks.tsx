@@ -132,7 +132,7 @@ function KinksPage() {
         <div className="text-center pt-2">
           <h1 className="font-display text-5xl text-foreground tracking-tight">Your kinks & limits</h1>
           <p className="text-sm text-muted-foreground mt-2">
-            Tap to rate. This becomes the starting point for every new session.
+            Tap to rate. This becomes the starting point for every new scene.
           </p>
         </div>
 
@@ -166,7 +166,7 @@ function KinksPage() {
 
         <div className="flex justify-center pt-2">
           <Link to="/sessions/new" className="cloud-btn cloud-btn-fluid">
-            <span>Start a new session</span>
+            <span>Start a new scene</span>
           </Link>
         </div>
       </div>

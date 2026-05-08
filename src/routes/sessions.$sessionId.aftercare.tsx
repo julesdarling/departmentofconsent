@@ -75,7 +75,7 @@ function AftercarePage() {
           }}
           className="w-full"
         >
-          Mark session completed
+          Mark scene completed
         </Button>
         <Button asChild variant="outline" className="w-full">
           <Link to="/sessions/$sessionId" params={{ sessionId }}>← Back</Link>

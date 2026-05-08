@@ -9,7 +9,7 @@ import { WhipLoader } from "@/components/WhipLoader";
 import emptySessionsImg from "@/assets/empty-sessions.png";
 
 export const Route = createFileRoute("/sessions/")({
-  head: () => ({ meta: [{ title: "Sessions — Department of Consent" }] }),
+  head: () => ({ meta: [{ title: "Scenes — Department of Consent" }] }),
   component: () => <RequireAuth><SessionsList /></RequireAuth>,
 });
 
@@ -22,7 +22,7 @@ function SessionsList() {
       <div className="space-y-5">
         <div className="flex items-end justify-between">
           <div>
-            <h1 className="font-display text-3xl font-semibold text-plum">Sessions</h1>
+            <h1 className="font-display text-3xl font-semibold text-plum">Scenes</h1>
             <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
           </div>
           <Button asChild size="sm" className="rounded-full">
@@ -37,7 +37,7 @@ function SessionsList() {
         {!isLoading && sorted.length === 0 && (
           <Sticker className="text-center space-y-3 py-10">
             <img src={emptySessionsImg} alt="" className="h-32 w-32 mx-auto object-contain" />
-            <p className="font-display text-lg text-plum">No sessions yet</p>
+            <p className="font-display text-lg text-plum">No scenes yet</p>
             <p className="text-sm text-muted-foreground">Your first negotiation is just a tap away.</p>
             <Button asChild className="rounded-full">
               <Link to="/sessions/new">Create one</Link>
@@ -52,7 +52,7 @@ function SessionsList() {
                 <div className="flex justify-between items-start gap-3">
                   <div className="min-w-0">
                     <div className="font-display text-lg font-semibold text-plum truncate">
-                      {s.partnerHandle || "Untitled session"}
+                      {s.partnerHandle || "Untitled scene"}
                     </div>
                     <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                       <Calendar className="h-3 w-3" />
