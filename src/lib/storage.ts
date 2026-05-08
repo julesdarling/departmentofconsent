@@ -462,6 +462,7 @@ export interface SessionSummary {
   createdAt: string;
   role: "owner" | "partner";
   status: SessionStatus;
+  ownerSide: SessionSide;
 }
 
 export function useMySessions() {
@@ -481,6 +482,7 @@ export function useMySessions() {
         status: string;
         created_at: string;
         owner_user_id: string | null;
+        owner_side: SessionSide;
       }>;
       return rows.map((r) => ({
         id: r.id,
@@ -490,6 +492,7 @@ export function useMySessions() {
         createdAt: r.created_at,
         role: r.owner_user_id === userId ? "owner" : "partner",
         status: r.status as SessionStatus,
+        ownerSide: r.owner_side,
       }));
     },
   });
