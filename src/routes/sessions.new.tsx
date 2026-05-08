@@ -40,8 +40,8 @@ const STEPS = [
 
 function NewSession() {
   const [profile] = useProfile();
-  const [ratings] = useRatings();
-  const [kinks] = useKinks();
+  const [ratings, setRatings] = useRatings();
+  const [kinks, setKinks] = useKinks();
   const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
 
