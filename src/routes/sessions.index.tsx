@@ -23,11 +23,11 @@ function SessionsList() {
   return (
     <Layout>
       <div className="space-y-5">
-        <div className="flex items-end justify-between">
-          <div>
-            <h1 className="font-display text-3xl font-semibold text-plum">Scenes</h1>
-            <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
-          </div>
+        <div>
+          <h1 className="font-display text-3xl font-semibold text-plum">Scenes</h1>
+          <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
+        </div>
+        <div className="flex justify-end">
           <Button asChild size="sm" className="rounded-full">
             <Link to="/sessions/new"><Plus className="h-4 w-4 mr-1" /> New</Link>
           </Button>
