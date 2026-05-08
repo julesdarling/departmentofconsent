@@ -16,6 +16,8 @@ export const Route = createFileRoute("/sessions/")({
 
 function SessionsList() {
   const { data: sessions, isLoading } = useMySessions();
+  const [kinks] = useKinks();
+  const kinkMap = useMemo(() => Object.fromEntries(kinks.map((k) => [k.id, k.name])), [kinks]);
   const sorted = (sessions ?? []).slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
