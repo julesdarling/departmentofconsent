@@ -264,29 +264,26 @@ function NewSession() {
 
         <div className="flex flex-col items-center gap-2">
           {step < STEPS.length - 1 && (
-            <Button
-              size="lg"
-              className="cloud-btn-fluid"
+            <CloudButton
               onClick={() => {
                 setStep((s) => Math.min(STEPS.length - 1, s + 1));
                 if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
               Next
-            </Button>
+            </CloudButton>
           )}
-          <Button
-            size="lg"
-            variant="outline"
-            className="cloud-btn-fluid"
-            disabled={step === 0}
-            onClick={() => {
-              setStep((s) => Math.max(0, s - 1));
-              if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
-          >
-            Back
-          </Button>
+          {step > 0 && (
+            <CloudButton
+              variant="outline"
+              onClick={() => {
+                setStep((s) => Math.max(0, s - 1));
+                if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
+              Back
+            </CloudButton>
+          )}
         </div>
       </div>
     </Layout>
