@@ -218,7 +218,7 @@ function SessionDetail() {
   );
 }
 
-function SideDetail({ title, value }: { title: string; value: string }) {
+function SideDetail({ title, value }: { title: string; value: string | undefined }) {
   if (!value?.trim()) return null;
   return (
     <div className="border-b border-border/40 pb-2">
