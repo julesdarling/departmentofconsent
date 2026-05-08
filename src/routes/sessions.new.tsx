@@ -18,7 +18,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
 import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -40,8 +40,8 @@ const STEPS = [
 
 function NewSession() {
   const [profile] = useProfile();
-  const [ratings] = useRatings();
-  const [kinks] = useKinks();
+  const [ratings, setRatings] = useRatings();
+  const [kinks, setKinks] = useKinks();
   const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
 
@@ -65,6 +65,17 @@ function NewSession() {
       const has = p.selectedKinks.includes(id);
       return { ...p, selectedKinks: has ? p.selectedKinks.filter((x) => x !== id) : [...p.selectedKinks, id] };
     });
+
+  const [newKink, setNewKink] = useState("");
+  const addKink = () => {
+    const name = newKink.trim();
+    if (!name) return;
+    const id = "c_" + nanoid(8);
+    setKinks((p) => [...p, { id, name, category: "Custom", custom: true }]);
+    setRatings((p) => ({ ...p, [id]: "yes" }));
+    setSide((p) => ({ ...p, selectedKinks: [...p.selectedKinks, id] }));
+    setNewKink("");
+  };
 
   const save = async (status: "draft" | "shared" = "shared") => {
     setSaving(true);
@@ -166,6 +177,15 @@ function NewSession() {
                   })}
                 </div>
               )}
+              <div className="flex gap-2 pt-2">
+                <Input
+                  value={newKink}
+                  onChange={(e) => setNewKink(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addKink(); } }}
+                  placeholder="Add your own kink…"
+                />
+                <Button type="button" onClick={addKink} disabled={!newKink.trim()}>Add</Button>
+              </div>
             </div>
           </Sticker>
         )}
@@ -213,7 +233,7 @@ function NewSession() {
         {step === 3 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
-            <Field label="Privacy — photos/videos? Sharing? Talking about it after?">
+            <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
               <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
             </Field>
             <Field label="Penetrative sex during the scene?">
