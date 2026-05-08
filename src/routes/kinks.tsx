@@ -90,6 +90,7 @@ function KinkRow({
 function KinksPage() {
   const [kinks, setKinks] = useKinks();
   const [ratings, setRatings] = useRatings();
+  const [directions, setDirections] = useDirections();
   const [newName, setNewName] = useState("");
   const [newCat, setNewCat] = useState("Custom");
 
@@ -104,6 +105,9 @@ function KinksPage() {
 
   const setRating = (id: string, r: Rating) =>
     setRatings((p) => ({ ...p, [id]: r }));
+
+  const setDirection = (id: string, d: Direction) =>
+    setDirections((p) => ({ ...p, [id]: d }));
 
   const addCustom = () => {
     if (!newName.trim()) return;
@@ -132,7 +136,9 @@ function KinksPage() {
                 key={item.id}
                 item={item}
                 rating={ratings[item.id]}
-                onSet={(r) => setRating(item.id, r)}
+                direction={directions[item.id]}
+                onSetRating={(r) => setRating(item.id, r)}
+                onSetDirection={(d) => setDirection(item.id, d)}
                 onRemove={item.custom ? () => removeCustom(item.id) : undefined}
               />
             ))}
