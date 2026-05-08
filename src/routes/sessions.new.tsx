@@ -106,23 +106,10 @@ function NewSession() {
 
         {step === 0 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Who & when</h2>
-            <Field label="Play partner name or handle">
-              <Input value={partnerHandle} onChange={(e) => setPartnerHandle(e.target.value)} placeholder="How you'll remember them" />
-            </Field>
+            <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
             <Field label="Date of play">
               <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
             </Field>
-            <p className="text-xs text-muted-foreground">
-              We'll use your saved profile, kinks, safewords and aftercare as the starting point.
-              You can tweak anything that's different for this scene in the next steps.
-            </p>
-          </Sticker>
-        )}
-
-        {step === 1 && (
-          <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
             <Field label="What are you imagining for this scene?">
               <Textarea
                 value={side.vision}
