@@ -105,11 +105,6 @@ function SessionDetail() {
 
         <div className="flex flex-wrap justify-center gap-2">
           <Button asChild variant="outline" size="sm">
-            <Link to="/sessions/$sessionId/edit" params={{ sessionId }}>
-              Edit
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="sm">
             <Link to="/sessions/$sessionId/scene" params={{ sessionId }}>
               <Flame className="h-4 w-4 mr-1" /> Scene
             </Link>
@@ -227,6 +222,12 @@ function SessionDetail() {
           <button onClick={remove} className="text-sm text-destructive underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
             <Trash2 className="h-4 w-4" /> Delete scene
           </button>
+        </div>
+
+        <div className="flex justify-center">
+          <Link to="/sessions/$sessionId/edit" params={{ sessionId }} className="text-sm text-coral underline underline-offset-4 hover:opacity-80">
+            Edit scene
+          </Link>
         </div>
       </div>
     </Layout>
