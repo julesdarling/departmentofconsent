@@ -18,6 +18,7 @@ export const Route = createFileRoute("/sessions/$sessionId/scene")({
 function ScenePage() {
   const { sessionId } = Route.useParams();
   const { session, update } = useCloudSession(sessionId);
+  const [profile] = useProfile();
   const [notes, setNotes] = useState("");
   const [savedNotes, setSavedNotes] = useState("");
   const [saving, setSaving] = useState(false);
@@ -34,7 +35,7 @@ function ScenePage() {
 
   const o = session.ownerSide;
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
-  const ownerName = o.name?.trim() || "Creator";
+  const ownerName = o.name?.trim() || profile?.name?.trim() || "Unnamed";
 
   const participants = [
     { name: ownerName, pronouns: o.pronouns, role: "Creator" },
