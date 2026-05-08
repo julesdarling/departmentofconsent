@@ -280,7 +280,7 @@ function JoinPage() {
           <Field label="Pronouns">
             <Input value={side.pronouns} onChange={(e) => updateField("pronouns", e.target.value)} />
           </Field>
-          <Field label="Healthcare?">
+          <Field label="Do you have health insurance? Who is your provider?">
             <Input value={side.healthcare} onChange={(e) => updateField("healthcare", e.target.value)} />
           </Field>
           <Field label="Emergency contact">
