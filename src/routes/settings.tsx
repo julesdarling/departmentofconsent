@@ -83,7 +83,7 @@ function SettingsPage() {
         <Sticker variant="coral" className="space-y-2">
           <div className="font-display text-base text-plum">Your data</div>
           <p className="text-xs text-muted-foreground">
-            Everything is stored on this device only. No accounts, no servers, no analytics on your sensitive content.
+            Your profile, kinks, and scenes sync to your account so you can sign in from any device. Some preferences are also cached on this device for speed.
           </p>
           <div className="flex flex-col items-center gap-2 pt-2">
             <Button variant="outline" onClick={() => setProfile(emptyProfile)}>
