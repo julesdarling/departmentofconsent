@@ -482,3 +482,72 @@ function RateRow({ name, value, onChange }: { name: string; value: Rating | unde
     </div>
   );
 }
+
+const DIRECTION_LABELS: Record<Direction, string> = { give: "Give", receive: "Receive", both: "Both" };
+
+function KinkBlock({
+  name,
+  creatorDirection,
+  rating,
+  direction,
+  onRating,
+  onDirection,
+}: {
+  name: string;
+  creatorDirection?: Direction;
+  rating: Rating | undefined;
+  direction: Direction | undefined;
+  onRating: (r: Rating) => void;
+  onDirection: (d: Direction) => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-border/40 p-3 space-y-2 bg-card/40">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-sm font-medium flex items-center gap-2 min-w-0">
+          <span className="truncate">{name}</span>
+          {creatorDirection && (
+            <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
+              They: {DIRECTION_LABELS[creatorDirection]}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex gap-1">
+          {(["yes", "maybe", "no"] as Rating[]).map((r) => (
+            <button
+              key={r}
+              type="button"
+              onClick={() => onRating(r)}
+              className={cn(
+                "h-7 px-2.5 rounded-full text-xs font-semibold border-2 transition capitalize",
+                rating === r
+                  ? r === "yes" ? "bg-yes/20 border-yes"
+                  : r === "maybe" ? "bg-maybe/20 border-maybe"
+                  : "bg-no/20 border-no"
+                  : "border-border/60 text-muted-foreground"
+              )}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
+        <div className="inline-flex rounded-full border border-border/60 overflow-hidden">
+          {(["give", "receive", "both"] as Direction[]).map((d) => (
+            <button
+              key={d}
+              type="button"
+              onClick={() => onDirection(d)}
+              className={cn(
+                "h-7 px-2.5 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0 capitalize",
+                direction === d ? "bg-yes/20 text-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {DIRECTION_LABELS[d]}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
