@@ -3,7 +3,6 @@ import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useProfile, emptyProfile } from "@/lib/storage";
-import { Trash2 } from "lucide-react";
 import { useAuth } from "@/lib/useAuth";
 import { useSubscription } from "@/lib/useSubscription";
 import { useServerFn } from "@tanstack/react-start";
@@ -43,17 +42,10 @@ function SettingsPage() {
     navigate({ to: "/auth" });
   };
 
-  const wipe = () => {
-    if (!confirm("Erase everything stored on this device? This cannot be undone.")) return;
-    localStorage.clear();
-    window.location.href = "/";
-  };
-
   const handleDelete = async () => {
     setDeleting(true);
     try {
       await deleteFn();
-      try { localStorage.clear(); } catch { /* ignore */ }
       await supabase.auth.signOut();
       window.location.href = "/";
     } catch (err) {
@@ -83,14 +75,11 @@ function SettingsPage() {
         <Sticker variant="coral" className="space-y-2">
           <div className="font-display text-base text-plum">Your data</div>
           <p className="text-xs text-muted-foreground">
-            Your profile, kinks, and scenes sync to your account so you can sign in from any device. Some preferences are also cached on this device for speed.
+            Your profile, kinks, ratings, and scenes are saved to your account and synced across every device you sign in on.
           </p>
           <div className="flex flex-col items-center gap-2 pt-2">
             <Button variant="outline" onClick={() => setProfile(emptyProfile)}>
               Reset profile
-            </Button>
-            <Button variant="outline" onClick={wipe}>
-              <Trash2 className="h-4 w-4 mr-1" /> Erase device data
             </Button>
           </div>
         </Sticker>
