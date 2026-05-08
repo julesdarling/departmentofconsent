@@ -102,7 +102,7 @@ function SessionDetail() {
           </div>
         </Sticker>
 
-        <div className="grid grid-cols-3 gap-2">
+        <div className="flex flex-wrap justify-center gap-2">
           <Button asChild variant="outline" size="sm">
             <Link to="/sessions/$sessionId/edit" params={{ sessionId }}>
               Edit
