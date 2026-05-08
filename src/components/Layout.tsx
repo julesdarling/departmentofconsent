@@ -24,7 +24,7 @@ function BottomNav() {
   ] as const;
   return (
     <nav className="fixed bottom-4 left-4 right-4 z-40 bg-white rounded-full shadow-lg max-w-md mx-auto">
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-3">
         {items.map(({ to, label, Icon }) => (
           <li key={to}>
             <Link
