@@ -54,30 +54,30 @@ function KinkRow({
         )}
       </div>
       <div className="flex items-center justify-between gap-2">
-        <div className="flex gap-1">
+        <div className="inline-flex rounded-full border border-border/60 overflow-hidden">
           {RATINGS.map((r) => (
             <button
               key={r.value}
               onClick={() => onSetRating(r.value)}
               className={cn(
-                "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
-                rating === r.value ? r.cls : "border-border/60 text-muted-foreground hover:border-primary/50"
+                "h-6 px-3 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
+                rating === r.value ? r.cls : "text-muted-foreground hover:text-foreground"
               )}
             >
               {r.label}
             </button>
           ))}
         </div>
-        <div className="flex gap-1">
+        <div className="inline-flex rounded-full border border-border/60 overflow-hidden">
           {DIRECTIONS.map((d) => (
             <button
               key={d.value}
               onClick={() => onSetDirection(d.value)}
               className={cn(
-                "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
+                "h-6 px-3 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
                 direction === d.value
-                  ? "bg-yes/20 border-yes text-foreground"
-                  : "border-border/60 text-muted-foreground hover:border-yes/50"
+                  ? "bg-yes/20 text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               )}
             >
               {d.label}
