@@ -121,7 +121,7 @@ function EditScene() {
                           : "border-border/60 text-muted-foreground hover:border-primary/50"
                       )}
                     >
-                      {selected ? "✓ " : "+ "}{k.name}
+                      {selected ? "Selected " : "+ "}{k.name}
                     </button>
                   );
                 })}

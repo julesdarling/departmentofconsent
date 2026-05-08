@@ -274,7 +274,7 @@ function Compare({
     <div className="space-y-4">
       {/* HERO: mutual yes — the positive overlap */}
       <Sticker variant="coral" className="space-y-3 text-center">
-        <div className="text-5xl">💖</div>
+        
         <div className="font-display text-2xl font-semibold text-plum">
           {mutualYes.length > 0
             ? `${mutualYes.length} mutual yes${mutualYes.length === 1 ? "" : "es"}`
@@ -290,7 +290,7 @@ function Compare({
                 key={n}
                 className="text-sm font-medium bg-yes/25 text-plum px-3 py-1.5 rounded-full border border-yes/40"
               >
-                💚 {n}
+                {n}
               </span>
             ))}
           </div>
@@ -299,7 +299,7 @@ function Compare({
 
       {curious.length > 0 && (
         <Sticker className="space-y-2">
-          <div className="font-display text-lg text-plum">✨ Curious to explore together</div>
+          <div className="font-display text-lg text-plum">Curious to explore together</div>
           <p className="text-xs text-muted-foreground">
             At least one of you is a yes, the other a maybe — worth a chat.
           </p>
@@ -316,7 +316,7 @@ function Compare({
           <div className="font-display text-lg text-plum">Negotiate</div>
           {negotiate.length > 0 && (
             <div>
-              <div className="text-xs font-semibold uppercase text-maybe mb-1">💛 Discuss</div>
+              <div className="text-xs font-semibold uppercase text-maybe mb-1">Discuss</div>
               <div className="flex flex-wrap gap-1">
                 {negotiate.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
               </div>
@@ -324,7 +324,7 @@ function Compare({
           )}
           {conflicts.length > 0 && (
             <div>
-              <div className="text-xs font-semibold uppercase text-no mb-1">🛑 Hard limit from one side</div>
+              <div className="text-xs font-semibold uppercase text-no mb-1">Hard limit from one side</div>
               <div className="flex flex-wrap gap-1">
                 {conflicts.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
               </div>

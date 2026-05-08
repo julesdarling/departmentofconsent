@@ -339,7 +339,7 @@ function JoinPage() {
                           : "border-border/60 text-muted-foreground"
                       )}
                     >
-                      {selected ? "✓ " : "+ "}{k.name}
+                      {selected ? "Selected " : "+ "}{k.name}
                     </button>
                   );
                 })}
@@ -362,7 +362,7 @@ function JoinPage() {
         </Sticker>
 
         <Sticker className="space-y-3">
-          <h2 className="font-display text-lg text-plum">Lightning round ✨</h2>
+          <h2 className="font-display text-lg text-plum">Lightning round</h2>
           {grouped.map(([cat, items]) => (
             <div key={cat}>
               <div className="font-display text-sm font-semibold text-coral mt-2 mb-1">{cat}</div>
@@ -402,7 +402,7 @@ function JoinPage() {
 
         <div className="flex justify-center pt-2">
           <Button disabled={submitting} onClick={submit}>
-            {submitting ? "Submitting..." : "Submit my side ♡"}
+            {submitting ? "Submitting..." : "Submit my side"}
           </Button>
         </div>
       </div>
