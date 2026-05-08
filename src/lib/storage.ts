@@ -206,6 +206,7 @@ interface ProfileRow {
   default_safewords: string;
   kinks_library: KinkItem[];
   kink_ratings: KinkRatings;
+  kink_directions: KinkDirections;
 }
 
 function rowToProfile(r: ProfileRow | null | undefined): Profile {
@@ -342,6 +343,12 @@ export function useRatings() {
   const derive = useCallback((r: ProfileRow | null): KinkRatings => r?.kink_ratings ?? {}, []);
   const toPatch = useCallback((v: KinkRatings) => ({ kink_ratings: v }), []);
   return useCloudField<KinkRatings>(derive, toPatch, {});
+}
+
+export function useDirections() {
+  const derive = useCallback((r: ProfileRow | null): KinkDirections => r?.kink_directions ?? {}, []);
+  const toPatch = useCallback((v: KinkDirections) => ({ kink_directions: v }), []);
+  return useCloudField<KinkDirections>(derive, toPatch, {});
 }
 
 // ===== Participant id (per-browser, used inside a session side payload only) =====
