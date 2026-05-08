@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useKinks, useRatings, type Rating, type KinkItem } from "@/lib/storage";
+import { useKinks, useRatings, useDirections, type Rating, type Direction, type KinkItem } from "@/lib/storage";
 import { useMemo, useState } from "react";
 import { Plus, X } from "lucide-react";
 import { nanoid } from "nanoid";
@@ -22,38 +22,66 @@ const RATINGS: { value: Rating; label: string; cls: string }[] = [
   { value: "no", label: "No", cls: "bg-no/20 text-foreground border-no" },
 ];
 
+const DIRECTIONS: { value: Direction; label: string }[] = [
+  { value: "give", label: "Give" },
+  { value: "receive", label: "Receive" },
+  { value: "both", label: "Both" },
+];
+
 function KinkRow({
   item,
   rating,
-  onSet,
+  direction,
+  onSetRating,
+  onSetDirection,
   onRemove,
 }: {
   item: KinkItem;
   rating?: Rating;
-  onSet: (r: Rating) => void;
+  direction?: Direction;
+  onSetRating: (r: Rating) => void;
+  onSetDirection: (d: Direction) => void;
   onRemove?: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 last:border-0">
-      <div className="text-sm text-foreground flex-1 min-w-0 truncate">{item.name}</div>
-      <div className="flex gap-1">
-        {RATINGS.map((r) => (
+    <div className="py-2 border-b border-border/50 last:border-0 space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-sm text-foreground flex-1 min-w-0 truncate">{item.name}</div>
+        <div className="flex gap-1">
+          {RATINGS.map((r) => (
+            <button
+              key={r.value}
+              onClick={() => onSetRating(r.value)}
+              className={cn(
+                "h-7 min-w-7 px-2 rounded-full text-xs font-semibold border-2 transition",
+                rating === r.value ? r.cls : "border-border/60 text-muted-foreground hover:border-primary/50"
+              )}
+            >
+              {r.label}
+            </button>
+          ))}
+          {onRemove && (
+            <button onClick={onRemove} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive">
+              <X className="h-3.5 w-3.5" />
+            </button>
+          )}
+        </div>
+      </div>
+      <div className="flex gap-1 justify-end">
+        {DIRECTIONS.map((d) => (
           <button
-            key={r.value}
-            onClick={() => onSet(r.value)}
+            key={d.value}
+            onClick={() => onSetDirection(d.value)}
             className={cn(
-              "h-7 min-w-7 px-2 rounded-full text-xs font-semibold border-2 transition",
-              rating === r.value ? r.cls : "border-border/60 text-muted-foreground hover:border-primary/50"
+              "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
+              direction === d.value
+                ? "bg-coral/15 border-coral text-coral"
+                : "border-border/60 text-muted-foreground hover:border-coral/50"
             )}
           >
-            {r.label}
+            {d.label}
           </button>
         ))}
-        {onRemove && (
-          <button onClick={onRemove} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive">
-            <X className="h-3.5 w-3.5" />
-          </button>
-        )}
       </div>
     </div>
   );
@@ -62,6 +90,7 @@ function KinkRow({
 function KinksPage() {
   const [kinks, setKinks] = useKinks();
   const [ratings, setRatings] = useRatings();
+  const [directions, setDirections] = useDirections();
   const [newName, setNewName] = useState("");
   const [newCat, setNewCat] = useState("Custom");
 
@@ -76,6 +105,9 @@ function KinksPage() {
 
   const setRating = (id: string, r: Rating) =>
     setRatings((p) => ({ ...p, [id]: r }));
+
+  const setDirection = (id: string, d: Direction) =>
+    setDirections((p) => ({ ...p, [id]: d }));
 
   const addCustom = () => {
     if (!newName.trim()) return;
@@ -104,7 +136,9 @@ function KinksPage() {
                 key={item.id}
                 item={item}
                 rating={ratings[item.id]}
-                onSet={(r) => setRating(item.id, r)}
+                direction={directions[item.id]}
+                onSetRating={(r) => setRating(item.id, r)}
+                onSetDirection={(d) => setDirection(item.id, d)}
                 onRemove={item.custom ? () => removeCustom(item.id) : undefined}
               />
             ))}

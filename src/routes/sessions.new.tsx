@@ -267,10 +267,10 @@ function NewSession() {
             <p className="text-sm text-muted-foreground">
               Save your side and get a share link + QR for {partnerHandle || "your partner"} to fill out theirs.
             </p>
-            <Button size="lg" disabled={saving} className="w-full rounded-full font-semibold" onClick={() => save("shared")}>
+            <Button size="lg" disabled={saving} className="cloud-btn-fluid" onClick={() => save("shared")}>
               {saving ? "Saving..." : "Save & get share link"}
             </Button>
-            <Button size="lg" disabled={saving} variant="outline" className="w-full rounded-full" onClick={() => save("draft")}>
+            <Button size="lg" disabled={saving} variant="outline" className="cloud-btn-fluid" onClick={() => save("draft")}>
               Save as draft
             </Button>
           </Sticker>
@@ -279,6 +279,8 @@ function NewSession() {
         <div className="flex flex-col items-center gap-2">
           {step < STEPS.length - 1 && (
             <Button
+              size="lg"
+              className="cloud-btn-fluid"
               onClick={() => {
                 setStep((s) => Math.min(STEPS.length - 1, s + 1));
                 if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
@@ -288,7 +290,9 @@ function NewSession() {
             </Button>
           )}
           <Button
+            size="lg"
             variant="outline"
+            className="cloud-btn-fluid"
             disabled={step === 0}
             onClick={() => {
               setStep((s) => Math.max(0, s - 1));

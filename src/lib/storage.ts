@@ -7,6 +7,8 @@ import { useAuth } from "@/lib/useAuth";
 // ===== Types =====
 
 export type Rating = "yes" | "maybe" | "no" | "unsure";
+export type Direction = "give" | "receive" | "both";
+export type KinkDirections = Record<string, Direction>;
 
 export interface Profile {
   name: string;
@@ -84,8 +86,6 @@ export const DEFAULT_KINKS: KinkItem[] = [
   // Intimacy
   { id: "k_handstuff", name: "Hand stuff", category: "Intimacy" },
   { id: "k_kissing", name: "Kissing", category: "Intimacy" },
-  { id: "k_oral_give", name: "Oral (giving)", category: "Intimacy" },
-  { id: "k_oral_recv", name: "Oral (receiving)", category: "Intimacy" },
   { id: "k_cock_sucking", name: "Cock sucking", category: "Intimacy" },
   { id: "k_pussy_eating", name: "Pussy eating", category: "Intimacy" },
   { id: "k_fucking", name: "Fucking", category: "Intimacy" },
@@ -98,7 +98,7 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_sensation", name: "Sensation", category: "Sensation" },
   { id: "k_temp", name: "Temperature play (ice/wax)", category: "Sensation" },
   { id: "k_scratch", name: "Scratching", category: "Sensation" },
-  { id: "k_nails_scratch", name: "Nails and scratching", category: "Sensation" },
+  
   { id: "k_bite", name: "Biting", category: "Sensation" },
   { id: "k_tickle", name: "Tickling", category: "Sensation" },
   { id: "k_pinch", name: "Pinching", category: "Sensation" },
@@ -162,7 +162,7 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_hypno", name: "Hypno", category: "Edge" },
   { id: "k_unconscious", name: "Unconscious play and fucking", category: "Edge" },
   { id: "k_cnc", name: "Cnc / rape play", category: "Edge" },
-  { id: "k_incest", name: "Incest", category: "Edge" },
+  { id: "k_incest", name: "Incest play", category: "Edge" },
   { id: "k_molestation", name: "Molestation", category: "Edge" },
   { id: "k_pissing", name: "Pissing", category: "Edge" },
   { id: "k_pacifier", name: "Pacifier", category: "Edge" },
@@ -206,6 +206,7 @@ interface ProfileRow {
   default_safewords: string;
   kinks_library: KinkItem[];
   kink_ratings: KinkRatings;
+  kink_directions: KinkDirections;
 }
 
 function rowToProfile(r: ProfileRow | null | undefined): Profile {
@@ -342,6 +343,12 @@ export function useRatings() {
   const derive = useCallback((r: ProfileRow | null): KinkRatings => r?.kink_ratings ?? {}, []);
   const toPatch = useCallback((v: KinkRatings) => ({ kink_ratings: v }), []);
   return useCloudField<KinkRatings>(derive, toPatch, {});
+}
+
+export function useDirections() {
+  const derive = useCallback((r: ProfileRow | null): KinkDirections => r?.kink_directions ?? {}, []);
+  const toPatch = useCallback((v: KinkDirections) => ({ kink_directions: v }), []);
+  return useCloudField<KinkDirections>(derive, toPatch, {});
 }
 
 // ===== Participant id (per-browser, used inside a session side payload only) =====

@@ -102,7 +102,7 @@ function AuthPage() {
       <div className="space-y-6">
         <div className="text-center pt-2">
           <h1 className="font-display text-5xl text-foreground tracking-tight">
-            {mode === "signin" ? "Welcome back" : mode === "signup" ? "Create your account" : "Reset password"}
+            {mode === "signin" ? "Start playing safely" : mode === "signup" ? "Create your account" : "Reset password"}
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
             {mode === "signin"

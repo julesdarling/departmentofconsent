@@ -1,0 +1,1 @@
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS kink_directions jsonb NOT NULL DEFAULT '{}'::jsonb;
