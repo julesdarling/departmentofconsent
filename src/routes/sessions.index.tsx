@@ -25,7 +25,7 @@ function SessionsList() {
     <Layout>
       <div className="space-y-5">
         <div>
-          <h1 className="sticker p-6 hover:scale-[1.01] transition-transform my-[12px]">Scenes</h1>
+          <h1 className="font-display text-3xl font-semibold text-plum">Scenes</h1>
           <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
         </div>
 
