@@ -3,9 +3,10 @@ import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useMySessions } from "@/lib/storage";
-import { Plus, Calendar, Sparkles } from "lucide-react";
+import { Plus, Calendar } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { WhipLoader } from "@/components/WhipLoader";
+import emptySessionsImg from "@/assets/empty-sessions.png";
 
 export const Route = createFileRoute("/sessions/")({
   head: () => ({ meta: [{ title: "Sessions — Department of Consent" }] }),
@@ -35,7 +36,7 @@ function SessionsList() {
 
         {!isLoading && sorted.length === 0 && (
           <Sticker className="text-center space-y-3 py-10">
-            <Sparkles className="h-8 w-8 mx-auto text-coral" />
+            <img src={emptySessionsImg} alt="" className="h-32 w-32 mx-auto object-contain" />
             <p className="font-display text-lg text-plum">No sessions yet</p>
             <p className="text-sm text-muted-foreground">Your first negotiation is just a tap away.</p>
             <Button asChild className="rounded-full">
