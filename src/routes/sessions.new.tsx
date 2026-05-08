@@ -29,7 +29,6 @@ export const Route = createFileRoute("/sessions/new")({
 });
 
 const STEPS = [
-  "Play partner",
   "Scene vision",
   "Scene & logistics",
   "Privacy & sex",
