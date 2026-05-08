@@ -235,12 +235,21 @@ function NewSession() {
         {step === 2 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum">Privacy & sex</h2>
-            <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
-              <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
-            </Field>
-            <Field label="Penetrative sex during the scene?">
-              <Textarea value={side.penetrativeSex} onChange={(e) => update("penetrativeSex", e.target.value)} rows={2} placeholder="Yes / no / conditions" />
-            </Field>
+            <YesNoMaybe
+              label="Photos / videos during the scene?"
+              value={side.privacy}
+              onChange={(v) => update("privacy", v)}
+            />
+            <YesNoMaybe
+              label="Talking about it with others after?"
+              value={side.talkingAfter || ""}
+              onChange={(v) => update("talkingAfter", v)}
+            />
+            <YesNoMaybe
+              label="Penetrative sex during the scene?"
+              value={side.penetrativeSex}
+              onChange={(v) => update("penetrativeSex", v)}
+            />
           </Sticker>
         )}
 
