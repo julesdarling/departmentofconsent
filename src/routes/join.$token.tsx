@@ -382,8 +382,25 @@ function JoinPage() {
           <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => updateField("callMe", e.target.value)} /></Field>
           <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => updateField("dontCallMe", e.target.value)} /></Field>
           <Field label="Intentions / how you want to feel"><Textarea value={side.intentions} onChange={(e) => updateField("intentions", e.target.value)} rows={3} /></Field>
-          <Field label="Privacy preferences"><Textarea value={side.privacy} onChange={(e) => updateField("privacy", e.target.value)} rows={3} /></Field>
-          <Field label="Penetrative sex?"><Textarea value={side.penetrativeSex} onChange={(e) => updateField("penetrativeSex", e.target.value)} rows={2} /></Field>
+
+          <YesNoMaybeMatch
+            label="Photos / videos during the scene?"
+            theirValue={session.ownerSide.privacy}
+            value={side.privacy}
+            onChange={(v) => updateField("privacy", v)}
+          />
+          <YesNoMaybeMatch
+            label="Talking about it with others after?"
+            theirValue={session.ownerSide.talkingAfter}
+            value={side.talkingAfter || ""}
+            onChange={(v) => updateField("talkingAfter", v)}
+          />
+          <YesNoMaybeMatch
+            label="Penetrative sex during the scene?"
+            theirValue={session.ownerSide.penetrativeSex}
+            value={side.penetrativeSex}
+            onChange={(v) => updateField("penetrativeSex", v)}
+          />
         </Sticker>
 
         <Sticker variant="coral" className="space-y-2">
