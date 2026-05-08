@@ -140,7 +140,7 @@ function NewSession() {
               </p>
               {interestedKinks.length === 0 ? (
                 <p className="text-xs text-muted-foreground italic">
-                  Rate some kinks on your <Link to="/kinks" className="underline text-coral">kinks page</Link> to pick from them here.
+                  Rate some kinks on your <Link to="/kinks" className="underline text-link">kinks page</Link> to pick from them here.
                 </p>
               ) : (
                 <div className="flex flex-wrap gap-2 pt-1">
@@ -234,7 +234,7 @@ function NewSession() {
             <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
             <p className="text-xs text-muted-foreground">
               Your saved kinks ratings are already attached.{" "}
-              <Link to="/kinks" className="underline text-coral">Edit your kinks library</Link>{" "}
+              <Link to="/kinks" className="underline text-link">Edit your kinks library</Link>{" "}
               if you need to. Below: only what's different about this scene.
             </p>
             <Field label="Names you want to be called for this scene (override)">

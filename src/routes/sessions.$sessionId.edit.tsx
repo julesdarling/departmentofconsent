@@ -82,7 +82,7 @@ function EditScene() {
       <div className="space-y-5">
         <div className="flex items-center justify-between">
           <h1 className="font-display text-3xl font-semibold text-plum">Edit scene</h1>
-          <Link to="/sessions/$sessionId" params={{ sessionId }} className="text-xs text-coral underline">Cancel</Link>
+          <Link to="/sessions/$sessionId" params={{ sessionId }} className="text-xs text-link underline">Cancel</Link>
         </div>
 
         <Sticker className="space-y-4">
@@ -103,7 +103,7 @@ function EditScene() {
             <Label className="doc-label">Pick what you're craving for this scene</Label>
             {interestedKinks.length === 0 ? (
               <p className="text-xs text-muted-foreground italic">
-                Rate some kinks on your <Link to="/kinks" className="underline text-coral">kinks page</Link>.
+                Rate some kinks on your <Link to="/kinks" className="underline text-link">kinks page</Link>.
               </p>
             ) : (
               <div className="flex flex-wrap gap-2 pt-1">

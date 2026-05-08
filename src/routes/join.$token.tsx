@@ -107,7 +107,7 @@ function JoinPage() {
               Your side has been shared with {ownerName}. Below is the full plan for the scene.
             </p>
             <div className="pt-1">
-              <Link to="/scene/$token" params={{ token }} className="text-sm text-coral underline underline-offset-4">
+              <Link to="/scene/$token" params={{ token }} className="text-sm text-link underline underline-offset-4">
                 View & share scene recap
               </Link>
             </div>

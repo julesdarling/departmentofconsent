@@ -91,7 +91,7 @@ function SettingsPage() {
             <div className="flex flex-col items-center gap-3 pt-2">
               <button
                 onClick={handleLogout}
-                className="text-sm text-coral underline underline-offset-4 hover:opacity-80"
+                className="text-sm text-link underline underline-offset-4 hover:opacity-80"
               >
                 Log out
               </button>

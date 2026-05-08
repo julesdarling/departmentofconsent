@@ -149,12 +149,12 @@ function AuthPage() {
               <>
                 <div>
                   New here?{" "}
-                  <button className="underline text-coral" onClick={() => setMode("signup")}>
+                  <button className="underline text-link" onClick={() => setMode("signup")}>
                     Create an account
                   </button>
                 </div>
                 <div>
-                  <button className="underline text-coral text-xs" onClick={() => setMode("forgot")}>
+                  <button className="underline text-link text-xs" onClick={() => setMode("forgot")}>
                     Forgot password?
                   </button>
                 </div>
@@ -163,13 +163,13 @@ function AuthPage() {
             {mode === "signup" && (
               <>
                 Have an account?{" "}
-                <button className="underline text-coral" onClick={() => setMode("signin")}>
+                <button className="underline text-link" onClick={() => setMode("signin")}>
                   Sign in
                 </button>
               </>
             )}
             {mode === "forgot" && (
-              <button className="underline text-coral" onClick={() => setMode("signin")}>
+              <button className="underline text-link" onClick={() => setMode("signin")}>
                 ← Back to sign in
               </button>
             )}
