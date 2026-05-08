@@ -327,10 +327,28 @@ export function useProfile() {
   return useCloudField<Profile>(derive, toPatch, emptyProfile);
 }
 
+const REMOVED_KINK_IDS = new Set([
+  "k_pen_giving",
+  "k_pen_recv",
+  "k_oral_giving",
+  "k_oral_recv",
+  "k_oral_receiving",
+]);
+const REMOVED_KINK_NAMES = new Set([
+  "penetrative (giving)",
+  "penetrative (receiving)",
+  "oral (giving)",
+  "oral (receiving)",
+]);
+
 export function useKinks() {
   const derive = useCallback((r: ProfileRow | null): KinkItem[] => {
     const arr = r?.kinks_library;
-    if (Array.isArray(arr) && arr.length > 0) return arr;
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr.filter(
+        (k) => !REMOVED_KINK_IDS.has(k.id) && !REMOVED_KINK_NAMES.has(k.name?.toLowerCase?.() ?? "")
+      );
+    }
     return DEFAULT_KINKS;
   }, []);
   const toPatch = useCallback((v: KinkItem[]) => ({ kinks_library: v }), []);
