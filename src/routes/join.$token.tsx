@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   useProfile,
-  useSessionIndex,
   emptySide,
   useRatings,
   type SessionSide,
@@ -29,7 +28,7 @@ function JoinPage() {
   const [profile] = useProfile();
   const [kinks] = useKinks();
   const [savedRatings] = useRatings();
-  const [, setIndex] = useSessionIndex();
+  
   // no navigate needed – guests see a thank-you instead
   const { session, error, addPartner } = useCloudSession(token);
 
@@ -84,21 +83,6 @@ function JoinPage() {
     setSubmitting(true);
     try {
       await addPartner({ ...side, filledAt: new Date().toISOString() });
-      setIndex((prev) =>
-        prev.some((s) => s.shareToken === token)
-          ? prev
-          : [
-              ...prev,
-              {
-                id: session.id,
-                shareToken: token,
-                partnerHandle: session.ownerSide.name || "Invite",
-                date: session.date,
-                createdAt: new Date().toISOString(),
-                role: "partner",
-              },
-            ]
-      );
       setSubmitted(true);
       if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
     } finally {
