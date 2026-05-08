@@ -268,18 +268,14 @@ function Compare({
 
   return (
     <div className="space-y-4">
-      {/* HERO: mutual yes — the positive overlap */}
-      <Sticker variant="coral" className="space-y-3 text-center">
-        
-        <div className="font-display text-2xl text-plum">
-          {mutualYes.length > 0
-            ? `${mutualYes.length} mutual yes${mutualYes.length === 1 ? "" : "es"}`
-            : "No mutual yeses yet"}
-        </div>
-        <p className="text-xs text-muted-foreground">
-          You and {partnerName} both said yes to these.
-        </p>
-        {mutualYes.length > 0 && (
+      {mutualYes.length > 0 && (
+        <Sticker variant="coral" className="space-y-3 text-center">
+          <div className="font-display text-2xl text-plum">
+            {mutualYes.length} mutual yes{mutualYes.length === 1 ? "" : "es"}
+          </div>
+          <p className="text-xs text-muted-foreground">
+            You and {partnerName} both said yes to these.
+          </p>
           <div className="flex flex-wrap gap-2 justify-center pt-1">
             {mutualYes.map((n) => (
               <span
@@ -290,8 +286,8 @@ function Compare({
               </span>
             ))}
           </div>
-        )}
-      </Sticker>
+        </Sticker>
+      )}
 
       {curious.length > 0 && (
         <Sticker className="space-y-2">
