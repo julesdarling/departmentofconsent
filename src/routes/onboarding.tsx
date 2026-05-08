@@ -64,7 +64,6 @@ function Onboarding() {
     setDeleting(true);
     try {
       await deleteFn();
-      try { localStorage.clear(); } catch { /* ignore */ }
       await supabase.auth.signOut();
       window.location.href = "/";
     } catch (err) {
@@ -201,7 +200,7 @@ function Onboarding() {
             <AlertDialogDescription asChild>
               <div className="space-y-3 text-sm">
                 <p>
-                  This permanently deletes your account, profile, and on-device data. Active
+                  This permanently deletes your account, profile, and saved scenes. Active
                   subscriptions are not automatically refunded — cancel first if needed.
                 </p>
                 <p>Type <span className="font-mono font-bold">DELETE</span> to confirm.</p>

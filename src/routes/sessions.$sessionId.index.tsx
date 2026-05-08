@@ -54,7 +54,7 @@ function SessionDetail() {
   };
 
   const remove = async () => {
-    if (!confirm("Delete this session? This wipes it from the server too.")) return;
+    if (!confirm("Delete this session? This permanently removes it for everyone.")) return;
     await apiDeleteSession(session.shareToken);
     navigate({ to: "/sessions" });
   };
