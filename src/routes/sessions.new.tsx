@@ -114,16 +114,31 @@ function NewSession() {
         {step === 0 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum">Scene vision</h2>
-            <Field label="Date & time of play">
-              <Input
-                type="datetime-local"
-                value={side.timeOfPlay || ""}
-                onChange={(e) => {
-                  update("timeOfPlay", e.target.value);
-                  if (e.target.value) setDate(e.target.value.slice(0, 10));
-                }}
-              />
-            </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Date of play">
+                <Input
+                  type="date"
+                  value={side.timeOfPlay ? side.timeOfPlay.slice(0, 10) : date}
+                  onChange={(e) => {
+                    const d = e.target.value;
+                    setDate(d);
+                    const t = side.timeOfPlay?.slice(11, 16) || "20:00";
+                    update("timeOfPlay", d ? `${d}T${t}` : "");
+                  }}
+                />
+              </Field>
+              <Field label="Time">
+                <Input
+                  type="time"
+                  value={side.timeOfPlay ? side.timeOfPlay.slice(11, 16) : ""}
+                  onChange={(e) => {
+                    const t = e.target.value;
+                    const d = side.timeOfPlay?.slice(0, 10) || date;
+                    update("timeOfPlay", d && t ? `${d}T${t}` : "");
+                  }}
+                />
+              </Field>
+            </div>
             <Field label="What are you imagining for this scene?">
               <Textarea
                 value={side.vision}
