@@ -89,7 +89,7 @@ function JoinPage() {
     try {
       await addPartner({ ...side, filledAt: new Date().toISOString() });
       setSubmitted(true);
-      if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+      navigate({ to: "/sessions/$sessionId", params: { sessionId: token } });
     } finally {
       setSubmitting(false);
     }
