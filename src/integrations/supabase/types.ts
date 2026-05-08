@@ -75,6 +75,7 @@ export type Database = {
           emergency_contact: string
           healthcare: string
           id: string
+          kink_directions: Json
           kink_ratings: Json
           kinks_library: Json
           name: string
@@ -91,6 +92,7 @@ export type Database = {
           emergency_contact?: string
           healthcare?: string
           id?: string
+          kink_directions?: Json
           kink_ratings?: Json
           kinks_library?: Json
           name?: string
@@ -107,6 +109,7 @@ export type Database = {
           emergency_contact?: string
           healthcare?: string
           id?: string
+          kink_directions?: Json
           kink_ratings?: Json
           kinks_library?: Json
           name?: string
