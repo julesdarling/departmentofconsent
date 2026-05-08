@@ -153,12 +153,6 @@ function SessionDetail() {
           />
         ))}
 
-        <div className="flex justify-center">
-          <Link to="/scene/$token" params={{ token: session.shareToken }} className="text-sm text-link underline underline-offset-4 hover:opacity-80">
-            View shareable scene recap
-          </Link>
-        </div>
-
         <Sticker className="space-y-3">
           <div className="font-display text-lg text-plum">Your side</div>
           <SideDetail title="Setting" value={o.setting} />
