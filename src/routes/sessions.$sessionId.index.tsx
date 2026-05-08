@@ -9,11 +9,11 @@ import { QRCodeSVG } from "qrcode.react";
 import { Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
 import { CloudButton } from "@/components/CloudButton";
 import { useMemo, useState } from "react";
-import { RequireAuth } from "@/components/RequireAuth";
+import { useAuth } from "@/lib/useAuth";
 
 export const Route = createFileRoute("/sessions/$sessionId/")({
   head: () => ({ meta: [{ title: "Scene — Department of Consent" }] }),
-  component: () => <RequireAuth><SessionDetail /></RequireAuth>,
+  component: SessionDetail,
 });
 
 function SessionDetail() {
