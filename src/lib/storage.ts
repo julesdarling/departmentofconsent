@@ -81,21 +81,52 @@ export interface PlaySession {
 // ===== Defaults =====
 
 export const DEFAULT_KINKS: KinkItem[] = [
+  // Intimacy
+  { id: "k_handstuff", name: "Hand stuff", category: "Intimacy" },
+  { id: "k_kissing", name: "Kissing", category: "Intimacy" },
+  { id: "k_oral_give", name: "Oral (giving)", category: "Intimacy" },
+  { id: "k_oral_recv", name: "Oral (receiving)", category: "Intimacy" },
+  { id: "k_cock_sucking", name: "Cock sucking", category: "Intimacy" },
+  { id: "k_pussy_eating", name: "Pussy eating", category: "Intimacy" },
+  { id: "k_fucking", name: "Fucking", category: "Intimacy" },
+  { id: "k_anal", name: "Anal play", category: "Intimacy" },
+  { id: "k_toys", name: "Toys", category: "Intimacy" },
+  { id: "k_pen_giving", name: "Penetrative (giving)", category: "Intimacy" },
+  { id: "k_pen_recv", name: "Penetrative (receiving)", category: "Intimacy" },
+
+  // Sensation
+  { id: "k_sensation", name: "Sensation", category: "Sensation" },
   { id: "k_temp", name: "Temperature play (ice/wax)", category: "Sensation" },
   { id: "k_scratch", name: "Scratching", category: "Sensation" },
+  { id: "k_nails_scratch", name: "Nails and scratching", category: "Sensation" },
   { id: "k_bite", name: "Biting", category: "Sensation" },
   { id: "k_tickle", name: "Tickling", category: "Sensation" },
   { id: "k_pinch", name: "Pinching", category: "Sensation" },
+  { id: "k_ear_licking", name: "Ear licking", category: "Sensation" },
+  { id: "k_electro", name: "Electro", category: "Sensation" },
+
+  // Impact
+  { id: "k_impact", name: "Impact", category: "Impact" },
   { id: "k_spank_hand", name: "Spanking (hand)", category: "Impact" },
   { id: "k_paddle", name: "Paddling", category: "Impact" },
   { id: "k_flog", name: "Flogging", category: "Impact" },
   { id: "k_cane", name: "Caning", category: "Impact" },
   { id: "k_slap_face", name: "Face slapping", category: "Impact" },
+  { id: "k_whipping", name: "Whipping", category: "Impact" },
+  { id: "k_body_punching", name: "Body punching", category: "Impact" },
+  { id: "k_face_punching", name: "Face punching", category: "Impact" },
+
+  // Bondage
   { id: "k_rope", name: "Rope bondage", category: "Bondage" },
   { id: "k_cuffs", name: "Cuffs / restraints", category: "Bondage" },
   { id: "k_blindfold", name: "Blindfold", category: "Bondage" },
   { id: "k_gag", name: "Gag", category: "Bondage" },
   { id: "k_collar", name: "Collar / leash", category: "Bondage" },
+  { id: "k_grabbing", name: "Grabbing / restraining", category: "Bondage" },
+  { id: "k_hand_mouth", name: "Hand over mouth", category: "Bondage" },
+  { id: "k_saran_wrap", name: "Saran Wrap", category: "Bondage" },
+
+  // Power exchange
   { id: "k_dom", name: "Dominance", category: "Power exchange" },
   { id: "k_sub", name: "Submission", category: "Power exchange" },
   { id: "k_brat", name: "Brat / bratty play", category: "Power exchange" },
@@ -103,23 +134,39 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_humil", name: "Humiliation (light)", category: "Power exchange" },
   { id: "k_degrade", name: "Degradation", category: "Power exchange" },
   { id: "k_praise", name: "Praise", category: "Power exchange" },
+
+  // Sensory
   { id: "k_sensory_dep", name: "Sensory deprivation", category: "Sensory" },
   { id: "k_overstim", name: "Overstimulation", category: "Sensory" },
+
+  // Roleplay
   { id: "k_role_age", name: "Age play (adult)", category: "Roleplay" },
+  { id: "k_ageplay_girl", name: "Ageplay / Little girl", category: "Roleplay" },
   { id: "k_role_pet", name: "Pet play", category: "Roleplay" },
   { id: "k_role_primal", name: "Primal play", category: "Roleplay" },
-  { id: "k_kissing", name: "Kissing", category: "Intimacy" },
-  { id: "k_oral_give", name: "Oral (giving)", category: "Intimacy" },
-  { id: "k_oral_recv", name: "Oral (receiving)", category: "Intimacy" },
-  { id: "k_handstuff", name: "Hand stuff", category: "Intimacy" },
-  { id: "k_toys", name: "Toys", category: "Intimacy" },
-  { id: "k_anal", name: "Anal play", category: "Intimacy" },
-  { id: "k_pen_giving", name: "Penetrative (giving)", category: "Intimacy" },
-  { id: "k_pen_recv", name: "Penetrative (receiving)", category: "Intimacy" },
+  { id: "k_fuckdoll", name: "Fuckdoll roleplay", category: "Roleplay" },
+
+  // Edge / Taboo
   { id: "k_breath", name: "Breath play", category: "Edge" },
+  { id: "k_choking", name: "Choking and strangulation", category: "Edge" },
   { id: "k_knife", name: "Knife / edge play", category: "Edge" },
   { id: "k_blood", name: "Blood play", category: "Edge" },
   { id: "k_fire", name: "Fire play", category: "Edge" },
+  { id: "k_fingers_throat", name: "Fingers down throat", category: "Edge" },
+  { id: "k_spitting", name: "Spitting", category: "Edge" },
+  { id: "k_throat_fucking", name: "Throat fucking", category: "Edge" },
+  { id: "k_deepthroat_training", name: "Deepthroat training", category: "Edge" },
+  { id: "k_tit_torture", name: "Tit torture", category: "Edge" },
+  { id: "k_pussy_torture", name: "Pussy torture", category: "Edge" },
+  { id: "k_orgasm_control", name: "Orgasm control", category: "Edge" },
+  { id: "k_hypno", name: "Hypno", category: "Edge" },
+  { id: "k_unconscious", name: "Unconscious play and fucking", category: "Edge" },
+  { id: "k_cnc", name: "Cnc / rape play", category: "Edge" },
+  { id: "k_incest", name: "Incest", category: "Edge" },
+  { id: "k_molestation", name: "Molestation", category: "Edge" },
+  { id: "k_pissing", name: "Pissing", category: "Edge" },
+  { id: "k_pacifier", name: "Pacifier", category: "Edge" },
+  { id: "k_vomitting", name: "Vomitting from throat fucking", category: "Edge" },
 ];
 
 export const DEFAULT_SAFEWORDS = `Verbal:
