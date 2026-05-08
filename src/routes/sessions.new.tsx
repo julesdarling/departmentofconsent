@@ -29,7 +29,6 @@ export const Route = createFileRoute("/sessions/new")({
 });
 
 const STEPS = [
-  "Play partner",
   "Scene vision",
   "Scene & logistics",
   "Privacy & sex",
@@ -44,7 +43,6 @@ function NewSession() {
   const navigate = useNavigate();
 
   const [session] = useState(() => newSession(profile, ratings));
-  const [partnerHandle, setPartnerHandle] = useState("");
   const [date, setDate] = useState(session.date);
   const [side, setSide] = useState<SessionSide>(session.ownerSide);
   const [step, setStep] = useState(0);
@@ -80,7 +78,7 @@ function NewSession() {
     try {
       const created = await apiCreateSession({
         shareToken: session.shareToken,
-        partnerHandle,
+        partnerHandle: "",
         date,
         status,
         ownerSide: { ...side, filledAt: new Date().toISOString() },
@@ -108,23 +106,10 @@ function NewSession() {
 
         {step === 0 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Who & when</h2>
-            <Field label="Play partner name or handle">
-              <Input value={partnerHandle} onChange={(e) => setPartnerHandle(e.target.value)} placeholder="How you'll remember them" />
-            </Field>
+            <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
             <Field label="Date of play">
               <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
             </Field>
-            <p className="text-xs text-muted-foreground">
-              We'll use your saved profile, kinks, safewords and aftercare as the starting point.
-              You can tweak anything that's different for this scene in the next steps.
-            </p>
-          </Sticker>
-        )}
-
-        {step === 1 && (
-          <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
             <Field label="What are you imagining for this scene?">
               <Textarea
                 value={side.vision}
@@ -177,7 +162,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 2 && (
+        {step === 1 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Scene & logistics</h2>
             <Field label="Setting (where is it happening?)">
@@ -217,7 +202,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 3 && (
+        {step === 2 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
@@ -229,7 +214,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 4 && (
+        {step === 3 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
             <p className="text-xs text-muted-foreground">
@@ -261,11 +246,11 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 5 && (
+        {step === 4 && (
           <Sticker className="space-y-3 text-center">
             <h2 className="font-display text-2xl text-plum">All set</h2>
             <p className="text-sm text-muted-foreground">
-              Save your side and get a share link + QR for {partnerHandle || "your partner"} to fill out theirs.
+              Save your side and get a share link + QR for your partner to fill out theirs.
             </p>
             <Button size="lg" disabled={saving} className="cloud-btn-fluid" onClick={() => save("shared")}>
               {saving ? "Saving..." : "Save & get share link"}
