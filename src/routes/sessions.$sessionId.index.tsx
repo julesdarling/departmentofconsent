@@ -137,6 +137,8 @@ function SessionDetail() {
             key={i}
             a={o.ratings || {}}
             b={ps.ratings || {}}
+            aSelected={o.selectedKinks || []}
+            bSelected={ps.selectedKinks || []}
             kinkMap={kinkMap}
             partnerName={ps.name || `Play partner ${i + 1}`}
           />
@@ -247,11 +249,15 @@ function SideDetail({ title, value }: { title: string; value: string }) {
 function Compare({
   a,
   b,
+  aSelected,
+  bSelected,
   kinkMap,
   partnerName,
 }: {
   a: Record<string, string>;
   b: Record<string, string>;
+  aSelected: string[];
+  bSelected: string[];
   kinkMap: Record<string, string>;
   partnerName: string;
 }) {
@@ -272,6 +278,11 @@ function Compare({
     ) curious.push(name);
     else if (ra === "maybe" || rb === "maybe") negotiate.push(name);
   }
+
+  const bSet = new Set(bSelected);
+  const agreedSelected = aSelected
+    .filter((id) => bSet.has(id))
+    .map((id) => kinkMap[id] || id);
 
   return (
     <div className="space-y-4">
@@ -314,9 +325,20 @@ function Compare({
         </Sticker>
       )}
 
-      {(negotiate.length > 0 || conflicts.length > 0) && (
+      {(negotiate.length > 0 || conflicts.length > 0 || agreedSelected.length > 0) && (
         <Sticker className="space-y-3">
           <div className="font-display text-lg text-plum">Negotiate</div>
+          {agreedSelected.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold uppercase text-yes mb-1">Both want to play</div>
+              <p className="text-[11px] text-muted-foreground mb-1">
+                Cravings you both picked for this scene.
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {agreedSelected.map((n) => <span key={n} className="text-xs bg-yes/25 px-2 py-0.5 rounded-full border border-yes/40">{n}</span>)}
+              </div>
+            </div>
+          )}
           {negotiate.length > 0 && (
             <div>
               <div className="text-xs font-semibold uppercase text-maybe mb-1">Discuss</div>
