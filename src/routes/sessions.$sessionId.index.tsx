@@ -369,3 +369,71 @@ function VisionBlock({
     </div>
   );
 }
+
+function FullSideBlock({
+  title,
+  side,
+  kinkMap,
+}: {
+  title: string;
+  side: SessionSide;
+  kinkMap: Record<string, string>;
+}) {
+  const yesItems = Object.entries(side.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
+  const maybeItems = Object.entries(side.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
+  const noItems = Object.entries(side.ratings || {}).filter(([, r]) => r === "no").map(([id]) => kinkMap[id] || id);
+
+  return (
+    <Sticker variant="coral" className="space-y-3">
+      <div className="font-display text-lg text-plum">{title}</div>
+      <SideDetail title="Vision" value={side.vision} />
+      <SideDetail title="Date & time of play" value={side.timeOfPlay} />
+      <SideDetail title="Setting" value={side.setting} />
+      <SideDetail title="Time constraints" value={side.timeConstraints} />
+      <SideDetail title="Music" value={side.music} />
+      <SideDetail title="Dress" value={side.dress} />
+      <SideDetail title="Substances" value={side.substances} />
+      <SideDetail title="Medical concerns" value={side.medicalConcerns} />
+      <SideDetail title="Other partners / dynamics" value={side.partnerDynamics} />
+      <SideDetail title="Intentions" value={side.intentions} />
+      <SideDetail title="A good time looks like" value={side.goodTime} />
+      <SideDetail title="A bad time looks like" value={side.badTime} />
+      <SideDetail title="Call me" value={side.callMe} />
+      <SideDetail title="Don't call me" value={side.dontCallMe} />
+      <SideDetail title="Photos / videos" value={side.privacy} />
+      <SideDetail title="Talking about it after" value={side.talkingAfter} />
+      <SideDetail title="Penetrative sex" value={side.penetrativeSex} />
+
+      {yesItems.length > 0 && (
+        <div>
+          <div className="text-xs font-semibold uppercase text-yes mt-3 mb-1">Yes</div>
+          <div className="flex flex-wrap gap-1">
+            {yesItems.map((n) => <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>)}
+          </div>
+        </div>
+      )}
+      {maybeItems.length > 0 && (
+        <div>
+          <div className="text-xs font-semibold uppercase text-maybe mt-3 mb-1">Maybe</div>
+          <div className="flex flex-wrap gap-1">
+            {maybeItems.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
+          </div>
+        </div>
+      )}
+      {noItems.length > 0 && (
+        <div>
+          <div className="text-xs font-semibold uppercase text-no mt-3 mb-1">Hard No</div>
+          <div className="flex flex-wrap gap-1">
+            {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
+          </div>
+        </div>
+      )}
+
+      <SideDetail title="Hard limits (text)" value={side.hardLimits} />
+      <SideDetail title="Soft limits (text)" value={side.softLimits} />
+      <SideDetail title="Yes (text)" value={side.yesList} />
+      <SideDetail title="Aftercare" value={side.aftercare} />
+      <SideDetail title="Brainstorm" value={side.brainstorm} />
+    </Sticker>
+  );
+}
