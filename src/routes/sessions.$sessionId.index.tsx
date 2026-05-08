@@ -85,25 +85,27 @@ function SessionDetail() {
           </span>
         </div>
 
-        <Sticker className="text-center space-y-3">
-          <div className="font-display text-lg text-plum">Share with your play partner</div>
-          <div className="flex justify-center bg-card p-3 rounded-xl">
-            <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
-          </div>
-          <div className="flex justify-center pt-1">
-            <CloudButton variant="mint" onClick={copy}>
-              {copied ? "Copied!" : "Copy link to share"}
-            </CloudButton>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            Anyone with this link can fill out the play partner side. They'll see your side once they submit.
-          </p>
-          <div className="flex justify-center pt-2">
-            <button onClick={refresh} className="text-sm text-link underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
-              <RefreshCw className="h-3 w-3" /> Check for play partner's reply
-            </button>
-          </div>
-        </Sticker>
+        {isOwner && (
+          <Sticker className="text-center space-y-3">
+            <div className="font-display text-lg text-plum">Share with your play partner</div>
+            <div className="flex justify-center bg-card p-3 rounded-xl">
+              <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
+            </div>
+            <div className="flex justify-center pt-1">
+              <CloudButton variant="mint" onClick={copy}>
+                {copied ? "Copied!" : "Copy link to share"}
+              </CloudButton>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Anyone with this link can fill out the play partner side. They'll see your side once they submit.
+            </p>
+            <div className="flex justify-center pt-2">
+              <button onClick={refresh} className="text-sm text-link underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
+                <RefreshCw className="h-3 w-3" /> Check for play partner's reply
+              </button>
+            </div>
+          </Sticker>
+        )}
 
         <div className="flex flex-col items-center gap-2">
           <CloudButton variant="outline" to={`/sessions/${sessionId}/scene`}>
