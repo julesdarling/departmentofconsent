@@ -137,6 +137,8 @@ function SessionDetail() {
             key={i}
             a={o.ratings || {}}
             b={ps.ratings || {}}
+            aSelected={o.selectedKinks || []}
+            bSelected={ps.selectedKinks || []}
             kinkMap={kinkMap}
             partnerName={ps.name || `Play partner ${i + 1}`}
           />
