@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, ListChecks, Heart, User } from "lucide-react";
+import { ListChecks, Heart, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
 
