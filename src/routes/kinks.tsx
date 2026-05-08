@@ -40,7 +40,7 @@ function KinkRow({
   rating?: Rating;
   direction?: Direction;
   onSetRating: (r: Rating) => void;
-  onSetDirection: (d: Direction) => void;
+  onSetDirection: (d: Direction | undefined) => void;
   onRemove?: () => void;
 }) {
   return (
