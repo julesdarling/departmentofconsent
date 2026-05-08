@@ -41,7 +41,7 @@ function BottomNav() {
               to={to}
               activeOptions={{ exact }}
               className="flex flex-col items-center justify-center gap-0.5 py-2.5 text-plum/60 text-[11px] rounded-full"
-              activeProps={{ className: "flex flex-col items-center justify-center gap-0.5 py-2.5 text-plum text-[11px] font-bold rounded-full bg-cream" }}
+              activeProps={{ className: "flex flex-col items-center justify-center gap-0.5 py-2.5 text-plum text-[11px] font-bold rounded-full", style: { backgroundColor: "#ffdce4" } }}
             >
               <Icon className="h-5 w-5" />
               <span>{label}</span>
