@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { ListChecks, Heart, User } from "lucide-react";
+import { ListChecks, Plus, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
 import wordmark from "@/assets/logo.svg";
@@ -29,7 +29,7 @@ export function Layout({ children, fullBleed = false, showFooter = false }: { ch
 function BottomNav() {
   const items = [
     { to: "/sessions", label: "Scenes", Icon: ListChecks },
-    { to: "/kinks", label: "Kinks", Icon: Heart },
+    { to: "/sessions/new", label: "New scene", Icon: Plus },
     { to: "/settings", label: "Profile", Icon: User },
   ] as const;
   return (

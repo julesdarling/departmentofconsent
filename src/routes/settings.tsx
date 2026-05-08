@@ -67,8 +67,11 @@ function SettingsPage() {
           <Row label="Healthcare" value={profile.healthcare} />
           <Row label="Emergency contact" value={profile.emergencyContact} />
           <Row label="Default aftercare" value={profile.defaultAftercare} />
-          <div className="flex justify-center pt-2">
+          <div className="flex flex-col items-center gap-3 pt-2">
             <Button asChild><Link to="/onboarding">Edit profile</Link></Button>
+            <Link to="/kinks" className="text-sm text-link underline underline-offset-4 hover:opacity-80">
+              Edit kinks
+            </Link>
           </div>
         </Sticker>
 
