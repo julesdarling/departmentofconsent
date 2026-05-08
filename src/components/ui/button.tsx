@@ -5,11 +5,11 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cloud-btn rounded-none",
   {
     variants: {
       variant: {
-        default: "cloud-btn",
+        default: "",
         destructive: "rounded-full bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90 px-4 py-2 text-sm",
         outline: "cloud-btn cloud-btn-outline",
         secondary: "rounded-full bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 px-4 py-2 text-sm",
