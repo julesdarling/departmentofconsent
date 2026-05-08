@@ -62,6 +62,7 @@ export interface SessionSide {
   aftercare: string;
   brainstorm: string;
   ratings: KinkRatings;
+  directions?: KinkDirections;
 }
 
 export type SessionStatus = "draft" | "shared" | "agreed" | "completed";
