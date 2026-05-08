@@ -11,7 +11,9 @@ import {
   useRatings,
   type SessionSide,
   type Rating,
+  type Direction,
 } from "@/lib/storage";
+import { DirectionRow } from "./sessions.new";
 import { useEffect, useMemo, useState } from "react";
 import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
@@ -77,6 +79,9 @@ function JoinPage() {
 
   const setRating = (id: string, r: Rating) =>
     setSide((p) => (p ? { ...p, ratings: { ...p.ratings, [id]: r } } : p));
+
+  const setDirection = (id: string, d: Direction) =>
+    setSide((p) => (p ? { ...p, directions: { ...(p.directions || {}), [id]: d } } : p));
 
   const submit = async () => {
     if (!side) return;
@@ -211,16 +216,19 @@ function JoinPage() {
                 </div>
               )}
               {visionKinkIds.length > 0 && (
-                <div className="space-y-1">
+                <div className="space-y-3">
                   <div className="text-xs text-muted-foreground pb-1">
                     {creatorName} picked these for the scene — how do you feel?
                   </div>
                   {visionKinkIds.map((id) => (
-                    <RateRow
+                    <KinkBlock
                       key={id}
                       name={ownerKinkMap[id]}
-                      value={side.ratings[id]}
-                      onChange={(r) => setRating(id, r)}
+                      creatorDirection={ownerSide.directions?.[id]}
+                      rating={side.ratings[id]}
+                      direction={side.directions?.[id]}
+                      onRating={(r) => setRating(id, r)}
+                      onDirection={(d) => setDirection(id, d)}
                     />
                   ))}
                 </div>
@@ -234,13 +242,16 @@ function JoinPage() {
               <p className="text-xs text-muted-foreground text-center">
                 Other things on their side. Rate each one.
               </p>
-              <div className="space-y-1 pt-1">
+              <div className="space-y-3 pt-1">
                 {sideKinkIds.map((id) => (
-                  <RateRow
+                  <KinkBlock
                     key={id}
                     name={ownerKinkMap[id]}
-                    value={side.ratings[id]}
-                    onChange={(r) => setRating(id, r)}
+                    creatorDirection={ownerSide.directions?.[id]}
+                    rating={side.ratings[id]}
+                    direction={side.directions?.[id]}
+                    onRating={(r) => setRating(id, r)}
+                    onDirection={(d) => setDirection(id, d)}
                   />
                 ))}
               </div>
@@ -467,6 +478,75 @@ function RateRow({ name, value, onChange }: { name: string; value: Rating | unde
             {r}
           </button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+const DIRECTION_LABELS: Record<Direction, string> = { give: "Give", receive: "Receive", both: "Both" };
+
+function KinkBlock({
+  name,
+  creatorDirection,
+  rating,
+  direction,
+  onRating,
+  onDirection,
+}: {
+  name: string;
+  creatorDirection?: Direction;
+  rating: Rating | undefined;
+  direction: Direction | undefined;
+  onRating: (r: Rating) => void;
+  onDirection: (d: Direction) => void;
+}) {
+  return (
+    <div className="rounded-2xl border border-border/40 p-3 space-y-2 bg-card/40">
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-sm font-medium flex items-center gap-2 min-w-0">
+          <span className="truncate">{name}</span>
+          {creatorDirection && (
+            <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
+              They: {DIRECTION_LABELS[creatorDirection]}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <div className="flex gap-1">
+          {(["yes", "maybe", "no"] as Rating[]).map((r) => (
+            <button
+              key={r}
+              type="button"
+              onClick={() => onRating(r)}
+              className={cn(
+                "h-7 px-2.5 rounded-full text-xs font-semibold border-2 transition capitalize",
+                rating === r
+                  ? r === "yes" ? "bg-yes/20 border-yes"
+                  : r === "maybe" ? "bg-maybe/20 border-maybe"
+                  : "bg-no/20 border-no"
+                  : "border-border/60 text-muted-foreground"
+              )}
+            >
+              {r}
+            </button>
+          ))}
+        </div>
+        <div className="inline-flex rounded-full border border-border/60 overflow-hidden">
+          {(["give", "receive", "both"] as Direction[]).map((d) => (
+            <button
+              key={d}
+              type="button"
+              onClick={() => onDirection(d)}
+              className={cn(
+                "h-7 px-2.5 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0 capitalize",
+                direction === d ? "bg-yes/20 text-foreground" : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {DIRECTION_LABELS[d]}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -11,8 +11,10 @@ import {
   useProfile,
   useRatings,
   useKinks,
+  useDirections,
   newSession,
   type SessionSide,
+  type Direction,
 } from "@/lib/storage";
 import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
@@ -40,14 +42,18 @@ const STEPS = [
 function NewSession() {
   const [profile] = useProfile();
   const [ratings, setRatings] = useRatings();
+  const [directions] = useDirections();
   const [kinks, setKinks] = useKinks();
   const navigate = useNavigate();
 
-  const [session] = useState(() => newSession(profile, ratings));
+  const [session] = useState(() => newSession(profile, ratings, "", directions));
   const [date, setDate] = useState(session.date);
   const [side, setSide] = useState<SessionSide>(session.ownerSide);
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
+
+  const setDirection = (id: string, d: Direction) =>
+    setSide((p) => ({ ...p, directions: { ...(p.directions || {}), [id]: d } }));
 
   const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => ({ ...p, [k]: v }));
@@ -129,25 +135,44 @@ function NewSession() {
                   Rate some kinks on your <Link to="/kinks" className="underline text-link">kinks page</Link> to pick from them here.
                 </p>
               ) : (
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {interestedKinks.map((k) => {
-                    const selected = side.selectedKinks.includes(k.id);
-                    return (
-                      <button
-                        key={k.id}
-                        type="button"
-                        onClick={() => toggleKink(k.id)}
-                        className={cn(
-                          "text-sm px-3 py-1.5 rounded-full border-2 transition",
-                          selected
-                            ? "bg-yes/30 border-yes text-plum font-semibold"
-                            : "border-border/60 text-muted-foreground hover:border-primary/50"
-                        )}
-                      >
-                        {selected ? "Selected " : "+ "}{k.name}
-                      </button>
-                    );
-                  })}
+                <div className="space-y-2 pt-1">
+                  <div className="flex flex-wrap gap-2">
+                    {interestedKinks.map((k) => {
+                      const selected = side.selectedKinks.includes(k.id);
+                      return (
+                        <button
+                          key={k.id}
+                          type="button"
+                          onClick={() => toggleKink(k.id)}
+                          className={cn(
+                            "text-sm px-3 py-1.5 rounded-full border-2 transition",
+                            selected
+                              ? "bg-yes/30 border-yes text-plum font-semibold"
+                              : "border-border/60 text-muted-foreground hover:border-primary/50"
+                          )}
+                        >
+                          {selected ? "Selected " : "+ "}{k.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {side.selectedKinks.length > 0 && (
+                    <div className="space-y-1.5 pt-3 border-t border-border/40">
+                      <div className="text-xs text-muted-foreground">For each, are you giving, receiving, or both?</div>
+                      {side.selectedKinks.map((id) => {
+                        const k = kinks.find((x) => x.id === id);
+                        if (!k) return null;
+                        return (
+                          <DirectionRow
+                            key={id}
+                            name={k.name}
+                            value={side.directions?.[id]}
+                            onChange={(d) => setDirection(id, d)}
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
               <div className="flex gap-2 pt-2">
@@ -295,6 +320,52 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     <div className="space-y-1.5">
       <Label className="doc-label">{label}</Label>
       {children}
+    </div>
+  );
+}
+
+const DIRECTIONS: { value: Direction; label: string }[] = [
+  { value: "give", label: "Give" },
+  { value: "receive", label: "Receive" },
+  { value: "both", label: "Both" },
+];
+
+export function DirectionRow({
+  name,
+  value,
+  onChange,
+  badge,
+}: {
+  name: string;
+  value: Direction | undefined;
+  onChange: (d: Direction) => void;
+  badge?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 py-1.5">
+      <div className="text-sm flex-1 min-w-0 truncate flex items-center gap-2">
+        <span className="truncate">{name}</span>
+        {badge && (
+          <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
+            {badge}
+          </span>
+        )}
+      </div>
+      <div className="inline-flex rounded-full border border-border/60 overflow-hidden shrink-0">
+        {DIRECTIONS.map((d) => (
+          <button
+            key={d.value}
+            type="button"
+            onClick={() => onChange(d.value)}
+            className={cn(
+              "h-7 px-2.5 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
+              value === d.value ? "bg-yes/20 text-foreground" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
