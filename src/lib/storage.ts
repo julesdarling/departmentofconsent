@@ -1,5 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { nanoid } from "nanoid";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/lib/useAuth";
 
 // ===== Types =====
 
@@ -30,7 +33,6 @@ export interface SessionSide {
   name: string;
   pronouns: string;
   filledAt?: string;
-  // logistics
   healthcare: string;
   emergencyContact: string;
   partnerDynamics: string;
@@ -38,7 +40,6 @@ export interface SessionSide {
   medicalConcerns: string;
   substances: string;
   substancesHardLimit: boolean;
-  // scene
   setting: string;
   music: string;
   dress: string;
@@ -47,23 +48,17 @@ export interface SessionSide {
   intentions: string;
   goodTime: string;
   badTime: string;
-  // privacy
   privacy: string;
-  // sex
   penetrativeSex: string;
-  // safewords
   safewords: string;
-  // tonight's vision
   vision: string;
   selectedKinks: string[];
-  // free text
   actions: string;
   hardLimits: string;
   softLimits: string;
   yesList: string;
   aftercare: string;
   brainstorm: string;
-  // ratings
   ratings: KinkRatings;
 }
 
@@ -83,28 +78,24 @@ export interface PlaySession {
   aftercareCompleted?: string[];
 }
 
-// ===== Default kink library =====
+// ===== Defaults =====
 
 export const DEFAULT_KINKS: KinkItem[] = [
-  // sensation
   { id: "k_temp", name: "Temperature play (ice/wax)", category: "Sensation" },
   { id: "k_scratch", name: "Scratching", category: "Sensation" },
   { id: "k_bite", name: "Biting", category: "Sensation" },
   { id: "k_tickle", name: "Tickling", category: "Sensation" },
   { id: "k_pinch", name: "Pinching", category: "Sensation" },
-  // impact
   { id: "k_spank_hand", name: "Spanking (hand)", category: "Impact" },
   { id: "k_paddle", name: "Paddling", category: "Impact" },
   { id: "k_flog", name: "Flogging", category: "Impact" },
   { id: "k_cane", name: "Caning", category: "Impact" },
   { id: "k_slap_face", name: "Face slapping", category: "Impact" },
-  // bondage
   { id: "k_rope", name: "Rope bondage", category: "Bondage" },
   { id: "k_cuffs", name: "Cuffs / restraints", category: "Bondage" },
   { id: "k_blindfold", name: "Blindfold", category: "Bondage" },
   { id: "k_gag", name: "Gag", category: "Bondage" },
   { id: "k_collar", name: "Collar / leash", category: "Bondage" },
-  // power
   { id: "k_dom", name: "Dominance", category: "Power exchange" },
   { id: "k_sub", name: "Submission", category: "Power exchange" },
   { id: "k_brat", name: "Brat / bratty play", category: "Power exchange" },
@@ -112,14 +103,11 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_humil", name: "Humiliation (light)", category: "Power exchange" },
   { id: "k_degrade", name: "Degradation", category: "Power exchange" },
   { id: "k_praise", name: "Praise", category: "Power exchange" },
-  // sensory
   { id: "k_sensory_dep", name: "Sensory deprivation", category: "Sensory" },
   { id: "k_overstim", name: "Overstimulation", category: "Sensory" },
-  // roleplay
   { id: "k_role_age", name: "Age play (adult)", category: "Roleplay" },
   { id: "k_role_pet", name: "Pet play", category: "Roleplay" },
   { id: "k_role_primal", name: "Primal play", category: "Roleplay" },
-  // fluids/sex
   { id: "k_kissing", name: "Kissing", category: "Intimacy" },
   { id: "k_oral_give", name: "Oral (giving)", category: "Intimacy" },
   { id: "k_oral_recv", name: "Oral (receiving)", category: "Intimacy" },
@@ -128,7 +116,6 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_anal", name: "Anal play", category: "Intimacy" },
   { id: "k_pen_giving", name: "Penetrative (giving)", category: "Intimacy" },
   { id: "k_pen_recv", name: "Penetrative (receiving)", category: "Intimacy" },
-  // edge
   { id: "k_breath", name: "Breath play", category: "Edge" },
   { id: "k_knife", name: "Knife / edge play", category: "Edge" },
   { id: "k_blood", name: "Blood play", category: "Edge" },
@@ -147,57 +134,6 @@ Enthusiastic thumb up — more more more please.
 Thumb side — right here is good, no more no less.
 Thumb down, double tap — check in please.`;
 
-// ===== Storage =====
-
-const KEY_PROFILE = "doc_profile";
-const KEY_KINKS = "doc_kinks";
-const KEY_RATINGS = "doc_ratings";
-const KEY_SESSIONS = "doc_sessions";
-const KEY_PARTICIPANT = "doc_participant_id";
-
-const isBrowser = typeof window !== "undefined";
-
-function read<T>(key: string, fallback: T): T {
-  if (!isBrowser) return fallback;
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as T) : fallback;
-  } catch {
-    return fallback;
-  }
-}
-
-function write<T>(key: string, value: T) {
-  if (!isBrowser) return;
-  localStorage.setItem(key, JSON.stringify(value));
-  window.dispatchEvent(new CustomEvent("doc-storage", { detail: key }));
-}
-
-function useStored<T>(key: string, fallback: T) {
-  const [value, setValue] = useState<T>(fallback);
-  useEffect(() => {
-    setValue(read(key, fallback));
-    const handler = (e: Event) => {
-      const ce = e as CustomEvent<string>;
-      if (ce.detail === key) setValue(read(key, fallback));
-    };
-    window.addEventListener("doc-storage", handler);
-    return () => window.removeEventListener("doc-storage", handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
-  const update = useCallback(
-    (next: T | ((prev: T) => T)) => {
-      setValue((prev) => {
-        const v = typeof next === "function" ? (next as (p: T) => T)(prev) : next;
-        write(key, v);
-        return v;
-      });
-    },
-    [key]
-  );
-  return [value, update] as const;
-}
-
 export const emptyProfile: Profile = {
   name: "",
   pronouns: "",
@@ -209,35 +145,164 @@ export const emptyProfile: Profile = {
   defaultSafewords: DEFAULT_SAFEWORDS,
 };
 
+// ===== Cloud-backed profile row =====
+
+interface ProfileRow {
+  user_id: string;
+  name: string;
+  pronouns: string;
+  call_me: string;
+  dont_call_me: string;
+  healthcare: string;
+  emergency_contact: string;
+  default_aftercare: string;
+  default_safewords: string;
+  kinks_library: KinkItem[];
+  kink_ratings: KinkRatings;
+}
+
+function rowToProfile(r: ProfileRow | null | undefined): Profile {
+  if (!r) return emptyProfile;
+  return {
+    name: r.name ?? "",
+    pronouns: r.pronouns ?? "",
+    callMe: r.call_me ?? "",
+    dontCallMe: r.dont_call_me ?? "",
+    healthcare: r.healthcare ?? "",
+    emergencyContact: r.emergency_contact ?? "",
+    defaultAftercare: r.default_aftercare ?? "",
+    defaultSafewords: r.default_safewords?.trim() ? r.default_safewords : DEFAULT_SAFEWORDS,
+  };
+}
+
+function profileToRow(p: Profile): Partial<ProfileRow> {
+  return {
+    name: p.name,
+    pronouns: p.pronouns,
+    call_me: p.callMe,
+    dont_call_me: p.dontCallMe,
+    healthcare: p.healthcare,
+    emergency_contact: p.emergencyContact,
+    default_aftercare: p.defaultAftercare,
+    default_safewords: p.defaultSafewords,
+  };
+}
+
+function useProfileRow() {
+  const { user, loading } = useAuth();
+  const qc = useQueryClient();
+  const userId = user?.id;
+  const query = useQuery({
+    queryKey: ["profile-row", userId],
+    enabled: !!userId,
+    queryFn: async (): Promise<ProfileRow | null> => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", userId!)
+        .maybeSingle();
+      if (error) throw error;
+      return (data as unknown as ProfileRow) ?? null;
+    },
+  });
+  return { row: query.data ?? null, userId, loading: loading || query.isLoading, qc };
+}
+
+async function patchProfileRow(userId: string, patch: Partial<ProfileRow>) {
+  // Try update first, fall back to insert if no row exists yet.
+  const p = patch as Record<string, unknown>;
+  const { data, error } = await supabase
+    .from("profiles")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .update(p as any)
+    .eq("user_id", userId)
+    .select()
+    .maybeSingle();
+  if (error) throw error;
+  if (data) return data;
+  const { data: inserted, error: insertErr } = await supabase
+    .from("profiles")
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .insert({ user_id: userId, ...p } as any)
+    .select()
+    .single();
+  if (insertErr) throw insertErr;
+  return inserted;
+}
+
+// Generic helper: optimistic local state synced to server with debounced patch
+function useCloudField<T>(
+  derive: (row: ProfileRow | null) => T,
+  toPatch: (value: T) => Partial<ProfileRow>,
+  fallback: T
+) {
+  const { row, userId, qc } = useProfileRow();
+  const [local, setLocal] = useState<T>(() => (row ? derive(row) : fallback));
+  const hydrated = useRef(false);
+
+  useEffect(() => {
+    if (!hydrated.current && row) {
+      setLocal(derive(row));
+      hydrated.current = true;
+    }
+  }, [row, derive]);
+
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const update = useCallback(
+    (next: T | ((prev: T) => T)) => {
+      setLocal((prev) => {
+        const v = typeof next === "function" ? (next as (p: T) => T)(prev) : next;
+        if (!userId) return v;
+        const patch = toPatch(v);
+        // Optimistic update of cached row
+        qc.setQueryData(["profile-row", userId], (old: ProfileRow | null | undefined) => ({
+          ...(old ?? { user_id: userId }),
+          ...patch,
+        }) as ProfileRow);
+        if (timer.current) clearTimeout(timer.current);
+        timer.current = setTimeout(() => {
+          patchProfileRow(userId, patch).catch((e) => console.error("profile save failed", e));
+        }, 350);
+        return v;
+      });
+    },
+    [userId, qc, toPatch]
+  );
+
+  return [local, update] as const;
+}
+
+// ===== Public hooks =====
+
 export function useProfile() {
-  return useStored<Profile>(KEY_PROFILE, emptyProfile);
+  const derive = useCallback((r: ProfileRow | null) => rowToProfile(r), []);
+  const toPatch = useCallback((p: Profile) => profileToRow(p), []);
+  return useCloudField<Profile>(derive, toPatch, emptyProfile);
 }
 
 export function useKinks() {
-  return useStored<KinkItem[]>(KEY_KINKS, DEFAULT_KINKS);
+  const derive = useCallback((r: ProfileRow | null): KinkItem[] => {
+    const arr = r?.kinks_library;
+    if (Array.isArray(arr) && arr.length > 0) return arr;
+    return DEFAULT_KINKS;
+  }, []);
+  const toPatch = useCallback((v: KinkItem[]) => ({ kinks_library: v }), []);
+  return useCloudField<KinkItem[]>(derive, toPatch, DEFAULT_KINKS);
 }
 
 export function useRatings() {
-  return useStored<KinkRatings>(KEY_RATINGS, {});
+  const derive = useCallback((r: ProfileRow | null): KinkRatings => r?.kink_ratings ?? {}, []);
+  const toPatch = useCallback((v: KinkRatings) => ({ kink_ratings: v }), []);
+  return useCloudField<KinkRatings>(derive, toPatch, {});
 }
 
-// Local index of sessions this device has created/joined.
-// The actual session content lives in the cloud, keyed by share_token.
-export interface SessionIndexEntry {
-  id: string;
-  shareToken: string;
-  partnerHandle: string;
-  date: string;
-  createdAt: string;
-  role: "owner" | "partner";
-}
+// ===== Participant id (per-browser, used inside a session side payload only) =====
 
-export function useSessionIndex() {
-  return useStored<SessionIndexEntry[]>(KEY_SESSIONS, []);
-}
+const KEY_PARTICIPANT = "doc_participant_id";
 
 export function getParticipantId(): string {
-  if (!isBrowser) return "";
+  if (typeof window === "undefined") return "";
   let id = localStorage.getItem(KEY_PARTICIPANT);
   if (!id) {
     id = nanoid(10);
@@ -292,4 +357,48 @@ export function newSession(profile: Profile, ratings: KinkRatings, partnerHandle
     ownerSide: emptySide(profile, ratings),
     aftercareCompleted: [],
   };
+}
+
+// ===== Cloud-backed sessions list =====
+
+export interface SessionSummary {
+  id: string;
+  shareToken: string;
+  partnerHandle: string;
+  date: string;
+  createdAt: string;
+  role: "owner" | "partner";
+  status: SessionStatus;
+}
+
+export function useMySessions() {
+  const { user } = useAuth();
+  const userId = user?.id;
+  const query = useQuery({
+    queryKey: ["my-sessions", userId],
+    enabled: !!userId,
+    queryFn: async (): Promise<SessionSummary[]> => {
+      const { data, error } = await supabase.rpc("list_my_play_sessions");
+      if (error) throw error;
+      const rows = (data ?? []) as Array<{
+        id: string;
+        share_token: string;
+        partner_handle: string;
+        date: string;
+        status: string;
+        created_at: string;
+        owner_user_id: string | null;
+      }>;
+      return rows.map((r) => ({
+        id: r.id,
+        shareToken: r.share_token,
+        partnerHandle: r.partner_handle,
+        date: r.date,
+        createdAt: r.created_at,
+        role: r.owner_user_id === userId ? "owner" : "partner",
+        status: r.status as SessionStatus,
+      }));
+    },
+  });
+  return query;
 }

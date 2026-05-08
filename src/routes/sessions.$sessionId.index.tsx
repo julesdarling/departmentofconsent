@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useKinks, useSessionIndex, type SessionSide } from "@/lib/storage";
+import { useKinks, type SessionSide } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/sessions/$sessionId/")({
 
 function SessionDetail() {
   const { sessionId } = Route.useParams(); // shareToken
-  const [, setIndex] = useSessionIndex();
+  
   const [kinks] = useKinks();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
@@ -54,9 +54,8 @@ function SessionDetail() {
   };
 
   const remove = async () => {
-    if (!confirm("Delete this session? This wipes it from the server too.")) return;
+    if (!confirm("Delete this session? This permanently removes it for everyone.")) return;
     await apiDeleteSession(session.shareToken);
-    setIndex((p) => p.filter((s) => s.shareToken !== session.shareToken));
     navigate({ to: "/sessions" });
   };
 

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useSessionIndex } from "@/lib/storage";
+import { useMySessions } from "@/lib/storage";
 import { Plus, Calendar, Sparkles } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
 
@@ -12,8 +12,8 @@ export const Route = createFileRoute("/sessions/")({
 });
 
 function SessionsList() {
-  const [sessions] = useSessionIndex();
-  const sorted = [...sessions].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const { data: sessions, isLoading } = useMySessions();
+  const sorted = (sessions ?? []).slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
     <Layout>
@@ -21,14 +21,18 @@ function SessionsList() {
         <div className="flex items-end justify-between">
           <div>
             <h1 className="font-display text-3xl font-semibold text-plum">Sessions</h1>
-            <p className="text-sm text-muted-foreground">Active and past play.</p>
+            <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
           </div>
           <Button asChild size="sm" className="rounded-full">
             <Link to="/sessions/new"><Plus className="h-4 w-4 mr-1" /> New</Link>
           </Button>
         </div>
 
-        {sorted.length === 0 && (
+        {isLoading && (
+          <Sticker className="text-center">Loading…</Sticker>
+        )}
+
+        {!isLoading && sorted.length === 0 && (
           <Sticker className="text-center space-y-3 py-10">
             <Sparkles className="h-8 w-8 mx-auto text-coral" />
             <p className="font-display text-lg text-plum">No sessions yet</p>

@@ -20,7 +20,9 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          joined_user_ids: string[]
           owner_side: Json
+          owner_user_id: string | null
           partner_handle: string
           partner_side: Json | null
           partner_sides: Json
@@ -34,7 +36,9 @@ export type Database = {
           created_at?: string
           date?: string
           id?: string
+          joined_user_ids?: string[]
           owner_side?: Json
+          owner_user_id?: string | null
           partner_handle?: string
           partner_side?: Json | null
           partner_sides?: Json
@@ -48,7 +52,9 @@ export type Database = {
           created_at?: string
           date?: string
           id?: string
+          joined_user_ids?: string[]
           owner_side?: Json
+          owner_user_id?: string | null
           partner_handle?: string
           partner_side?: Json | null
           partner_sides?: Json
@@ -69,6 +75,8 @@ export type Database = {
           emergency_contact: string
           healthcare: string
           id: string
+          kink_ratings: Json
+          kinks_library: Json
           name: string
           pronouns: string
           updated_at: string
@@ -83,6 +91,8 @@ export type Database = {
           emergency_contact?: string
           healthcare?: string
           id?: string
+          kink_ratings?: Json
+          kinks_library?: Json
           name?: string
           pronouns?: string
           updated_at?: string
@@ -97,6 +107,8 @@ export type Database = {
           emergency_contact?: string
           healthcare?: string
           id?: string
+          kink_ratings?: Json
+          kinks_library?: Json
           name?: string
           pronouns?: string
           updated_at?: string
@@ -164,7 +176,9 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          joined_user_ids: string[]
           owner_side: Json
+          owner_user_id: string | null
           partner_handle: string
           partner_side: Json | null
           partner_sides: Json
@@ -193,7 +207,9 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          joined_user_ids: string[]
           owner_side: Json
+          owner_user_id: string | null
           partner_handle: string
           partner_side: Json | null
           partner_sides: Json
@@ -217,7 +233,9 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          joined_user_ids: string[]
           owner_side: Json
+          owner_user_id: string | null
           partner_handle: string
           partner_side: Json | null
           partner_sides: Json
@@ -237,6 +255,31 @@ export type Database = {
         Args: { check_env?: string; user_uuid: string }
         Returns: boolean
       }
+      list_my_play_sessions: {
+        Args: never
+        Returns: {
+          aftercare_completed: Json
+          created_at: string
+          date: string
+          id: string
+          joined_user_ids: string[]
+          owner_side: Json
+          owner_user_id: string | null
+          partner_handle: string
+          partner_side: Json | null
+          partner_sides: Json
+          reflection: string | null
+          share_token: string
+          status: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "play_sessions"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       update_play_session: {
         Args: { p_patch: Json; p_token: string }
         Returns: {
@@ -244,7 +287,9 @@ export type Database = {
           created_at: string
           date: string
           id: string
+          joined_user_ids: string[]
           owner_side: Json
+          owner_user_id: string | null
           partner_handle: string
           partner_side: Json | null
           partner_sides: Json
