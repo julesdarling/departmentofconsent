@@ -108,11 +108,6 @@ function Index() {
 
         <div className="text-center pt-12">
           <CloudButton to={startTo} className="cloud-btn-cta">Start negotiating</CloudButton>
-          {hasProfile && (
-            <p className="text-xs mt-3">
-              <Link to="/sessions" className="underline text-coral">View saved scenes</Link>
-            </p>
-          )}
         </div>
       </section>
     </Layout>
