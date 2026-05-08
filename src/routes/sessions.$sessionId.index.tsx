@@ -62,7 +62,7 @@ function SessionDetail() {
 
   const o = session.ownerSide;
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
-  const ownerName = o.name?.trim() || "Creator";
+  const ownerName = o.name?.trim() || profile?.name?.trim() || "Creator";
 
   const yesItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
   const maybeItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
