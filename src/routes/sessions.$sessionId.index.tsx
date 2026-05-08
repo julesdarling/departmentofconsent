@@ -223,6 +223,12 @@ function SessionDetail() {
             <Trash2 className="h-4 w-4" /> Delete scene
           </button>
         </div>
+
+        <div className="flex justify-center">
+          <Link to="/sessions/$sessionId/edit" params={{ sessionId }} className="text-sm text-coral underline underline-offset-4 hover:opacity-80">
+            Edit scene
+          </Link>
+        </div>
       </div>
     </Layout>
   );
