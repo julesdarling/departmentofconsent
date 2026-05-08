@@ -115,7 +115,7 @@ function KinksPage() {
           <div className="doc-label">Add your own</div>
           <Input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="e.g. wax play, sensory deprivation hood" />
           <Input value={newCat} onChange={(e) => setNewCat(e.target.value)} placeholder="Category" />
-          <Button onClick={addCustom} className="w-full rounded-full">
+          <Button onClick={addCustom} className="w-full rounded-none">
             <Plus className="h-4 w-4 mr-1" /> Add
           </Button>
         </Sticker>

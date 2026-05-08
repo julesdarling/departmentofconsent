@@ -277,7 +277,7 @@ function NewSession() {
                 if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              Next <ChevronRight className="h-4 w-4 ml-1" />
+              Next
             </Button>
           )}
           <Button
@@ -288,7 +288,7 @@ function NewSession() {
               if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <ChevronLeft className="h-4 w-4 mr-1" /> Back
+            Back
           </Button>
         </div>
       </div>

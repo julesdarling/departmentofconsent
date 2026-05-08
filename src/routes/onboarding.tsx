@@ -72,7 +72,7 @@ function Onboarding() {
             Tell us about you
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
-            Saved on this device. You can change anything later.
+            Saved to your account. You can change anything later.
           </p>
         </div>
 
