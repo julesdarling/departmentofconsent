@@ -53,6 +53,7 @@ export interface SessionSide {
   privacy: string;
   talkingAfter?: string;
   penetrativeSex: string;
+  timeOfPlay?: string;
   safewords: string;
   vision: string;
   selectedKinks: string[];
@@ -405,6 +406,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     badTime: "",
     privacy: "",
     penetrativeSex: "",
+    timeOfPlay: "",
     safewords: profile?.defaultSafewords ?? DEFAULT_SAFEWORDS,
     vision: "",
     selectedKinks: [],
