@@ -4,6 +4,7 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCloudSession } from "@/lib/useCloudSession";
+import { useProfile } from "@/lib/storage";
 import { Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
