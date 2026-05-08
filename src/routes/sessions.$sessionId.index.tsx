@@ -249,11 +249,15 @@ function SideDetail({ title, value }: { title: string; value: string }) {
 function Compare({
   a,
   b,
+  aSelected,
+  bSelected,
   kinkMap,
   partnerName,
 }: {
   a: Record<string, string>;
   b: Record<string, string>;
+  aSelected: string[];
+  bSelected: string[];
   kinkMap: Record<string, string>;
   partnerName: string;
 }) {
@@ -274,6 +278,11 @@ function Compare({
     ) curious.push(name);
     else if (ra === "maybe" || rb === "maybe") negotiate.push(name);
   }
+
+  const bSet = new Set(bSelected);
+  const agreedSelected = aSelected
+    .filter((id) => bSet.has(id))
+    .map((id) => kinkMap[id] || id);
 
   return (
     <div className="space-y-4">
