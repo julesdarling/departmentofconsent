@@ -210,9 +210,11 @@ function useProfileRow() {
 
 async function patchProfileRow(userId: string, patch: Partial<ProfileRow>) {
   // Try update first, fall back to insert if no row exists yet.
+  const p = patch as Record<string, unknown>;
   const { data, error } = await supabase
     .from("profiles")
-    .update(patch)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .update(p as any)
     .eq("user_id", userId)
     .select()
     .maybeSingle();
@@ -220,7 +222,8 @@ async function patchProfileRow(userId: string, patch: Partial<ProfileRow>) {
   if (data) return data;
   const { data: inserted, error: insertErr } = await supabase
     .from("profiles")
-    .insert({ user_id: userId, ...patch })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .insert({ user_id: userId, ...p } as any)
     .select()
     .single();
   if (insertErr) throw insertErr;
