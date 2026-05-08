@@ -73,7 +73,7 @@ function SettingsPage() {
         </Sticker>
 
         <Sticker variant="coral" className="space-y-2">
-          <div className="font-display text-base text-plum">Your data</div>
+          <div className="font-display text-plum text-center font-normal text-3xl">Your data</div>
           <p className="text-xs text-muted-foreground">
             Your profile, kinks, ratings, and scenes are saved to your account and synced across every device you sign in on.
           </p>
@@ -86,7 +86,7 @@ function SettingsPage() {
 
         {user && (
           <Sticker className="space-y-3 text-center">
-            <div className="font-display text-base text-plum">Account</div>
+            <div className="font-display text-plum text-center font-normal text-3xl">Account</div>
             <p className="text-xs text-muted-foreground">Signed in as {user.email}</p>
             <div className="flex flex-col items-center gap-3 pt-2">
               <button
