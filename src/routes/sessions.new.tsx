@@ -214,7 +214,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 1 && (
+        {step === 3 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
             <p className="text-xs text-muted-foreground">
