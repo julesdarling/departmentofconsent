@@ -36,6 +36,7 @@ function JoinPage() {
   const [side, setSide] = useState<SessionSide | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     if (session && !side) {
