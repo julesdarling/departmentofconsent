@@ -95,12 +95,12 @@ function EditScene() {
         </Sticker>
 
         <Sticker className="space-y-4">
-          <h2 className="font-display text-xl text-plum">Tonight's vision</h2>
+          <h2 className="font-display text-xl text-plum">Scene vision</h2>
           <Field label="What are you imagining for this scene?">
             <Textarea value={side.vision} onChange={(e) => u("vision", e.target.value)} rows={5} />
           </Field>
           <div className="space-y-2">
-            <Label className="doc-label">Pick what you're craving tonight</Label>
+            <Label className="doc-label">Pick what you're craving for this scene</Label>
             {interestedKinks.length === 0 ? (
               <p className="text-xs text-muted-foreground italic">
                 Rate some kinks on your <Link to="/kinks" className="underline text-coral">kinks page</Link>.
@@ -155,7 +155,7 @@ function EditScene() {
         </Sticker>
 
         <Sticker variant="coral" className="space-y-4">
-          <h2 className="font-display text-xl text-plum">For tonight</h2>
+          <h2 className="font-display text-xl text-plum">For this scene</h2>
           <Field label="Names you want to be called"><Input value={side.callMe} onChange={(e) => u("callMe", e.target.value)} /></Field>
           <Field label="Off-limits names"><Input value={side.dontCallMe} onChange={(e) => u("dontCallMe", e.target.value)} /></Field>
           <Field label="Hard limits for this scene"><Textarea value={side.hardLimits} onChange={(e) => u("hardLimits", e.target.value)} rows={2} /></Field>
