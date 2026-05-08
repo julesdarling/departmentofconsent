@@ -431,9 +431,9 @@ function JoinPage() {
         </Sticker>
 
         <div className="flex justify-center pt-2">
-          <Button disabled={submitting} onClick={submit}>
+          <CloudButton onClick={submitting ? undefined : submit}>
             {submitting ? "Submitting..." : "Submit my side"}
-          </Button>
+          </CloudButton>
         </div>
       </div>
     </Layout>
