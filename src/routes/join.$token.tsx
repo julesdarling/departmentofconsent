@@ -509,7 +509,7 @@ function KinkBlock({
           <span className="truncate">{name}</span>
           {creatorDirection && (
             <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
-              They: {DIRECTION_LABELS[creatorDirection]}
+              They: {creatorDirection === "both" ? "Give and Receive" : DIRECTION_LABELS[creatorDirection]}
             </span>
           )}
         </div>
