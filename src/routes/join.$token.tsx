@@ -140,7 +140,7 @@ function JoinPage() {
           )}
 
           <Sticker className="space-y-3">
-            <div className="font-display text-lg text-plum">{ownerName}'s side</div>
+            <div className="font-display text-2xl text-plum text-center">{ownerName}'s side</div>
             <Detail title="Setting" value={o.setting} />
             <Detail title="Music" value={o.music} />
             <Detail title="Dress" value={o.dress} />
@@ -285,7 +285,7 @@ function JoinPage() {
 
         {(session.ownerSide.hardLimits?.trim() || session.ownerSide.softLimits?.trim()) && (
           <Sticker className="space-y-3">
-            <h2 className="font-display text-lg text-plum">
+            <h2 className="font-display text-2xl text-plum text-center">
               {session.ownerSide.name?.trim() || "Their"} limits
             </h2>
             <p className="text-xs text-muted-foreground">
@@ -307,7 +307,7 @@ function JoinPage() {
         )}
 
         <Sticker variant="coral" className="space-y-3">
-          <h2 className="font-display text-lg text-plum">Your side</h2>
+          <h2 className="font-display text-2xl text-plum text-center">Your side</h2>
           <Field label="Your name / handle">
             <Input value={side.name} onChange={(e) => updateField("name", e.target.value)} />
           </Field>
@@ -329,7 +329,7 @@ function JoinPage() {
         </Sticker>
 
         <Sticker className="space-y-3">
-          <h2 className="font-display text-lg text-plum">Scene vision</h2>
+          <h2 className="font-display text-2xl text-plum text-center">Scene vision</h2>
           <Field label="What are you imagining for this scene?">
             <Textarea
               value={side.vision}
@@ -378,7 +378,7 @@ function JoinPage() {
         </Sticker>
 
         <Sticker className="space-y-3">
-          <h2 className="font-display text-lg text-plum">The scene</h2>
+          <h2 className="font-display text-2xl text-plum text-center">The scene</h2>
           <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => updateField("callMe", e.target.value)} /></Field>
           <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => updateField("dontCallMe", e.target.value)} /></Field>
           <Field label="Intentions / how you want to feel"><Textarea value={side.intentions} onChange={(e) => updateField("intentions", e.target.value)} rows={3} /></Field>
@@ -387,12 +387,12 @@ function JoinPage() {
         </Sticker>
 
         <Sticker variant="coral" className="space-y-2">
-          <h2 className="font-display text-lg text-plum">Your safewords</h2>
+          <h2 className="font-display text-2xl text-plum text-center">Your safewords</h2>
           <Textarea value={side.safewords} onChange={(e) => updateField("safewords", e.target.value)} rows={10} className="font-mono text-xs" />
         </Sticker>
 
         <Sticker className="space-y-3">
-          <h2 className="font-display text-lg text-plum">Lightning round</h2>
+          <h2 className="font-display text-2xl text-plum text-center">Lightning round</h2>
           {grouped.map(([cat, items]) => (
             <div key={cat}>
               <div className="font-display text-sm text-coral mt-2 mb-1">{cat}</div>
