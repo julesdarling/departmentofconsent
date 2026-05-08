@@ -88,10 +88,11 @@ function SessionDetail() {
           <div className="flex justify-center bg-card p-3 rounded-xl">
             <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
           </div>
-          <button onClick={copy} className="text-xs flex items-center gap-1 mx-auto text-muted-foreground hover:text-primary break-all">
-            <Copy className="h-3 w-3 shrink-0" />
-            {copied ? "Copied!" : shareUrl}
-          </button>
+          <div className="flex justify-center pt-1">
+            <CloudButton variant="mint" className="cloud-btn-sm" onClick={copy}>
+              {copied ? "Copied!" : "Copy link to share"}
+            </CloudButton>
+          </div>
           <p className="text-xs text-muted-foreground">
             Anyone with this link can fill out the play partner side. They'll see your side once they submit.
           </p>
