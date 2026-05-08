@@ -261,9 +261,9 @@ function JoinPage() {
           )}
 
           <div className="flex justify-center pt-2">
-            <Button onClick={() => { setStarted(true); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+            <CloudButton onClick={() => { setStarted(true); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
               Next
-            </Button>
+            </CloudButton>
           </div>
         </div>
       </Layout>
