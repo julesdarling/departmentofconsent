@@ -12,7 +12,7 @@ import { useMemo, useState } from "react";
 import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/sessions/$sessionId/")({
-  head: () => ({ meta: [{ title: "Session — Department of Consent" }] }),
+  head: () => ({ meta: [{ title: "Scene — Department of Consent" }] }),
   component: () => <RequireAuth><SessionDetail /></RequireAuth>,
 });
 
@@ -34,7 +34,7 @@ function SessionDetail() {
     return (
       <Layout>
         <Sticker className="text-center space-y-3">
-          <p>Session not found.</p>
+          <p>Scene not found.</p>
           {error && <p className="text-xs text-muted-foreground">{error}</p>}
           <Button asChild><Link to="/sessions">Back</Link></Button>
         </Sticker>
@@ -54,7 +54,7 @@ function SessionDetail() {
   };
 
   const remove = async () => {
-    if (!confirm("Delete this session? This permanently removes it for everyone.")) return;
+    if (!confirm("Delete this scene? This permanently removes it for everyone.")) return;
     await apiDeleteSession(session.shareToken);
     navigate({ to: "/sessions" });
   };
@@ -73,7 +73,7 @@ function SessionDetail() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <h1 className="font-display text-3xl font-semibold text-plum">
-              {session.partnerHandle || "Untitled session"}
+              {session.partnerHandle || "Untitled scene"}
             </h1>
             <p className="text-sm text-muted-foreground">{session.date}</p>
           </div>
@@ -224,7 +224,7 @@ function SessionDetail() {
 
         <div className="flex justify-center pt-2">
           <button onClick={remove} className="text-sm text-destructive underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
-            <Trash2 className="h-4 w-4" /> Delete session
+            <Trash2 className="h-4 w-4" /> Delete scene
           </button>
         </div>
       </div>

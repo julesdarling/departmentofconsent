@@ -144,7 +144,7 @@ function ScenePage() {
 
         <div className="flex justify-center pt-2">
           <Button asChild variant="outline" className="rounded-full">
-            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back to session</Link>
+            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back to scene</Link>
           </Button>
         </div>
       </div>

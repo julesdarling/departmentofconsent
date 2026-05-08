@@ -87,7 +87,7 @@ function Index() {
           <Feature
             icon={iconWhip}
             title="Your kinks"
-            body="Curate yes / maybe / no. Reuse for every session."
+            body="Curate yes / maybe / no. Reuse for every scene."
           />
           <Feature
             icon={iconHearts}
