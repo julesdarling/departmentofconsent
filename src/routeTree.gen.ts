@@ -9,9 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SubscribeRouteImport } from './routes/subscribe'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as OnboardingRouteImport } from './routes/onboarding'
 import { Route as KinksRouteImport } from './routes/kinks'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -27,6 +29,11 @@ import { Route as SessionsSessionIdEditRouteImport } from './routes/sessions.$se
 import { Route as SessionsSessionIdAftercareRouteImport } from './routes/sessions.$sessionId.aftercare'
 import { Route as ApiPublicPaymentsWebhookRouteImport } from './routes/api/public/payments/webhook'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SubscribeRoute = SubscribeRouteImport.update({
   id: '/subscribe',
   path: '/subscribe',
@@ -40,6 +47,11 @@ const SettingsRoute = SettingsRouteImport.update({
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OnboardingRoute = OnboardingRouteImport.update({
@@ -120,9 +132,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/subscribe': typeof SubscribeRoute
+  '/terms': typeof TermsRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/scene/$token': typeof SceneTokenRoute
@@ -139,9 +153,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/subscribe': typeof SubscribeRoute
+  '/terms': typeof TermsRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/scene/$token': typeof SceneTokenRoute
@@ -159,9 +175,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/kinks': typeof KinksRoute
   '/onboarding': typeof OnboardingRoute
+  '/privacy': typeof PrivacyRoute
   '/reset-password': typeof ResetPasswordRoute
   '/settings': typeof SettingsRoute
   '/subscribe': typeof SubscribeRoute
+  '/terms': typeof TermsRoute
   '/checkout/return': typeof CheckoutReturnRoute
   '/join/$token': typeof JoinTokenRoute
   '/scene/$token': typeof SceneTokenRoute
@@ -180,9 +198,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/kinks'
     | '/onboarding'
+    | '/privacy'
     | '/reset-password'
     | '/settings'
     | '/subscribe'
+    | '/terms'
     | '/checkout/return'
     | '/join/$token'
     | '/scene/$token'
@@ -199,9 +219,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/kinks'
     | '/onboarding'
+    | '/privacy'
     | '/reset-password'
     | '/settings'
     | '/subscribe'
+    | '/terms'
     | '/checkout/return'
     | '/join/$token'
     | '/scene/$token'
@@ -218,9 +240,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/kinks'
     | '/onboarding'
+    | '/privacy'
     | '/reset-password'
     | '/settings'
     | '/subscribe'
+    | '/terms'
     | '/checkout/return'
     | '/join/$token'
     | '/scene/$token'
@@ -238,9 +262,11 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   KinksRoute: typeof KinksRoute
   OnboardingRoute: typeof OnboardingRoute
+  PrivacyRoute: typeof PrivacyRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SettingsRoute: typeof SettingsRoute
   SubscribeRoute: typeof SubscribeRoute
+  TermsRoute: typeof TermsRoute
   CheckoutReturnRoute: typeof CheckoutReturnRoute
   JoinTokenRoute: typeof JoinTokenRoute
   SceneTokenRoute: typeof SceneTokenRoute
@@ -255,6 +281,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/subscribe': {
       id: '/subscribe'
       path: '/subscribe'
@@ -274,6 +307,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/onboarding': {
@@ -382,9 +422,11 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   KinksRoute: KinksRoute,
   OnboardingRoute: OnboardingRoute,
+  PrivacyRoute: PrivacyRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SettingsRoute: SettingsRoute,
   SubscribeRoute: SubscribeRoute,
+  TermsRoute: TermsRoute,
   CheckoutReturnRoute: CheckoutReturnRoute,
   JoinTokenRoute: JoinTokenRoute,
   SceneTokenRoute: SceneTokenRoute,
@@ -399,3 +441,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
