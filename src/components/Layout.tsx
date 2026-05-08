@@ -1,12 +1,22 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { ListChecks, Heart, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
+import wordmark from "@/assets/logo.svg";
 
 export function Layout({ children, fullBleed = false, showFooter = false }: { children: React.ReactNode; fullBleed?: boolean; showFooter?: boolean }) {
+  const { pathname } = useLocation();
+  const showHeader = pathname !== "/";
   return (
     <div className="min-h-screen grain bg-background flex flex-col">
-      <main className={fullBleed ? "flex-1 pb-28" : "flex-1 max-w-2xl w-full mx-auto px-5 pt-10 pb-32"}>
+      {showHeader && (
+        <header className="w-full flex justify-center pt-6 pb-2">
+          <Link to="/" aria-label="Dept of Consent — Home">
+            <img src={wordmark} alt="Dept of Consent" className="h-16 w-auto" />
+          </Link>
+        </header>
+      )}
+      <main className={fullBleed ? "flex-1 pb-28" : "flex-1 max-w-2xl w-full mx-auto px-5 pt-4 pb-32"}>
         {children}
       </main>
       {showFooter && <Footer />}
