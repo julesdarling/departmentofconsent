@@ -11,7 +11,9 @@ import {
   useRatings,
   type SessionSide,
   type Rating,
+  type Direction,
 } from "@/lib/storage";
+import { DirectionRow } from "./sessions.new";
 import { useEffect, useMemo, useState } from "react";
 import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
