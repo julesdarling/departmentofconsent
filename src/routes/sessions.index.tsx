@@ -2,10 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useMySessions } from "@/lib/storage";
+import { useMySessions, useKinks, generateSceneTitle } from "@/lib/storage";
 import { Plus, Calendar } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { WhipLoader } from "@/components/WhipLoader";
+import { useMemo } from "react";
 import emptySessionsImg from "@/assets/empty-sessions.png";
 
 export const Route = createFileRoute("/sessions/")({
@@ -15,6 +16,8 @@ export const Route = createFileRoute("/sessions/")({
 
 function SessionsList() {
   const { data: sessions, isLoading } = useMySessions();
+  const [kinks] = useKinks();
+  const kinkMap = useMemo(() => Object.fromEntries(kinks.map((k) => [k.id, k.name])), [kinks]);
   const sorted = (sessions ?? []).slice().sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
   return (
@@ -52,7 +55,7 @@ function SessionsList() {
                 <div className="flex justify-between items-start gap-3">
                   <div className="min-w-0">
                     <div className="font-display text-lg font-semibold text-plum truncate">
-                      {s.partnerHandle || "Untitled scene"}
+                      {generateSceneTitle(s.ownerSide, kinkMap) || s.partnerHandle || "Untitled scene"}
                     </div>
                     <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                       <Calendar className="h-3 w-3" />

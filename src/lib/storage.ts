@@ -429,6 +429,29 @@ export function newSession(profile: Profile, ratings: KinkRatings, partnerHandle
   };
 }
 
+export function generateSceneTitle(side: SessionSide, kinkMap: Record<string, string>): string {
+  const selected = (side.selectedKinks || [])
+    .map((id) => kinkMap[id])
+    .filter(Boolean);
+  const yesKinks = Object.entries(side.ratings || {})
+    .filter(([, r]) => r === "yes")
+    .map(([id]) => kinkMap[id])
+    .filter(Boolean);
+  const kinks = (selected.length > 0 ? selected : yesKinks).slice(0, 2);
+  const setting = side.setting?.trim();
+
+  if (kinks.length === 0 && !setting) return "";
+  const kinkPart =
+    kinks.length === 0
+      ? ""
+      : kinks.length === 1
+        ? kinks[0]
+        : `${kinks[0]} & ${kinks[1]}`;
+  if (!setting) return kinkPart;
+  if (!kinkPart) return setting;
+  return `${kinkPart} at ${setting}`;
+}
+
 // ===== Cloud-backed sessions list =====
 
 export interface SessionSummary {
@@ -439,6 +462,7 @@ export interface SessionSummary {
   createdAt: string;
   role: "owner" | "partner";
   status: SessionStatus;
+  ownerSide: SessionSide;
 }
 
 export function useMySessions() {
@@ -450,7 +474,7 @@ export function useMySessions() {
     queryFn: async (): Promise<SessionSummary[]> => {
       const { data, error } = await supabase.rpc("list_my_play_sessions");
       if (error) throw error;
-      const rows = (data ?? []) as Array<{
+      const rows = (data ?? []) as unknown as Array<{
         id: string;
         share_token: string;
         partner_handle: string;
@@ -458,6 +482,7 @@ export function useMySessions() {
         status: string;
         created_at: string;
         owner_user_id: string | null;
+        owner_side: SessionSide;
       }>;
       return rows.map((r) => ({
         id: r.id,
@@ -467,6 +492,7 @@ export function useMySessions() {
         createdAt: r.created_at,
         role: r.owner_user_id === userId ? "owner" : "partner",
         status: r.status as SessionStatus,
+        ownerSide: r.owner_side,
       }));
     },
   });

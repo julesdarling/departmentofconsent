@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useKinks, useProfile, type SessionSide } from "@/lib/storage";
+import { useKinks, useProfile, generateSceneTitle, type SessionSide } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -74,7 +74,7 @@ function SessionDetail() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <h1 className="font-display text-3xl font-semibold text-plum">
-              {session.partnerHandle || "Untitled scene"}
+              {generateSceneTitle(o, kinkMap) || session.partnerHandle || "Untitled scene"}
             </h1>
             <p className="text-sm text-muted-foreground">{session.date}</p>
           </div>
