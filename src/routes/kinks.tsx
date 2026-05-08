@@ -45,8 +45,15 @@ function KinkRow({
 }) {
   return (
     <div className="py-2 border-b border-border/50 last:border-0 space-y-2">
+      <div className="flex items-start justify-between gap-2">
+        <div className="text-sm text-foreground flex-1 min-w-0">{item.name}</div>
+        {onRemove && (
+          <button onClick={onRemove} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive shrink-0">
+            <X className="h-3.5 w-3.5" />
+          </button>
+        )}
+      </div>
       <div className="flex items-center justify-between gap-2">
-        <div className="text-sm text-foreground flex-1 min-w-0 truncate">{item.name}</div>
         <div className="flex gap-1">
           {RATINGS.map((r) => (
             <button
@@ -60,28 +67,23 @@ function KinkRow({
               {r.label}
             </button>
           ))}
-          {onRemove && (
-            <button onClick={onRemove} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive">
-              <X className="h-3.5 w-3.5" />
-            </button>
-          )}
         </div>
-      </div>
-      <div className="flex gap-1 justify-end">
-        {DIRECTIONS.map((d) => (
-          <button
-            key={d.value}
-            onClick={() => onSetDirection(d.value)}
-            className={cn(
-              "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
-              direction === d.value
-                ? "bg-yes/20 border-yes text-foreground"
-                : "border-border/60 text-muted-foreground hover:border-yes/50"
-            )}
-          >
-            {d.label}
-          </button>
-        ))}
+        <div className="flex gap-1">
+          {DIRECTIONS.map((d) => (
+            <button
+              key={d.value}
+              onClick={() => onSetDirection(d.value)}
+              className={cn(
+                "h-6 px-2 rounded-full text-[11px] font-semibold border transition",
+                direction === d.value
+                  ? "bg-yes/20 border-yes text-foreground"
+                  : "border-border/60 text-muted-foreground hover:border-yes/50"
+              )}
+            >
+              {d.label}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
