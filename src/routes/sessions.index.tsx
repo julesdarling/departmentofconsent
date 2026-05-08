@@ -47,7 +47,7 @@ function SessionsList() {
 
         <div className="space-y-5">
           {sorted.map((s) => (
-            <Link key={s.shareToken} to="/sessions/$sessionId" params={{ sessionId: s.shareToken }}>
+            <Link key={s.shareToken} to="/sessions/$sessionId" params={{ sessionId: s.shareToken }} className="block">
               <Sticker className="hover:scale-[1.01] transition-transform">
                 <div className="flex justify-between items-start gap-3">
                   <div className="min-w-0">
