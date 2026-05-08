@@ -250,6 +250,13 @@ function NewSession() {
               value={side.penetrativeSex}
               onChange={(v) => update("penetrativeSex", v)}
             />
+            <Field label="Time of play">
+              <Input
+                type="datetime-local"
+                value={side.timeOfPlay || ""}
+                onChange={(e) => update("timeOfPlay", e.target.value)}
+              />
+            </Field>
           </Sticker>
         )}
 
