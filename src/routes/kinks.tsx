@@ -60,7 +60,7 @@ function KinkRow({
               key={r.value}
               onClick={() => onSetRating(r.value)}
               className={cn(
-                "h-6 px-3 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
+                "h-6 px-2 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
                 rating === r.value ? r.cls : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -74,7 +74,7 @@ function KinkRow({
               key={d.value}
               onClick={() => onSetDirection(d.value)}
               className={cn(
-                "h-6 px-3 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
+                "h-6 px-2 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
                 direction === d.value
                   ? "bg-yes/20 text-foreground"
                   : "text-muted-foreground hover:text-foreground"
