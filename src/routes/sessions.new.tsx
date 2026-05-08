@@ -18,7 +18,7 @@ import {
 import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
 import { useMemo, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
