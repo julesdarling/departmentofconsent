@@ -216,10 +216,9 @@ function JoinPage() {
               </div>
             )}
             <Field label="Your vision for this scene">
-              <Textarea
+              <Input
                 value={side.vision}
                 onChange={(e) => updateField("vision", e.target.value)}
-                rows={4}
                 placeholder="Set the mood in your own words…"
               />
             </Field>
