@@ -67,6 +67,12 @@ function SessionsList() {
             </Link>
           ))}
         </div>
+
+        {!isLoading && sorted.length > 0 && (
+          <div className="flex justify-center pt-4">
+            <CloudButton to="/sessions/new">+ New scene</CloudButton>
+          </div>
+        )}
       </div>
     </Layout>
   );
