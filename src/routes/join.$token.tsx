@@ -555,47 +555,69 @@ function KinkBlock({
   );
 }
 
-function SceneDetailsBlock({ side, creatorName }: { side: SessionSide; creatorName: string }) {
-  const items: { label: string; value?: string }[] = [
-    { label: "Date / time of play", value: side.timeOfPlay },
-    { label: "Time constraints", value: side.timeConstraints },
-    { label: "Setting", value: side.setting },
-    { label: "Music", value: side.music },
-    { label: "Dress", value: side.dress },
-    { label: "Substances", value: side.substances },
-    { label: "Medical concerns", value: side.medicalConcerns },
-    { label: "Other partners / dynamics", value: side.partnerDynamics },
-    { label: "Intentions — how they want to feel", value: side.intentions },
-    { label: "What a good time looks like", value: side.goodTime },
-    { label: "…and a bad time", value: side.badTime },
-    { label: "Other partners / dynamics", value: side.partnerDynamics },
-    { label: "Call them", value: side.callMe },
-    { label: "Don't call them", value: side.dontCallMe },
-    { label: "Their hard limits", value: side.hardLimits },
-    { label: "Their soft limits", value: side.softLimits },
-    { label: "Their enthusiastic yes", value: side.yesList },
-    { label: "Aftercare", value: side.aftercare },
-    { label: "Brainstorm", value: side.brainstorm },
-  ].filter((i) => i.value && i.value.trim().length > 0);
-
-  if (items.length === 0 && !side.substancesHardLimit) return null;
+function SceneDetailsBlock({
+  ownerSide,
+  mySide,
+  updateField,
+  creatorName,
+}: {
+  ownerSide: SessionSide;
+  mySide: SessionSide;
+  updateField: <K extends keyof SessionSide>(k: K, v: SessionSide[K]) => void;
+  creatorName: string;
+}) {
+  const items: { label: string; field: keyof SessionSide }[] = [
+    { label: "Date / time of play", field: "timeOfPlay" },
+    { label: "Time constraints", field: "timeConstraints" },
+    { label: "Setting", field: "setting" },
+    { label: "Music", field: "music" },
+    { label: "Dress", field: "dress" },
+    { label: "Substances", field: "substances" },
+    { label: "Medical concerns", field: "medicalConcerns" },
+    { label: "Other partners / dynamics", field: "partnerDynamics" },
+    { label: "Intentions — how they want to feel", field: "intentions" },
+    { label: "What a good time looks like", field: "goodTime" },
+    { label: "…and a bad time", field: "badTime" },
+    { label: "Names they want to be called", field: "callMe" },
+    { label: "Off-limits names", field: "dontCallMe" },
+    { label: "Their hard limits", field: "hardLimits" },
+    { label: "Their soft limits", field: "softLimits" },
+    { label: "Their enthusiastic yes", field: "yesList" },
+    { label: "Aftercare", field: "aftercare" },
+    { label: "Brainstorm", field: "brainstorm" },
+  ];
 
   return (
     <Sticker className="space-y-3">
       <div className="text-center font-display text-2xl text-plum">{creatorName}'s scene details</div>
-      <p className="text-xs text-muted-foreground text-center">Everything they shared so you have the full picture.</p>
-      <div className="space-y-2 pt-1">
-        {side.substancesHardLimit && (
-          <div className="text-[11px] uppercase tracking-wider text-no font-semibold">
-            Substance use is a hard limit for them
-          </div>
-        )}
-        {items.map((i) => (
-          <div key={i.label} className="border-b border-border/40 pb-2 last:border-0">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{i.label}</div>
-            <div className="text-sm whitespace-pre-wrap">{i.value}</div>
-          </div>
-        ))}
+      <p className="text-xs text-muted-foreground text-center">
+        Their answer is shown for each — add yours underneath.
+      </p>
+      {ownerSide.substancesHardLimit && (
+        <div className="text-[11px] uppercase tracking-wider text-no font-semibold">
+          Substance use is a hard limit for them
+        </div>
+      )}
+      <div className="space-y-4 pt-1">
+        {items.map((i) => {
+          const theirVal = (ownerSide[i.field] as string | undefined)?.trim();
+          if (!theirVal) return null;
+          const myVal = (mySide[i.field] as string | undefined) ?? "";
+          return (
+            <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                {i.label}
+              </div>
+              <div className="text-sm whitespace-pre-wrap mb-2">{theirVal}</div>
+              <Textarea
+                value={myVal}
+                onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
+                rows={2}
+                placeholder="Your response…"
+              />
+            </div>
+          );
+        })}
       </div>
     </Sticker>
   );
