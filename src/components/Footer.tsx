@@ -1,9 +1,9 @@
 import { Link } from "@tanstack/react-router";
-import flag from "@/assets/trans-flag.png";
+import flag from "@/assets/trans-flag.svg";
 
 export function Footer() {
   return (
-    <footer className="bg-plum text-white px-6 py-14">
+    <footer className="bg-plum text-white px-6 pt-14 pb-32">
       <div className="max-w-3xl mx-auto text-center space-y-5">
         <img src={flag} alt="Trans pride flag" className="h-8 w-auto mx-auto" />
         <p className="text-base sm:text-lg max-w-md mx-auto leading-snug">
