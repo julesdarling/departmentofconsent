@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useMySessions } from "@/lib/storage";
+import { useMySessions, useKinks, generateSceneTitle } from "@/lib/storage";
 import { Plus, Calendar } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { WhipLoader } from "@/components/WhipLoader";
