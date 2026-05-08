@@ -202,7 +202,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 1 && (
+        {step === 2 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
