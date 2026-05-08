@@ -115,12 +115,11 @@ function NewSession() {
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum">Scene vision</h2>
             <Field label="Date & time of play">
-              <Input
-                type="datetime-local"
+              <DateTimePicker
                 value={side.timeOfPlay || ""}
-                onChange={(e) => {
-                  update("timeOfPlay", e.target.value);
-                  if (e.target.value) setDate(e.target.value.slice(0, 10));
+                onChange={(v) => {
+                  update("timeOfPlay", v);
+                  if (v) setDate(v.slice(0, 10));
                 }}
               />
             </Field>
