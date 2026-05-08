@@ -34,7 +34,7 @@ function Index() {
       <section className="relative">
         <div className="relative w-full aspect-[3/4] sm:aspect-[16/10] max-h-[760px] overflow-hidden">
           <img src={heroImg} alt="Friends laughing in a soft pile, joyful and intimate" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/25 sm:bg-black/30 pointer-events-none" />
+          <div className="absolute inset-0 bg-black/35 sm:bg-black/40 pointer-events-none" />
           <div className="absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 w-44 sm:w-72 md:w-80 lg:w-96">
             <img src={wordmark} alt="Dept of Consent" className="w-full" />
           </div>
