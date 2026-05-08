@@ -1,5 +1,5 @@
 import { Link, useLocation } from "@tanstack/react-router";
-import { ListChecks, Heart, User } from "lucide-react";
+import { ListChecks, Plus, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
 import wordmark from "@/assets/logo.svg";
