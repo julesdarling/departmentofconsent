@@ -33,6 +33,13 @@ export const Route = createFileRoute("/onboarding")({
 function Onboarding() {
   const [profile, setProfile] = useProfile();
   const [draft, setDraft] = useState(profile);
+  const [hydrated, setHydrated] = useState(false);
+  // Sync draft once the stored profile has hydrated from storage
+  // so users see their previous answers in the inputs.
+  if (!hydrated && (profile.name || profile.pronouns || profile.callMe || profile.healthcare || profile.emergencyContact || profile.defaultAftercare)) {
+    setDraft(profile);
+    setHydrated(true);
+  }
   const navigate = useNavigate();
   const { signOut, user } = useAuth();
   const { isActive } = useSubscription();
