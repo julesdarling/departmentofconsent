@@ -74,7 +74,7 @@ function SessionDetail() {
         <div className="flex items-start justify-between gap-3">
           <div>
             <h1 className="font-display text-3xl font-semibold text-plum">
-              {session.partnerHandle || "Untitled scene"}
+              {generateSceneTitle(o, kinkMap) || session.partnerHandle || "Untitled scene"}
             </h1>
             <p className="text-sm text-muted-foreground">{session.date}</p>
           </div>
