@@ -177,6 +177,15 @@ function NewSession() {
                   })}
                 </div>
               )}
+              <div className="flex gap-2 pt-2">
+                <Input
+                  value={newKink}
+                  onChange={(e) => setNewKink(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addKink(); } }}
+                  placeholder="Add your own kink…"
+                />
+                <Button type="button" onClick={addKink} disabled={!newKink.trim()}>Add</Button>
+              </div>
             </div>
           </Sticker>
         )}
