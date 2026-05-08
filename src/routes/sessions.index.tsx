@@ -6,6 +6,7 @@ import { useMySessions, useKinks, generateSceneTitle } from "@/lib/storage";
 import { Plus, Calendar } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { WhipLoader } from "@/components/WhipLoader";
+import { useMemo } from "react";
 import emptySessionsImg from "@/assets/empty-sessions.png";
 
 export const Route = createFileRoute("/sessions/")({
