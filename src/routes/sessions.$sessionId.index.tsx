@@ -89,7 +89,7 @@ function SessionDetail() {
             <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
           </div>
           <div className="flex justify-center pt-1">
-            <CloudButton variant="mint" className="cloud-btn-sm" onClick={copy}>
+            <CloudButton variant="mint" onClick={copy}>
               {copied ? "Copied!" : "Copy link to share"}
             </CloudButton>
           </div>
