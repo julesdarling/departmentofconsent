@@ -216,10 +216,9 @@ function JoinPage() {
               </div>
             )}
             <Field label="Your vision for this scene">
-              <Textarea
+              <Input
                 value={side.vision}
                 onChange={(e) => updateField("vision", e.target.value)}
-                rows={4}
                 placeholder="Set the mood in your own words…"
               />
             </Field>
@@ -510,10 +509,9 @@ function SceneDetailsBlock({
                 {i.label}
               </div>
               <div className="text-sm whitespace-pre-wrap mb-2">{theirVal}</div>
-              <Textarea
+              <Input
                 value={myVal}
                 onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
-                rows={2}
                 placeholder="Your response…"
               />
             </div>
