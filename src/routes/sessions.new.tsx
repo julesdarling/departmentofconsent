@@ -162,7 +162,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 2 && (
+        {step === 1 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Scene & logistics</h2>
             <Field label="Setting (where is it happening?)">
@@ -202,7 +202,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 3 && (
+        {step === 1 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
@@ -214,7 +214,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 4 && (
+        {step === 1 && (
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
             <p className="text-xs text-muted-foreground">
@@ -246,7 +246,7 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 5 && (
+        {step === 1 && (
           <Sticker className="space-y-3 text-center">
             <h2 className="font-display text-2xl text-plum">All set</h2>
             <p className="text-sm text-muted-foreground">
