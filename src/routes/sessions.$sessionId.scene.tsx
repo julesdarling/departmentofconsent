@@ -72,9 +72,9 @@ function ScenePage() {
           <ul className="space-y-1">
             {participants.map((p, i) => (
               <li key={i} className="text-sm">
+                <span className="text-muted-foreground">{p.role} · </span>
                 <span className="font-semibold text-plum">{p.name}</span>
                 {p.pronouns && <span className="text-muted-foreground"> · {p.pronouns}</span>}
-                <span className="text-muted-foreground"> · {p.role}</span>
               </li>
             ))}
           </ul>
