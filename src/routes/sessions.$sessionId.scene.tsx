@@ -2,9 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { Phone } from "lucide-react";
-
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/sessions/$sessionId/scene")({
@@ -14,7 +16,17 @@ export const Route = createFileRoute("/sessions/$sessionId/scene")({
 
 function ScenePage() {
   const { sessionId } = Route.useParams();
-  const { session } = useCloudSession(sessionId);
+  const { session, update } = useCloudSession(sessionId);
+  const [notes, setNotes] = useState("");
+  const [savedNotes, setSavedNotes] = useState("");
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (session && session.reflection !== undefined) {
+      setNotes(session.reflection ?? "");
+      setSavedNotes(session.reflection ?? "");
+    }
+  }, [session]);
 
   if (session === undefined) return <Layout><Sticker>Loading…</Sticker></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
@@ -23,28 +35,61 @@ function ScenePage() {
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
   const ownerName = o.name?.trim() || "Creator";
 
+  const participants = [
+    { name: ownerName, pronouns: o.pronouns, role: "Creator" },
+    ...partners.map((p, i) => ({
+      name: p.name?.trim() || `Play partner ${i + 1}`,
+      pronouns: p.pronouns,
+      role: "Partner",
+    })),
+  ];
+
+  const saveNotes = async () => {
+    setSaving(true);
+    try {
+      await update({ reflection: notes });
+      setSavedNotes(notes);
+      toast.success("Notes saved");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "Failed to save");
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="space-y-4">
-        <div>
+        <div className="text-center">
           <h1 className="font-display text-3xl font-semibold text-plum">In-scene card</h1>
           <p className="text-sm text-muted-foreground">{session.partnerHandle} · {session.date}</p>
         </div>
+
+        <Sticker className="space-y-2">
+          <div className="section-label">Who's playing</div>
+          <ul className="space-y-1">
+            {participants.map((p, i) => (
+              <li key={i} className="text-sm">
+                <span className="font-semibold text-plum">{p.name}</span>
+                {p.pronouns && <span className="text-muted-foreground"> · {p.pronouns}</span>}
+                <span className="text-muted-foreground"> · {p.role}</span>
+              </li>
+            ))}
+          </ul>
+        </Sticker>
 
         {(o.vision || partners.some((p) => p.vision)) && (
           <Sticker className="space-y-3">
             {o.vision && (
               <div>
-                <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
-                  {ownerName}'s vision for the night
-                </div>
+                <div className="section-label">{ownerName}'s vision for the scene</div>
                 <p className="text-sm whitespace-pre-wrap">{o.vision}</p>
               </div>
             )}
             {partners.map((ps, i) => ps.vision && (
               <div key={i}>
-                <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
-                  {(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the night
+                <div className="section-label">
+                  {(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the scene
                 </div>
                 <p className="text-sm whitespace-pre-wrap">{ps.vision}</p>
               </div>
@@ -53,36 +98,53 @@ function ScenePage() {
         )}
 
         <Sticker variant="coral" className="space-y-1">
-          <div className="text-[10px] uppercase tracking-wider text-coral font-bold">Safewords</div>
+          <div className="section-label">Safewords</div>
           <pre className="font-mono text-xs whitespace-pre-wrap leading-relaxed">{o.safewords}</pre>
         </Sticker>
 
         {o.hardLimits && (
           <Sticker className="border-no">
-            <div className="text-[10px] uppercase tracking-wider text-no font-bold mb-1">Hard limits</div>
+            <div className="section-label" style={{ color: "var(--color-no)" }}>Hard limits</div>
             <div className="text-base whitespace-pre-wrap font-semibold">{o.hardLimits}</div>
           </Sticker>
         )}
 
         {o.dontCallMe && (
           <Sticker>
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-1">Don't call me</div>
+            <div className="section-label">Don't call me</div>
             <div className="text-base font-semibold">{o.dontCallMe}</div>
           </Sticker>
         )}
 
         {o.emergencyContact && (
           <Sticker variant="coral">
-            <div className="text-[10px] uppercase tracking-wider text-coral font-bold mb-1 flex items-center gap-1">
+            <div className="section-label flex items-center gap-1">
               <Phone className="h-3 w-3" /> Emergency contact
             </div>
             <div className="text-base whitespace-pre-wrap">{o.emergencyContact}</div>
           </Sticker>
         )}
 
-        <Button asChild variant="outline" className="w-full rounded-full">
-          <Link to="/sessions/$sessionId" params={{ sessionId }}>← Back to session</Link>
-        </Button>
+        <Sticker className="space-y-2">
+          <div className="section-label">Notes</div>
+          <Textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={5}
+            placeholder="Jot down notes during or after the scene…"
+          />
+          <div className="flex justify-end">
+            <Button size="sm" onClick={saveNotes} disabled={saving || notes === savedNotes}>
+              {saving ? "Saving…" : "Save notes"}
+            </Button>
+          </div>
+        </Sticker>
+
+        <div className="flex justify-center pt-2">
+          <Button asChild variant="outline" className="rounded-full">
+            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back to session</Link>
+          </Button>
+        </div>
       </div>
     </Layout>
   );

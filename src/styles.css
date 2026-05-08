@@ -191,6 +191,16 @@
     display: block;
     margin-bottom: 0.45rem;
   }
+  /* Consistent uppercase section eyebrow label */
+  .section-label {
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--color-coral);
+    margin-bottom: 0.35rem;
+  }
 
   /* Cloud-shaped button — uses provided SVG backgrounds */
   .cloud-btn {

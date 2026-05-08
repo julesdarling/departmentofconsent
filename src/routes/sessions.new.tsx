@@ -110,7 +110,7 @@ function NewSession() {
 
         {step === 0 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Who & when</h2>
+            <h2 className="font-display text-2xl text-plum font-semibold">Who & when</h2>
             <Field label="Play partner name or handle">
               <Input value={partnerHandle} onChange={(e) => setPartnerHandle(e.target.value)} placeholder="How you'll remember them" />
             </Field>
@@ -126,7 +126,7 @@ function NewSession() {
 
         {step === 1 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Scene vision</h2>
+            <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
             <Field label="What are you imagining for this scene?">
               <Textarea
                 value={side.vision}
@@ -172,7 +172,7 @@ function NewSession() {
 
         {step === 2 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Scene & logistics</h2>
+            <h2 className="font-display text-2xl text-plum font-semibold">Scene & logistics</h2>
             <Field label="Setting (where is it happening?)">
               <Input value={side.setting} onChange={(e) => update("setting", e.target.value)} />
             </Field>
@@ -212,7 +212,7 @@ function NewSession() {
 
         {step === 3 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Privacy & sex</h2>
+            <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it after?">
               <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
             </Field>
@@ -224,7 +224,7 @@ function NewSession() {
 
         {step === 4 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-xl text-plum">For this scene</h2>
+            <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
             <p className="text-xs text-muted-foreground">
               Your saved kinks ratings are already attached.{" "}
               <Link to="/kinks" className="underline text-coral">Edit your kinks library</Link>{" "}
