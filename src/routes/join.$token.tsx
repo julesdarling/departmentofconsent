@@ -179,7 +179,12 @@ function JoinPage() {
 
   const creatorName = session.ownerSide.name?.trim() || "Your play partner";
   const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
-  const ownerSelectedKinks = (session.ownerSide.selectedKinks || []).map((id) => ownerKinkMap[id] || id);
+  const ownerSide = session.ownerSide;
+  const visionKinkIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
+  const sideKinkIds = Object.entries(ownerSide.ratings || {})
+    .filter(([, r]) => r === "yes" || r === "maybe")
+    .map(([id]) => id)
+    .filter((id) => ownerKinkMap[id] && !visionKinkIds.includes(id));
 
   if (!started) {
     return (
@@ -190,27 +195,54 @@ function JoinPage() {
               {creatorName} has invited you to play together.
             </h1>
             <p className="text-sm text-muted-foreground">
-              Read their vision below, then share your side so they can see what matches.
+              Tap yes / maybe / no on each item below so they can see what matches.
             </p>
           </Sticker>
 
-          {(session.ownerSide.vision?.trim() || ownerSelectedKinks.length > 0) && (
+          {(ownerSide.vision?.trim() || visionKinkIds.length > 0) && (
             <Sticker variant="coral" className="space-y-3">
               <div className="text-center font-display text-2xl text-plum">Scene vision</div>
-              <div className="bg-card/60 rounded-xl p-3 space-y-2">
-                <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
-                  {creatorName}'s vision
-                </div>
-                {session.ownerSide.vision?.trim() && (
-                  <p className="text-sm whitespace-pre-wrap">{session.ownerSide.vision}</p>
-                )}
-                {ownerSelectedKinks.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {ownerSelectedKinks.map((n) => (
-                      <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>
-                    ))}
+              {ownerSide.vision?.trim() && (
+                <div className="bg-card/60 rounded-xl p-3">
+                  <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
+                    {creatorName}'s vision
                   </div>
-                )}
+                  <p className="text-sm whitespace-pre-wrap">{ownerSide.vision}</p>
+                </div>
+              )}
+              {visionKinkIds.length > 0 && (
+                <div className="space-y-1">
+                  <div className="text-xs text-muted-foreground pb-1">
+                    {creatorName} picked these for the scene — how do you feel?
+                  </div>
+                  {visionKinkIds.map((id) => (
+                    <RateRow
+                      key={id}
+                      name={ownerKinkMap[id]}
+                      value={side.ratings[id]}
+                      onChange={(r) => setRating(id, r)}
+                    />
+                  ))}
+                </div>
+              )}
+            </Sticker>
+          )}
+
+          {sideKinkIds.length > 0 && (
+            <Sticker className="space-y-2">
+              <div className="text-center font-display text-2xl text-plum">{creatorName}'s kinks</div>
+              <p className="text-xs text-muted-foreground text-center">
+                Other things on their side. Rate each one.
+              </p>
+              <div className="space-y-1 pt-1">
+                {sideKinkIds.map((id) => (
+                  <RateRow
+                    key={id}
+                    name={ownerKinkMap[id]}
+                    value={side.ratings[id]}
+                    onChange={(r) => setRating(id, r)}
+                  />
+                ))}
               </div>
             </Sticker>
           )}
