@@ -91,8 +91,6 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_fucking", name: "Fucking", category: "Intimacy" },
   { id: "k_anal", name: "Anal play", category: "Intimacy" },
   { id: "k_toys", name: "Toys", category: "Intimacy" },
-  { id: "k_pen_giving", name: "Penetrative (giving)", category: "Intimacy" },
-  { id: "k_pen_recv", name: "Penetrative (receiving)", category: "Intimacy" },
 
   // Sensation
   { id: "k_sensation", name: "Sensation", category: "Sensation" },
