@@ -60,7 +60,7 @@ function JoinPage() {
     return (
       <Layout>
         <Sticker className="text-center space-y-3">
-          <h1 className="font-display text-3xl text-plum font-semibold">Scene not found</h1>
+          <h1 className="font-display text-3xl text-plum">Scene not found</h1>
           <p className="text-sm text-muted-foreground">
             This invite link doesn't match anything. Ask your play partner to share it again.
           </p>
@@ -102,7 +102,7 @@ function JoinPage() {
       <Layout>
         <div className="space-y-5">
           <Sticker className="text-center space-y-3">
-            <h1 className="font-display text-3xl text-plum font-semibold">Thank you</h1>
+            <h1 className="font-display text-3xl text-plum">Thank you</h1>
             <p className="text-sm text-muted-foreground">
               Your side has been shared with {ownerName}. Below is the full plan for the scene.
             </p>
@@ -118,7 +118,7 @@ function JoinPage() {
 
           {(o.vision || (o.selectedKinks && o.selectedKinks.length > 0)) && (
             <Sticker variant="coral" className="space-y-3">
-              <div className="text-center font-display text-2xl font-semibold text-plum">Scene vision</div>
+              <div className="text-center font-display text-2xl text-plum">Scene vision</div>
               <div className="bg-card/60 rounded-xl p-3 space-y-2">
                 <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{ownerName}'s vision for the night</div>
                 {o.vision && <p className="text-sm whitespace-pre-wrap">{o.vision}</p>}
@@ -186,7 +186,7 @@ function JoinPage() {
       <Layout>
         <div className="space-y-5">
           <Sticker className="text-center space-y-3">
-            <h1 className="font-display text-3xl text-plum font-semibold">
+            <h1 className="font-display text-3xl text-plum">
               {creatorName} has invited you to play together.
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -196,7 +196,7 @@ function JoinPage() {
 
           {(session.ownerSide.vision?.trim() || ownerSelectedKinks.length > 0) && (
             <Sticker variant="coral" className="space-y-3">
-              <div className="text-center font-display text-2xl font-semibold text-plum">Scene vision</div>
+              <div className="text-center font-display text-2xl text-plum">Scene vision</div>
               <div className="bg-card/60 rounded-xl p-3 space-y-2">
                 <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
                   {creatorName}'s vision
@@ -229,7 +229,7 @@ function JoinPage() {
     <Layout>
       <div className="space-y-5">
         <Sticker className="text-center space-y-2">
-          <h1 className="font-display text-3xl text-plum font-semibold">
+          <h1 className="font-display text-3xl text-plum">
             Your side
           </h1>
           <p className="text-sm text-muted-foreground">
@@ -349,7 +349,7 @@ function JoinPage() {
           <h2 className="font-display text-lg text-plum">Lightning round</h2>
           {grouped.map(([cat, items]) => (
             <div key={cat}>
-              <div className="font-display text-sm font-semibold text-coral mt-2 mb-1">{cat}</div>
+              <div className="font-display text-sm text-coral mt-2 mb-1">{cat}</div>
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between gap-2 py-1.5 border-b border-border/40 last:border-0">
                   <div className="text-sm flex-1 min-w-0 truncate">{item.name}</div>

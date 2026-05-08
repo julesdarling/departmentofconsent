@@ -81,7 +81,7 @@ function EditScene() {
     <Layout>
       <div className="space-y-5">
         <div className="flex items-center justify-between">
-          <h1 className="font-display text-3xl font-semibold text-plum">Edit scene</h1>
+          <h1 className="font-display text-3xl text-plum">Edit scene</h1>
           <Link to="/sessions/$sessionId" params={{ sessionId }} className="text-xs text-link underline">Cancel</Link>
         </div>
 
@@ -95,7 +95,7 @@ function EditScene() {
         </Sticker>
 
         <Sticker className="space-y-4">
-          <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
+          <h2 className="font-display text-2xl text-plum">Scene vision</h2>
           <Field label="What are you imagining for this scene?">
             <Textarea value={side.vision} onChange={(e) => u("vision", e.target.value)} rows={5} />
           </Field>
@@ -131,7 +131,7 @@ function EditScene() {
         </Sticker>
 
         <Sticker variant="coral" className="space-y-4">
-          <h2 className="font-display text-2xl text-plum font-semibold">Scene & logistics</h2>
+          <h2 className="font-display text-2xl text-plum">Scene & logistics</h2>
           <Field label="Setting"><Input value={side.setting} onChange={(e) => u("setting", e.target.value)} /></Field>
           <Field label="Time constraints"><Input value={side.timeConstraints} onChange={(e) => u("timeConstraints", e.target.value)} /></Field>
           <Field label="Music"><Input value={side.music} onChange={(e) => u("music", e.target.value)} /></Field>
@@ -149,13 +149,13 @@ function EditScene() {
         </Sticker>
 
         <Sticker className="space-y-4">
-          <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
+          <h2 className="font-display text-2xl text-plum">Privacy & sex</h2>
           <Field label="Privacy"><Textarea value={side.privacy} onChange={(e) => u("privacy", e.target.value)} rows={4} /></Field>
           <Field label="Penetrative sex?"><Textarea value={side.penetrativeSex} onChange={(e) => u("penetrativeSex", e.target.value)} rows={2} /></Field>
         </Sticker>
 
         <Sticker variant="coral" className="space-y-4">
-          <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
+          <h2 className="font-display text-2xl text-plum">For this scene</h2>
           <Field label="Names you want to be called"><Input value={side.callMe} onChange={(e) => u("callMe", e.target.value)} /></Field>
           <Field label="Off-limits names"><Input value={side.dontCallMe} onChange={(e) => u("dontCallMe", e.target.value)} /></Field>
           <Field label="Hard limits for this scene"><Textarea value={side.hardLimits} onChange={(e) => u("hardLimits", e.target.value)} rows={2} /></Field>

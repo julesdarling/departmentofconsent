@@ -73,7 +73,7 @@ function SessionDetail() {
       <div className="space-y-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <h1 className="font-display text-3xl font-semibold text-plum">
+            <h1 className="font-display text-3xl text-plum">
               {generateSceneTitle(o, kinkMap) || session.partnerHandle || "Untitled scene"}
             </h1>
             <p className="text-sm text-muted-foreground">{session.date}</p>
@@ -119,7 +119,7 @@ function SessionDetail() {
         {/* Visions per participant */}
         <Sticker variant="coral" className="space-y-4">
           <div className="text-center">
-            <div className="font-display text-2xl font-semibold text-plum">Scene vision</div>
+            <div className="font-display text-2xl text-plum">Scene vision</div>
           </div>
           <VisionBlock name={`${ownerName}'s vision for the night`} side={o} kinkMap={kinkMap} />
           {partners.map((ps, i) => (
@@ -278,7 +278,7 @@ function Compare({
       {/* HERO: mutual yes — the positive overlap */}
       <Sticker variant="coral" className="space-y-3 text-center">
         
-        <div className="font-display text-2xl font-semibold text-plum">
+        <div className="font-display text-2xl text-plum">
           {mutualYes.length > 0
             ? `${mutualYes.length} mutual yes${mutualYes.length === 1 ? "" : "es"}`
             : "No mutual yeses yet"}
