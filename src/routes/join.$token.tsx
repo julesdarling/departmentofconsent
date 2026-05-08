@@ -193,16 +193,63 @@ function JoinPage() {
     );
   }
 
+  const creatorName = session.ownerSide.name?.trim() || "Your play partner";
+  const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
+  const ownerSelectedKinks = (session.ownerSide.selectedKinks || []).map((id) => ownerKinkMap[id] || id);
+
+  if (!started) {
+    return (
+      <Layout>
+        <div className="space-y-5">
+          <Sticker className="text-center space-y-3">
+            <h1 className="font-display text-2xl text-plum">
+              {creatorName} has invited you to play together.
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              Read their vision below, then share your side so they can see what matches.
+            </p>
+          </Sticker>
+
+          {(session.ownerSide.vision?.trim() || ownerSelectedKinks.length > 0) && (
+            <Sticker variant="coral" className="space-y-3">
+              <div className="text-center font-display text-2xl font-semibold text-plum">Scene vision</div>
+              <div className="bg-card/60 rounded-xl p-3 space-y-2">
+                <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
+                  {creatorName}'s vision
+                </div>
+                {session.ownerSide.vision?.trim() && (
+                  <p className="text-sm whitespace-pre-wrap">{session.ownerSide.vision}</p>
+                )}
+                {ownerSelectedKinks.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {ownerSelectedKinks.map((n) => (
+                      <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </Sticker>
+          )}
+
+          <div className="flex justify-center pt-2">
+            <Button onClick={() => { setStarted(true); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+              Next
+            </Button>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div className="space-y-5">
         <Sticker className="text-center space-y-2">
           <h1 className="font-display text-2xl text-plum">
-            You've been invited to negotiate ♡
+            Your side
           </h1>
           <p className="text-sm text-muted-foreground">
-            {session.ownerSide.name || "Your play partner"} wants to plan a scene with you on {session.date}.
-            Fill out your side — they'll see what matches.
+            Fill out your scene vision, kinks, limits, and safewords. {creatorName} will see what matches.
           </p>
         </Sticker>
 
