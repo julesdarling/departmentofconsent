@@ -48,14 +48,6 @@ function JoinPage() {
     }
   }, [session, side, profile, savedRatings]);
 
-  const grouped = useMemo(() => {
-    const m = new Map<string, typeof kinks>();
-    for (const k of kinks) {
-      if (!m.has(k.category)) m.set(k.category, []);
-      m.get(k.category)!.push(k);
-    }
-    return Array.from(m.entries());
-  }, [kinks]);
 
   if (session === undefined) return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
 
