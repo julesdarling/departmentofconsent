@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useKinks, type SessionSide } from "@/lib/storage";
+import { useKinks, useProfile, type SessionSide } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -20,6 +20,7 @@ function SessionDetail() {
   const { sessionId } = Route.useParams(); // shareToken
   
   const [kinks] = useKinks();
+  const [profile] = useProfile();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { session, error, refresh } = useCloudSession(sessionId);
@@ -61,7 +62,7 @@ function SessionDetail() {
 
   const o = session.ownerSide;
   const partners = session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : []);
-  const ownerName = o.name?.trim() || "Creator";
+  const ownerName = o.name?.trim() || profile?.name?.trim() || "Creator";
 
   const yesItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
   const maybeItems = Object.entries(o.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
