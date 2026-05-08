@@ -160,7 +160,7 @@ function NewSession() {
                             : "border-border/60 text-muted-foreground hover:border-primary/50"
                         )}
                       >
-                        {selected ? "✓ " : "+ "}{k.name}
+                        {selected ? "Selected " : "+ "}{k.name}
                       </button>
                     );
                   })}
@@ -256,7 +256,7 @@ function NewSession() {
 
         {step === 5 && (
           <Sticker className="space-y-3 text-center">
-            <h2 className="font-display text-2xl text-plum">All set ♡</h2>
+            <h2 className="font-display text-2xl text-plum">All set</h2>
             <p className="text-sm text-muted-foreground">
               Save your side and get a share link + QR for {partnerHandle || "your partner"} to fill out theirs.
             </p>
