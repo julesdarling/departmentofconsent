@@ -24,7 +24,7 @@ export function RequireAuth({ children, requireSubscription = true }: { children
   if (loading || !user || (requireSubscription && (subLoading || !isActive))) {
     return (
       <Layout>
-        <div className="flex justify-center py-16"><WhipLoader /></div>
+        <div className="flex items-center justify-center min-h-[70vh]"><WhipLoader /></div>
       </Layout>
     );
   }
