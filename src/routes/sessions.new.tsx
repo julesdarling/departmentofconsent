@@ -115,11 +115,12 @@ function NewSession() {
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum">Scene vision</h2>
             <Field label="Date & time of play">
-              <DateTimePicker
+              <Input
+                type="datetime-local"
                 value={side.timeOfPlay || ""}
-                onChange={(v) => {
-                  update("timeOfPlay", v);
-                  if (v) setDate(v.slice(0, 10));
+                onChange={(e) => {
+                  update("timeOfPlay", e.target.value);
+                  if (e.target.value) setDate(e.target.value.slice(0, 10));
                 }}
               />
             </Field>
@@ -331,61 +332,6 @@ function NewSession() {
         </div>
       </div>
     </Layout>
-  );
-}
-
-function DateTimePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  // value is "YYYY-MM-DDTHH:mm" (24h)
-  const [datePart, timePart] = value ? value.split("T") : ["", ""];
-  const [h24, m] = timePart ? timePart.split(":") : ["", ""];
-  const hourNum = h24 ? parseInt(h24, 10) : NaN;
-  const ampm: "am" | "pm" = !isNaN(hourNum) && hourNum >= 12 ? "pm" : "am";
-  const hour12 = !isNaN(hourNum) ? ((hourNum % 12) || 12).toString() : "";
-
-  const compose = (d: string, hr12: string, min: string, ap: "am" | "pm") => {
-    if (!d || !hr12 || min === "") return d ? `${d}T00:00` : "";
-    let h = parseInt(hr12, 10) % 12;
-    if (ap === "pm") h += 12;
-    onChange(`${d}T${String(h).padStart(2, "0")}:${min}`);
-  };
-
-  return (
-    <div className="flex gap-2 flex-wrap">
-      <Input
-        type="date"
-        value={datePart}
-        onChange={(e) => compose(e.target.value, hour12 || "12", m || "00", ampm)}
-        className="flex-1 min-w-[140px]"
-      />
-      <select
-        value={hour12}
-        onChange={(e) => compose(datePart, e.target.value, m || "00", ampm)}
-        className="doc-input px-2"
-      >
-        <option value="" disabled>Hr</option>
-        {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
-          <option key={n} value={n}>{n}</option>
-        ))}
-      </select>
-      <select
-        value={m}
-        onChange={(e) => compose(datePart, hour12 || "12", e.target.value, ampm)}
-        className="doc-input px-2"
-      >
-        <option value="" disabled>Min</option>
-        {Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0")).map((n) => (
-          <option key={n} value={n}>{n}</option>
-        ))}
-      </select>
-      <select
-        value={ampm}
-        onChange={(e) => compose(datePart, hour12 || "12", m || "00", e.target.value as "am" | "pm")}
-        className="doc-input px-2"
-      >
-        <option value="am">AM</option>
-        <option value="pm">PM</option>
-      </select>
-    </div>
   );
 }
 
