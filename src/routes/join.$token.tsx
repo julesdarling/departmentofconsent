@@ -600,3 +600,46 @@ function SceneDetailsBlock({ side, creatorName }: { side: SessionSide; creatorNa
     </Sticker>
   );
 }
+
+function YesNoMaybeMatch({
+  label,
+  theirValue,
+  value,
+  onChange,
+}: {
+  label: string;
+  theirValue?: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const opts: { v: string; cls: string }[] = [
+    { v: "yes", cls: "bg-yes/20 border-yes" },
+    { v: "maybe", cls: "bg-maybe/20 border-maybe" },
+    { v: "no", cls: "bg-no/20 border-no" },
+  ];
+  return (
+    <div className="space-y-1.5">
+      <Label className="doc-label">{label}</Label>
+      {theirValue?.trim() && (
+        <p className="text-[11px] text-muted-foreground">
+          They said: <span className="font-semibold capitalize text-plum">{theirValue}</span>
+        </p>
+      )}
+      <div className="flex gap-2">
+        {opts.map((o) => (
+          <button
+            key={o.v}
+            type="button"
+            onClick={() => onChange(o.v)}
+            className={cn(
+              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
+              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {o.v}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
