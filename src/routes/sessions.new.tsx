@@ -233,7 +233,7 @@ function NewSession() {
         {step === 3 && (
           <Sticker className="space-y-4">
             <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
-            <Field label="Privacy — photos/videos? Sharing? Talking about it after?">
+            <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
               <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
             </Field>
             <Field label="Penetrative sex during the scene?">
