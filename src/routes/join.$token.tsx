@@ -38,7 +38,7 @@ function JoinPage() {
   const [side, setSide] = useState<SessionSide | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [started, setStarted] = useState(false);
+  
 
   useEffect(() => {
     if (session && !side) {
@@ -192,61 +192,43 @@ function JoinPage() {
     .map(([id]) => id)
     .filter((id) => ownerKinkMap[id] && !visionKinkIds.includes(id));
 
-  if (!started) {
-    return (
-      <Layout>
-        <div className="space-y-5">
-          <Sticker className="text-center space-y-3">
-            <h1 className="font-display text-3xl text-plum">
-              {creatorName} has invited you to play together.
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Tap yes / maybe / no on each item below so they can see what matches.
-            </p>
-          </Sticker>
+  return (
+    <Layout>
+      <div className="space-y-5">
+        <Sticker className="text-center space-y-3">
+          <h1 className="font-display text-3xl text-plum">
+            {creatorName} has invited you to play together.
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Their answers are shown for each item — add yours underneath.
+          </p>
+        </Sticker>
 
-          {(ownerSide.vision?.trim() || visionKinkIds.length > 0) && (
-            <Sticker variant="coral" className="space-y-3">
-              <div className="text-center font-display text-2xl text-plum">Scene vision</div>
-              {ownerSide.vision?.trim() && (
-                <div className="bg-card/60 rounded-xl p-3">
-                  <div className="text-[11px] uppercase tracking-wider text-coral font-bold mb-1">
-                    {creatorName}'s vision
-                  </div>
-                  <p className="text-sm whitespace-pre-wrap">{ownerSide.vision}</p>
+        {(ownerSide.vision?.trim() || visionKinkIds.length > 0) && (
+          <Sticker variant="coral" className="space-y-3">
+            <div className="text-center font-display text-2xl text-plum">Scene vision</div>
+            {ownerSide.vision?.trim() && (
+              <div className="bg-card/60 rounded-xl p-3 space-y-2">
+                <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
+                  {creatorName}'s vision
                 </div>
-              )}
-              {visionKinkIds.length > 0 && (
-                <div className="space-y-3">
-                  <div className="text-xs text-muted-foreground pb-1">
-                    {creatorName} picked these for the scene — how do you feel?
-                  </div>
-                  {visionKinkIds.map((id) => (
-                    <KinkBlock
-                      key={id}
-                      name={ownerKinkMap[id]}
-                      creatorDirection={ownerSide.directions?.[id]}
-                      rating={side.ratings[id]}
-                      direction={side.directions?.[id]}
-                      onRating={(r) => setRating(id, r)}
-                      onDirection={(d) => setDirection(id, d)}
-                    />
-                  ))}
+                <p className="text-sm whitespace-pre-wrap">{ownerSide.vision}</p>
+              </div>
+            )}
+            <Field label="Your vision for this scene">
+              <Textarea
+                value={side.vision}
+                onChange={(e) => updateField("vision", e.target.value)}
+                rows={4}
+                placeholder="Set the mood in your own words…"
+              />
+            </Field>
+            {visionKinkIds.length > 0 && (
+              <div className="space-y-3">
+                <div className="text-xs text-muted-foreground pb-1">
+                  {creatorName} picked these for the scene — how do you feel?
                 </div>
-              )}
-            </Sticker>
-          )}
-
-          <SceneDetailsBlock side={ownerSide} creatorName={creatorName} />
-
-          {sideKinkIds.length > 0 && (
-            <Sticker className="space-y-2">
-              <div className="text-center font-display text-2xl text-plum">{creatorName}'s kinks</div>
-              <p className="text-xs text-muted-foreground text-center">
-                Other things on their side. Rate each one.
-              </p>
-              <div className="space-y-3 pt-1">
-                {sideKinkIds.map((id) => (
+                {visionKinkIds.map((id) => (
                   <KinkBlock
                     key={id}
                     name={ownerKinkMap[id]}
@@ -258,56 +240,41 @@ function JoinPage() {
                   />
                 ))}
               </div>
-            </Sticker>
-          )}
-
-          <div className="flex justify-center pt-2">
-            <CloudButton onClick={() => { setStarted(true); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-              Next
-            </CloudButton>
-          </div>
-        </div>
-      </Layout>
-    );
-  }
-
-  return (
-    <Layout>
-      <div className="space-y-5">
-        <Sticker className="text-center space-y-2">
-          <h1 className="font-display text-3xl text-plum">
-            Your side
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Fill out your scene vision, kinks, limits, and safewords. {creatorName} will see what matches.
-          </p>
-        </Sticker>
-
-        {(session.ownerSide.hardLimits?.trim() || session.ownerSide.softLimits?.trim()) && (
-          <Sticker className="space-y-3">
-            <h2 className="font-display text-2xl text-plum text-center">
-              {session.ownerSide.name?.trim() || "Their"} limits
-            </h2>
-            <p className="text-xs text-muted-foreground">
-              These are the limits they shared. Please respect them as you fill out your side.
-            </p>
-            {session.ownerSide.hardLimits?.trim() && (
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-no font-semibold mb-1">Hard limits</div>
-                <div className="text-sm whitespace-pre-wrap">{session.ownerSide.hardLimits}</div>
-              </div>
-            )}
-            {session.ownerSide.softLimits?.trim() && (
-              <div>
-                <div className="text-[10px] uppercase tracking-wider text-maybe font-semibold mb-1">Soft limits</div>
-                <div className="text-sm whitespace-pre-wrap">{session.ownerSide.softLimits}</div>
-              </div>
             )}
           </Sticker>
         )}
 
+        <SceneDetailsBlock
+          ownerSide={ownerSide}
+          mySide={side}
+          updateField={updateField}
+          creatorName={creatorName}
+        />
+
+        {sideKinkIds.length > 0 && (
+          <Sticker className="space-y-2">
+            <div className="text-center font-display text-2xl text-plum">{creatorName}'s kinks</div>
+            <p className="text-xs text-muted-foreground text-center">
+              Other things on their side. Rate each one.
+            </p>
+            <div className="space-y-3 pt-1">
+              {sideKinkIds.map((id) => (
+                <KinkBlock
+                  key={id}
+                  name={ownerKinkMap[id]}
+                  creatorDirection={ownerSide.directions?.[id]}
+                  rating={side.ratings[id]}
+                  direction={side.directions?.[id]}
+                  onRating={(r) => setRating(id, r)}
+                  onDirection={(d) => setDirection(id, d)}
+                />
+              ))}
+            </div>
+          </Sticker>
+        )}
+
         <Sticker variant="coral" className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">Your side</h2>
+          <h2 className="font-display text-2xl text-plum text-center">About you</h2>
           <Field label="Your name / handle">
             <Input value={side.name} onChange={(e) => updateField("name", e.target.value)} />
           </Field>
@@ -320,84 +287,25 @@ function JoinPage() {
           <Field label="Emergency contact">
             <Textarea value={side.emergencyContact} onChange={(e) => updateField("emergencyContact", e.target.value)} rows={2} />
           </Field>
-          <Field label="Medical concerns">
-            <Textarea value={side.medicalConcerns} onChange={(e) => updateField("medicalConcerns", e.target.value)} rows={2} />
-          </Field>
-          <Field label="Substances">
-            <Textarea value={side.substances} onChange={(e) => updateField("substances", e.target.value)} rows={2} />
-          </Field>
         </Sticker>
 
         <Sticker className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">Scene vision</h2>
-          <Field label="What are you imagining for this scene?">
-            <Textarea
-              value={side.vision}
-              onChange={(e) => updateField("vision", e.target.value)}
-              rows={5}
-              placeholder="Set the mood in your own words…"
-            />
-          </Field>
-          <div className="space-y-2">
-            <Label className="doc-label">Pick what you're craving for this scene</Label>
-            <p className="text-xs text-muted-foreground">From your kink list (yes & maybes).</p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              {kinks
-                .filter((k) => side.ratings[k.id] === "yes" || side.ratings[k.id] === "maybe")
-                .map((k) => {
-                  const selected = side.selectedKinks.includes(k.id);
-                  return (
-                    <button
-                      key={k.id}
-                      type="button"
-                      onClick={() =>
-                        setSide((p) =>
-                          p
-                            ? {
-                                ...p,
-                                selectedKinks: selected
-                                  ? p.selectedKinks.filter((x) => x !== k.id)
-                                  : [...p.selectedKinks, k.id],
-                              }
-                            : p
-                        )
-                      }
-                      className={cn(
-                        "text-sm px-3 py-1.5 rounded-full border-2 transition",
-                        selected
-                          ? "bg-yes/30 border-yes text-plum font-semibold"
-                          : "border-border/60 text-muted-foreground"
-                      )}
-                    >
-                      {selected ? "Selected " : "+ "}{k.name}
-                    </button>
-                  );
-                })}
-            </div>
-          </div>
-        </Sticker>
-
-        <Sticker className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">The scene</h2>
-          <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => updateField("callMe", e.target.value)} /></Field>
-          <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => updateField("dontCallMe", e.target.value)} /></Field>
-          <Field label="Intentions / how you want to feel"><Textarea value={side.intentions} onChange={(e) => updateField("intentions", e.target.value)} rows={3} /></Field>
-
+          <h2 className="font-display text-2xl text-plum text-center">Privacy & sex</h2>
           <YesNoMaybeMatch
             label="Photos / videos during the scene?"
-            theirValue={session.ownerSide.privacy}
+            theirValue={ownerSide.privacy}
             value={side.privacy}
             onChange={(v) => updateField("privacy", v)}
           />
           <YesNoMaybeMatch
             label="Talking about it with others after?"
-            theirValue={session.ownerSide.talkingAfter}
+            theirValue={ownerSide.talkingAfter}
             value={side.talkingAfter || ""}
             onChange={(v) => updateField("talkingAfter", v)}
           />
           <YesNoMaybeMatch
             label="Penetrative sex during the scene?"
-            theirValue={session.ownerSide.penetrativeSex}
+            theirValue={ownerSide.penetrativeSex}
             value={side.penetrativeSex}
             onChange={(v) => updateField("penetrativeSex", v)}
           />
@@ -438,13 +346,6 @@ function JoinPage() {
               ))}
             </div>
           ))}
-        </Sticker>
-
-        <Sticker variant="coral" className="space-y-3">
-          <Field label="Hard limits"><Textarea value={side.hardLimits} onChange={(e) => updateField("hardLimits", e.target.value)} rows={2} /></Field>
-          <Field label="Soft limits"><Textarea value={side.softLimits} onChange={(e) => updateField("softLimits", e.target.value)} rows={2} /></Field>
-          <Field label="Enthusiastic Yes"><Textarea value={side.yesList} onChange={(e) => updateField("yesList", e.target.value)} rows={2} /></Field>
-          <Field label="Aftercare needs"><Textarea value={side.aftercare} onChange={(e) => updateField("aftercare", e.target.value)} rows={3} /></Field>
         </Sticker>
 
         <div className="flex justify-center pt-2">
@@ -555,47 +456,69 @@ function KinkBlock({
   );
 }
 
-function SceneDetailsBlock({ side, creatorName }: { side: SessionSide; creatorName: string }) {
-  const items: { label: string; value?: string }[] = [
-    { label: "Date / time of play", value: side.timeOfPlay },
-    { label: "Time constraints", value: side.timeConstraints },
-    { label: "Setting", value: side.setting },
-    { label: "Music", value: side.music },
-    { label: "Dress", value: side.dress },
-    { label: "Substances", value: side.substances },
-    { label: "Medical concerns", value: side.medicalConcerns },
-    { label: "Other partners / dynamics", value: side.partnerDynamics },
-    { label: "Intentions — how they want to feel", value: side.intentions },
-    { label: "What a good time looks like", value: side.goodTime },
-    { label: "…and a bad time", value: side.badTime },
-    { label: "Other partners / dynamics", value: side.partnerDynamics },
-    { label: "Call them", value: side.callMe },
-    { label: "Don't call them", value: side.dontCallMe },
-    { label: "Their hard limits", value: side.hardLimits },
-    { label: "Their soft limits", value: side.softLimits },
-    { label: "Their enthusiastic yes", value: side.yesList },
-    { label: "Aftercare", value: side.aftercare },
-    { label: "Brainstorm", value: side.brainstorm },
-  ].filter((i) => i.value && i.value.trim().length > 0);
-
-  if (items.length === 0 && !side.substancesHardLimit) return null;
+function SceneDetailsBlock({
+  ownerSide,
+  mySide,
+  updateField,
+  creatorName,
+}: {
+  ownerSide: SessionSide;
+  mySide: SessionSide;
+  updateField: <K extends keyof SessionSide>(k: K, v: SessionSide[K]) => void;
+  creatorName: string;
+}) {
+  const items: { label: string; field: keyof SessionSide }[] = [
+    { label: "Date / time of play", field: "timeOfPlay" },
+    { label: "Time constraints", field: "timeConstraints" },
+    { label: "Setting", field: "setting" },
+    { label: "Music", field: "music" },
+    { label: "Dress", field: "dress" },
+    { label: "Substances", field: "substances" },
+    { label: "Medical concerns", field: "medicalConcerns" },
+    { label: "Other partners / dynamics", field: "partnerDynamics" },
+    { label: "Intentions — how they want to feel", field: "intentions" },
+    { label: "What a good time looks like", field: "goodTime" },
+    { label: "…and a bad time", field: "badTime" },
+    { label: "Names they want to be called", field: "callMe" },
+    { label: "Off-limits names", field: "dontCallMe" },
+    { label: "Their hard limits", field: "hardLimits" },
+    { label: "Their soft limits", field: "softLimits" },
+    { label: "Their enthusiastic yes", field: "yesList" },
+    { label: "Aftercare", field: "aftercare" },
+    { label: "Brainstorm", field: "brainstorm" },
+  ];
 
   return (
     <Sticker className="space-y-3">
       <div className="text-center font-display text-2xl text-plum">{creatorName}'s scene details</div>
-      <p className="text-xs text-muted-foreground text-center">Everything they shared so you have the full picture.</p>
-      <div className="space-y-2 pt-1">
-        {side.substancesHardLimit && (
-          <div className="text-[11px] uppercase tracking-wider text-no font-semibold">
-            Substance use is a hard limit for them
-          </div>
-        )}
-        {items.map((i) => (
-          <div key={i.label} className="border-b border-border/40 pb-2 last:border-0">
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{i.label}</div>
-            <div className="text-sm whitespace-pre-wrap">{i.value}</div>
-          </div>
-        ))}
+      <p className="text-xs text-muted-foreground text-center">
+        Their answer is shown for each — add yours underneath.
+      </p>
+      {ownerSide.substancesHardLimit && (
+        <div className="text-[11px] uppercase tracking-wider text-no font-semibold">
+          Substance use is a hard limit for them
+        </div>
+      )}
+      <div className="space-y-4 pt-1">
+        {items.map((i) => {
+          const theirVal = (ownerSide[i.field] as string | undefined)?.trim();
+          if (!theirVal) return null;
+          const myVal = (mySide[i.field] as string | undefined) ?? "";
+          return (
+            <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                {i.label}
+              </div>
+              <div className="text-sm whitespace-pre-wrap mb-2">{theirVal}</div>
+              <Textarea
+                value={myVal}
+                onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
+                rows={2}
+                placeholder="Your response…"
+              />
+            </div>
+          );
+        })}
       </div>
     </Sticker>
   );
