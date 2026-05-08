@@ -25,7 +25,7 @@ export function CookieBanner() {
       </p>
       <button
         onClick={accept}
-        className="text-xs font-semibold text-coral underline underline-offset-4 shrink-0"
+        className="text-xs font-semibold text-link underline underline-offset-4 shrink-0"
       >
         Got it
       </button>

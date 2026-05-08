@@ -97,7 +97,7 @@ function SessionDetail() {
             Anyone with this link can fill out the play partner side. They'll see your side once they submit.
           </p>
           <div className="flex justify-center pt-2">
-            <button onClick={refresh} className="text-sm text-coral underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
+            <button onClick={refresh} className="text-sm text-link underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
               <RefreshCw className="h-3 w-3" /> Check for play partner's reply
             </button>
           </div>
@@ -170,7 +170,7 @@ function SessionDetail() {
         )}
 
         <div className="flex justify-center">
-          <Link to="/scene/$token" params={{ token: session.shareToken }} className="text-sm text-coral underline underline-offset-4 hover:opacity-80">
+          <Link to="/scene/$token" params={{ token: session.shareToken }} className="text-sm text-link underline underline-offset-4 hover:opacity-80">
             View shareable scene recap
           </Link>
         </div>
@@ -225,7 +225,7 @@ function SessionDetail() {
         </div>
 
         <div className="flex justify-center">
-          <Link to="/sessions/$sessionId/edit" params={{ sessionId }} className="text-sm text-coral underline underline-offset-4 hover:opacity-80">
+          <Link to="/sessions/$sessionId/edit" params={{ sessionId }} className="text-sm text-link underline underline-offset-4 hover:opacity-80">
             Edit scene
           </Link>
         </div>
