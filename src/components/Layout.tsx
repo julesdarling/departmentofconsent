@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Home, ListChecks, Heart, User } from "lucide-react";
+import { ListChecks, Heart, User } from "lucide-react";
 import { Footer } from "@/components/Footer";
 import { CookieBanner } from "@/components/CookieBanner";
 
@@ -18,14 +18,13 @@ export function Layout({ children, fullBleed = false, showFooter = false }: { ch
 
 function BottomNav() {
   const items = [
-    { to: "/", label: "Home", Icon: Home },
     { to: "/sessions", label: "Scenes", Icon: ListChecks },
     { to: "/kinks", label: "Kinks", Icon: Heart },
     { to: "/settings", label: "Profile", Icon: User },
   ] as const;
   return (
     <nav className="fixed bottom-4 left-4 right-4 z-40 bg-white rounded-full shadow-lg max-w-md mx-auto">
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-3">
         {items.map(({ to, label, Icon }) => (
           <li key={to}>
             <Link
