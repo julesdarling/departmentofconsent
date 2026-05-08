@@ -80,6 +80,9 @@ function JoinPage() {
   const setRating = (id: string, r: Rating) =>
     setSide((p) => (p ? { ...p, ratings: { ...p.ratings, [id]: r } } : p));
 
+  const setDirection = (id: string, d: Direction) =>
+    setSide((p) => (p ? { ...p, directions: { ...(p.directions || {}), [id]: d } } : p));
+
   const submit = async () => {
     if (!side) return;
     setSubmitting(true);
