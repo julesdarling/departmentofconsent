@@ -189,7 +189,7 @@ function JoinPage() {
       <div className="space-y-5">
         <Sticker className="text-center space-y-3">
           <h1 className="font-display text-3xl text-plum">
-            {creatorName} has invited you to play together.
+            {creatorName} has invited you to play together!
           </h1>
           <p className="text-sm text-muted-foreground">
             Their answers are shown for each item — add yours underneath.
