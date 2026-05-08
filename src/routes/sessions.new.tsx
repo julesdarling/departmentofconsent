@@ -11,8 +11,10 @@ import {
   useProfile,
   useRatings,
   useKinks,
+  useDirections,
   newSession,
   type SessionSide,
+  type Direction,
 } from "@/lib/storage";
 import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
