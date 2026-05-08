@@ -323,3 +323,49 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
     </div>
   );
 }
+
+const DIRECTIONS: { value: Direction; label: string }[] = [
+  { value: "give", label: "Give" },
+  { value: "receive", label: "Receive" },
+  { value: "both", label: "Both" },
+];
+
+export function DirectionRow({
+  name,
+  value,
+  onChange,
+  badge,
+}: {
+  name: string;
+  value: Direction | undefined;
+  onChange: (d: Direction) => void;
+  badge?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-2 py-1.5">
+      <div className="text-sm flex-1 min-w-0 truncate flex items-center gap-2">
+        <span className="truncate">{name}</span>
+        {badge && (
+          <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
+            {badge}
+          </span>
+        )}
+      </div>
+      <div className="inline-flex rounded-full border border-border/60 overflow-hidden shrink-0">
+        {DIRECTIONS.map((d) => (
+          <button
+            key={d.value}
+            type="button"
+            onClick={() => onChange(d.value)}
+            className={cn(
+              "h-7 px-2.5 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
+              value === d.value ? "bg-yes/20 text-foreground" : "text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
