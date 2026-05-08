@@ -43,7 +43,6 @@ function NewSession() {
   const navigate = useNavigate();
 
   const [session] = useState(() => newSession(profile, ratings));
-  const [partnerHandle, setPartnerHandle] = useState("");
   const [date, setDate] = useState(session.date);
   const [side, setSide] = useState<SessionSide>(session.ownerSide);
   const [step, setStep] = useState(0);
