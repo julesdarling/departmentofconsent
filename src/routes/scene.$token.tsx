@@ -43,7 +43,7 @@ function SceneRecap() {
     <Layout>
       <div className="space-y-5">
         <div className="text-center">
-          <h1 className="font-display text-3xl font-semibold text-plum">Scene recap</h1>
+          <h1 className="font-display text-3xl text-plum">Scene recap</h1>
           <p className="text-sm text-muted-foreground">{session.partnerHandle} · {session.date}</p>
         </div>
 

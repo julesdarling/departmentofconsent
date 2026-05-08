@@ -41,7 +41,7 @@ function AftercarePage() {
       <div className="space-y-4">
         <div className="text-center space-y-2">
           <img src={bunnyIcon} alt="" className="h-20 w-20 mx-auto" />
-          <h1 className="font-display text-3xl font-semibold text-plum">Aftercare</h1>
+          <h1 className="font-display text-3xl text-plum">Aftercare</h1>
           <p className="text-sm text-muted-foreground">Take what you need.</p>
         </div>
 

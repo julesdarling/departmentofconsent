@@ -24,8 +24,8 @@ function SessionsList() {
   return (
     <Layout>
       <div className="space-y-5">
-        <div>
-          <h1 className="font-display text-3xl font-semibold text-plum">Scenes</h1>
+        <div className="text-center">
+          <h1 className="font-display text-5xl text-plum">Scenes</h1>
           <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
         </div>
 
@@ -51,7 +51,7 @@ function SessionsList() {
               <Sticker className="hover:scale-[1.01] transition-transform">
                 <div className="flex justify-between items-start gap-3">
                   <div className="min-w-0">
-                    <div className="font-display text-lg font-semibold text-plum truncate">
+                    <div className="font-display text-lg text-plum truncate">
                       {generateSceneTitle(s.ownerSide, kinkMap) || s.partnerHandle || "Untitled scene"}
                     </div>
                     <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">

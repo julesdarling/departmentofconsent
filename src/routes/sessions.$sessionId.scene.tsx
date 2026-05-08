@@ -63,7 +63,7 @@ function ScenePage() {
     <Layout>
       <div className="space-y-4">
         <div className="text-center">
-          <h1 className="font-display text-3xl font-semibold text-plum">In-scene card</h1>
+          <h1 className="font-display text-3xl text-plum">In-scene card</h1>
           <p className="text-sm text-muted-foreground">{session.partnerHandle} · {session.date}</p>
         </div>
 

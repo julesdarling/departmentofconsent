@@ -107,7 +107,7 @@ function NewSession() {
 
         {step === 0 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Scene vision</h2>
+            <h2 className="font-display text-2xl text-plum">Scene vision</h2>
             <Field label="Date of play">
               <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
             </Field>
@@ -165,7 +165,7 @@ function NewSession() {
 
         {step === 1 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Scene & logistics</h2>
+            <h2 className="font-display text-2xl text-plum">Scene & logistics</h2>
             <Field label="Setting (where is it happening?)">
               <Input value={side.setting} onChange={(e) => update("setting", e.target.value)} />
             </Field>
@@ -205,7 +205,7 @@ function NewSession() {
 
         {step === 2 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">Privacy & sex</h2>
+            <h2 className="font-display text-2xl text-plum">Privacy & sex</h2>
             <Field label="Privacy — photos/videos? Sharing? Talking about it with others after?">
               <Textarea value={side.privacy} onChange={(e) => update("privacy", e.target.value)} rows={4} />
             </Field>
@@ -217,7 +217,7 @@ function NewSession() {
 
         {step === 3 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-2xl text-plum font-semibold">For this scene</h2>
+            <h2 className="font-display text-2xl text-plum">For this scene</h2>
             <p className="text-xs text-muted-foreground">
               Your saved kinks ratings are already attached.{" "}
               <Link to="/kinks" className="underline text-link">Edit your kinks library</Link>{" "}
