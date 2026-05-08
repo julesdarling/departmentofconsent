@@ -429,6 +429,29 @@ export function newSession(profile: Profile, ratings: KinkRatings, partnerHandle
   };
 }
 
+export function generateSceneTitle(side: SessionSide, kinkMap: Record<string, string>): string {
+  const selected = (side.selectedKinks || [])
+    .map((id) => kinkMap[id])
+    .filter(Boolean);
+  const yesKinks = Object.entries(side.ratings || {})
+    .filter(([, r]) => r === "yes")
+    .map(([id]) => kinkMap[id])
+    .filter(Boolean);
+  const kinks = (selected.length > 0 ? selected : yesKinks).slice(0, 2);
+  const setting = side.setting?.trim();
+
+  if (kinks.length === 0 && !setting) return "";
+  const kinkPart =
+    kinks.length === 0
+      ? ""
+      : kinks.length === 1
+        ? kinks[0]
+        : `${kinks[0]} & ${kinks[1]}`;
+  if (!setting) return kinkPart;
+  if (!kinkPart) return setting;
+  return `${kinkPart} at ${setting}`;
+}
+
 // ===== Cloud-backed sessions list =====
 
 export interface SessionSummary {
