@@ -216,16 +216,19 @@ function JoinPage() {
                 </div>
               )}
               {visionKinkIds.length > 0 && (
-                <div className="space-y-1">
+                <div className="space-y-3">
                   <div className="text-xs text-muted-foreground pb-1">
                     {creatorName} picked these for the scene — how do you feel?
                   </div>
                   {visionKinkIds.map((id) => (
-                    <RateRow
+                    <KinkBlock
                       key={id}
                       name={ownerKinkMap[id]}
-                      value={side.ratings[id]}
-                      onChange={(r) => setRating(id, r)}
+                      creatorDirection={ownerSide.directions?.[id]}
+                      rating={side.ratings[id]}
+                      direction={side.directions?.[id]}
+                      onRating={(r) => setRating(id, r)}
+                      onDirection={(d) => setDirection(id, d)}
                     />
                   ))}
                 </div>
@@ -239,13 +242,16 @@ function JoinPage() {
               <p className="text-xs text-muted-foreground text-center">
                 Other things on their side. Rate each one.
               </p>
-              <div className="space-y-1 pt-1">
+              <div className="space-y-3 pt-1">
                 {sideKinkIds.map((id) => (
-                  <RateRow
+                  <KinkBlock
                     key={id}
                     name={ownerKinkMap[id]}
-                    value={side.ratings[id]}
-                    onChange={(r) => setRating(id, r)}
+                    creatorDirection={ownerSide.directions?.[id]}
+                    rating={side.ratings[id]}
+                    direction={side.directions?.[id]}
+                    onRating={(r) => setRating(id, r)}
+                    onDirection={(d) => setDirection(id, d)}
                   />
                 ))}
               </div>
