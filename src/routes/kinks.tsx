@@ -72,7 +72,7 @@ function KinkRow({
           {DIRECTIONS.map((d) => (
             <button
               key={d.value}
-              onClick={() => onSetDirection(d.value)}
+              onClick={() => onSetDirection(direction === d.value ? undefined : d.value)}
               className={cn(
                 "h-6 px-2 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
                 direction === d.value
