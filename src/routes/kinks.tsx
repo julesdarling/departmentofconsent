@@ -40,7 +40,7 @@ function KinkRow({
   rating?: Rating;
   direction?: Direction;
   onSetRating: (r: Rating) => void;
-  onSetDirection: (d: Direction) => void;
+  onSetDirection: (d: Direction | undefined) => void;
   onRemove?: () => void;
 }) {
   return (
@@ -72,7 +72,7 @@ function KinkRow({
           {DIRECTIONS.map((d) => (
             <button
               key={d.value}
-              onClick={() => onSetDirection(d.value)}
+              onClick={() => onSetDirection(direction === d.value ? undefined : d.value)}
               className={cn(
                 "h-6 px-2 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
                 direction === d.value
@@ -108,8 +108,14 @@ function KinksPage() {
   const setRating = (id: string, r: Rating) =>
     setRatings((p) => ({ ...p, [id]: r }));
 
-  const setDirection = (id: string, d: Direction) =>
-    setDirections((p) => ({ ...p, [id]: d }));
+  const setDirection = (id: string, d: Direction | undefined) =>
+    setDirections((p) => {
+      if (d === undefined) {
+        const { [id]: _, ...rest } = p;
+        return rest;
+      }
+      return { ...p, [id]: d };
+    });
 
   const addCustom = () => {
     if (!newName.trim()) return;
