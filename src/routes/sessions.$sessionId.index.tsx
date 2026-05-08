@@ -20,6 +20,7 @@ function SessionDetail() {
   const { sessionId } = Route.useParams(); // shareToken
   
   const [kinks] = useKinks();
+  const [profile] = useProfile();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { session, error, refresh } = useCloudSession(sessionId);
