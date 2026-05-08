@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useMySessions } from "@/lib/storage";
 import { Plus, Calendar, Sparkles } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
+import { WhipLoader } from "@/components/WhipLoader";
 
 export const Route = createFileRoute("/sessions/")({
   head: () => ({ meta: [{ title: "Sessions — Department of Consent" }] }),
@@ -29,7 +30,7 @@ function SessionsList() {
         </div>
 
         {isLoading && (
-          <Sticker className="text-center">Loading…</Sticker>
+          <div className="flex justify-center py-10"><WhipLoader /></div>
         )}
 
         {!isLoading && sorted.length === 0 && (

@@ -3,7 +3,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/lib/useAuth";
 import { useSubscription } from "@/lib/useSubscription";
 import { Layout } from "@/components/Layout";
-import { Sticker } from "@/components/Sticker";
+import { WhipLoader } from "@/components/WhipLoader";
 
 export function RequireAuth({ children, requireSubscription = true }: { children: React.ReactNode; requireSubscription?: boolean }) {
   const { user, loading } = useAuth();
@@ -24,7 +24,7 @@ export function RequireAuth({ children, requireSubscription = true }: { children
   if (loading || !user || (requireSubscription && (subLoading || !isActive))) {
     return (
       <Layout>
-        <Sticker className="text-center">Loading…</Sticker>
+        <div className="flex justify-center py-16"><WhipLoader /></div>
       </Layout>
     );
   }
