@@ -11,7 +11,6 @@ import {
   useProfile,
   useRatings,
   useKinks,
-  useSessionIndex,
   newSession,
   type SessionSide,
 } from "@/lib/storage";
@@ -42,7 +41,6 @@ function NewSession() {
   const [profile] = useProfile();
   const [ratings, setRatings] = useRatings();
   const [kinks, setKinks] = useKinks();
-  const [, setIndex] = useSessionIndex();
   const navigate = useNavigate();
 
   const [session] = useState(() => newSession(profile, ratings));
@@ -87,17 +85,6 @@ function NewSession() {
         status,
         ownerSide: { ...side, filledAt: new Date().toISOString() },
       });
-      setIndex((p) => [
-        ...p,
-        {
-          id: created.id,
-          shareToken: created.shareToken,
-          partnerHandle: created.partnerHandle,
-          date: created.date,
-          createdAt: created.createdAt,
-          role: "owner",
-        },
-      ]);
       navigate({ to: "/sessions/$sessionId", params: { sessionId: created.shareToken } });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Could not save session");
