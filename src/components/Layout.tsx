@@ -1,12 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { Home, ListChecks, Heart, User } from "lucide-react";
+import { Footer } from "@/components/Footer";
+import { CookieBanner } from "@/components/CookieBanner";
 
-export function Layout({ children, fullBleed = false }: { children: React.ReactNode; fullBleed?: boolean }) {
+export function Layout({ children, fullBleed = false, showFooter = false }: { children: React.ReactNode; fullBleed?: boolean; showFooter?: boolean }) {
   return (
     <div className="min-h-screen grain bg-background flex flex-col">
       <main className={fullBleed ? "flex-1 pb-28" : "flex-1 max-w-2xl w-full mx-auto px-5 pt-10 pb-32"}>
         {children}
       </main>
+      {showFooter && <Footer />}
+      <CookieBanner />
       <BottomNav />
     </div>
   );

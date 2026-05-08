@@ -1,13 +1,27 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
-import { Button } from "@/components/ui/button";
 import { CloudButton } from "@/components/CloudButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useProfile } from "@/lib/storage";
 import { useState } from "react";
+import { useAuth } from "@/lib/useAuth";
+import { useSubscription } from "@/lib/useSubscription";
+import { useServerFn } from "@tanstack/react-start";
+import { deleteOwnAccount } from "@/lib/account.functions";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { supabase } from "@/integrations/supabase/client";
 
 import { RequireAuth } from "@/components/RequireAuth";
 
@@ -20,6 +34,32 @@ function Onboarding() {
   const [profile, setProfile] = useProfile();
   const [draft, setDraft] = useState(profile);
   const navigate = useNavigate();
+  const { signOut, user } = useAuth();
+  const { isActive } = useSubscription();
+  const deleteFn = useServerFn(deleteOwnAccount);
+
+  const [showCancel, setShowCancel] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [confirmText, setConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate({ to: "/auth" });
+  };
+
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await deleteFn();
+      try { localStorage.clear(); } catch { /* ignore */ }
+      await supabase.auth.signOut();
+      window.location.href = "/";
+    } catch (err) {
+      alert((err as Error).message || "Could not delete account.");
+      setDeleting(false);
+    }
+  };
 
   const update = <K extends keyof typeof draft>(key: K, value: (typeof draft)[K]) =>
     setDraft((p) => ({ ...p, [key]: value }));
@@ -80,7 +120,100 @@ function Onboarding() {
             Save and continue
           </CloudButton>
         </div>
+
+        {user && (
+          <Sticker className="space-y-3 text-center">
+            <div className="font-display text-base text-plum">Account</div>
+            <p className="text-xs text-muted-foreground">Signed in as {user.email}</p>
+            <div className="flex flex-col items-center gap-3 pt-2">
+              <Link to="/settings" className="text-sm text-coral underline underline-offset-4 hover:opacity-80">
+                More account settings
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-sm text-coral underline underline-offset-4 hover:opacity-80"
+              >
+                Log out
+              </button>
+              <button
+                onClick={() => setShowCancel(true)}
+                className="text-sm text-coral underline underline-offset-4 hover:opacity-80"
+              >
+                Cancel my subscription
+              </button>
+              <button
+                onClick={() => { setConfirmText(""); setShowDelete(true); }}
+                className="text-sm font-semibold text-destructive underline underline-offset-4 hover:opacity-80"
+              >
+                Delete my account
+              </button>
+            </div>
+          </Sticker>
+        )}
       </div>
+
+      <AlertDialog open={showCancel} onOpenChange={setShowCancel}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel your subscription</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                {isActive ? (
+                  <>
+                    <p>To cancel your subscription:</p>
+                    <ol className="list-decimal pl-5 space-y-1.5">
+                      <li>Email <span className="font-semibold">support@departmentofconsent.com</span> from the address you used to sign up.</li>
+                      <li>Include the subject line "Cancel subscription".</li>
+                      <li>We'll cancel and confirm via email within 1–2 business days.</li>
+                    </ol>
+                    <p className="text-xs text-muted-foreground">
+                      You'll keep access through the end of your current billing period.
+                    </p>
+                  </>
+                ) : (
+                  <p>You don't currently have an active subscription on this account.</p>
+                )}
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={showDelete} onOpenChange={(o) => { setShowDelete(o); if (!o) setConfirmText(""); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-destructive">Delete your account?</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="space-y-3 text-sm">
+                <p>
+                  This permanently deletes your account, profile, and on-device data. Active
+                  subscriptions are not automatically refunded — cancel first if needed.
+                </p>
+                <p>Type <span className="font-mono font-bold">DELETE</span> to confirm.</p>
+                <input
+                  className="doc-input"
+                  value={confirmText}
+                  onChange={(e) => setConfirmText(e.target.value)}
+                  placeholder="DELETE"
+                />
+              </div>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              disabled={confirmText !== "DELETE" || deleting}
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleting ? "Deleting…" : "Delete account"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Layout>
   );
 }

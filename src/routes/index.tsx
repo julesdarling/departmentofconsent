@@ -29,12 +29,13 @@ function Index() {
   const startTo = !user ? "/auth" : hasProfile ? "/sessions/new" : "/onboarding";
 
   return (
-    <Layout fullBleed>
+    <Layout fullBleed showFooter>
       {/* Hero */}
       <section className="relative">
         <div className="relative w-full aspect-[3/5] sm:aspect-[16/10] max-h-[760px] overflow-hidden">
           <img src={heroImg} alt="Friends laughing in a soft pile, joyful and intimate" className="w-full h-full object-cover" />
-          <div className="absolute top-4 left-1/2 -translate-x-1/2 w-44 sm:w-56">
+          <div className="absolute inset-0 bg-black/25 sm:bg-black/30 pointer-events-none" />
+          <div className="absolute top-4 sm:top-8 left-1/2 -translate-x-1/2 w-44 sm:w-[28rem] md:w-[34rem] lg:w-[40rem]">
             <img src={wordmark} alt="Dept of Consent" className="w-full" />
           </div>
           <div className="absolute bottom-6 left-0 right-0 flex justify-center">
@@ -107,9 +108,6 @@ function Index() {
 
         <div className="text-center pt-12">
           <CloudButton to={startTo} className="cloud-btn-cta">Start negotiating</CloudButton>
-          <p className="text-xs text-foreground/70 mt-5 max-w-xs mx-auto">
-            Anonymous-first. Everything lives on this device unless you choose otherwise.
-          </p>
           {hasProfile && (
             <p className="text-xs mt-3">
               <Link to="/sessions" className="underline text-coral">View saved scenes</Link>
