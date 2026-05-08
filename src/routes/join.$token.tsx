@@ -61,7 +61,7 @@ function JoinPage() {
     return (
       <Layout>
         <Sticker className="text-center space-y-3">
-          <h1 className="font-display text-2xl text-plum">Session not found</h1>
+          <h1 className="font-display text-3xl text-plum font-semibold">Session not found</h1>
           <p className="text-sm text-muted-foreground">
             This invite link doesn't match anything. Ask your play partner to share it again.
           </p>
@@ -118,7 +118,7 @@ function JoinPage() {
       <Layout>
         <div className="space-y-5">
           <Sticker className="text-center space-y-3">
-            <h1 className="font-display text-2xl text-plum">Thank you</h1>
+            <h1 className="font-display text-3xl text-plum font-semibold">Thank you</h1>
             <p className="text-sm text-muted-foreground">
               Your side has been shared with {ownerName}. Below is the full plan for the scene.
             </p>
@@ -202,7 +202,7 @@ function JoinPage() {
       <Layout>
         <div className="space-y-5">
           <Sticker className="text-center space-y-3">
-            <h1 className="font-display text-2xl text-plum">
+            <h1 className="font-display text-3xl text-plum font-semibold">
               {creatorName} has invited you to play together.
             </h1>
             <p className="text-sm text-muted-foreground">
@@ -245,7 +245,7 @@ function JoinPage() {
     <Layout>
       <div className="space-y-5">
         <Sticker className="text-center space-y-2">
-          <h1 className="font-display text-2xl text-plum">
+          <h1 className="font-display text-3xl text-plum font-semibold">
             Your side
           </h1>
           <p className="text-sm text-muted-foreground">
