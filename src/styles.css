@@ -103,6 +103,7 @@
   --plum: oklch(0.22 0.04 20);           /* near-black text */
   --cream: oklch(0.965 0.018 50);
   --mint: oklch(0.78 0.12 165);          /* CTA mint/teal */
+  --link: #2b1213;                        /* default link color */
 
   --yes: oklch(0.78 0.12 165);
   --maybe: oklch(0.82 0.13 75);
