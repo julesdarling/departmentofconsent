@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
+import { CloudButton } from "@/components/CloudButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -261,9 +262,9 @@ function JoinPage() {
           )}
 
           <div className="flex justify-center pt-2">
-            <Button onClick={() => { setStarted(true); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+            <CloudButton onClick={() => { setStarted(true); if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); }}>
               Next
-            </Button>
+            </CloudButton>
           </div>
         </div>
       </Layout>
@@ -430,9 +431,9 @@ function JoinPage() {
         </Sticker>
 
         <div className="flex justify-center pt-2">
-          <Button disabled={submitting} onClick={submit}>
+          <CloudButton onClick={submitting ? undefined : submit}>
             {submitting ? "Submitting..." : "Submit my side"}
-          </Button>
+          </CloudButton>
         </div>
       </div>
     </Layout>
