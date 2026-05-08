@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useProfile } from "@/lib/storage";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "@/lib/useAuth";
 import { useSubscription } from "@/lib/useSubscription";
 import { useServerFn } from "@tanstack/react-start";
@@ -33,13 +33,18 @@ export const Route = createFileRoute("/onboarding")({
 function Onboarding() {
   const [profile, setProfile] = useProfile();
   const [draft, setDraft] = useState(profile);
-  const [hydrated, setHydrated] = useState(false);
-  // Sync draft once the stored profile has hydrated from storage
-  // so users see their previous answers in the inputs.
-  if (!hydrated && (profile.name || profile.pronouns || profile.callMe || profile.healthcare || profile.emergencyContact || profile.defaultAftercare)) {
-    setDraft(profile);
-    setHydrated(true);
-  }
+  const syncedRef = useRef(false);
+  // Hydrate the draft once the stored profile has loaded from storage.
+  useEffect(() => {
+    if (syncedRef.current) return;
+    const hasAny =
+      profile.name || profile.pronouns || profile.callMe || profile.dontCallMe ||
+      profile.healthcare || profile.emergencyContact || profile.defaultAftercare;
+    if (hasAny) {
+      setDraft(profile);
+      syncedRef.current = true;
+    }
+  }, [profile]);
   const navigate = useNavigate();
   const { signOut, user } = useAuth();
   const { isActive } = useSubscription();
