@@ -135,44 +135,48 @@ function NewSession() {
                   Rate some kinks on your <Link to="/kinks" className="underline text-link">kinks page</Link> to pick from them here.
                 </p>
               ) : (
-                <div className="space-y-2 pt-1">
-                  <div className="flex flex-wrap gap-2">
-                    {interestedKinks.map((k) => {
-                      const selected = side.selectedKinks.includes(k.id);
-                      return (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {interestedKinks.map((k) => {
+                    const selected = side.selectedKinks.includes(k.id);
+                    const dir = side.directions?.[k.id];
+                    return (
+                      <div
+                        key={k.id}
+                        className={cn(
+                          "rounded-full border-2 transition flex items-center overflow-hidden",
+                          selected ? "bg-yes/30 border-yes" : "border-border/60"
+                        )}
+                      >
                         <button
-                          key={k.id}
                           type="button"
                           onClick={() => toggleKink(k.id)}
                           className={cn(
-                            "text-sm px-3 py-1.5 rounded-full border-2 transition",
-                            selected
-                              ? "bg-yes/30 border-yes text-plum font-semibold"
-                              : "border-border/60 text-muted-foreground hover:border-primary/50"
+                            "text-sm px-3 py-1.5",
+                            selected ? "text-plum font-semibold" : "text-muted-foreground"
                           )}
                         >
-                          {selected ? "Selected " : "+ "}{k.name}
+                          {selected ? "✓ " : "+ "}{k.name}
                         </button>
-                      );
-                    })}
-                  </div>
-                  {side.selectedKinks.length > 0 && (
-                    <div className="space-y-1.5 pt-3 border-t border-border/40">
-                      <div className="text-xs text-muted-foreground">For each, are you giving, receiving, or both?</div>
-                      {side.selectedKinks.map((id) => {
-                        const k = kinks.find((x) => x.id === id);
-                        if (!k) return null;
-                        return (
-                          <DirectionRow
-                            key={id}
-                            name={k.name}
-                            value={side.directions?.[id]}
-                            onChange={(d) => setDirection(id, d)}
-                          />
-                        );
-                      })}
-                    </div>
-                  )}
+                        {selected && (
+                          <div className="flex border-l-2 border-yes/60">
+                            {(["give", "receive", "both"] as Direction[]).map((d) => (
+                              <button
+                                key={d}
+                                type="button"
+                                onClick={() => setDirection(k.id, d)}
+                                className={cn(
+                                  "text-[11px] font-semibold px-2 py-1.5 capitalize transition border-r border-yes/40 last:border-r-0",
+                                  dir === d ? "bg-yes/60 text-plum" : "text-plum/60 hover:bg-yes/20"
+                                )}
+                              >
+                                {d}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               )}
               <div className="flex gap-2 pt-2">
