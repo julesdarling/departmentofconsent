@@ -108,8 +108,14 @@ function KinksPage() {
   const setRating = (id: string, r: Rating) =>
     setRatings((p) => ({ ...p, [id]: r }));
 
-  const setDirection = (id: string, d: Direction) =>
-    setDirections((p) => ({ ...p, [id]: d }));
+  const setDirection = (id: string, d: Direction | undefined) =>
+    setDirections((p) => {
+      if (d === undefined) {
+        const { [id]: _, ...rest } = p;
+        return rest;
+      }
+      return { ...p, [id]: d };
+    });
 
   const addCustom = () => {
     if (!newName.trim()) return;
