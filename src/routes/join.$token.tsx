@@ -133,7 +133,7 @@ function JoinPage() {
 
           {(o.vision || (o.selectedKinks && o.selectedKinks.length > 0)) && (
             <Sticker variant="coral" className="space-y-3">
-              <div className="text-center font-display text-2xl font-semibold text-plum">Tonight's vision</div>
+              <div className="text-center font-display text-2xl font-semibold text-plum">Scene vision</div>
               <div className="bg-card/60 rounded-xl p-3 space-y-2">
                 <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{ownerName}'s vision for the night</div>
                 {o.vision && <p className="text-sm whitespace-pre-wrap">{o.vision}</p>}
@@ -251,7 +251,7 @@ function JoinPage() {
         </Sticker>
 
         <Sticker className="space-y-3">
-          <h2 className="font-display text-lg text-plum">Tonight's vision</h2>
+          <h2 className="font-display text-lg text-plum">Scene vision</h2>
           <Field label="What are you imagining for this scene?">
             <Textarea
               value={side.vision}
@@ -261,7 +261,7 @@ function JoinPage() {
             />
           </Field>
           <div className="space-y-2">
-            <Label className="doc-label">Pick what you're craving tonight</Label>
+            <Label className="doc-label">Pick what you're craving for this scene</Label>
             <p className="text-xs text-muted-foreground">From your kink list (yes & maybes).</p>
             <div className="flex flex-wrap gap-2 pt-1">
               {kinks

@@ -31,10 +31,10 @@ export const Route = createFileRoute("/sessions/new")({
 
 const STEPS = [
   "Play partner",
-  "Tonight's vision",
+  "Scene vision",
   "Scene & logistics",
   "Privacy & sex",
-  "For tonight",
+  "For this scene",
   "Review",
 ];
 
@@ -119,14 +119,14 @@ function NewSession() {
             </Field>
             <p className="text-xs text-muted-foreground">
               We'll use your saved profile, kinks, safewords and aftercare as the starting point.
-              You can tweak anything that's different for tonight in the next steps.
+              You can tweak anything that's different for this scene in the next steps.
             </p>
           </Sticker>
         )}
 
         {step === 1 && (
           <Sticker className="space-y-4">
-            <h2 className="font-display text-xl text-plum">Tonight's vision</h2>
+            <h2 className="font-display text-xl text-plum">Scene vision</h2>
             <Field label="What are you imagining for this scene?">
               <Textarea
                 value={side.vision}
@@ -136,7 +136,7 @@ function NewSession() {
               />
             </Field>
             <div className="space-y-2">
-              <Label className="doc-label">Pick what you're craving tonight</Label>
+              <Label className="doc-label">Pick what you're craving for this scene</Label>
               <p className="text-xs text-muted-foreground">
                 From your kink list (yes & maybes). Tap to add. Your play partner will see what overlaps.
               </p>
@@ -192,7 +192,7 @@ function NewSession() {
               <Label className="text-sm">Substance use is a hard limit for me</Label>
               <Switch checked={side.substancesHardLimit} onCheckedChange={(v) => update("substancesHardLimit", v)} />
             </div>
-            <Field label="Medical concerns specific to tonight">
+            <Field label="Medical concerns specific to this scene">
               <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, on my period, new meds..." />
             </Field>
             <Field label="Other play partners / dynamics to be aware of">
@@ -224,16 +224,16 @@ function NewSession() {
 
         {step === 4 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-xl text-plum">For tonight</h2>
+            <h2 className="font-display text-xl text-plum">For this scene</h2>
             <p className="text-xs text-muted-foreground">
               Your saved kinks ratings are already attached.{" "}
               <Link to="/kinks" className="underline text-coral">Edit your kinks library</Link>{" "}
-              if you need to. Below: only what's different about tonight.
+              if you need to. Below: only what's different about this scene.
             </p>
-            <Field label="Names you want to be called tonight (override)">
+            <Field label="Names you want to be called for this scene (override)">
               <Input value={side.callMe} onChange={(e) => update("callMe", e.target.value)} placeholder={profile.callMe || "from your profile"} />
             </Field>
-            <Field label="Off-limits names tonight (override)">
+            <Field label="Off-limits names for this scene (override)">
               <Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} placeholder={profile.dontCallMe || "from your profile"} />
             </Field>
             <Field label="Extra hard limits for this scene">
@@ -242,7 +242,7 @@ function NewSession() {
             <Field label="Soft limits / Maybes for this scene">
               <Textarea value={side.softLimits} onChange={(e) => update("softLimits", e.target.value)} rows={2} />
             </Field>
-            <Field label="Enthusiastic Yes for tonight">
+            <Field label="Enthusiastic Yes for this scene">
               <Textarea value={side.yesList} onChange={(e) => update("yesList", e.target.value)} rows={2} />
             </Field>
             <Field label="Anything else to brainstorm">
