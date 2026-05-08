@@ -236,6 +236,8 @@ function JoinPage() {
             </Sticker>
           )}
 
+          <SceneDetailsBlock side={ownerSide} creatorName={creatorName} />
+
           {sideKinkIds.length > 0 && (
             <Sticker className="space-y-2">
               <div className="text-center font-display text-2xl text-plum">{creatorName}'s kinks</div>
