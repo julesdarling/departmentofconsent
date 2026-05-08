@@ -95,9 +95,9 @@ function SessionDetail() {
             Anyone with this link can fill out the play partner side. They'll see your side once they submit.
           </p>
           <div className="flex justify-center pt-2">
-            <Button variant="outline" size="sm" onClick={refresh}>
-              <RefreshCw className="h-3 w-3 mr-1" /> Check for play partner's reply
-            </Button>
+            <button onClick={refresh} className="text-sm text-coral underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
+              <RefreshCw className="h-3 w-3" /> Check for play partner's reply
+            </button>
           </div>
         </Sticker>
 
@@ -173,9 +173,9 @@ function SessionDetail() {
         )}
 
         <div className="flex justify-center">
-          <Button asChild variant="outline">
-            <Link to="/scene/$token" params={{ token: session.shareToken }}>View shareable scene recap</Link>
-          </Button>
+          <Link to="/scene/$token" params={{ token: session.shareToken }} className="text-sm text-coral underline underline-offset-4 hover:opacity-80">
+            View shareable scene recap
+          </Link>
         </div>
 
         <Sticker className="space-y-3">
@@ -222,9 +222,9 @@ function SessionDetail() {
         </Sticker>
 
         <div className="flex justify-center pt-2">
-          <Button variant="outline" onClick={remove}>
-            <Trash2 className="h-4 w-4 mr-1" /> Delete session
-          </Button>
+          <button onClick={remove} className="text-sm text-destructive underline underline-offset-4 hover:opacity-80 inline-flex items-center gap-1">
+            <Trash2 className="h-4 w-4" /> Delete session
+          </button>
         </div>
       </div>
     </Layout>
