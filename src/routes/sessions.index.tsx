@@ -2,8 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
+import { CloudButton } from "@/components/CloudButton";
 import { useMySessions, useKinks, generateSceneTitle } from "@/lib/storage";
-import { Plus, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { RequireAuth } from "@/components/RequireAuth";
 import { WhipLoader } from "@/components/WhipLoader";
 import { useMemo } from "react";
@@ -27,11 +28,7 @@ function SessionsList() {
           <h1 className="font-display text-3xl font-semibold text-plum">Scenes</h1>
           <p className="text-sm text-muted-foreground">Active and past play, synced to your account.</p>
         </div>
-        <div className="flex justify-end">
-          <Button asChild size="sm" className="rounded-full">
-            <Link to="/sessions/new"><Plus className="h-4 w-4 mr-1" /> New</Link>
-          </Button>
-        </div>
+
 
         {isLoading && (
           <div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div>
@@ -70,6 +67,12 @@ function SessionsList() {
             </Link>
           ))}
         </div>
+
+        {!isLoading && sorted.length > 0 && (
+          <div className="flex justify-center pt-4">
+            <CloudButton to="/sessions/new">+ New scene</CloudButton>
+          </div>
+        )}
       </div>
     </Layout>
   );
