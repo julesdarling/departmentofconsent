@@ -382,8 +382,25 @@ function JoinPage() {
           <Field label="What you want to be called"><Input value={side.callMe} onChange={(e) => updateField("callMe", e.target.value)} /></Field>
           <Field label="What you don't want to be called"><Input value={side.dontCallMe} onChange={(e) => updateField("dontCallMe", e.target.value)} /></Field>
           <Field label="Intentions / how you want to feel"><Textarea value={side.intentions} onChange={(e) => updateField("intentions", e.target.value)} rows={3} /></Field>
-          <Field label="Privacy preferences"><Textarea value={side.privacy} onChange={(e) => updateField("privacy", e.target.value)} rows={3} /></Field>
-          <Field label="Penetrative sex?"><Textarea value={side.penetrativeSex} onChange={(e) => updateField("penetrativeSex", e.target.value)} rows={2} /></Field>
+
+          <YesNoMaybeMatch
+            label="Photos / videos during the scene?"
+            theirValue={session.ownerSide.privacy}
+            value={side.privacy}
+            onChange={(v) => updateField("privacy", v)}
+          />
+          <YesNoMaybeMatch
+            label="Talking about it with others after?"
+            theirValue={session.ownerSide.talkingAfter}
+            value={side.talkingAfter || ""}
+            onChange={(v) => updateField("talkingAfter", v)}
+          />
+          <YesNoMaybeMatch
+            label="Penetrative sex during the scene?"
+            theirValue={session.ownerSide.penetrativeSex}
+            value={side.penetrativeSex}
+            onChange={(v) => updateField("penetrativeSex", v)}
+          />
         </Sticker>
 
         <Sticker variant="coral" className="space-y-2">
@@ -551,9 +568,7 @@ function SceneDetailsBlock({ side, creatorName }: { side: SessionSide; creatorNa
     { label: "Intentions — how they want to feel", value: side.intentions },
     { label: "What a good time looks like", value: side.goodTime },
     { label: "…and a bad time", value: side.badTime },
-    { label: "Photos / videos", value: side.privacy },
-    { label: "Talking about it after", value: side.talkingAfter },
-    { label: "Penetrative sex", value: side.penetrativeSex },
+    { label: "Other partners / dynamics", value: side.partnerDynamics },
     { label: "Call them", value: side.callMe },
     { label: "Don't call them", value: side.dontCallMe },
     { label: "Their hard limits", value: side.hardLimits },
@@ -583,5 +598,48 @@ function SceneDetailsBlock({ side, creatorName }: { side: SessionSide; creatorNa
         ))}
       </div>
     </Sticker>
+  );
+}
+
+function YesNoMaybeMatch({
+  label,
+  theirValue,
+  value,
+  onChange,
+}: {
+  label: string;
+  theirValue?: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  const opts: { v: string; cls: string }[] = [
+    { v: "yes", cls: "bg-yes/20 border-yes" },
+    { v: "maybe", cls: "bg-maybe/20 border-maybe" },
+    { v: "no", cls: "bg-no/20 border-no" },
+  ];
+  return (
+    <div className="space-y-1.5">
+      <Label className="doc-label">{label}</Label>
+      {theirValue?.trim() && (
+        <p className="text-[11px] text-muted-foreground">
+          They said: <span className="font-semibold capitalize text-plum">{theirValue}</span>
+        </p>
+      )}
+      <div className="flex gap-2">
+        {opts.map((o) => (
+          <button
+            key={o.v}
+            type="button"
+            onClick={() => onChange(o.v)}
+            className={cn(
+              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
+              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {o.v}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
