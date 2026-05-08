@@ -135,7 +135,7 @@ function ScenePage() {
             rows={5}
             placeholder="Jot down notes during or after the scene…"
           />
-          <div className="flex justify-end">
+          <div className="flex justify-center">
             <Button size="sm" onClick={saveNotes} disabled={saving || notes === savedNotes}>
               {saving ? "Saving…" : "Save notes"}
             </Button>
@@ -144,7 +144,7 @@ function ScenePage() {
 
         <div className="flex justify-center pt-2">
           <Button asChild variant="outline" className="rounded-full">
-            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back to scene</Link>
+            <Link to="/sessions/$sessionId" params={{ sessionId }}>Back</Link>
           </Button>
         </div>
       </div>
