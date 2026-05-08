@@ -24,6 +24,8 @@ function SessionDetail() {
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   const { session, error, refresh } = useCloudSession(sessionId);
+  const { user } = useAuth();
+  const isOwner = !!user;
 
   const kinkMap = useMemo(() => Object.fromEntries(kinks.map((k) => [k.id, k.name])), [kinks]);
 
