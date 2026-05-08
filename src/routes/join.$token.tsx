@@ -118,7 +118,7 @@ function JoinPage() {
       <Layout>
         <div className="space-y-5">
           <Sticker className="text-center space-y-3">
-            <h1 className="font-display text-2xl text-plum">Thank you ♡</h1>
+            <h1 className="font-display text-2xl text-plum">Thank you</h1>
             <p className="text-sm text-muted-foreground">
               Your side has been shared with {ownerName}. Below is the full plan for the scene.
             </p>
