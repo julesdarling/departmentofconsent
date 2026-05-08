@@ -103,17 +103,13 @@ function SessionDetail() {
           </div>
         </Sticker>
 
-        <div className="flex flex-wrap justify-center gap-2">
-          <Button asChild variant="outline" size="sm">
-            <Link to="/sessions/$sessionId/scene" params={{ sessionId }}>
-              <Flame className="h-4 w-4 mr-1" /> Scene
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="sm">
-            <Link to="/sessions/$sessionId/aftercare" params={{ sessionId }}>
-              <Heart className="h-4 w-4 mr-1" /> Aftercare
-            </Link>
-          </Button>
+        <div className="flex flex-col items-center gap-2">
+          <CloudButton variant="outline" to={`/sessions/${sessionId}/scene`}>
+            <Flame className="h-4 w-4 mr-1 inline" /> Open Scene Card
+          </CloudButton>
+          <CloudButton variant="outline" to={`/sessions/${sessionId}/aftercare`}>
+            <Heart className="h-4 w-4 mr-1 inline" /> Start After Care
+          </CloudButton>
         </div>
 
         {/* Visions per participant */}
