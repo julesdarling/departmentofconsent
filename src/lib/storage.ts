@@ -98,7 +98,7 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_sensation", name: "Sensation", category: "Sensation" },
   { id: "k_temp", name: "Temperature play (ice/wax)", category: "Sensation" },
   { id: "k_scratch", name: "Scratching", category: "Sensation" },
-  { id: "k_nails_scratch", name: "Nails and scratching", category: "Sensation" },
+  
   { id: "k_bite", name: "Biting", category: "Sensation" },
   { id: "k_tickle", name: "Tickling", category: "Sensation" },
   { id: "k_pinch", name: "Pinching", category: "Sensation" },
@@ -162,7 +162,7 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_hypno", name: "Hypno", category: "Edge" },
   { id: "k_unconscious", name: "Unconscious play and fucking", category: "Edge" },
   { id: "k_cnc", name: "Cnc / rape play", category: "Edge" },
-  { id: "k_incest", name: "Incest", category: "Edge" },
+  { id: "k_incest", name: "Incest play", category: "Edge" },
   { id: "k_molestation", name: "Molestation", category: "Edge" },
   { id: "k_pissing", name: "Pissing", category: "Edge" },
   { id: "k_pacifier", name: "Pacifier", category: "Edge" },
