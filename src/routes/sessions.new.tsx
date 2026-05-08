@@ -66,6 +66,17 @@ function NewSession() {
       return { ...p, selectedKinks: has ? p.selectedKinks.filter((x) => x !== id) : [...p.selectedKinks, id] };
     });
 
+  const [newKink, setNewKink] = useState("");
+  const addKink = () => {
+    const name = newKink.trim();
+    if (!name) return;
+    const id = "c_" + nanoid(8);
+    setKinks((p) => [...p, { id, name, category: "Custom", custom: true }]);
+    setRatings((p) => ({ ...p, [id]: "yes" }));
+    setSide((p) => ({ ...p, selectedKinks: [...p.selectedKinks, id] }));
+    setNewKink("");
+  };
+
   const save = async (status: "draft" | "shared" = "shared") => {
     setSaving(true);
     try {
