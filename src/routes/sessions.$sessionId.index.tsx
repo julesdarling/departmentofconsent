@@ -6,7 +6,8 @@ import { useKinks, useSessionIndex, type SessionSide } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
-import { Copy, Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
+import { Flame, Heart, RefreshCw } from "lucide-react";
+import { CloudButton } from "@/components/CloudButton";
 import { useMemo, useState } from "react";
 import { RequireAuth } from "@/components/RequireAuth";
 
