@@ -123,9 +123,9 @@ function JoinPage() {
               Your side has been shared with {ownerName}. Below is the full plan for the scene.
             </p>
             <div className="pt-1">
-              <Button asChild>
-                <Link to="/scene/$token" params={{ token }}>View & share scene recap</Link>
-              </Button>
+              <Link to="/scene/$token" params={{ token }} className="text-sm text-coral underline underline-offset-4">
+                View & share scene recap
+              </Link>
             </div>
             <p className="text-[11px] text-muted-foreground">
               The recap has its own permalink anyone in the scene can open.
