@@ -254,6 +254,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      get_session_owner_name: { Args: { p_token: string }; Returns: string }
       has_active_subscription: {
         Args: { check_env?: string; user_uuid: string }
         Returns: boolean
