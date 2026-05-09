@@ -212,7 +212,7 @@ function JoinPage() {
                 <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
                   {creatorName}'s vision
                 </div>
-                <p className="text-sm whitespace-pre-wrap">{ownerSide.vision}</p>
+                <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl px-3 py-1.5 font-medium">{ownerSide.vision}</p>
               </div>
             )}
             <Field label="Your vision for this scene">
