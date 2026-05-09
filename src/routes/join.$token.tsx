@@ -215,7 +215,7 @@ function JoinPage() {
                 <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
                   {creatorName}'s vision
                 </div>
-                <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 font-medium">{ownerSide.vision}</p>
+                <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-lg rounded-bl-none px-3 py-1.5 font-medium">{ownerSide.vision}</p>
               </div>
             )}
             <Field label="Your vision for this scene">
@@ -324,7 +324,7 @@ function JoinPage() {
                 {ownerSide.safewordItems!.map((item) => (
                   <span
                     key={item}
-                    className="inline-block bg-blush text-plum text-sm rounded-2xl rounded-bl-none px-3 py-1.5 font-medium"
+                    className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium"
                   >
                     {item}
                   </span>
@@ -355,7 +355,7 @@ function JoinPage() {
                 {ownerSide.aftercareItems!.map((item) => (
                   <span
                     key={item}
-                    className="inline-block bg-blush text-plum text-sm rounded-2xl rounded-bl-none px-3 py-1.5 font-medium"
+                    className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium"
                   >
                     {item}
                   </span>
@@ -471,7 +471,7 @@ function KinkBlock({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="text-sm font-medium flex items-center gap-2 min-w-0 flex-wrap">
           {creatorDirection ? (
-            <span className="text-sm px-3 py-1.5 rounded-2xl rounded-bl-none bg-blush text-plum font-medium shrink-0">
+            <span className="text-sm px-3 py-1.5 rounded-lg rounded-bl-none bg-blush text-plum font-medium shrink-0">
               {`I want to ${creatorDirection === "both" ? "give and receive" : creatorDirection} ${name.toLowerCase()}`}
             </span>
           ) : (
@@ -554,7 +554,7 @@ function SceneDetailsBlock({
             <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
               <Label className="doc-label block mb-1.5">{i.label}</Label>
               {display && (
-                <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 mb-2 font-medium">{display}</div>
+                <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-lg rounded-bl-none px-3 py-1.5 mb-2 font-medium">{display}</div>
               )}
               <Input
                 value={myVal}
@@ -589,7 +589,7 @@ function YesNoMaybeMatch({
     <div className="space-y-1.5">
       <Label className="doc-label">{label}</Label>
       {theirValue?.trim() && (
-        <div className="inline-block bg-blush text-plum text-sm rounded-2xl rounded-bl-none px-3 py-1.5 font-medium capitalize">
+        <div className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium capitalize">
           {theirValue}
         </div>
       )}
