@@ -107,12 +107,6 @@ function SessionDetail() {
           </Sticker>
         )}
 
-        <div className="flex flex-col items-center gap-2">
-          <CloudButton variant="outline" to={`/sessions/${sessionId}/aftercare`}>
-            <Heart className="h-4 w-4 mr-1 inline" /> Start After Care
-          </CloudButton>
-        </div>
-
         {/* Visions per participant */}
         <Sticker variant="coral" className="space-y-4">
           <div className="text-center">
@@ -192,6 +186,12 @@ function SessionDetail() {
           <SideDetail title="Aftercare" value={o.aftercare} />
           <SideDetail title="Brainstorm" value={o.brainstorm} />
         </Sticker>
+
+        <div className="flex flex-col items-center gap-2">
+          <CloudButton variant="outline" to={`/sessions/${sessionId}/aftercare`}>
+            <Heart className="h-4 w-4 mr-1 inline" /> Start After Care
+          </CloudButton>
+        </div>
 
         {isOwner && (
           <>
