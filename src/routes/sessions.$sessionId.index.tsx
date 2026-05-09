@@ -353,70 +353,65 @@ function SideChat({
   kinkMap: Record<string, string>;
 }) {
   if (participants.length === 0) return null;
-  return (
-    <div className="space-y-4">
-      {CHAT_FIELDS.map(({ key, label }) => {
-        const replies = participants
-          .map((p) => ({ p, value: ((p.side[key] as string | undefined) ?? "").trim() }))
-          .filter((r) => r.value.length > 0);
-        if (replies.length === 0) return null;
-        return (
-          <Sticker key={String(key)} className="space-y-3">
-            <div className="font-display text-xl text-plum text-center">{label}</div>
-            <div className="space-y-3">
-              {replies.map(({ p, value }, i) => (
-                <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                  <p className="whitespace-pre-wrap">{value}</p>
-                </ChatBubble>
-              ))}
-            </div>
-          </Sticker>
-        );
-      })}
+  const textSections = CHAT_FIELDS.map(({ key, label }) => ({
+    label,
+    replies: participants
+      .map((p) => ({ p, value: ((p.side[key] as string | undefined) ?? "").trim() }))
+      .filter((r) => r.value.length > 0),
+  })).filter((s) => s.replies.length > 0);
 
-      <RatingsChat participants={participants} kinkMap={kinkMap} rating="yes" label="Yes" cls="bg-yes/25 border-yes/40" />
-      <RatingsChat participants={participants} kinkMap={kinkMap} rating="maybe" label="Maybe" cls="bg-maybe/25 border-maybe/40" />
-      <RatingsChat participants={participants} kinkMap={kinkMap} rating="no" label="Hard No" cls="bg-no/25 border-no/40" />
-    </div>
-  );
-}
+  const ratingSections = (
+    [
+      { rating: "yes" as const, label: "Yes", cls: "bg-yes/25 border-yes/40" },
+      { rating: "maybe" as const, label: "Maybe", cls: "bg-maybe/25 border-maybe/40" },
+      { rating: "no" as const, label: "Hard No", cls: "bg-no/25 border-no/40" },
+    ]
+  ).map(({ rating, label, cls }) => ({
+    label,
+    cls,
+    replies: participants
+      .map((p) => ({
+        p,
+        items: Object.entries(p.side.ratings || {})
+          .filter(([, r]) => r === rating)
+          .map(([id]) => kinkMap[id] || id),
+      }))
+      .filter((r) => r.items.length > 0),
+  })).filter((s) => s.replies.length > 0);
 
-function RatingsChat({
-  participants,
-  kinkMap,
-  rating,
-  label,
-  cls,
-}: {
-  participants: ChatParticipant[];
-  kinkMap: Record<string, string>;
-  rating: "yes" | "maybe" | "no";
-  label: string;
-  cls: string;
-}) {
-  const replies = participants
-    .map((p) => ({
-      p,
-      items: Object.entries(p.side.ratings || {})
-        .filter(([, r]) => r === rating)
-        .map(([id]) => kinkMap[id] || id),
-    }))
-    .filter((r) => r.items.length > 0);
-  if (replies.length === 0) return null;
+  if (textSections.length === 0 && ratingSections.length === 0) return null;
+
   return (
-    <Sticker className="space-y-3">
-      <div className="font-display text-xl text-plum text-center">{label}</div>
-      <div className="space-y-3">
-        {replies.map(({ p, items }, i) => (
-          <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-            <div className="flex flex-wrap gap-1">
-              {items.map((n) => (
-                <span key={n} className={`text-xs px-2 py-0.5 rounded-full border ${cls}`}>{n}</span>
-              ))}
-            </div>
-          </ChatBubble>
-        ))}
-      </div>
+    <Sticker className="space-y-5">
+      <div className="font-display text-2xl text-plum text-center">Replies</div>
+      {textSections.map(({ label, replies }) => (
+        <div key={label} className="space-y-2">
+          <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold text-center">{label}</div>
+          <div className="space-y-2">
+            {replies.map(({ p, value }, i) => (
+              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                <p className="whitespace-pre-wrap">{value}</p>
+              </ChatBubble>
+            ))}
+          </div>
+        </div>
+      ))}
+      {ratingSections.map(({ label, cls, replies }) => (
+        <div key={label} className="space-y-2">
+          <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold text-center">{label}</div>
+          <div className="space-y-2">
+            {replies.map(({ p, items }, i) => (
+              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                <div className="flex flex-wrap gap-1">
+                  {items.map((n) => (
+                    <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${cls}`}>{n}</span>
+                  ))}
+                </div>
+              </ChatBubble>
+            ))}
+          </div>
+        </div>
+      ))}
     </Sticker>
   );
 }
@@ -432,11 +427,11 @@ function ChatBubble({
 }) {
   return (
     <div className={`flex flex-col ${isOwner ? "items-start" : "items-end"}`}>
-      <div className={`text-[11px] uppercase tracking-wider text-plum font-bold mb-1 px-1`}>
+      <div className="text-[10px] uppercase tracking-wider text-plum/80 font-semibold mb-0.5 px-1">
         {name}
       </div>
       <div
-        className={`max-w-[85%] text-sm px-4 py-2.5 border-2 border-plum/30 ${
+        className={`max-w-[80%] text-xs leading-snug px-3 py-1.5 border border-plum/25 ${
           isOwner
             ? "bg-card rounded-2xl rounded-bl-sm"
             : "bg-blush rounded-2xl rounded-br-sm"
