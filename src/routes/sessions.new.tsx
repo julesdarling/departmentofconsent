@@ -308,6 +308,14 @@ function NewSession() {
                 onChange={(next: string[]) => update("aftercareItems", next)}
               />
             </Field>
+            <Field label="Safewords — pick the ones you'll use">
+              <Checklist
+                defaultItems={DEFAULT_SAFEWORD_ITEMS}
+                selected={side.safewordItems ?? []}
+                onChange={(next: string[]) => update("safewordItems", next)}
+                addPlaceholder="Add another safeword…"
+              />
+            </Field>
           </Sticker>
         )}
 
