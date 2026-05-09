@@ -89,67 +89,85 @@ function ScenePage() {
               side: p,
             })),
           ];
+          if (sides.length < 2) return null;
           const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
           const allKinkIds = Array.from(
             new Set(sides.flatMap((s) => Object.keys(s.side.ratings || {})))
           );
-          const agreed = allKinkIds.filter(
-            (id) => sides.length >= 2 && sides.every((s) => s.side.ratings?.[id] === "yes")
-          );
-          if (agreed.length === 0) return null;
+          const bothPlay: string[] = [];
+          const discuss: string[] = [];
+          const hardLimit: string[] = [];
+          const allSelected = sides.map((s) => new Set(s.side.selectedKinks ?? []));
+          for (const id of allKinkIds) {
+            const ratings = sides.map((s) => s.side.ratings?.[id]);
+            const name = kinkMap[id] || id;
+            const hasNo = ratings.includes("no");
+            const hasYesOrMaybe = ratings.some((r) => r === "yes" || r === "maybe");
+            if (hasNo && hasYesOrMaybe) {
+              hardLimit.push(name);
+            } else if (
+              ratings.every((r) => r === "yes") &&
+              allSelected.every((s) => s.has(id))
+            ) {
+              bothPlay.push(name);
+            } else if (
+              !hasNo &&
+              ratings.every((r) => r === "yes" || r === "maybe") &&
+              ratings.some((r) => r === "maybe")
+            ) {
+              discuss.push(name);
+            }
+          }
+          if (bothPlay.length + discuss.length + hardLimit.length === 0) return null;
+          const pillBase =
+            "inline-block font-display text-2xl sm:text-3xl rounded-lg px-4 py-2 leading-tight border-2";
           return (
-            <Sticker variant="coral" className="space-y-3">
-              <div className="text-center font-display text-2xl text-plum">Agreed kinks</div>
-              <div className="flex flex-wrap gap-2 justify-center">
-                {agreed.map((id) => (
-                  <span
-                    key={id}
-                    className="inline-block bg-yes/25 border-2 border-yes text-plum font-display text-2xl sm:text-3xl rounded-lg px-4 py-2 leading-tight"
-                  >
-                    {kinkMap[id] || id}
-                  </span>
-                ))}
-              </div>
-            </Sticker>
-          );
-        })()}
-
-        {(() => {
-          const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
-          const sides = [
-            { name: ownerName, side: o },
-            ...partners.map((p, i) => ({
-              name: p.name?.trim() || `Play partner ${i + 1}`,
-              side: p,
-            })),
-          ];
-          const perPerson = sides
-            .map((s) => ({
-              name: s.name,
-              yeses: Object.entries(s.side.ratings || {})
-                .filter(([, v]) => v === "yes")
-                .map(([id]) => kinkMap[id] || id),
-            }))
-            .filter((s) => s.yeses.length > 0);
-          if (perPerson.length === 0) return null;
-          return (
-            <Sticker className="space-y-3">
-              <div className="section-label">Each participant's yeses</div>
-              {perPerson.map((p, i) => (
-                <div key={i} className="space-y-1">
-                  <div className="text-sm font-semibold text-plum">{p.name}</div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {p.yeses.map((y) => (
-                      <span
-                        key={y}
-                        className="inline-block bg-yes/20 border border-yes text-plum text-sm rounded-md px-2 py-0.5"
-                      >
-                        {y}
+            <Sticker className="space-y-5">
+              {bothPlay.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-base font-bold uppercase tracking-wider text-yes">
+                    Both want to play
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    Cravings everyone picked for this scene.
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {bothPlay.map((n) => (
+                      <span key={n} className={`${pillBase} bg-yes/25 border-yes text-plum`}>
+                        {n}
                       </span>
                     ))}
                   </div>
                 </div>
-              ))}
+              )}
+              {discuss.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-base font-bold uppercase tracking-wider text-maybe">
+                    Discuss
+                  </div>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {discuss.map((n) => (
+                      <span key={n} className={`${pillBase} bg-maybe/25 border-maybe text-plum`}>
+                        {n}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {hardLimit.length > 0 && (
+                <div className="space-y-2">
+                  <div className="text-base font-bold uppercase tracking-wider text-no">
+                    Hard limit from one side
+                  </div>
+                  <div className="flex flex-wrap gap-2 pt-1">
+                    {hardLimit.map((n) => (
+                      <span key={n} className={`${pillBase} bg-no/20 border-no text-plum`}>
+                        {n}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </Sticker>
           );
         })()}
