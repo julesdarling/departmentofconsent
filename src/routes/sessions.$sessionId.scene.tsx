@@ -224,7 +224,7 @@ function ScenePage() {
 
         {o.hardLimits && (
           <Sticker className="border-no">
-            <div className="section-label" style={{ color: "var(--color-no)" }}>Hard limits</div>
+            <div className="section-label">Hard limits</div>
             <div className="text-base whitespace-pre-wrap font-semibold">{o.hardLimits}</div>
           </Sticker>
         )}
