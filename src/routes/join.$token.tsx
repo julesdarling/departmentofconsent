@@ -529,9 +529,9 @@ function YesNoMaybeMatch({
     <div className="space-y-1.5">
       <Label className="doc-label">{label}</Label>
       {theirValue?.trim() && (
-        <p className="text-[11px] text-muted-foreground">
-          They said: <span className="font-semibold capitalize text-plum">{theirValue}</span>
-        </p>
+        <div className="inline-block bg-blush text-plum text-sm rounded-2xl px-3 py-1.5 font-medium capitalize">
+          {theirValue}
+        </div>
       )}
       <div className="flex gap-2">
         {opts.map((o) => (
