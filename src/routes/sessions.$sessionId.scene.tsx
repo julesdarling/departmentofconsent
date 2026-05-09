@@ -4,7 +4,7 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCloudSession } from "@/lib/useCloudSession";
-import { useProfile, useKinks } from "@/lib/storage";
+import { DEFAULT_SAFEWORD_ITEMS, useProfile, useKinks, type SessionSide } from "@/lib/storage";
 import { Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -46,6 +46,26 @@ function ScenePage() {
       role: "Partner",
     })),
   ];
+
+  const sceneSides = [
+    { name: ownerName, side: o },
+    ...partners.map((p, i) => ({
+      name: p.name?.trim() || `Play partner ${i + 1}`,
+      side: p,
+    })),
+  ];
+
+  const safewordItemsFor = (side: SessionSide) => {
+    const explicit = (side.safewordItems ?? []).map((item) => item.trim()).filter(Boolean);
+    if (explicit.length > 0) return explicit;
+
+    const legacy = (side.safewords ?? "")
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    return legacy.length > 0 ? legacy : DEFAULT_SAFEWORD_ITEMS;
+  };
 
   const saveNotes = async () => {
     setSaving(true);
