@@ -73,7 +73,7 @@ function Index() {
               A better way to talk about limits, kinks, and aftercare.
             </h1>
             <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
-              Save your own interests, boundaries, and notes so you do not have to rebuild the conversation from scratch every time.
+              What words, signals, or boundaries stop the scene immediately?
             </p>
             <div className="pt-1">
               <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
