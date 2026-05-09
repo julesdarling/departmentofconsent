@@ -106,22 +106,6 @@ function SessionDetail() {
           </Sticker>
         )}
 
-        {/* Visions per participant */}
-        <Sticker variant="coral" className="space-y-4">
-          <div className="text-center">
-            <div className="font-display text-2xl text-plum">Scene vision</div>
-          </div>
-          <VisionBlock name={`${ownerName}'s vision for the scene`} side={o} kinkMap={kinkMap} />
-          {partners.map((ps, i) => (
-            <VisionBlock
-              key={i}
-              name={`${(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the scene`}
-              side={ps}
-              kinkMap={kinkMap}
-            />
-          ))}
-        </Sticker>
-
         <ParticipantsSection
           participants={[
             {
@@ -139,6 +123,22 @@ function SessionDetail() {
             })),
           ]}
         />
+
+        {/* Visions per participant */}
+        <Sticker variant="coral" className="space-y-4">
+          <div className="text-center">
+            <div className="font-display text-2xl text-plum">Scene vision</div>
+          </div>
+          <VisionBlock name={`${ownerName}'s vision for the scene`} side={o} kinkMap={kinkMap} />
+          {partners.map((ps, i) => (
+            <VisionBlock
+              key={i}
+              name={`${(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the scene`}
+              side={ps}
+              kinkMap={kinkMap}
+            />
+          ))}
+        </Sticker>
 
         {partners.map((ps, i) => (
           <Compare
