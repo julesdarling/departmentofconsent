@@ -211,10 +211,10 @@ function ScenePage() {
             const items = safewordItemsFor(s.side);
             return (
               <div key={i} className="space-y-2">
-                <div className="text-base font-bold text-plum">{s.name}</div>
-                <ul className="space-y-2">
+                <div className="text-sm font-semibold text-plum">{s.name}</div>
+                <ul className="space-y-1">
                   {items.map((item) => (
-                    <li key={item} className="text-lg leading-snug font-semibold text-plum">
+                    <li key={item} className="text-sm">
                       {item}
                     </li>
                   ))}
