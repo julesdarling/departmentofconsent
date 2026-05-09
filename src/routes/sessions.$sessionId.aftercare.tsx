@@ -1,3 +1,4 @@
+import { WhipLoader } from "@/components/WhipLoader";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
@@ -29,7 +30,7 @@ function AftercarePage() {
   const { session, update } = useCloudSession(sessionId);
   const navigate = useNavigate();
 
-  if (session === undefined) return <Layout><Sticker>Loading…</Sticker></Layout>;
+  if (session === undefined) return <Layout><Sticker className="flex justify-center"><WhipLoader /></Sticker></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
 
   const completed = session.aftercareCompleted ?? [];

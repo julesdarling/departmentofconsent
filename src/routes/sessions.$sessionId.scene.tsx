@@ -1,3 +1,4 @@
+import { WhipLoader } from "@/components/WhipLoader";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
@@ -31,7 +32,7 @@ function ScenePage() {
     }
   }, [session]);
 
-  if (session === undefined) return <Layout><Sticker>Loading…</Sticker></Layout>;
+  if (session === undefined) return <Layout><Sticker className="flex justify-center"><WhipLoader /></Sticker></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
 
   const o = session.ownerSide;

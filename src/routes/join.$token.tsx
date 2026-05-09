@@ -1,3 +1,4 @@
+import { WhipLoader } from "@/components/WhipLoader";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
@@ -61,7 +62,7 @@ function JoinPage() {
   }, [session, side, profile]);
 
 
-  if (session === undefined) return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
+  if (session === undefined) return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
 
   if (!session) {
     return (
