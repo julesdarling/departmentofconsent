@@ -6,10 +6,10 @@ import wordmark from "@/assets/logo.svg";
 
 export function Layout({ children, fullBleed = false, showFooter = false }: { children: React.ReactNode; fullBleed?: boolean; showFooter?: boolean }) {
   const { pathname } = useLocation();
-  const showHeader = pathname !== "/";
+  const isHome = pathname === "/";
   return (
     <div className="min-h-screen grain bg-background flex flex-col">
-      {showHeader && (
+      {!isHome && (
         <header className="w-full flex justify-center pt-6 pb-2">
           <Link to="/" aria-label="Dept of Consent — Home">
             <img src={wordmark} alt="Dept of Consent" className="h-16 w-auto" />
@@ -21,7 +21,7 @@ export function Layout({ children, fullBleed = false, showFooter = false }: { ch
       </main>
       {showFooter && <Footer />}
       <CookieBanner />
-      <BottomNav />
+      {!isHome && <BottomNav />}
     </div>
   );
 }
