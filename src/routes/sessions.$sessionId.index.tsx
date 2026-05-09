@@ -122,6 +122,16 @@ function SessionDetail() {
           ))}
         </Sticker>
 
+        <ParticipantsSection
+          participants={[
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ]}
+        />
+
         {partners.map((ps, i) => (
           <Compare
             key={i}
@@ -148,16 +158,6 @@ function SessionDetail() {
             name: p.name?.trim() || `Play partner ${i + 1}`,
             side: p,
           }))}
-        />
-
-        <ParticipantsSection
-          participants={[
-            { name: ownerName, side: o },
-            ...partners.map((p, i) => ({
-              name: p.name?.trim() || `Play partner ${i + 1}`,
-              side: p,
-            })),
-          ]}
         />
 
         <SideChat
