@@ -614,9 +614,7 @@ function YesNoMaybeMatch({
       {theirValue?.trim() && (
         <div className="space-y-1">
           {theirName && (
-            <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold">
-              {theirName}
-            </div>
+            <div className="doc-label">{theirName}</div>
           )}
           <div className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium capitalize">
             {theirValue}
