@@ -124,7 +124,15 @@ function SessionDetail() {
 
         <ParticipantsSection
           participants={[
-            { name: ownerName, side: o },
+            {
+              name: ownerName,
+              side: {
+                ...o,
+                pronouns: o.pronouns?.trim() || profile?.pronouns || "",
+                healthcare: o.healthcare?.trim() || profile?.healthcare || "",
+                emergencyContact: o.emergencyContact?.trim() || profile?.emergencyContact || "",
+              },
+            },
             ...partners.map((p, i) => ({
               name: p.name?.trim() || `Play partner ${i + 1}`,
               side: p,
