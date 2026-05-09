@@ -455,6 +455,7 @@ const DIRECTION_LABELS: Record<Direction, string> = { give: "Give", receive: "Re
 function KinkBlock({
   name,
   creatorDirection,
+  creatorName,
   rating,
   direction,
   onRating,
@@ -462,6 +463,7 @@ function KinkBlock({
 }: {
   name: string;
   creatorDirection?: Direction;
+  creatorName?: string;
   rating: Rating | undefined;
   direction: Direction | undefined;
   onRating: (r: Rating) => void;
@@ -470,11 +472,18 @@ function KinkBlock({
   return (
     <div className="py-2">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <div className="text-sm font-medium flex items-center gap-2 min-w-0 flex-wrap">
+        <div className="text-sm font-medium flex flex-col gap-0.5 min-w-0">
           {creatorDirection ? (
-            <span className="text-sm px-3 py-1.5 rounded-lg rounded-bl-none bg-blush text-plum font-medium shrink-0">
-              {`I want to ${creatorDirection === "both" ? "give and receive" : creatorDirection} ${name.toLowerCase()}`}
-            </span>
+            <>
+              {creatorName && (
+                <span className="text-[9px] uppercase tracking-wide text-plum/60 font-semibold px-1">
+                  {creatorName}
+                </span>
+              )}
+              <span className="text-sm px-3 py-1.5 rounded-lg rounded-bl-none bg-blush text-plum font-medium self-start max-w-full">
+                {`I want to ${creatorDirection === "both" ? "give and receive" : creatorDirection} ${name.toLowerCase()}`}
+              </span>
+            </>
           ) : (
             <span className="break-words">{name}</span>
           )}
