@@ -39,7 +39,14 @@ function JoinPage() {
   const [side, setSide] = useState<SessionSide | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  
+  const [ownerProfileName, setOwnerProfileName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!token) return;
+    supabase.rpc("get_session_owner_name", { p_token: token }).then(({ data }) => {
+      if (typeof data === "string" && data.trim()) setOwnerProfileName(data.trim());
+    });
+  }, [token]);
 
   useEffect(() => {
     if (session && !side) {
