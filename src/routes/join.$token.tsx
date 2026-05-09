@@ -170,7 +170,7 @@ function JoinPage() {
             )}
             {noItems.length > 0 && (
               <div>
-                <div className="text-xs font-semibold uppercase text-no mt-3 mb-1">Hard No</div>
+                <div className="text-xs font-semibold uppercase text-plum mt-3 mb-1">Hard No</div>
                 <div className="flex flex-wrap gap-1">
                   {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
                 </div>
@@ -541,7 +541,7 @@ function SceneDetailsBlock({
         Their answer is shown for each — add yours underneath.
       </p>
       {ownerSide.substancesHardLimit && (
-        <div className="text-[11px] uppercase tracking-wider text-no font-semibold">
+        <div className="text-[11px] uppercase tracking-wider text-plum font-semibold">
           Substance use is a hard limit for them
         </div>
       )}

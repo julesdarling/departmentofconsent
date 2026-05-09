@@ -182,7 +182,7 @@ function SessionDetail() {
           )}
           {noItems.length > 0 && (
             <div>
-              <div className="text-xs font-semibold uppercase text-no mt-3 mb-1">Hard No</div>
+              <div className="text-xs font-semibold uppercase text-plum mt-3 mb-1">Hard No</div>
               <div className="flex flex-wrap gap-1">
                 {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
               </div>
@@ -325,7 +325,7 @@ function Compare({
           )}
           {conflicts.length > 0 && (
             <div>
-              <div className="text-xs font-semibold uppercase text-no mb-1">Hard limit from one side</div>
+              <div className="text-xs font-semibold uppercase text-plum mb-1">Hard limit from one side</div>
               <div className="flex flex-wrap gap-1">
                 {conflicts.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
               </div>
@@ -349,7 +349,7 @@ function VisionBlock({
   if (!side.vision && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
   return (
     <div className="bg-card/60 rounded-xl p-3 space-y-2">
-      <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{name}</div>
+      <div className="text-[11px] uppercase tracking-wider text-plum font-bold">{name}</div>
       {side.vision && <p className="text-sm whitespace-pre-wrap">{side.vision}</p>}
       {side.selectedKinks?.length > 0 && (
         <div className="flex flex-wrap gap-1.5 pt-1">
@@ -416,7 +416,7 @@ function FullSideBlock({
       )}
       {noItems.length > 0 && (
         <div>
-          <div className="text-xs font-semibold uppercase text-no mt-3 mb-1">Hard No</div>
+          <div className="text-xs font-semibold uppercase text-plum mt-3 mb-1">Hard No</div>
           <div className="flex flex-wrap gap-1">
             {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
           </div>

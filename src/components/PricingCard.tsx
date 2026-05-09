@@ -5,7 +5,7 @@ export function PricingCard() {
   return (
     <Sticker variant="coral" className="space-y-3">
       <div className="text-center">
-        <div className="text-xs uppercase tracking-wider text-coral font-bold">Membership</div>
+        <div className="text-xs uppercase tracking-wider text-plum font-bold">Membership</div>
         <div className="font-display text-4xl text-plum mt-1">$9<span className="text-base text-muted-foreground">/month</span></div>
         <p className="text-xs text-muted-foreground mt-1">Cancel anytime.</p>
       </div>

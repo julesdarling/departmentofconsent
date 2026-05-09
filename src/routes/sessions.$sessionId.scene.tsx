@@ -156,7 +156,7 @@ function ScenePage() {
               )}
               {hardLimit.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-base font-bold uppercase tracking-wider text-no">
+                  <div className="text-base font-bold uppercase tracking-wider text-plum">
                     Hard limit from one side
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
@@ -224,7 +224,7 @@ function ScenePage() {
 
         {o.hardLimits && (
           <Sticker className="border-no">
-            <div className="section-label" style={{ color: "var(--color-no)" }}>Hard limits</div>
+            <div className="section-label">Hard limits</div>
             <div className="text-base whitespace-pre-wrap font-semibold">{o.hardLimits}</div>
           </Sticker>
         )}
