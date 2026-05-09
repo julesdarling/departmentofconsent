@@ -150,6 +150,16 @@ function SessionDetail() {
           }))}
         />
 
+        <ParticipantsSection
+          participants={[
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ]}
+        />
+
         <SideChat
           participants={[
             { name: ownerName, side: o, isOwner: true },
