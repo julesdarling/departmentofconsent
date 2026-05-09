@@ -212,7 +212,7 @@ function JoinPage() {
                 <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
                   {creatorName}'s vision
                 </div>
-                <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl px-3 py-1.5 font-medium">{ownerSide.vision}</p>
+                <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 font-medium">{ownerSide.vision}</p>
               </div>
             )}
             <Field label="Your vision for this scene">
@@ -495,7 +495,7 @@ function SceneDetailsBlock({
           return (
             <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
               <Label className="doc-label block mb-1.5">{i.label}</Label>
-              <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl px-3 py-1.5 mb-2 font-medium">{display}</div>
+              <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 mb-2 font-medium">{display}</div>
               <Input
                 value={myVal}
                 onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
@@ -529,7 +529,7 @@ function YesNoMaybeMatch({
     <div className="space-y-1.5">
       <Label className="doc-label">{label}</Label>
       {theirValue?.trim() && (
-        <div className="inline-block bg-blush text-plum text-sm rounded-2xl px-3 py-1.5 font-medium capitalize">
+        <div className="inline-block bg-blush text-plum text-sm rounded-2xl rounded-bl-none px-3 py-1.5 font-medium capitalize">
           {theirValue}
         </div>
       )}
