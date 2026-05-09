@@ -10,6 +10,7 @@ import {
   useProfile,
   emptySide,
   useRatings,
+  DEFAULT_SAFEWORD_ITEMS,
   type SessionSide,
   type Rating,
   type Direction,
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { AftercareChecklist } from "@/components/AftercareChecklist";
+import { Checklist } from "@/components/Checklist";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a scene" }] }),
