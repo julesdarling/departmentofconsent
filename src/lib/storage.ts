@@ -444,6 +444,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     penetrativeSex: "",
     timeOfPlay: "",
     safewords: profile?.defaultSafewords ?? DEFAULT_SAFEWORDS,
+    safewordItems: [...DEFAULT_SAFEWORD_ITEMS],
     vision: "",
     selectedKinks: [],
     actions: "",
