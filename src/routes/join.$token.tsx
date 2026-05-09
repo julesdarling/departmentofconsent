@@ -208,8 +208,8 @@ function JoinPage() {
           <Sticker variant="coral" className="space-y-3">
             <div className="text-center font-display text-2xl text-plum">Scene vision</div>
             {ownerSide.vision?.trim() && (
-              <div className="bg-card/60 rounded-xl p-3 space-y-2">
-                <div className="text-[11px] uppercase tracking-wider text-coral font-bold">
+              <div className="space-y-2">
+                <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
                   {creatorName}'s vision
                 </div>
                 <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 font-medium">{ownerSide.vision}</p>
