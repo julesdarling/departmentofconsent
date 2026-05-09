@@ -88,19 +88,6 @@ function ScenePage() {
           <p className="text-sm text-muted-foreground">{session.partnerHandle} · {session.date}</p>
         </div>
 
-        <Sticker className="space-y-2">
-          <div className="section-label">Who's playing</div>
-          <ul className="space-y-1">
-            {participants.map((p, i) => (
-              <li key={i} className="text-sm">
-                <span className="text-muted-foreground">{p.role} · </span>
-                <span className="font-semibold text-plum">{p.name}</span>
-                {p.pronouns && <span className="text-muted-foreground"> · {p.pronouns}</span>}
-              </li>
-            ))}
-          </ul>
-        </Sticker>
-
         {(() => {
           const sides = sceneSides;
           if (sides.length < 2) return null;
@@ -185,6 +172,19 @@ function ScenePage() {
             </Sticker>
           );
         })()}
+
+        <Sticker className="space-y-2">
+          <div className="section-label">Who's playing</div>
+          <ul className="space-y-1">
+            {participants.map((p, i) => (
+              <li key={i} className="text-sm">
+                <span className="text-muted-foreground">{p.role} · </span>
+                <span className="font-semibold text-plum">{p.name}</span>
+                {p.pronouns && <span className="text-muted-foreground"> · {p.pronouns}</span>}
+              </li>
+            ))}
+          </ul>
+        </Sticker>
 
         {(o.vision || partners.some((p) => p.vision)) && (
           <Sticker className="space-y-3">
