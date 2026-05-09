@@ -53,11 +53,12 @@ function JoinPage() {
 
   useEffect(() => {
     if (session && !side) {
-      // Pre-fill with the user's saved profile + ratings if they have any
-      const initial = session.partnerSide ?? emptySide(profile, savedRatings);
+      // Pre-fill profile fields only — do NOT inherit saved kink ratings/directions.
+      // Only kinks the partner explicitly rates in this invite should be on their side.
+      const initial = session.partnerSide ?? emptySide(profile);
       setSide(initial);
     }
-  }, [session, side, profile, savedRatings]);
+  }, [session, side, profile]);
 
 
   if (session === undefined) return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
