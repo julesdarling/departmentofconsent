@@ -305,7 +305,7 @@ function NewSession() {
             <Field label="Aftercare — pick what matters for this scene">
               <AftercareChecklist
                 selected={side.aftercareItems ?? []}
-                onChange={(next) => update("aftercareItems", next)}
+                onChange={(next: string[]) => update("aftercareItems", next)}
               />
             </Field>
             <Field label="Aftercare notes — anything different from your default?">
