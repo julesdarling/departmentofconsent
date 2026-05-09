@@ -520,13 +520,13 @@ function ParticipantsSection({
               {hasContact && (
                 <Accordion type="single" collapsible className="pt-1">
                   <AccordionItem value="contact" className="border-none">
-                    <AccordionTrigger className="py-1.5 text-[10px] uppercase tracking-wider text-muted-foreground font-semibold hover:no-underline">
+                    <AccordionTrigger className="py-1.5 text-[10px] uppercase tracking-wider text-plum/70 font-semibold hover:no-underline">
                       Emergency contact
                     </AccordionTrigger>
                     <AccordionContent className="space-y-2 pt-1">
                       {p.side.healthcare?.trim() && (
                         <div>
-                          <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                          <div className="text-[10px] uppercase tracking-wider text-plum/70 font-semibold">
                             Health insurance
                           </div>
                           <div className="text-sm whitespace-pre-wrap">{p.side.healthcare}</div>
@@ -534,7 +534,7 @@ function ParticipantsSection({
                       )}
                       {p.side.emergencyContact?.trim() && (
                         <div>
-                          <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                          <div className="text-[10px] uppercase tracking-wider text-plum/70 font-semibold">
                             Emergency contact
                           </div>
                           <div className="text-sm whitespace-pre-wrap">{p.side.emergencyContact}</div>
