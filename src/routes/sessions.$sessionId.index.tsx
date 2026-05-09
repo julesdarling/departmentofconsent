@@ -150,6 +150,16 @@ function SessionDetail() {
           }))}
         />
 
+        <ParticipantsSection
+          participants={[
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ]}
+        />
+
         <SideChat
           participants={[
             { name: ownerName, side: o, isOwner: true },
@@ -472,6 +482,64 @@ function SafewordsSection({
           </div>
         ) : null
       )}
+    </Sticker>
+  );
+}
+
+function ParticipantsSection({
+  participants,
+}: {
+  participants: { name: string; side: SessionSide }[];
+}) {
+  const visible = participants.filter(
+    (p) =>
+      (p.name?.trim() || p.side.pronouns?.trim() || p.side.healthcare?.trim() || p.side.emergencyContact?.trim())
+  );
+  if (visible.length === 0) return null;
+
+  return (
+    <Sticker className="space-y-3">
+      <div className="font-display text-2xl text-plum text-center">Participants</div>
+      <div className="space-y-3">
+        {visible.map((p, i) => {
+          const hasContact = !!(p.side.healthcare?.trim() || p.side.emergencyContact?.trim());
+          return (
+            <div key={i} className="border-b border-border/40 pb-3 last:border-b-0 last:pb-0 space-y-1">
+              <div className="text-base font-semibold text-plum">{p.name}</div>
+              {p.side.pronouns?.trim() && (
+                <div className="text-sm text-muted-foreground">{p.side.pronouns}</div>
+              )}
+              {hasContact && (
+                <Accordion type="single" collapsible className="pt-1">
+                  <AccordionItem value="contact" className="border-none">
+                    <AccordionTrigger className="py-1.5 text-xs uppercase tracking-wider text-plum/70 font-semibold hover:no-underline">
+                      Emergency contact
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-2 pt-1">
+                      {p.side.healthcare?.trim() && (
+                        <div>
+                          <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                            Health insurance
+                          </div>
+                          <div className="text-sm whitespace-pre-wrap">{p.side.healthcare}</div>
+                        </div>
+                      )}
+                      {p.side.emergencyContact?.trim() && (
+                        <div>
+                          <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                            Emergency contact
+                          </div>
+                          <div className="text-sm whitespace-pre-wrap">{p.side.emergencyContact}</div>
+                        </div>
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </Sticker>
   );
 }
