@@ -1,3 +1,4 @@
+import { WhipLoader } from "@/components/WhipLoader";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
@@ -44,7 +45,7 @@ function EditScene() {
   );
 
   if (session === undefined || !side) {
-    return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
+    return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
   }
   if (!session) {
     return <Layout><Sticker className="text-center">Not found.</Sticker></Layout>;

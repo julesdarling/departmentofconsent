@@ -1,3 +1,4 @@
+import { WhipLoader } from "@/components/WhipLoader";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
@@ -31,7 +32,7 @@ function SessionDetail() {
   const kinkMap = useMemo(() => Object.fromEntries(kinks.map((k) => [k.id, k.name])), [kinks]);
 
   if (session === undefined) {
-    return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
+    return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
   }
 
   if (!session) {

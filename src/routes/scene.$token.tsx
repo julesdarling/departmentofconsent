@@ -1,3 +1,4 @@
+import { WhipLoader } from "@/components/WhipLoader";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
@@ -22,7 +23,7 @@ function SceneRecap() {
     [kinks]
   );
 
-  if (session === undefined) return <Layout><Sticker className="text-center">Loading…</Sticker></Layout>;
+  if (session === undefined) return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
   if (!session) return <Layout><Sticker className="text-center">Scene not found.</Sticker></Layout>;
 
   const o = session.ownerSide;
