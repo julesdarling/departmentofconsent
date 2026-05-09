@@ -216,33 +216,13 @@ function Compare({
   }
 
   const bSet = new Set(bSelected);
-  const agreedSelected = aSelected
+  const agreedSelectedNames = aSelected
     .filter((id) => bSet.has(id))
     .map((id) => kinkMap[id] || id);
+  const bothWantToPlay = Array.from(new Set([...agreedSelectedNames, ...mutualYes]));
 
   return (
     <div className="space-y-4">
-      {mutualYes.length > 0 && (
-        <Sticker variant="coral" className="space-y-3 text-center">
-          <div className="font-display text-2xl text-plum">
-            {mutualYes.length} mutual yes{mutualYes.length === 1 ? "" : "es"}
-          </div>
-          <p className="text-xs text-muted-foreground">
-            You and {partnerName} both said yes to these.
-          </p>
-          <div className="flex flex-wrap gap-2 justify-center pt-1">
-            {mutualYes.map((n) => (
-              <span
-                key={n}
-                className="text-sm font-medium bg-yes/25 text-plum px-3 py-1.5 rounded-full border border-yes/40"
-              >
-                {n}
-              </span>
-            ))}
-          </div>
-        </Sticker>
-      )}
-
       {curious.length > 0 && (
         <Sticker className="space-y-2">
           <div className="font-display text-2xl text-plum text-center">Curious to explore together</div>
@@ -257,17 +237,17 @@ function Compare({
         </Sticker>
       )}
 
-      {(negotiate.length > 0 || conflicts.length > 0 || agreedSelected.length > 0) && (
+      {(negotiate.length > 0 || conflicts.length > 0 || bothWantToPlay.length > 0) && (
         <Sticker className="space-y-3">
           <div className="font-display text-2xl text-plum text-center">Negotiate</div>
-          {agreedSelected.length > 0 && (
+          {bothWantToPlay.length > 0 && (
             <div>
               <div className="text-xs font-semibold uppercase text-yes mb-1">Both want to play</div>
               <p className="text-[11px] text-muted-foreground mb-1">
-                Cravings you both picked for this scene.
+                You and {partnerName} are both into these.
               </p>
               <div className="flex flex-wrap gap-1">
-                {agreedSelected.map((n) => <span key={n} className="text-xs bg-yes/25 px-2 py-0.5 rounded-full border border-yes/40">{n}</span>)}
+                {bothWantToPlay.map((n) => <span key={n} className="text-xs bg-yes/25 px-2 py-0.5 rounded-full border border-yes/40">{n}</span>)}
               </div>
             </div>
           )}
