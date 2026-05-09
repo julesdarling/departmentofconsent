@@ -3,7 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
-import { useKinks, useProfile, generateSceneTitle, type SessionSide } from "@/lib/storage";
+import { useKinks, useProfile, generateSceneTitle, DEFAULT_SAFEWORD_ITEMS, type SessionSide } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -135,6 +135,14 @@ function SessionDetail() {
         ))}
 
         <PrivacySexConsensus
+          owner={{ name: ownerName, side: o }}
+          partners={partners.map((p, i) => ({
+            name: p.name?.trim() || `Play partner ${i + 1}`,
+            side: p,
+          }))}
+        />
+
+        <SafewordsSection
           owner={{ name: ownerName, side: o }}
           partners={partners.map((p, i) => ({
             name: p.name?.trim() || `Play partner ${i + 1}`,
@@ -388,6 +396,82 @@ function PrivacySexConsensus({
           </div>
         ))}
       </div>
+    </Sticker>
+  );
+}
+
+function SafewordsSection({
+  owner,
+  partners,
+}: {
+  owner: { name: string; side: SessionSide };
+  partners: { name: string; side: SessionSide }[];
+}) {
+  const all = [owner, ...partners];
+  const defaultSet = new Set(DEFAULT_SAFEWORD_ITEMS);
+
+  const perPerson = all.map((p) => {
+    const items = (p.side.safewordItems ?? []).map((s) => s.trim()).filter(Boolean);
+    const defaults = items.filter((i) => defaultSet.has(i));
+    const customs = items.filter((i) => !defaultSet.has(i));
+    return { name: p.name, defaults, customs };
+  });
+
+  const hasAny = perPerson.some((p) => p.defaults.length > 0 || p.customs.length > 0);
+  if (!hasAny) return null;
+
+  // Determine if everyone's default selection is identical
+  const sigs = perPerson.map((p) => [...p.defaults].sort().join("||"));
+  const allSameDefaults = sigs.every((s) => s === sigs[0]);
+
+  return (
+    <Sticker className="space-y-3">
+      <div className="font-display text-2xl text-plum text-center">Safewords</div>
+
+      {allSameDefaults ? (
+        perPerson[0].defaults.length > 0 && (
+          <div className="space-y-1.5">
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+              Everyone agreed
+            </div>
+            <ul className="space-y-1">
+              {perPerson[0].defaults.map((item) => (
+                <li key={item} className="text-sm text-plum">• {item}</li>
+              ))}
+            </ul>
+          </div>
+        )
+      ) : (
+        perPerson.map((p, i) =>
+          p.defaults.length > 0 ? (
+            <div key={`d-${i}`} className="space-y-1.5">
+              <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+                {p.name}
+              </div>
+              <ul className="space-y-1">
+                {p.defaults.map((item) => (
+                  <li key={item} className="text-sm text-plum">• {item}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null
+        )
+      )}
+
+      {perPerson.map((p, i) =>
+        p.customs.length > 0 ? (
+          <div key={`c-${i}`} className="space-y-1.5 pt-1">
+            <div className="text-[10px] uppercase tracking-wider text-destructive font-semibold">
+              {p.name}'s custom safeword{p.customs.length > 1 ? "s" : ""}
+            </div>
+            <ul className="space-y-1">
+              {p.customs.map((item) => (
+                <li key={item} className="text-sm text-destructive font-medium">• {item}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null
+      )}
     </Sticker>
   );
 }
