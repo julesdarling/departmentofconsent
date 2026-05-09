@@ -23,6 +23,7 @@ import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { CloudButton } from "@/components/CloudButton";
+import { AftercareChecklist } from "@/components/AftercareChecklist";
 
 import { RequireAuth } from "@/components/RequireAuth";
 
@@ -301,7 +302,13 @@ function NewSession() {
             <Field label="Anything else to brainstorm">
               <Textarea value={side.brainstorm} onChange={(e) => update("brainstorm", e.target.value)} rows={3} />
             </Field>
-            <Field label="Aftercare — anything different from your default?">
+            <Field label="Aftercare — pick what matters for this scene">
+              <AftercareChecklist
+                selected={side.aftercareItems ?? []}
+                onChange={(next: string[]) => update("aftercareItems", next)}
+              />
+            </Field>
+            <Field label="Aftercare notes — anything different from your default?">
               <Textarea value={side.aftercare} onChange={(e) => update("aftercare", e.target.value)} rows={3} placeholder={profile.defaultAftercare || "from your profile"} />
             </Field>
           </Sticker>

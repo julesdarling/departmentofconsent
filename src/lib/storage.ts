@@ -62,6 +62,7 @@ export interface SessionSide {
   softLimits: string;
   yesList: string;
   aftercare: string;
+  aftercareItems?: string[];
   brainstorm: string;
   ratings: KinkRatings;
   directions?: KinkDirections;
@@ -181,6 +182,29 @@ Thumb up — keep going.
 Enthusiastic thumb up — more more more please.
 Thumb side — right here is good, no more no less.
 Thumb down, double tap — check in please.`;
+
+export const DEFAULT_AFTERCARE_ITEMS: string[] = [
+  "Drink water",
+  "Eat a snack",
+  "Cuddle or maintain comforting physical contact",
+  "Offer reassurance and praise",
+  "Check emotional state",
+  "Confirm consent and boundaries felt respected",
+  "Rest quietly together",
+  "Use blankets or regulate body temperature",
+  "Remove restraints/gear carefully",
+  "Check for injuries, bruising, numbness, or circulation problems",
+  "Clean and treat marks or wounds",
+  "Practice grounding or deep breathing",
+  "Create a calm, low-stimulation environment",
+  "Allow space for emotions and processing",
+  "Ask \u201cWhat do you need right now?\u201d",
+  "Discuss what worked well in the scene",
+  "Discuss anything uncomfortable or unexpected",
+  "Shower, bathe, or freshen up",
+  "Sleep or take a nap if needed",
+  "Follow up later with a text or check-in",
+];
 
 export const emptyProfile: Profile = {
   name: "",
@@ -415,6 +439,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     softLimits: "",
     yesList: "",
     aftercare: profile?.defaultAftercare ?? "",
+    aftercareItems: [],
     brainstorm: "",
     ratings: ratings ? { ...ratings } : {},
     directions: directions ? { ...directions } : {},
