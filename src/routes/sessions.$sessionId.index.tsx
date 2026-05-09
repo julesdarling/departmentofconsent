@@ -122,6 +122,16 @@ function SessionDetail() {
           ))}
         </Sticker>
 
+        <ParticipantsSection
+          participants={[
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ]}
+        />
+
         {partners.map((ps, i) => (
           <Compare
             key={i}
@@ -148,16 +158,6 @@ function SessionDetail() {
             name: p.name?.trim() || `Play partner ${i + 1}`,
             side: p,
           }))}
-        />
-
-        <ParticipantsSection
-          participants={[
-            { name: ownerName, side: o },
-            ...partners.map((p, i) => ({
-              name: p.name?.trim() || `Play partner ${i + 1}`,
-              side: p,
-            })),
-          ]}
         />
 
         <SideChat
@@ -512,7 +512,7 @@ function ParticipantsSection({
               {hasContact && (
                 <Accordion type="single" collapsible className="pt-1">
                   <AccordionItem value="contact" className="border-none">
-                    <AccordionTrigger className="py-1.5 text-xs uppercase tracking-wider text-plum/70 font-semibold hover:no-underline">
+                    <AccordionTrigger className="py-1.5 text-[10px] uppercase tracking-wider text-muted-foreground font-semibold hover:no-underline">
                       Emergency contact
                     </AccordionTrigger>
                     <AccordionContent className="space-y-2 pt-1">
