@@ -99,10 +99,27 @@ function ScenePage() {
           </Sticker>
         )}
 
-        <Sticker variant="coral" className="space-y-1">
-          <div className="section-label">Safewords</div>
-          <pre className="font-mono text-xs whitespace-pre-wrap leading-relaxed">{o.safewords}</pre>
-        </Sticker>
+        {(() => {
+          const sides = [o, ...((session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : [])))];
+          const allItems = Array.from(
+            new Set(sides.flatMap((s) => s.safewordItems ?? []))
+          );
+          if (allItems.length === 0 && !o.safewords?.trim()) return null;
+          return (
+            <Sticker variant="coral" className="space-y-2">
+              <div className="section-label">Safewords</div>
+              {allItems.length > 0 ? (
+                <ul className="space-y-1.5">
+                  {allItems.map((item) => (
+                    <li key={item} className="text-sm font-medium text-plum">{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <pre className="font-mono text-xs whitespace-pre-wrap leading-relaxed">{o.safewords}</pre>
+              )}
+            </Sticker>
+          );
+        })()}
 
         {o.hardLimits && (
           <Sticker className="border-no">
