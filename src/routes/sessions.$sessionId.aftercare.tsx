@@ -83,7 +83,7 @@ function AftercarePage() {
         })}
 
         <Sticker variant="coral" className="space-y-2">
-          <Label className="font-display text-base text-plum">Private reflection</Label>
+          <Label className="block text-center font-display text-2xl text-plum">Private reflection</Label>
           <p className="text-xs text-muted-foreground">How was it? What to remember next time?</p>
           <Textarea
             value={session.reflection ?? ""}
