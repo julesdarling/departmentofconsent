@@ -135,57 +135,17 @@ function SessionDetail() {
           />
         ))}
 
-        {partners.map((ps, i) => (
-          <FullSideBlock
-            key={i}
-            title={`${ps.name?.trim() || `Play partner ${i + 1}`}'s side`}
-            side={ps}
-            kinkMap={kinkMap}
-          />
-        ))}
-
-        <Sticker className="space-y-3">
-          <div className="font-display text-2xl text-plum text-center">Your side</div>
-          <SideDetail title="Setting" value={o.setting} />
-          <SideDetail title="Music" value={o.music} />
-          <SideDetail title="Dress" value={o.dress} />
-          <SideDetail title="Call me" value={o.callMe} />
-          <SideDetail title="Don't call me" value={o.dontCallMe} />
-          <SideDetail title="Intentions" value={o.intentions} />
-          <SideDetail title="Privacy" value={o.privacy} />
-          <SideDetail title="Penetrative sex" value={o.penetrativeSex} />
-
-          {yesItems.length > 0 && (
-            <div>
-              <div className="text-xs font-semibold uppercase text-yes mt-3 mb-1">Yes</div>
-              <div className="flex flex-wrap gap-1">
-                {yesItems.map((n) => <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>)}
-              </div>
-            </div>
-          )}
-          {maybeItems.length > 0 && (
-            <div>
-              <div className="text-xs font-semibold uppercase text-maybe mt-3 mb-1">Maybe</div>
-              <div className="flex flex-wrap gap-1">
-                {maybeItems.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
-              </div>
-            </div>
-          )}
-          {noItems.length > 0 && (
-            <div>
-              <div className="text-xs font-semibold uppercase text-plum mt-3 mb-1">Hard No</div>
-              <div className="flex flex-wrap gap-1">
-                {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
-              </div>
-            </div>
-          )}
-
-          <SideDetail title="Hard limits (text)" value={o.hardLimits} />
-          <SideDetail title="Soft limits (text)" value={o.softLimits} />
-          <SideDetail title="Yes (text)" value={o.yesList} />
-          <SideDetail title="Aftercare" value={o.aftercare} />
-          <SideDetail title="Brainstorm" value={o.brainstorm} />
-        </Sticker>
+        <SideChat
+          participants={[
+            { name: ownerName, side: o, isOwner: true },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+              isOwner: false,
+            })),
+          ]}
+          kinkMap={kinkMap}
+        />
 
         <div className="flex flex-col items-center gap-2">
           <CloudButton variant="outline" to={`/sessions/${sessionId}/aftercare`}>
