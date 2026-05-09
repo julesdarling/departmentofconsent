@@ -4,8 +4,10 @@ import { CloudButton } from "@/components/CloudButton";
 import { useProfile } from "@/lib/storage";
 import { useAuth } from "@/lib/useAuth";
 import { Check } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
-import wordmark from "@/assets/logo.svg";
+import heroImg from "@/assets/hero-friends.jpg";
+import sectionBg from "@/assets/section-bg.jpg";
+import wordmark from "@/assets/site-logo.svg";
+import footerWordmark from "@/assets/footer-wordmark.svg";
 import flag from "@/assets/trans-flag.svg";
 import stickerWhip from "@/assets/sticker-whip.png";
 import stickerHandcuffs from "@/assets/sticker-handcuffs.png";
@@ -224,8 +226,8 @@ function Index() {
       {/* 5. Built for kinky people */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
         <div className="relative rounded-3xl overflow-hidden bg-plum text-white">
-          <img src={heroImg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover opacity-50" />
-          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/70 to-plum/30" />
+          <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/75 to-plum/40" />
           <div className="relative p-8 sm:p-12 lg:p-16 max-w-xl">
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">
               Built for kinky people who take consent seriously.
@@ -265,27 +267,8 @@ function Index() {
       </section>
 
       {/* 7. Giant wordmark */}
-      <section className="px-2 sm:px-6 pt-6 pb-10 max-w-7xl mx-auto">
-        <div className="giant-wordmark">
-          <div>
-            <span className="lt-blue">D</span>
-            <span className="lt-coral">e</span>
-            <span className="lt-teal">p</span>
-            <span className="lt-purple">t</span>
-            <span className="lt-coral"> </span>
-            <span className="lt-teal">o</span>
-            <span className="lt-coral">f</span>
-          </div>
-          <div>
-            <span className="lt-blue">C</span>
-            <span className="lt-teal">o</span>
-            <span className="lt-purple">n</span>
-            <span className="lt-coral">s</span>
-            <span className="lt-purple">e</span>
-            <span className="lt-teal">n</span>
-            <span className="lt-coral">t</span>
-          </div>
-        </div>
+      <section className="px-4 sm:px-8 pt-6 pb-10 max-w-7xl mx-auto">
+        <img src={footerWordmark} alt="Dept of Consent" className="w-full h-auto block" />
         <div className="text-center text-xs text-muted-foreground pt-6 space-y-2">
           <p>Copyright Department of Consent {new Date().getFullYear()}</p>
           <nav className="flex justify-center gap-6 font-semibold">
