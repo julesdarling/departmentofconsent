@@ -97,7 +97,7 @@ function ScenePage() {
                 {agreed.map((id) => (
                   <span
                     key={id}
-                    className="inline-block bg-yes/25 border-2 border-yes text-plum font-display text-2xl sm:text-3xl rounded-2xl px-4 py-2 leading-tight"
+                    className="inline-block bg-yes/25 border-2 border-yes text-plum font-display text-2xl sm:text-3xl rounded-lg px-4 py-2 leading-tight"
                   >
                     {kinkMap[id] || id}
                   </span>
