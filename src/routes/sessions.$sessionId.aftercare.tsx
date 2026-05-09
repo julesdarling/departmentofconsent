@@ -30,7 +30,7 @@ function AftercarePage() {
   const { session, update } = useCloudSession(sessionId);
   const navigate = useNavigate();
 
-  if (session === undefined) return <Layout><Sticker className="flex justify-center"><WhipLoader /></Sticker></Layout>;
+  if (session === undefined) return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
   if (!session) return <Layout><Sticker>Not found.</Sticker></Layout>;
 
   const completed = session.aftercareCompleted ?? [];

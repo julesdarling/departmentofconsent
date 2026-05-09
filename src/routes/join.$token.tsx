@@ -62,7 +62,7 @@ function JoinPage() {
   }, [session, side, profile]);
 
 
-  if (session === undefined) return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
+  if (session === undefined) return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
 
   if (!session) {
     return (

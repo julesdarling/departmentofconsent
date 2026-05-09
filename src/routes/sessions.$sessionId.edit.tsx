@@ -45,7 +45,7 @@ function EditScene() {
   );
 
   if (session === undefined || !side) {
-    return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
+    return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
   }
   if (!session) {
     return <Layout><Sticker className="text-center">Not found.</Sticker></Layout>;

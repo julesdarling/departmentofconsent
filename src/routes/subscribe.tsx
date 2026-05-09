@@ -30,7 +30,7 @@ function SubscribePage() {
   }, [isActive, navigate]);
 
   if (loading || subLoading || !user) {
-    return <Layout><Sticker className="text-center flex justify-center"><WhipLoader /></Sticker></Layout>;
+    return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
   }
 
   return (
