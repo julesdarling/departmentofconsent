@@ -62,6 +62,7 @@ export interface SessionSide {
   softLimits: string;
   yesList: string;
   aftercare: string;
+  aftercareItems?: string[];
   brainstorm: string;
   ratings: KinkRatings;
   directions?: KinkDirections;
