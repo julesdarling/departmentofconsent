@@ -321,7 +321,7 @@ function VisionBlock({
 }) {
   if (!side.vision && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
   return (
-    <div className="bg-card/60 rounded-xl p-3 space-y-2">
+    <div className="space-y-2">
       <div className="text-[11px] uppercase tracking-wider text-plum font-bold">{name}</div>
       {side.vision && <p className="text-sm whitespace-pre-wrap">{side.vision}</p>}
       {side.selectedKinks?.length > 0 && (
