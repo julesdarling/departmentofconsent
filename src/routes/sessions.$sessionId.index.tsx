@@ -427,10 +427,10 @@ function ChatBubble({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`flex items-end gap-1.5 ${isOwner ? "justify-start" : "justify-end flex-row-reverse"}`}>
-      <span className="text-[9px] uppercase tracking-wide text-plum/60 font-semibold pb-1 shrink-0">
+    <div className={`flex flex-col ${isOwner ? "items-start" : "items-end"}`}>
+      <div className="text-[8px] uppercase tracking-wide text-plum/60 font-semibold mb-0.5 px-1">
         {name}
-      </span>
+      </div>
       <div
         className={`max-w-[82%] text-[11px] leading-snug px-2.5 py-1 border border-plum/20 ${
           isOwner
