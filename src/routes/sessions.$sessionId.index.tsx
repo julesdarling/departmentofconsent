@@ -140,7 +140,6 @@ function SessionDetail() {
             aSelected={o.selectedKinks || []}
             bSelected={ps.selectedKinks || []}
             kinkMap={kinkMap}
-            partnerName={ps.name || `Play partner ${i + 1}`}
           />
         ))}
 
@@ -232,25 +231,21 @@ function Compare({
   aSelected,
   bSelected,
   kinkMap,
-  partnerName,
 }: {
   a: Record<string, string>;
   b: Record<string, string>;
   aSelected: string[];
   bSelected: string[];
   kinkMap: Record<string, string>;
-  partnerName: string;
 }) {
   const allIds = Array.from(new Set([...Object.keys(a), ...Object.keys(b)]));
-  const mutualYes: string[] = [];
   const curious: string[] = []; // yes+maybe or maybe+maybe
   const conflicts: string[] = [];
   const negotiate: string[] = [];
   for (const id of allIds) {
     const ra = a[id], rb = b[id];
     const name = kinkMap[id] || id;
-    if (ra === "yes" && rb === "yes") mutualYes.push(name);
-    else if (ra === "no" || rb === "no") conflicts.push(name);
+    if (ra === "no" || rb === "no") conflicts.push(name);
     else if (
       (ra === "yes" && rb === "maybe") ||
       (ra === "maybe" && rb === "yes") ||
