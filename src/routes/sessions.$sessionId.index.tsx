@@ -382,37 +382,40 @@ function SideChat({
 
   if (textSections.length === 0 && ratingSections.length === 0) return null;
 
+  const allSections = [
+    ...textSections.map((s) => ({ kind: "text" as const, ...s })),
+    ...ratingSections.map((s) => ({ kind: "rating" as const, ...s })),
+  ];
   return (
-    <Sticker className="space-y-3 p-4">
-      <div className="font-display text-xl text-plum text-center">Replies</div>
-      {textSections.map(({ label, replies }) => (
-        <div key={label} className="space-y-1">
-          <div className="text-[10px] uppercase tracking-wider text-plum/60 font-bold text-center">{label}</div>
-          <div className="space-y-1">
-            {replies.map(({ p, value }, i) => (
-              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                <p className="whitespace-pre-wrap">{value}</p>
-              </ChatBubble>
-            ))}
-          </div>
-        </div>
-      ))}
-      {ratingSections.map(({ label, cls, replies }) => (
-        <div key={label} className="space-y-1">
-          <div className="text-[10px] uppercase tracking-wider text-plum/60 font-bold text-center">{label}</div>
-          <div className="space-y-1">
-            {replies.map(({ p, items }, i) => (
-              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                <div className="flex flex-wrap gap-1">
-                  {items.map((n) => (
-                    <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${cls}`}>{n}</span>
+    <Sticker className="p-4">
+      <div className="font-display text-xl text-plum text-center mb-2">Replies</div>
+      <div className="rounded-xl overflow-hidden border border-plum/10">
+        {allSections.map((s, idx) => (
+          <div
+            key={`${s.kind}-${s.label}`}
+            className={`px-3 py-2 space-y-1 ${idx % 2 === 0 ? "bg-plum/[0.04]" : "bg-transparent"}`}
+          >
+            <div className="text-[10px] uppercase tracking-wider text-plum/60 font-bold text-center">{s.label}</div>
+            <div className="space-y-1">
+              {s.kind === "text"
+                ? s.replies.map(({ p, value }, i) => (
+                    <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                      <p className="whitespace-pre-wrap">{value}</p>
+                    </ChatBubble>
+                  ))
+                : s.replies.map(({ p, items }, i) => (
+                    <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                      <div className="flex flex-wrap gap-1">
+                        {items.map((n) => (
+                          <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${s.cls}`}>{n}</span>
+                        ))}
+                      </div>
+                    </ChatBubble>
                   ))}
-                </div>
-              </ChatBubble>
-            ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </Sticker>
   );
 }
