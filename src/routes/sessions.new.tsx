@@ -23,6 +23,7 @@ import { nanoid } from "nanoid";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { CloudButton } from "@/components/CloudButton";
+import { AftercareChecklist } from "@/components/AftercareChecklist";
 
 import { RequireAuth } from "@/components/RequireAuth";
 
