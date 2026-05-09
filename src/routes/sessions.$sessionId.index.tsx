@@ -108,9 +108,6 @@ function SessionDetail() {
         )}
 
         <div className="flex flex-col items-center gap-2">
-          <CloudButton variant="outline" to={`/sessions/${sessionId}/scene`}>
-            <Flame className="h-4 w-4 mr-1 inline" /> Open Scene Card
-          </CloudButton>
           <CloudButton variant="outline" to={`/sessions/${sessionId}/aftercare`}>
             <Heart className="h-4 w-4 mr-1 inline" /> Start After Care
           </CloudButton>
