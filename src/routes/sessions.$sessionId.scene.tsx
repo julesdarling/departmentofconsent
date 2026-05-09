@@ -4,7 +4,7 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCloudSession } from "@/lib/useCloudSession";
-import { useProfile, useKinks } from "@/lib/storage";
+import { DEFAULT_SAFEWORD_ITEMS, useProfile, useKinks, type SessionSide } from "@/lib/storage";
 import { Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -47,6 +47,26 @@ function ScenePage() {
     })),
   ];
 
+  const sceneSides = [
+    { name: ownerName, side: o },
+    ...partners.map((p, i) => ({
+      name: p.name?.trim() || `Play partner ${i + 1}`,
+      side: p,
+    })),
+  ];
+
+  const safewordItemsFor = (side: SessionSide) => {
+    const explicit = (side.safewordItems ?? []).map((item) => item.trim()).filter(Boolean);
+    if (explicit.length > 0) return explicit;
+
+    const legacy = (side.safewords ?? "")
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+
+    return legacy.length > 0 ? legacy : DEFAULT_SAFEWORD_ITEMS;
+  };
+
   const saveNotes = async () => {
     setSaving(true);
     try {
@@ -82,13 +102,7 @@ function ScenePage() {
         </Sticker>
 
         {(() => {
-          const sides = [
-            { name: ownerName, side: o },
-            ...partners.map((p, i) => ({
-              name: p.name?.trim() || `Play partner ${i + 1}`,
-              side: p,
-            })),
-          ];
+          const sides = sceneSides;
           if (sides.length < 2) return null;
           const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
           const allKinkIds = Array.from(
@@ -191,44 +205,24 @@ function ScenePage() {
           </Sticker>
         )}
 
-        {(() => {
-          const sides = [
-            { name: ownerName, side: o },
-            ...partners.map((p, i) => ({
-              name: p.name?.trim() || `Play partner ${i + 1}`,
-              side: p,
-            })),
-          ];
-          const itemsFor = (side: typeof o) => {
-            const explicit = side.safewordItems ?? [];
-            if (explicit.length > 0) return explicit;
-            return (side.safewords ?? "")
-              .split("\n")
-              .map((l) => l.trim())
-              .filter(Boolean);
-          };
-          const anyHas = sides.some((s) => itemsFor(s.side).length > 0);
-          if (!anyHas) return null;
-          return (
-            <Sticker variant="coral" className="space-y-3">
-              <div className="section-label">Safewords</div>
-              {sides.map((s, i) => {
-                const items = itemsFor(s.side);
-                if (items.length === 0) return null;
-                return (
-                  <div key={i} className="space-y-1">
-                    <div className="text-sm font-semibold text-plum">{s.name}</div>
-                    <ul className="space-y-0.5 ml-1">
-                      {items.map((item) => (
-                        <li key={item} className="text-sm text-plum">{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              })}
-            </Sticker>
-          );
-        })()}
+        <Sticker variant="coral" className="space-y-4">
+          <div className="section-label">Safewords</div>
+          {sceneSides.map((s, i) => {
+            const items = safewordItemsFor(s.side);
+            return (
+              <div key={i} className="space-y-2">
+                <div className="text-base font-bold text-plum">{s.name}</div>
+                <ul className="space-y-2">
+                  {items.map((item) => (
+                    <li key={item} className="text-lg leading-snug font-semibold text-plum">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+        </Sticker>
 
         {o.hardLimits && (
           <Sticker className="border-no">
