@@ -138,7 +138,7 @@ function KinksPage() {
 
         {grouped.map(([cat, items]) => (
           <Sticker key={cat} className="space-y-1">
-            <div className="doc-label text-coral mb-2">{cat}</div>
+            <div className="doc-label text-plum mb-2">{cat}</div>
             {items.map((item) => (
               <KinkRow
                 key={item.id}
