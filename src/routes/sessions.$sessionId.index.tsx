@@ -140,6 +140,7 @@ function SessionDetail() {
             aSelected={o.selectedKinks || []}
             bSelected={ps.selectedKinks || []}
             kinkMap={kinkMap}
+            partnerName={ps.name || `Play partner ${i + 1}`}
           />
         ))}
 
@@ -231,21 +232,25 @@ function Compare({
   aSelected,
   bSelected,
   kinkMap,
+  partnerName,
 }: {
   a: Record<string, string>;
   b: Record<string, string>;
   aSelected: string[];
   bSelected: string[];
   kinkMap: Record<string, string>;
+  partnerName: string;
 }) {
   const allIds = Array.from(new Set([...Object.keys(a), ...Object.keys(b)]));
+  const mutualYes: string[] = [];
   const curious: string[] = []; // yes+maybe or maybe+maybe
   const conflicts: string[] = [];
   const negotiate: string[] = [];
   for (const id of allIds) {
     const ra = a[id], rb = b[id];
     const name = kinkMap[id] || id;
-    if (ra === "no" || rb === "no") conflicts.push(name);
+    if (ra === "yes" && rb === "yes") mutualYes.push(name);
+    else if (ra === "no" || rb === "no") conflicts.push(name);
     else if (
       (ra === "yes" && rb === "maybe") ||
       (ra === "maybe" && rb === "yes") ||
@@ -258,39 +263,77 @@ function Compare({
   const agreedSelected = aSelected
     .filter((id) => bSet.has(id))
     .map((id) => kinkMap[id] || id);
-  const discussItems = Array.from(new Set([...curious, ...negotiate]));
-  const pillBase = "inline-block font-display text-2xl sm:text-3xl rounded-lg px-4 py-2 leading-tight border-2";
-
-  if (agreedSelected.length + discussItems.length + conflicts.length === 0) return null;
 
   return (
-    <Sticker className="space-y-6">
-      {agreedSelected.length > 0 && (
-        <div className="space-y-2">
-          <div className="text-lg sm:text-xl font-bold uppercase tracking-wider text-yes">Both want to play</div>
-          <p className="text-base text-muted-foreground">Cravings you both picked for this scene.</p>
-          <div className="flex flex-wrap gap-2 pt-1">
-            {agreedSelected.map((n) => <span key={n} className={`${pillBase} bg-yes/25 border-yes text-plum`}>{n}</span>)}
+    <div className="space-y-4">
+      {mutualYes.length > 0 && (
+        <Sticker variant="coral" className="space-y-3 text-center">
+          <div className="font-display text-2xl text-plum">
+            {mutualYes.length} mutual yes{mutualYes.length === 1 ? "" : "es"}
           </div>
-        </div>
-      )}
-      {discussItems.length > 0 && (
-        <div className="space-y-2">
-          <div className="text-lg sm:text-xl font-bold uppercase tracking-wider text-maybe">Discuss</div>
-          <div className="flex flex-wrap gap-2 pt-1">
-            {discussItems.map((n) => <span key={n} className={`${pillBase} bg-maybe/25 border-maybe text-plum`}>{n}</span>)}
+          <p className="text-xs text-muted-foreground">
+            You and {partnerName} both said yes to these.
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center pt-1">
+            {mutualYes.map((n) => (
+              <span
+                key={n}
+                className="text-sm font-medium bg-yes/25 text-plum px-3 py-1.5 rounded-full border border-yes/40"
+              >
+                {n}
+              </span>
+            ))}
           </div>
-        </div>
+        </Sticker>
       )}
-      {conflicts.length > 0 && (
-        <div className="space-y-2">
-          <div className="text-lg sm:text-xl font-bold uppercase tracking-wider text-plum">Hard limit from one side</div>
-          <div className="flex flex-wrap gap-2 pt-1">
-            {conflicts.map((n) => <span key={n} className={`${pillBase} bg-no/20 border-no text-plum`}>{n}</span>)}
+
+      {curious.length > 0 && (
+        <Sticker className="space-y-2">
+          <div className="font-display text-2xl text-plum text-center">Curious to explore together</div>
+          <p className="text-xs text-muted-foreground">
+            At least one of you is a yes, the other a maybe — worth a chat.
+          </p>
+          <div className="flex flex-wrap gap-1 pt-1">
+            {curious.map((n) => (
+              <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>
+            ))}
           </div>
-        </div>
+        </Sticker>
       )}
-    </Sticker>
+
+      {(negotiate.length > 0 || conflicts.length > 0 || agreedSelected.length > 0) && (
+        <Sticker className="space-y-3">
+          <div className="font-display text-2xl text-plum text-center">Negotiate</div>
+          {agreedSelected.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold uppercase text-yes mb-1">Both want to play</div>
+              <p className="text-[11px] text-muted-foreground mb-1">
+                Cravings you both picked for this scene.
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {agreedSelected.map((n) => <span key={n} className="text-xs bg-yes/25 px-2 py-0.5 rounded-full border border-yes/40">{n}</span>)}
+              </div>
+            </div>
+          )}
+          {negotiate.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold uppercase text-maybe mb-1">Discuss</div>
+              <div className="flex flex-wrap gap-1">
+                {negotiate.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
+              </div>
+            </div>
+          )}
+          {conflicts.length > 0 && (
+            <div>
+              <div className="text-xs font-semibold uppercase text-plum mb-1">Hard limit from one side</div>
+              <div className="flex flex-wrap gap-1">
+                {conflicts.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
+              </div>
+            </div>
+          )}
+        </Sticker>
+      )}
+    </div>
   );
 }
 
