@@ -412,11 +412,12 @@ function KinkBlock({
     <div className="rounded-2xl border border-border/40 p-3 bg-card/40">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div className="text-sm font-medium flex items-center gap-2 min-w-0 flex-wrap">
-          <span className="break-words">{name}</span>
-          {creatorDirection && (
+          {creatorDirection ? (
             <span className="text-xs px-3 py-1.5 rounded-2xl rounded-bl-none bg-blush text-plum font-medium shrink-0">
               {`I want to ${creatorDirection === "both" ? "give and receive" : creatorDirection} ${name.toLowerCase()}`}
             </span>
+          ) : (
+            <span className="break-words">{name}</span>
           )}
         </div>
         <div className="flex gap-1 shrink-0 self-start sm:self-auto">
