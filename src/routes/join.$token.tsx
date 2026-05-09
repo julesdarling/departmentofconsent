@@ -520,13 +520,14 @@ function SceneDetailsBlock({
       <div className="space-y-4 pt-1">
         {items.map((i) => {
           const theirVal = (ownerSide[i.field] as string | undefined)?.trim();
-          if (!theirVal) return null;
           const myVal = (mySide[i.field] as string | undefined) ?? "";
-          const display = i.field === "timeOfPlay" ? formatDateTime(theirVal) : theirVal;
+          const display = theirVal && i.field === "timeOfPlay" ? formatDateTime(theirVal) : theirVal;
           return (
             <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
               <Label className="doc-label block mb-1.5">{i.label}</Label>
-              <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 mb-2 font-medium">{display}</div>
+              {display && (
+                <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl rounded-bl-none px-3 py-1.5 mb-2 font-medium">{display}</div>
+              )}
               <Input
                 value={myVal}
                 onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
