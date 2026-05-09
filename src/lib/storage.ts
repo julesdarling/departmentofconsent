@@ -416,6 +416,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     softLimits: "",
     yesList: "",
     aftercare: profile?.defaultAftercare ?? "",
+    aftercareItems: [],
     brainstorm: "",
     ratings: ratings ? { ...ratings } : {},
     directions: directions ? { ...directions } : {},
