@@ -6,7 +6,7 @@ import { useKinks, useProfile, generateSceneTitle, type SessionSide } from "@/li
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
-import { Flame, Heart, RefreshCw, Trash2 } from "lucide-react";
+import { Heart, RefreshCw, Trash2 } from "lucide-react";
 import { CloudButton } from "@/components/CloudButton";
 import { useMemo, useState } from "react";
 import { useAuth } from "@/lib/useAuth";
@@ -108,9 +108,6 @@ function SessionDetail() {
         )}
 
         <div className="flex flex-col items-center gap-2">
-          <CloudButton variant="outline" to={`/sessions/${sessionId}/scene`}>
-            <Flame className="h-4 w-4 mr-1 inline" /> Open Scene Card
-          </CloudButton>
           <CloudButton variant="outline" to={`/sessions/${sessionId}/aftercare`}>
             <Heart className="h-4 w-4 mr-1 inline" /> Start After Care
           </CloudButton>
