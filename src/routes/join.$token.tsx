@@ -592,11 +592,13 @@ function SceneDetailsBlock({
 
 function YesNoMaybeMatch({
   label,
+  theirName,
   theirValue,
   value,
   onChange,
 }: {
   label: string;
+  theirName?: string;
   theirValue?: string;
   value: string;
   onChange: (v: string) => void;
@@ -610,11 +612,18 @@ function YesNoMaybeMatch({
     <div className="space-y-1.5">
       <Label className="doc-label">{label}</Label>
       {theirValue?.trim() && (
-        <div className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium capitalize">
-          {theirValue}
+        <div className="space-y-1">
+          {theirName && (
+            <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold">
+              {theirName}
+            </div>
+          )}
+          <div className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium capitalize">
+            {theirValue}
+          </div>
         </div>
       )}
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-end">
         {opts.map((o) => (
           <button
             key={o.v}
