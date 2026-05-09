@@ -315,6 +315,35 @@ function JoinPage() {
           <Textarea value={side.safewords} onChange={(e) => updateField("safewords", e.target.value)} rows={10} className="font-mono text-xs" />
         </Sticker>
 
+        <Sticker className="space-y-3">
+          <h2 className="font-display text-2xl text-plum text-center">Aftercare</h2>
+          {(ownerSide.aftercareItems?.length ?? 0) > 0 && (
+            <div className="space-y-2">
+              <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
+                {creatorName} wants
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {ownerSide.aftercareItems!.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-block bg-blush text-plum text-sm rounded-2xl rounded-bl-none px-3 py-1.5 font-medium"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="space-y-2 pt-1">
+            <Label className="doc-label block">What you'd like for aftercare</Label>
+            <AftercareChecklist
+              selected={side.aftercareItems ?? []}
+              onChange={(next) => updateField("aftercareItems", next)}
+              extraItems={ownerSide.aftercareItems ?? []}
+            />
+          </div>
+        </Sticker>
+
 
 
         <div className="flex justify-center pt-2">
