@@ -13,6 +13,7 @@ import {
   useKinks,
   useDirections,
   newSession,
+  DEFAULT_SAFEWORD_ITEMS,
   type SessionSide,
   type Direction,
 } from "@/lib/storage";
@@ -24,6 +25,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { CloudButton } from "@/components/CloudButton";
 import { AftercareChecklist } from "@/components/AftercareChecklist";
+import { Checklist } from "@/components/Checklist";
 
 import { RequireAuth } from "@/components/RequireAuth";
 
