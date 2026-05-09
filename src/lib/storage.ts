@@ -55,6 +55,7 @@ export interface SessionSide {
   penetrativeSex: string;
   timeOfPlay?: string;
   safewords: string;
+  safewordItems?: string[];
   vision: string;
   selectedKinks: string[];
   actions: string;
@@ -204,6 +205,17 @@ export const DEFAULT_AFTERCARE_ITEMS: string[] = [
   "Shower, bathe, or freshen up",
   "Sleep or take a nap if needed",
   "Follow up later with a text or check-in",
+];
+
+export const DEFAULT_SAFEWORD_ITEMS: string[] = [
+  "Red — stop the scene, something is wrong and we can't continue.",
+  "Yellow — check in.",
+  "Green — good, keep going.",
+  "Mercy — no more on the same spot.",
+  "Thumb up — keep going.",
+  "Enthusiastic thumb up — more more more please.",
+  "Thumb side — right here is good, no more no less.",
+  "Thumb down, double tap — check in please.",
 ];
 
 export const emptyProfile: Profile = {
@@ -432,6 +444,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     penetrativeSex: "",
     timeOfPlay: "",
     safewords: profile?.defaultSafewords ?? DEFAULT_SAFEWORDS,
+    safewordItems: [...DEFAULT_SAFEWORD_ITEMS],
     vision: "",
     selectedKinks: [],
     actions: "",

@@ -10,6 +10,7 @@ import {
   useProfile,
   emptySide,
   useRatings,
+  DEFAULT_SAFEWORD_ITEMS,
   type SessionSide,
   type Rating,
   type Direction,
@@ -22,6 +23,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 import { AftercareChecklist } from "@/components/AftercareChecklist";
+import { Checklist } from "@/components/Checklist";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a scene" }] }),
@@ -311,9 +313,35 @@ function JoinPage() {
           />
         </Sticker>
 
-        <Sticker variant="coral" className="space-y-2">
+        <Sticker variant="coral" className="space-y-3">
           <h2 className="font-display text-2xl text-plum text-center">Your safewords</h2>
-          <Textarea value={side.safewords} onChange={(e) => updateField("safewords", e.target.value)} rows={10} className="font-mono text-xs" />
+          {(ownerSide.safewordItems?.length ?? 0) > 0 && (
+            <div className="space-y-2">
+              <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
+                {creatorName} uses
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {ownerSide.safewordItems!.map((item) => (
+                  <span
+                    key={item}
+                    className="inline-block bg-blush text-plum text-sm rounded-2xl rounded-bl-none px-3 py-1.5 font-medium"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="space-y-2 pt-1">
+            <Label className="doc-label block">Safewords you'll use</Label>
+            <Checklist
+              defaultItems={DEFAULT_SAFEWORD_ITEMS}
+              selected={side.safewordItems ?? []}
+              onChange={(next: string[]) => updateField("safewordItems", next)}
+              extraItems={ownerSide.safewordItems ?? []}
+              addPlaceholder="Add another safeword…"
+            />
+          </div>
         </Sticker>
 
         <Sticker className="space-y-3">
