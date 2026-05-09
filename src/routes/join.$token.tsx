@@ -494,9 +494,7 @@ function SceneDetailsBlock({
           const display = i.field === "timeOfPlay" ? formatDateTime(theirVal) : theirVal;
           return (
             <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
-              <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-                {i.label}
-              </div>
+              <Label className="doc-label block mb-1.5">{i.label}</Label>
               <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl px-3 py-1.5 mb-2 font-medium">{display}</div>
               <Input
                 value={myVal}
