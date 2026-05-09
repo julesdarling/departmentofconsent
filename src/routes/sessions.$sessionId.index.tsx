@@ -321,70 +321,133 @@ function VisionBlock({
   );
 }
 
-function FullSideBlock({
-  title,
-  side,
+type ChatParticipant = { name: string; side: SessionSide; isOwner: boolean };
+
+const CHAT_FIELDS: { key: keyof SessionSide; label: string }[] = [
+  { key: "vision", label: "Vision" },
+  { key: "timeOfPlay", label: "Date & time of play" },
+  { key: "setting", label: "Setting" },
+  { key: "timeConstraints", label: "Time constraints" },
+  { key: "music", label: "Music" },
+  { key: "dress", label: "Dress" },
+  { key: "substances", label: "Substances" },
+  { key: "medicalConcerns", label: "Medical concerns" },
+  { key: "partnerDynamics", label: "Other partners / dynamics" },
+  { key: "intentions", label: "Intentions" },
+  { key: "goodTime", label: "A good time looks like" },
+  { key: "badTime", label: "A bad time looks like" },
+  { key: "callMe", label: "Call me" },
+  { key: "dontCallMe", label: "Don't call me" },
+  { key: "privacy", label: "Photos / videos" },
+  { key: "talkingAfter", label: "Talking about it after" },
+  { key: "penetrativeSex", label: "Penetrative sex" },
+  { key: "hardLimits", label: "Hard limits" },
+  { key: "softLimits", label: "Soft limits" },
+  { key: "yesList", label: "Enthusiastic yes" },
+  { key: "aftercare", label: "Aftercare" },
+  { key: "brainstorm", label: "Brainstorm" },
+];
+
+function SideChat({
+  participants,
   kinkMap,
 }: {
-  title: string;
-  side: SessionSide;
+  participants: ChatParticipant[];
   kinkMap: Record<string, string>;
 }) {
-  const yesItems = Object.entries(side.ratings || {}).filter(([, r]) => r === "yes").map(([id]) => kinkMap[id] || id);
-  const maybeItems = Object.entries(side.ratings || {}).filter(([, r]) => r === "maybe").map(([id]) => kinkMap[id] || id);
-  const noItems = Object.entries(side.ratings || {}).filter(([, r]) => r === "no").map(([id]) => kinkMap[id] || id);
-
+  if (participants.length === 0) return null;
   return (
-    <Sticker variant="coral" className="space-y-3">
-      <div className="font-display text-2xl text-plum text-center">{title}</div>
-      <SideDetail title="Vision" value={side.vision} />
-      <SideDetail title="Date & time of play" value={side.timeOfPlay} />
-      <SideDetail title="Setting" value={side.setting} />
-      <SideDetail title="Time constraints" value={side.timeConstraints} />
-      <SideDetail title="Music" value={side.music} />
-      <SideDetail title="Dress" value={side.dress} />
-      <SideDetail title="Substances" value={side.substances} />
-      <SideDetail title="Medical concerns" value={side.medicalConcerns} />
-      <SideDetail title="Other partners / dynamics" value={side.partnerDynamics} />
-      <SideDetail title="Intentions" value={side.intentions} />
-      <SideDetail title="A good time looks like" value={side.goodTime} />
-      <SideDetail title="A bad time looks like" value={side.badTime} />
-      <SideDetail title="Call me" value={side.callMe} />
-      <SideDetail title="Don't call me" value={side.dontCallMe} />
-      <SideDetail title="Photos / videos" value={side.privacy} />
-      <SideDetail title="Talking about it after" value={side.talkingAfter} />
-      <SideDetail title="Penetrative sex" value={side.penetrativeSex} />
+    <div className="space-y-4">
+      {CHAT_FIELDS.map(({ key, label }) => {
+        const replies = participants
+          .map((p) => ({ p, value: ((p.side[key] as string | undefined) ?? "").trim() }))
+          .filter((r) => r.value.length > 0);
+        if (replies.length === 0) return null;
+        return (
+          <Sticker key={String(key)} className="space-y-3">
+            <div className="font-display text-xl text-plum text-center">{label}</div>
+            <div className="space-y-3">
+              {replies.map(({ p, value }, i) => (
+                <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                  <p className="whitespace-pre-wrap">{value}</p>
+                </ChatBubble>
+              ))}
+            </div>
+          </Sticker>
+        );
+      })}
 
-      {yesItems.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-yes mt-3 mb-1">Yes</div>
-          <div className="flex flex-wrap gap-1">
-            {yesItems.map((n) => <span key={n} className="text-xs bg-yes/20 px-2 py-0.5 rounded-full">{n}</span>)}
-          </div>
-        </div>
-      )}
-      {maybeItems.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-maybe mt-3 mb-1">Maybe</div>
-          <div className="flex flex-wrap gap-1">
-            {maybeItems.map((n) => <span key={n} className="text-xs bg-maybe/20 px-2 py-0.5 rounded-full">{n}</span>)}
-          </div>
-        </div>
-      )}
-      {noItems.length > 0 && (
-        <div>
-          <div className="text-xs font-semibold uppercase text-plum mt-3 mb-1">Hard No</div>
-          <div className="flex flex-wrap gap-1">
-            {noItems.map((n) => <span key={n} className="text-xs bg-no/20 px-2 py-0.5 rounded-full">{n}</span>)}
-          </div>
-        </div>
-      )}
+      <RatingsChat participants={participants} kinkMap={kinkMap} rating="yes" label="Yes" cls="bg-yes/25 border-yes/40" />
+      <RatingsChat participants={participants} kinkMap={kinkMap} rating="maybe" label="Maybe" cls="bg-maybe/25 border-maybe/40" />
+      <RatingsChat participants={participants} kinkMap={kinkMap} rating="no" label="Hard No" cls="bg-no/25 border-no/40" />
+    </div>
+  );
+}
 
-      <SideDetail title="Hard limits (text)" value={side.hardLimits} />
-      <SideDetail title="Soft limits (text)" value={side.softLimits} />
-      <SideDetail title="Yes (text)" value={side.yesList} />
-      <SideDetail title="Aftercare" value={side.aftercare} />
-      <SideDetail title="Brainstorm" value={side.brainstorm} />
+function RatingsChat({
+  participants,
+  kinkMap,
+  rating,
+  label,
+  cls,
+}: {
+  participants: ChatParticipant[];
+  kinkMap: Record<string, string>;
+  rating: "yes" | "maybe" | "no";
+  label: string;
+  cls: string;
+}) {
+  const replies = participants
+    .map((p) => ({
+      p,
+      items: Object.entries(p.side.ratings || {})
+        .filter(([, r]) => r === rating)
+        .map(([id]) => kinkMap[id] || id),
+    }))
+    .filter((r) => r.items.length > 0);
+  if (replies.length === 0) return null;
+  return (
+    <Sticker className="space-y-3">
+      <div className="font-display text-xl text-plum text-center">{label}</div>
+      <div className="space-y-3">
+        {replies.map(({ p, items }, i) => (
+          <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+            <div className="flex flex-wrap gap-1">
+              {items.map((n) => (
+                <span key={n} className={`text-xs px-2 py-0.5 rounded-full border ${cls}`}>{n}</span>
+              ))}
+            </div>
+          </ChatBubble>
+        ))}
+      </div>
     </Sticker>
   );
 }
+
+function ChatBubble({
+  name,
+  isOwner,
+  children,
+}: {
+  name: string;
+  isOwner: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className={`flex flex-col ${isOwner ? "items-start" : "items-end"}`}>
+      <div className={`text-[11px] uppercase tracking-wider text-plum font-bold mb-1 px-1`}>
+        {name}
+      </div>
+      <div
+        className={`max-w-[85%] text-sm px-4 py-2.5 border-2 border-plum/30 ${
+          isOwner
+            ? "bg-card rounded-2xl rounded-bl-sm"
+            : "bg-blush rounded-2xl rounded-br-sm"
+        }`}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
+
