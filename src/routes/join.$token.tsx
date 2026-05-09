@@ -566,7 +566,12 @@ function SceneDetailsBlock({
             <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
               <Label className="doc-label block mb-1.5">{i.label}</Label>
               {display && (
-                <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-lg rounded-bl-none px-3 py-1.5 mb-2 font-medium">{display}</div>
+                <div className="mb-2">
+                  <div className="text-[9px] uppercase tracking-wide text-plum/60 font-semibold px-1 mb-0.5">
+                    {creatorName}
+                  </div>
+                  <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-lg rounded-bl-none px-3 py-1.5 font-medium">{display}</div>
+                </div>
               )}
               <Input
                 value={myVal}
