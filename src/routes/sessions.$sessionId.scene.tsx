@@ -181,30 +181,22 @@ function ScenePage() {
               side: p,
             })),
           ];
-          const anyHas = sides.some(
-            (s) => (s.side.safewordItems?.length ?? 0) > 0 || s.side.safewords?.trim()
-          );
+          const anyHas = sides.some((s) => (s.side.safewordItems?.length ?? 0) > 0);
           if (!anyHas) return null;
           return (
             <Sticker variant="coral" className="space-y-3">
               <div className="section-label">Safewords</div>
               {sides.map((s, i) => {
                 const items = s.side.safewordItems ?? [];
-                const free = s.side.safewords?.trim();
-                if (items.length === 0 && !free) return null;
+                if (items.length === 0) return null;
                 return (
                   <div key={i} className="space-y-1">
                     <div className="text-sm font-semibold text-plum">{s.name}</div>
-                    {items.length > 0 && (
-                      <ul className="space-y-0.5 ml-1">
-                        {items.map((item) => (
-                          <li key={item} className="text-sm text-plum">{item}</li>
-                        ))}
-                      </ul>
-                    )}
-                    {free && (
-                      <pre className="font-mono text-xs whitespace-pre-wrap leading-relaxed ml-1">{free}</pre>
-                    )}
+                    <ul className="space-y-0.5 ml-1">
+                      {items.map((item) => (
+                        <li key={item} className="text-sm text-plum">{item}</li>
+                      ))}
+                    </ul>
                   </div>
                 );
               })}
