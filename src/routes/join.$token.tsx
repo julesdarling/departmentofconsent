@@ -183,7 +183,7 @@ function JoinPage() {
     );
   }
 
-  const creatorName = session.ownerSide.name?.trim() || "Your play partner";
+  const creatorName = ownerProfileName || session.ownerSide.name?.trim() || "Your play partner";
   const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
   const ownerSide = session.ownerSide;
   const visionKinkIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
