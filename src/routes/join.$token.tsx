@@ -539,9 +539,9 @@ function SceneDetailsBlock({
     { label: "…and a bad time", field: "badTime" },
     { label: "Names they want to be called", field: "callMe" },
     { label: "Off-limits names", field: "dontCallMe" },
-    { label: "Their hard limits", field: "hardLimits" },
-    { label: "Their soft limits", field: "softLimits" },
-    { label: "Their enthusiastic yes", field: "yesList" },
+    { label: "Hard limits", field: "hardLimits" },
+    { label: "Soft limits", field: "softLimits" },
+    { label: "Enthusiastic yes", field: "yesList" },
     { label: "Aftercare", field: "aftercare" },
     { label: "Brainstorm", field: "brainstorm" },
   ];
