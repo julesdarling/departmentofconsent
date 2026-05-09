@@ -97,7 +97,7 @@ function SideRecap({
       <div className="font-display text-lg text-plum">{title}</div>
       {side.vision && (
         <div>
-          <div className="text-[10px] uppercase tracking-wider text-coral font-bold">Vision</div>
+          <div className="text-[10px] uppercase tracking-wider text-plum font-bold">Vision</div>
           <p className="text-sm whitespace-pre-wrap">{side.vision}</p>
         </div>
       )}

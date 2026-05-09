@@ -156,7 +156,7 @@ function ScenePage() {
               )}
               {hardLimit.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-base font-bold uppercase tracking-wider text-no">
+                  <div className="text-base font-bold uppercase tracking-wider text-plum">
                     Hard limit from one side
                   </div>
                   <div className="flex flex-wrap gap-2 pt-1">
