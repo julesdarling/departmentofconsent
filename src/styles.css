@@ -285,6 +285,25 @@
     mix-blend-mode: multiply;
     z-index: 100;
   }
+
+  .giant-wordmark {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(4.5rem, 22vw, 18rem);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .lt-blue   { color: #3b3ad6; }
+  .lt-coral  { color: #ec5b46; }
+  .lt-teal   { color: #1f8a7a; }
+  .lt-purple { color: #6b3ebf; }
+
+  .feature-card {
+    background: #ffffff;
+    border-radius: 1.5rem;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 6px 24px -12px rgba(40,10,30,0.12);
+  }
 }
 
 @layer utilities {
