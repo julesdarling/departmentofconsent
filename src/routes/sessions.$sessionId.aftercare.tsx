@@ -62,7 +62,7 @@ function AftercarePage() {
           const personKey = side.participantId || `p_${idx}`;
           return (
             <Sticker key={personKey} className="space-y-3">
-              <div className="font-display text-lg text-plum">{name}'s aftercare</div>
+              <div className="text-center font-display text-2xl text-plum">{name}'s aftercare</div>
               {items.length === 0 && (
                 <p className="text-sm text-muted-foreground">
                   Nothing specific noted. Drink water, breathe, be soft with each other.
@@ -83,7 +83,7 @@ function AftercarePage() {
         })}
 
         <Sticker variant="coral" className="space-y-2">
-          <Label className="font-display text-base text-plum">Private reflection</Label>
+          <Label className="block text-center font-display text-2xl text-plum">Private reflection</Label>
           <p className="text-xs text-muted-foreground">How was it? What to remember next time?</p>
           <Textarea
             value={session.reflection ?? ""}
