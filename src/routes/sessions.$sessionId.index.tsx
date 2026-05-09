@@ -8,6 +8,7 @@ import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
 import { Heart, RefreshCw, Trash2 } from "lucide-react";
 import { CloudButton } from "@/components/CloudButton";
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useMemo, useState } from "react";
 import { useAuth } from "@/lib/useAuth";
 
