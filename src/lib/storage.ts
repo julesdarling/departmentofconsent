@@ -207,6 +207,17 @@ export const DEFAULT_AFTERCARE_ITEMS: string[] = [
   "Follow up later with a text or check-in",
 ];
 
+export const DEFAULT_SAFEWORD_ITEMS: string[] = [
+  "Red — stop the scene, something is wrong and we can't continue.",
+  "Yellow — check in.",
+  "Green — good, keep going.",
+  "Mercy — no more on the same spot.",
+  "Thumb up — keep going.",
+  "Enthusiastic thumb up — more more more please.",
+  "Thumb side — right here is good, no more no less.",
+  "Thumb down, double tap — check in please.",
+];
+
 export const emptyProfile: Profile = {
   name: "",
   pronouns: "",
