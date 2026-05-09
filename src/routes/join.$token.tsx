@@ -490,7 +490,7 @@ function KinkBlock({
             <span className="break-words">{name}</span>
           )}
         </div>
-        <div className="flex gap-1.5 shrink-0">
+        <div className="flex gap-2 justify-end">
           {(["yes", "maybe", "no"] as Rating[]).map((r) => (
             <button
               key={r}
