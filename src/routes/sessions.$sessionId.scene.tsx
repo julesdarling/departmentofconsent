@@ -199,13 +199,21 @@ function ScenePage() {
               side: p,
             })),
           ];
-          const anyHas = sides.some((s) => (s.side.safewordItems?.length ?? 0) > 0);
+          const itemsFor = (side: typeof o) => {
+            const explicit = side.safewordItems ?? [];
+            if (explicit.length > 0) return explicit;
+            return (side.safewords ?? "")
+              .split("\n")
+              .map((l) => l.trim())
+              .filter(Boolean);
+          };
+          const anyHas = sides.some((s) => itemsFor(s.side).length > 0);
           if (!anyHas) return null;
           return (
             <Sticker variant="coral" className="space-y-3">
               <div className="section-label">Safewords</div>
               {sides.map((s, i) => {
-                const items = s.side.safewordItems ?? [];
+                const items = itemsFor(s.side);
                 if (items.length === 0) return null;
                 return (
                   <div key={i} className="space-y-1">
