@@ -382,36 +382,46 @@ function SideChat({
   if (textSections.length === 0 && ratingSections.length === 0) return null;
 
   return (
-    <Sticker className="space-y-5">
-      <div className="font-display text-2xl text-plum text-center">Replies</div>
-      {textSections.map(({ label, replies }) => (
-        <div key={label} className="space-y-2">
-          <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold text-center">{label}</div>
-          <div className="space-y-2">
-            {replies.map(({ p, value }, i) => (
-              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                <p className="whitespace-pre-wrap">{value}</p>
-              </ChatBubble>
-            ))}
-          </div>
-        </div>
-      ))}
-      {ratingSections.map(({ label, cls, replies }) => (
-        <div key={label} className="space-y-2">
-          <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold text-center">{label}</div>
-          <div className="space-y-2">
-            {replies.map(({ p, items }, i) => (
-              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                <div className="flex flex-wrap gap-1">
-                  {items.map((n) => (
-                    <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${cls}`}>{n}</span>
-                  ))}
-                </div>
-              </ChatBubble>
-            ))}
-          </div>
-        </div>
-      ))}
+    <Sticker className="space-y-2">
+      <div className="font-display text-2xl text-plum text-center mb-1">Replies</div>
+      <Accordion type="multiple" className="w-full">
+        {textSections.map(({ label, replies }) => (
+          <AccordionItem key={label} value={`t-${label}`} className="border-plum/15">
+            <AccordionTrigger className="py-2 text-[11px] uppercase tracking-wider text-plum/70 font-bold">
+              {label} <span className="ml-auto mr-2 text-plum/40 normal-case tracking-normal">{replies.length}</span>
+            </AccordionTrigger>
+            <AccordionContent className="pb-3">
+              <div className="space-y-1.5">
+                {replies.map(({ p, value }, i) => (
+                  <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                    <p className="whitespace-pre-wrap">{value}</p>
+                  </ChatBubble>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+        {ratingSections.map(({ label, cls, replies }) => (
+          <AccordionItem key={label} value={`r-${label}`} className="border-plum/15">
+            <AccordionTrigger className="py-2 text-[11px] uppercase tracking-wider text-plum/70 font-bold">
+              {label} <span className="ml-auto mr-2 text-plum/40 normal-case tracking-normal">{replies.length}</span>
+            </AccordionTrigger>
+            <AccordionContent className="pb-3">
+              <div className="space-y-1.5">
+                {replies.map(({ p, items }, i) => (
+                  <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                    <div className="flex flex-wrap gap-1">
+                      {items.map((n) => (
+                        <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${cls}`}>{n}</span>
+                      ))}
+                    </div>
+                  </ChatBubble>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </Sticker>
   );
 }
