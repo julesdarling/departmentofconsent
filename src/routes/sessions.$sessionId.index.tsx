@@ -134,6 +134,14 @@ function SessionDetail() {
           />
         ))}
 
+        <PrivacySexConsensus
+          owner={{ name: ownerName, side: o }}
+          partners={partners.map((p, i) => ({
+            name: p.name?.trim() || `Play partner ${i + 1}`,
+            side: p,
+          }))}
+        />
+
         <SideChat
           participants={[
             { name: ownerName, side: o, isOwner: true },
@@ -308,6 +316,79 @@ function VisionBlock({
         </div>
       )}
     </div>
+  );
+}
+
+const PRIVACY_FIELDS: { key: keyof SessionSide; label: string }[] = [
+  { key: "privacy", label: "Photos / videos" },
+  { key: "talkingAfter", label: "Talking about it after" },
+  { key: "penetrativeSex", label: "Penetrative sex" },
+];
+
+function PrivacySexConsensus({
+  owner,
+  partners,
+}: {
+  owner: { name: string; side: SessionSide };
+  partners: { name: string; side: SessionSide }[];
+}) {
+  if (partners.length === 0) return null;
+  const all = [owner, ...partners];
+  const rows = PRIVACY_FIELDS.map(({ key, label }) => {
+    const answers = all.map((p) => ({
+      name: p.name,
+      value: ((p.side[key] as string | undefined) ?? "").trim().toLowerCase(),
+    }));
+    if (answers.every((a) => !a.value)) return null;
+    const distinct = Array.from(new Set(answers.map((a) => a.value).filter(Boolean)));
+    const allAgree = distinct.length === 1 && answers.every((a) => a.value);
+    return { label, answers, allAgree, agreedValue: distinct[0] };
+  }).filter(Boolean) as {
+    label: string;
+    answers: { name: string; value: string }[];
+    allAgree: boolean;
+    agreedValue: string;
+  }[];
+  if (rows.length === 0) return null;
+
+  const tone = (v: string) =>
+    v === "yes" ? "bg-yes/25 border-yes/40"
+    : v === "no" ? "bg-no/25 border-no/40"
+    : v === "maybe" ? "bg-maybe/25 border-maybe/40"
+    : "bg-card border-plum/20";
+
+  return (
+    <Sticker className="space-y-3">
+      <div className="font-display text-2xl text-plum text-center">Privacy & sex</div>
+      <div className="space-y-3">
+        {rows.map((r) => (
+          <div key={r.label} className="space-y-1">
+            <div className="text-[11px] uppercase tracking-wider text-plum/70 font-bold">{r.label}</div>
+            {r.allAgree ? (
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className={`text-xs px-2 py-0.5 rounded-full border capitalize ${tone(r.agreedValue)}`}>
+                  {r.agreedValue}
+                </span>
+                <span className="text-[10px] uppercase tracking-wider text-plum/60 font-semibold">
+                  Everyone agrees
+                </span>
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-1.5">
+                {r.answers.map((a, i) => (
+                  <span
+                    key={i}
+                    className={`text-xs px-2 py-0.5 rounded-full border capitalize ${tone(a.value)}`}
+                  >
+                    <span className="font-semibold normal-case">{a.name}:</span> {a.value || "—"}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </Sticker>
   );
 }
 
