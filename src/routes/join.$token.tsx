@@ -20,6 +20,7 @@ import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a scene" }] }),
@@ -38,7 +39,14 @@ function JoinPage() {
   const [side, setSide] = useState<SessionSide | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  
+  const [ownerProfileName, setOwnerProfileName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!token) return;
+    supabase.rpc("get_session_owner_name", { p_token: token }).then(({ data }) => {
+      if (typeof data === "string" && data.trim()) setOwnerProfileName(data.trim());
+    });
+  }, [token]);
 
   useEffect(() => {
     if (session && !side) {
@@ -175,7 +183,7 @@ function JoinPage() {
     );
   }
 
-  const creatorName = session.ownerSide.name?.trim() || "Your play partner";
+  const creatorName = ownerProfileName || session.ownerSide.name?.trim() || "Your play partner";
   const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
   const ownerSide = session.ownerSide;
   const visionKinkIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
