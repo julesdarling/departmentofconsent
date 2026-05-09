@@ -299,18 +299,21 @@ function JoinPage() {
           <h2 className="font-display text-2xl text-plum text-center">Privacy & sex</h2>
           <YesNoMaybeMatch
             label="Photos / videos during the scene?"
+            theirName={creatorName}
             theirValue={ownerSide.privacy}
             value={side.privacy}
             onChange={(v) => updateField("privacy", v)}
           />
           <YesNoMaybeMatch
             label="Talking about it with others after?"
+            theirName={creatorName}
             theirValue={ownerSide.talkingAfter}
             value={side.talkingAfter || ""}
             onChange={(v) => updateField("talkingAfter", v)}
           />
           <YesNoMaybeMatch
             label="Penetrative sex during the scene?"
+            theirName={creatorName}
             theirValue={ownerSide.penetrativeSex}
             value={side.penetrativeSex}
             onChange={(v) => updateField("penetrativeSex", v)}
