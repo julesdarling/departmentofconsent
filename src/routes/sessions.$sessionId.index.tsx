@@ -197,7 +197,7 @@ function Compare({
   kinkMap: Record<string, string>;
   partnerName: string;
 }) {
-  const allIds = Array.from(new Set([...Object.keys(a), ...Object.keys(b)]));
+  const allIds = Array.from(new Set([...Object.keys(a), ...Object.keys(b), ...aSelected, ...bSelected]));
   const mutualYes: string[] = [];
   const curious: string[] = []; // yes+maybe or maybe+maybe
   const conflicts: string[] = [];
