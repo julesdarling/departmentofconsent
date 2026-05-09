@@ -236,6 +236,7 @@ function JoinPage() {
                     key={id}
                     name={ownerKinkMap[id]}
                     creatorDirection={ownerSide.directions?.[id]}
+                    creatorName={creatorName}
                     rating={side.ratings[id]}
                     direction={side.directions?.[id]}
                     onRating={(r) => setRating(id, r)}
