@@ -420,14 +420,14 @@ function KinkBlock({
             <span className="break-words">{name}</span>
           )}
         </div>
-        <div className="flex gap-1 shrink-0 self-start sm:self-auto">
+        <div className="flex gap-2 shrink-0 self-start sm:self-auto">
           {(["yes", "maybe", "no"] as Rating[]).map((r) => (
             <button
               key={r}
               type="button"
               onClick={() => onRating(r)}
               className={cn(
-                "h-7 px-2.5 rounded-full text-xs font-semibold border-2 transition capitalize",
+                "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
                 rating === r
                   ? r === "yes" ? "bg-yes/20 border-yes"
                   : r === "maybe" ? "bg-maybe/20 border-maybe"
