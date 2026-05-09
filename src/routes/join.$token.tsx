@@ -339,7 +339,7 @@ function JoinPage() {
             <Label className="doc-label block">What you'd like for aftercare</Label>
             <AftercareChecklist
               selected={side.aftercareItems ?? []}
-              onChange={(next) => updateField("aftercareItems", next)}
+              onChange={(next: string[]) => updateField("aftercareItems", next)}
               extraItems={ownerSide.aftercareItems ?? []}
             />
           </div>
