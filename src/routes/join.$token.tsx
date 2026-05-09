@@ -20,6 +20,7 @@ import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a scene" }] }),
