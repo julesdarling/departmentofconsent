@@ -19,6 +19,7 @@ function ScenePage() {
   const { sessionId } = Route.useParams();
   const { session, update } = useCloudSession(sessionId);
   const [profile] = useProfile();
+  const [kinks] = useKinks();
   const [notes, setNotes] = useState("");
   const [savedNotes, setSavedNotes] = useState("");
   const [saving, setSaving] = useState(false);
