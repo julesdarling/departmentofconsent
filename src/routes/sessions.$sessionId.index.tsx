@@ -215,11 +215,22 @@ function Compare({
     else if (ra === "maybe" || rb === "maybe") negotiate.push(name);
   }
 
+  const aSet = new Set(aSelected);
   const bSet = new Set(bSelected);
-  const agreedSelectedNames = aSelected
-    .filter((id) => bSet.has(id))
-    .map((id) => kinkMap[id] || id);
-  const bothWantToPlay = Array.from(new Set([...agreedSelectedNames, ...mutualYes]));
+  // "Both want to play" = either side picked it AND the other side picked it
+  // OR rated it yes (or both rated yes).
+  const bothIds = new Set<string>();
+  for (const id of allIds) {
+    const ra = a[id], rb = b[id];
+    const aWants = aSet.has(id) || ra === "yes";
+    const bWants = bSet.has(id) || rb === "yes";
+    const aBlocks = ra === "no";
+    const bBlocks = rb === "no";
+    if (aWants && bWants && !aBlocks && !bBlocks) bothIds.add(id);
+  }
+  // also include selected-by-both even if no ratings exist
+  for (const id of aSelected) if (bSet.has(id)) bothIds.add(id);
+  const bothWantToPlay = Array.from(bothIds).map((id) => kinkMap[id] || id);
 
   return (
     <div className="space-y-4">
