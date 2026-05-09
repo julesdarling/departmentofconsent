@@ -414,8 +414,8 @@ function KinkBlock({
         <div className="text-sm font-medium flex items-center gap-2 min-w-0 flex-wrap">
           <span className="break-words">{name}</span>
           {creatorDirection && (
-            <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
-              They: {creatorDirection === "both" ? "Give and Receive" : DIRECTION_LABELS[creatorDirection]}
+            <span className="text-xs px-3 py-1.5 rounded-2xl rounded-bl-none bg-blush text-plum font-medium shrink-0">
+              {`I want to ${creatorDirection === "both" ? "give and receive" : creatorDirection} ${name.toLowerCase()}`}
             </span>
           )}
         </div>
