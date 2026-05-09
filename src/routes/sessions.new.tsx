@@ -308,9 +308,6 @@ function NewSession() {
                 onChange={(next: string[]) => update("aftercareItems", next)}
               />
             </Field>
-            <Field label="Aftercare notes — anything different from your default?">
-              <Textarea value={side.aftercare} onChange={(e) => update("aftercare", e.target.value)} rows={3} placeholder={profile.defaultAftercare || "from your profile"} />
-            </Field>
           </Sticker>
         )}
 
