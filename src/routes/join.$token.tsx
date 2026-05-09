@@ -473,7 +473,7 @@ function KinkBlock({
 }) {
   return (
     <div className="py-2">
-      <div className="flex flex-row items-center justify-between gap-2">
+      <div className="flex flex-col gap-2">
         <div className="text-sm font-medium flex flex-col gap-0.5 min-w-0">
           {creatorDirection ? (
             <>
@@ -490,7 +490,7 @@ function KinkBlock({
             <span className="break-words">{name}</span>
           )}
         </div>
-        <div className="flex gap-1.5 shrink-0">
+        <div className="flex gap-2 justify-end">
           {(["yes", "maybe", "no"] as Rating[]).map((r) => (
             <button
               key={r}
