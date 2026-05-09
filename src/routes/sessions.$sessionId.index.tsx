@@ -383,46 +383,36 @@ function SideChat({
   if (textSections.length === 0 && ratingSections.length === 0) return null;
 
   return (
-    <Sticker className="space-y-2">
-      <div className="font-display text-2xl text-plum text-center mb-1">Replies</div>
-      <Accordion type="multiple" className="w-full">
-        {textSections.map(({ label, replies }) => (
-          <AccordionItem key={label} value={`t-${label}`} className="border-plum/15">
-            <AccordionTrigger className="py-2 text-[11px] uppercase tracking-wider text-plum/70 font-bold">
-              {label} <span className="ml-auto mr-2 text-plum/40 normal-case tracking-normal">{replies.length}</span>
-            </AccordionTrigger>
-            <AccordionContent className="pb-3">
-              <div className="space-y-1.5">
-                {replies.map(({ p, value }, i) => (
-                  <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                    <p className="whitespace-pre-wrap">{value}</p>
-                  </ChatBubble>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-        {ratingSections.map(({ label, cls, replies }) => (
-          <AccordionItem key={label} value={`r-${label}`} className="border-plum/15">
-            <AccordionTrigger className="py-2 text-[11px] uppercase tracking-wider text-plum/70 font-bold">
-              {label} <span className="ml-auto mr-2 text-plum/40 normal-case tracking-normal">{replies.length}</span>
-            </AccordionTrigger>
-            <AccordionContent className="pb-3">
-              <div className="space-y-1.5">
-                {replies.map(({ p, items }, i) => (
-                  <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                    <div className="flex flex-wrap gap-1">
-                      {items.map((n) => (
-                        <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${cls}`}>{n}</span>
-                      ))}
-                    </div>
-                  </ChatBubble>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+    <Sticker className="space-y-3 p-4">
+      <div className="font-display text-xl text-plum text-center">Replies</div>
+      {textSections.map(({ label, replies }) => (
+        <div key={label} className="space-y-1">
+          <div className="text-[10px] uppercase tracking-wider text-plum/60 font-bold text-center">{label}</div>
+          <div className="space-y-1">
+            {replies.map(({ p, value }, i) => (
+              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                <p className="whitespace-pre-wrap">{value}</p>
+              </ChatBubble>
+            ))}
+          </div>
+        </div>
+      ))}
+      {ratingSections.map(({ label, cls, replies }) => (
+        <div key={label} className="space-y-1">
+          <div className="text-[10px] uppercase tracking-wider text-plum/60 font-bold text-center">{label}</div>
+          <div className="space-y-1">
+            {replies.map(({ p, items }, i) => (
+              <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
+                <div className="flex flex-wrap gap-1">
+                  {items.map((n) => (
+                    <span key={n} className={`text-[10px] px-1.5 py-0.5 rounded-full border ${cls}`}>{n}</span>
+                  ))}
+                </div>
+              </ChatBubble>
+            ))}
+          </div>
+        </div>
+      ))}
     </Sticker>
   );
 }
@@ -437,12 +427,12 @@ function ChatBubble({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`flex flex-col ${isOwner ? "items-start" : "items-end"}`}>
-      <div className="text-[10px] uppercase tracking-wider text-plum/80 font-semibold mb-0.5 px-1">
+    <div className={`flex items-end gap-1.5 ${isOwner ? "justify-start" : "justify-end flex-row-reverse"}`}>
+      <span className="text-[9px] uppercase tracking-wide text-plum/60 font-semibold pb-1 shrink-0">
         {name}
-      </div>
+      </span>
       <div
-        className={`max-w-[80%] text-xs leading-snug px-3 py-1.5 border border-plum/25 ${
+        className={`max-w-[82%] text-[11px] leading-snug px-2.5 py-1 border border-plum/20 ${
           isOwner
             ? "bg-card rounded-2xl rounded-bl-sm"
             : "bg-blush rounded-2xl rounded-br-sm"
