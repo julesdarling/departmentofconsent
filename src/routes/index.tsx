@@ -267,27 +267,8 @@ function Index() {
       </section>
 
       {/* 7. Giant wordmark */}
-      <section className="px-2 sm:px-6 pt-6 pb-10 max-w-7xl mx-auto">
-        <div className="giant-wordmark">
-          <div>
-            <span className="lt-blue">D</span>
-            <span className="lt-coral">e</span>
-            <span className="lt-teal">p</span>
-            <span className="lt-purple">t</span>
-            <span className="lt-coral"> </span>
-            <span className="lt-teal">o</span>
-            <span className="lt-coral">f</span>
-          </div>
-          <div>
-            <span className="lt-blue">C</span>
-            <span className="lt-teal">o</span>
-            <span className="lt-purple">n</span>
-            <span className="lt-coral">s</span>
-            <span className="lt-purple">e</span>
-            <span className="lt-teal">n</span>
-            <span className="lt-coral">t</span>
-          </div>
-        </div>
+      <section className="px-4 sm:px-8 pt-6 pb-10 max-w-7xl mx-auto">
+        <img src={footerWordmark} alt="Dept of Consent" className="w-full h-auto block" />
         <div className="text-center text-xs text-muted-foreground pt-6 space-y-2">
           <p>Copyright Department of Consent {new Date().getFullYear()}</p>
           <nav className="flex justify-center gap-6 font-semibold">
