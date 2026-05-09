@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DEFAULT_AFTERCARE_ITEMS } from "@/lib/storage";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
 
 export function AftercareChecklist({
