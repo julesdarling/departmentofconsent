@@ -1,55 +1,71 @@
-## What's broken
+## New homepage — desktop + mobile
 
-Sessions are currently stored only in your phone's browser (localStorage). When you send the link or QR to a partner, their phone has no copy of the session, so the join page shows "Session not found." It will only ever work if your partner opens the link on the same device that created it — which defeats the purpose.
+Rebuild `src/routes/index.tsx` to match the mockups closely. Reorganized into 7 stacked sections, fully responsive (single column on mobile, multi-column with floating stickers on desktop).
 
-## Fix: put sessions in Lovable Cloud
+### Layout & header
 
-Enable Lovable Cloud (our managed backend) so sessions live server-side and can be opened from any device. Profiles, kinks library, and ratings stay on-device — only the shared session payload goes to the server, gated by the random share token in the URL.
+- Add a top header to the homepage only (wordmark left, "Sign In" / "My scenes" pill right). Hide the bottom nav on `/` (it stays on every other route).
+- Cream background throughout, sections separated by generous vertical padding. No full-bleed hero image — the hero photo sits inside a rounded card on the right.
 
-### Data model (single table)
+### Sections (top → bottom)
 
-`play_sessions`
-- `id` (uuid, pk)
-- `share_token` (text, unique, indexed) — what's in the URL
-- `partner_handle`, `date`, `status`
-- `owner_side` (jsonb) — full SessionSide
-- `partner_side` (jsonb, nullable)
-- `reflection` (text, nullable)
-- `aftercare_completed` (jsonb, default `[]`)
-- `created_at`, `updated_at`
+1. **Hero (split)** — Left: H1 *"A better way to talk about limits, kinks, and aftercare."*, supporting paragraph, mint **Create a scene** cloud CTA, tiny disclaimer line. Right: rounded photo of friends with the existing `hero.jpg`. Floating sticker decorations (whip, handcuffs) absolutely positioned around the photo on `md+`. On mobile: stacks photo above text.
 
-Anonymous-first: no auth required. RLS policies allow:
-- `select` / `update` only when the request supplies the matching `share_token` (via a SECURITY DEFINER function `get_session_by_token(token)` and `update_partner_side(token, side)` / `update_owner_side(token, side)` RPCs). The table itself denies direct row access.
-- `insert` is open (creating a draft session); the inserter receives the token back.
+2. **"What are you into? is not enough." card** — White rounded card, centered, italic display headline + subtitle. Then a checklist of 6 nuanced questions (each with a coral check-bullet):
+   - "What turns you on, and how?"
+   - "What's a hard no?"
+   - "What scenes do you fantasize about?"
+   - "What do you need to feel safe?"
+   - "What kind of aftercare do you want?"
+   - "What words make you feel hot — or shut down?"
+   Floating wand sticker bottom-left.
 
-This way, only people holding the link can read or write a session.
+3. **How it works** — Section heading + short subtitle. 4 short white step cards in a row on desktop, stacked on mobile:
+   - Step 1 — Choose your interests and limits
+   - Step 2 — Share with your play partner
+   - Step 3 — Compare and plan the scene
+   - Step 4 — Keep the scene card nearby
+   Floating bound-hands sticker centered below.
 
-### App changes
+4. **Feature cluster (4 stylized illustrative cards)** — White rounded cards with a small hint of mocked app UI inside each (chips, bullet lists), arranged in an asymmetric collage on desktop, stacked on mobile. Floating rope (right) and feather (left) stickers.
+   - **Your personal kink menu** — small chip row + bullet list of categories.
+   - **Two-way consent, not one-way permission** — paired yes/maybe/no chips.
+   - **Scene cards for when brains stop working** — title + bullet list (safeword, limits, aftercare, etc.).
+   - **Aftercare does not have to be improvised** — checklist mock + tagline.
 
-- `src/lib/storage.ts` — keep local hooks for `profile`, `kinks`, `ratings`. Replace `useSessions` with cloud-backed hooks:
-  - `useSessionsList()` — pulls the list of session IDs/tokens this device created (kept locally, so "My sessions" still works without an account).
-  - `useSession(idOrToken)` — fetches/subscribes to one session from the server.
-  - `createSession`, `updateOwnerSide`, `updatePartnerSide`, `saveReflection`, `toggleAftercareItem`, `deleteSession`.
-- `src/routes/sessions.new.tsx` — on save, insert into the server, store `{id, shareToken}` in the local list.
-- `src/routes/sessions.$sessionId.index.tsx` — load from server by id; live-refresh so the host sees the partner's side appear.
-- `src/routes/join.$token.tsx` — load by token from server (works on any device); submit writes `partner_side`.
-- `src/routes/sessions.index.tsx` — list local entries, fetch each by id for status/date display.
-- `src/routes/sessions.$sessionId.aftercare.tsx` and `scene.tsx` — read from server-backed hook.
+5. **"Built for kinky people who take consent seriously"** — Dark photo card (uses `hero.jpg` desaturated/overlay or a dedicated photo), white headline + supporting paragraph + small trans-flag icon line ("Department of Consent is built by + for the queer, kinky, and trans communities.") Single rounded card, full width on mobile, max-w container on desktop.
 
-### Privacy & safety notes
+6. **Mint CTA card** — Mint card, white display headline *"Make the scene clear before you start."*, short supporting line, white-fill cloud **Create a scene** button. Floating collar stickers (left) and heart-harness (right) on desktop.
 
-- The share token is the only key. It's 16 random characters from nanoid (~95 bits of entropy) — not enumerable.
-- Sessions are not tied to a user account; deleting locally also deletes server-side via the token.
-- We do not log or analyze session content.
-- Add a "Delete from server" action that purges the row.
+7. **Giant wordmark footer** — Massive multi-color "Dept of / Consent" rendered in CSS using Instrument Serif, per-letter spans colored blue / coral / teal / purple. Scales fluidly with `clamp()`. Below it: small footer line ("Copyright Department of Consent" + Privacy / Terms links).
 
-### Alternative considered
+### Assets
 
-Encode the entire session in the URL itself (no backend). Rejected because: (1) the partner's reply has no way back to the host without a second trip, and (2) sensitive content ends up in URL/QR/clipboard history.
+Use existing assets in `src/assets/`:
+- `hero.jpg`, `logo.svg`, `trans-flag.svg`
+- `icon-whip.png`, `icon-hearts.png`, `icon-checklist.png`, `icon-bunnies.png`, `icon-bunny-cuddle.png`, `icon-heart-harness.png`, `icon-step1.png`, `icon-step2.png`
 
-## Steps
+No new generated images required. Stickers are positioned with `absolute` + responsive offsets and hidden below `md` where they'd crowd mobile.
 
-1. Enable Lovable Cloud, create the `play_sessions` table, RLS policies, and the SECURITY DEFINER RPCs for token-based access.
-2. Rewrite `useSessions` into the cloud-backed hooks above; keep a local index of `{id, shareToken}` per device.
-3. Update the five session routes to use the new hooks.
-4. Add gentle copy on the share screen explaining "anyone with this link can fill out the partner side."
+### Layout component change
+
+Update `src/components/Layout.tsx` so the bottom nav is hidden on `/` (homepage gets its own top header rendered inside `index.tsx`). All other pages unchanged.
+
+### Styles
+
+- Add a couple of utility classes in `src/styles.css`:
+  - `.giant-wordmark` — display serif, fluid `clamp(4rem, 18vw, 14rem)`, tight leading.
+  - `.feature-card` — white card, soft shadow, rounded-3xl.
+  - per-letter color helpers (`.lt-blue`, `.lt-coral`, `.lt-teal`, `.lt-purple`).
+- Add a `--color-display-blue` and `--color-display-purple` token.
+
+### Responsive behavior
+
+- Mobile (`< md`): single column everywhere, photo above text in hero, stickers hidden or scaled down, feature collage becomes vertical stack matching the mobile mockup.
+- Desktop (`md+`): hero is 2-col, feature cards stagger left/right, stickers float at edges.
+
+### Out of scope
+
+- No backend, route, or auth changes.
+- No new generated images — all marketing copy + CSS only.
+- Bottom nav behavior on other routes unchanged.
