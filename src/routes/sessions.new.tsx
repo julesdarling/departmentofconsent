@@ -317,12 +317,14 @@ function NewSession() {
             <p className="text-sm text-muted-foreground">
               Save your side and get a share link + QR for your partner to fill out theirs.
             </p>
-            <Button size="lg" disabled={saving} className="cloud-btn-fluid" onClick={() => save("shared")}>
-              {saving ? "Saving..." : "Save & get share link"}
-            </Button>
-            <Button size="lg" disabled={saving} variant="outline" className="cloud-btn-fluid" onClick={() => save("draft")}>
-              Save as draft
-            </Button>
+            <div className="flex flex-col items-center gap-3">
+              <CloudButton onClick={saving ? undefined : () => save("shared")}>
+                {saving ? "Saving..." : "Save & get share link"}
+              </CloudButton>
+              <CloudButton variant="outline" onClick={saving ? undefined : () => save("draft")}>
+                Save as draft
+              </CloudButton>
+            </div>
           </Sticker>
         )}
 
