@@ -226,8 +226,8 @@ function Index() {
       {/* 5. Built for kinky people */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
         <div className="relative rounded-3xl overflow-hidden bg-plum text-white">
-          <img src={heroImg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover opacity-50" />
-          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/70 to-plum/30" />
+          <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/75 to-plum/40" />
           <div className="relative p-8 sm:p-12 lg:p-16 max-w-xl">
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">
               Built for kinky people who take consent seriously.
