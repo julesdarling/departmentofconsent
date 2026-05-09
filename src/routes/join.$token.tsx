@@ -125,8 +125,8 @@ function JoinPage() {
           {(o.vision || (o.selectedKinks && o.selectedKinks.length > 0)) && (
             <Sticker variant="coral" className="space-y-3">
               <div className="text-center font-display text-2xl text-plum">Scene vision</div>
-              <div className="bg-card/60 rounded-xl p-3 space-y-2">
-                <div className="text-[11px] uppercase tracking-wider text-coral font-bold">{ownerName}'s vision for the night</div>
+              <div className="space-y-2">
+                <div className="text-[11px] uppercase tracking-wider text-plum font-bold">{ownerName}'s vision for the night</div>
                 {o.vision && <p className="text-sm whitespace-pre-wrap">{o.vision}</p>}
                 {o.selectedKinks?.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1">
