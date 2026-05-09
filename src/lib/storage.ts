@@ -55,6 +55,7 @@ export interface SessionSide {
   penetrativeSex: string;
   timeOfPlay?: string;
   safewords: string;
+  safewordItems?: string[];
   vision: string;
   selectedKinks: string[];
   actions: string;
