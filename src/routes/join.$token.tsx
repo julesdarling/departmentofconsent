@@ -21,6 +21,7 @@ import { useCloudSession } from "@/lib/useCloudSession";
 import { cn } from "@/lib/utils";
 import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
+import { AftercareChecklist } from "@/components/AftercareChecklist";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a scene" }] }),
