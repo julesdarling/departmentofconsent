@@ -82,12 +82,19 @@ function ScenePage() {
         </Sticker>
 
         {(() => {
-          const sides = [o, ...partners];
-          if (sides.length < 2) return null;
+          const sides = [
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ];
           const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
-          const ids = Object.keys(o.ratings || {});
-          const agreed = ids.filter((id) =>
-            sides.every((s) => s.ratings?.[id] === "yes")
+          const allKinkIds = Array.from(
+            new Set(sides.flatMap((s) => Object.keys(s.side.ratings || {})))
+          );
+          const agreed = allKinkIds.filter(
+            (id) => sides.length >= 2 && sides.every((s) => s.side.ratings?.[id] === "yes")
           );
           if (agreed.length === 0) return null;
           return (
@@ -103,6 +110,46 @@ function ScenePage() {
                   </span>
                 ))}
               </div>
+            </Sticker>
+          );
+        })()}
+
+        {(() => {
+          const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
+          const sides = [
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ];
+          const perPerson = sides
+            .map((s) => ({
+              name: s.name,
+              yeses: Object.entries(s.side.ratings || {})
+                .filter(([, v]) => v === "yes")
+                .map(([id]) => kinkMap[id] || id),
+            }))
+            .filter((s) => s.yeses.length > 0);
+          if (perPerson.length === 0) return null;
+          return (
+            <Sticker className="space-y-3">
+              <div className="section-label">Each participant's yeses</div>
+              {perPerson.map((p, i) => (
+                <div key={i} className="space-y-1">
+                  <div className="text-sm font-semibold text-plum">{p.name}</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {p.yeses.map((y) => (
+                      <span
+                        key={y}
+                        className="inline-block bg-yes/20 border border-yes text-plum text-sm rounded-md px-2 py-0.5"
+                      >
+                        {y}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </Sticker>
           );
         })()}
@@ -127,23 +174,40 @@ function ScenePage() {
         )}
 
         {(() => {
-          const sides = [o, ...((session.partnerSides ?? (session.partnerSide ? [session.partnerSide] : [])))];
-          const allItems = Array.from(
-            new Set(sides.flatMap((s) => s.safewordItems ?? []))
+          const sides = [
+            { name: ownerName, side: o },
+            ...partners.map((p, i) => ({
+              name: p.name?.trim() || `Play partner ${i + 1}`,
+              side: p,
+            })),
+          ];
+          const anyHas = sides.some(
+            (s) => (s.side.safewordItems?.length ?? 0) > 0 || s.side.safewords?.trim()
           );
-          if (allItems.length === 0 && !o.safewords?.trim()) return null;
+          if (!anyHas) return null;
           return (
-            <Sticker variant="coral" className="space-y-2">
+            <Sticker variant="coral" className="space-y-3">
               <div className="section-label">Safewords</div>
-              {allItems.length > 0 ? (
-                <ul className="space-y-1.5">
-                  {allItems.map((item) => (
-                    <li key={item} className="text-sm font-medium text-plum">{item}</li>
-                  ))}
-                </ul>
-              ) : (
-                <pre className="font-mono text-xs whitespace-pre-wrap leading-relaxed">{o.safewords}</pre>
-              )}
+              {sides.map((s, i) => {
+                const items = s.side.safewordItems ?? [];
+                const free = s.side.safewords?.trim();
+                if (items.length === 0 && !free) return null;
+                return (
+                  <div key={i} className="space-y-1">
+                    <div className="text-sm font-semibold text-plum">{s.name}</div>
+                    {items.length > 0 && (
+                      <ul className="space-y-0.5 ml-1">
+                        {items.map((item) => (
+                          <li key={item} className="text-sm text-plum">{item}</li>
+                        ))}
+                      </ul>
+                    )}
+                    {free && (
+                      <pre className="font-mono text-xs whitespace-pre-wrap leading-relaxed ml-1">{free}</pre>
+                    )}
+                  </div>
+                );
+              })}
             </Sticker>
           );
         })()}
