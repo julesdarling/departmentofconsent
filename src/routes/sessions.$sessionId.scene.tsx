@@ -81,6 +81,32 @@ function ScenePage() {
           </ul>
         </Sticker>
 
+        {(() => {
+          const sides = [o, ...partners];
+          if (sides.length < 2) return null;
+          const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
+          const ids = Object.keys(o.ratings || {});
+          const agreed = ids.filter((id) =>
+            sides.every((s) => s.ratings?.[id] === "yes")
+          );
+          if (agreed.length === 0) return null;
+          return (
+            <Sticker variant="coral" className="space-y-3">
+              <div className="text-center font-display text-2xl text-plum">Agreed kinks</div>
+              <div className="flex flex-wrap gap-2 justify-center">
+                {agreed.map((id) => (
+                  <span
+                    key={id}
+                    className="inline-block bg-yes/25 border-2 border-yes text-plum font-display text-2xl sm:text-3xl rounded-2xl px-4 py-2 leading-tight"
+                  >
+                    {kinkMap[id] || id}
+                  </span>
+                ))}
+              </div>
+            </Sticker>
+          );
+        })()}
+
         {(o.vision || partners.some((p) => p.vision)) && (
           <Sticker className="space-y-3">
             {o.vision && (
