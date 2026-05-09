@@ -392,16 +392,16 @@ function KinkBlock({
 }) {
   return (
     <div className="rounded-2xl border border-border/40 p-3 bg-card/40">
-      <div className="flex items-center justify-between gap-2">
-        <div className="text-sm font-medium flex items-center gap-2 min-w-0">
-          <span className="truncate">{name}</span>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div className="text-sm font-medium flex items-center gap-2 min-w-0 flex-wrap">
+          <span className="break-words">{name}</span>
           {creatorDirection && (
             <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
               They: {creatorDirection === "both" ? "Give and Receive" : DIRECTION_LABELS[creatorDirection]}
             </span>
           )}
         </div>
-        <div className="flex gap-1 shrink-0">
+        <div className="flex gap-1 shrink-0 self-start sm:self-auto">
           {(["yes", "maybe", "no"] as Rating[]).map((r) => (
             <button
               key={r}
