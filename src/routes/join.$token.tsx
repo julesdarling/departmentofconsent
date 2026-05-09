@@ -473,7 +473,7 @@ function KinkBlock({
 }) {
   return (
     <div className="py-2">
-      <div className="flex flex-row items-center justify-between gap-2">
+      <div className="flex flex-col gap-2">
         <div className="text-sm font-medium flex flex-col gap-0.5 min-w-0">
           {creatorDirection ? (
             <>
