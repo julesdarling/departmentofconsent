@@ -111,11 +111,11 @@ function SessionDetail() {
           <div className="text-center">
             <div className="font-display text-2xl text-plum">Scene vision</div>
           </div>
-          <VisionBlock name={`${ownerName}'s vision for the night`} side={o} kinkMap={kinkMap} />
+          <VisionBlock name={`${ownerName}'s vision for the scene`} side={o} kinkMap={kinkMap} />
           {partners.map((ps, i) => (
             <VisionBlock
               key={i}
-              name={`${(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the night`}
+              name={`${(ps.name?.trim() || `Play partner ${i + 1}`)}'s vision for the scene`}
               side={ps}
               kinkMap={kinkMap}
             />
@@ -321,7 +321,7 @@ function VisionBlock({
 }) {
   if (!side.vision && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
   return (
-    <div className="bg-card/60 rounded-xl p-3 space-y-2">
+    <div className="space-y-2">
       <div className="text-[11px] uppercase tracking-wider text-plum font-bold">{name}</div>
       {side.vision && <p className="text-sm whitespace-pre-wrap">{side.vision}</p>}
       {side.selectedKinks?.length > 0 && (
