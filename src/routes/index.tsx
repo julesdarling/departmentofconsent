@@ -53,34 +53,32 @@ function Index() {
   return (
     <Layout fullBleed>
       {/* Top header */}
-      <header className="w-full px-5 sm:px-10 pt-5 pb-2 flex items-center justify-between max-w-7xl mx-auto">
+      <header className="w-full px-5 sm:px-10 pt-6 sm:pt-8 pb-2 flex items-center justify-between max-w-7xl mx-auto">
         <Link to="/" aria-label="Dept of Consent — Home" className="block">
-          <img src={wordmark} alt="Dept of Consent" className="h-9 sm:h-10 w-auto" />
+          <img src={wordmark} alt="Dept of Consent" className="h-7 sm:h-8 w-auto" />
         </Link>
         <Link
           to={user ? "/sessions" : "/auth"}
-          className="text-xs sm:text-sm font-semibold text-plum bg-blush hover:bg-blush/80 transition px-4 py-2 rounded-full"
+          className="text-sm font-semibold text-plum/70 hover:text-plum bg-blush hover:bg-blush/80 transition px-5 py-2.5 rounded-full"
         >
           {user ? "My scenes" : "Sign in"}
         </Link>
       </header>
 
       {/* 1. Hero */}
-      <section className="px-5 sm:px-10 pt-6 sm:pt-12 pb-10 sm:pb-20 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-8 md:gap-10 items-center">
-          <div className="space-y-5 order-2 md:order-1 relative">
-            <h1 className="font-display text-plum leading-[1.02] text-4xl sm:text-5xl lg:text-6xl tracking-tight">
+      <section className="px-5 sm:px-10 pt-4 sm:pt-10 pb-6 sm:pb-12 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-12 items-center">
+          <div className="space-y-6 order-2 md:order-1 relative">
+            <h1 className="font-display text-plum leading-[1.02] text-[2.5rem] sm:text-5xl lg:text-[3.75rem] tracking-tight">
               A better way to talk about limits, kinks, and aftercare.
             </h1>
-            <p className="text-foreground/80 max-w-md text-base leading-snug">
-              Build the scene, easily, in a single
-              shared agreement that both you and they
-              can see.
+            <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
+              Build the scene, easily, in a single shared agreement that both you and they can see.
             </p>
             <div className="pt-1">
-              <CloudButton to={startTo} className="!max-w-[16rem]">Create a scene</CloudButton>
+              <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
             </div>
-            <p className="text-[10px] text-muted-foreground/80 max-w-xs leading-snug pt-2">
+            <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-1">
               Department of Consent is a tool for negotiating consent, not a substitute for it.
               Your scene, your responsibility — please play safely with people you trust.
             </p>
@@ -90,25 +88,32 @@ function Index() {
             <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-blush">
               <img src={heroImg} alt="Friends laughing in a soft pile" className="w-full h-full object-cover" />
             </div>
-            <img src={stickerWhip} alt="" aria-hidden className="hidden sm:block absolute -left-8 -bottom-6 w-24 lg:w-28 rotate-[-15deg] pointer-events-none" />
-            <img src={stickerHandcuffs} alt="" aria-hidden className="hidden sm:block absolute -right-6 bottom-4 w-24 lg:w-28 rotate-[10deg] pointer-events-none" />
+            <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 -bottom-10 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none drop-shadow-sm" />
+            <img src={stickerHandcuffs} alt="" aria-hidden className="absolute -right-4 sm:-right-8 -bottom-6 sm:-bottom-10 w-24 sm:w-32 lg:w-36 rotate-[8deg] pointer-events-none drop-shadow-sm" />
           </div>
         </div>
       </section>
 
+      {/* Bridge sticker */}
+      <div className="flex justify-center mt-8 mb-2 sm:mt-10 sm:mb-4">
+        <img src={stickerGag} alt="" aria-hidden className="w-16 sm:w-20 rotate-[10deg] pointer-events-none" />
+      </div>
+
       {/* 2. "What are you into?" is not enough */}
-      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-3xl mx-auto relative">
-        <img src={stickerWand} alt="" aria-hidden className="hidden md:block absolute -left-12 bottom-6 w-24 rotate-[-20deg] pointer-events-none" />
-        <img src={stickerGag} alt="" aria-hidden className="hidden md:block absolute -right-10 -top-6 w-24 rotate-[12deg] pointer-events-none" />
+      <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-2xl mx-auto relative">
+        <img src={stickerWand} alt="" aria-hidden className="hidden md:block absolute -left-20 bottom-12 w-24 rotate-[-18deg] pointer-events-none" />
         <div className="feature-card p-8 sm:p-12 text-center">
-          <h2 className="font-display italic text-3xl sm:text-4xl text-plum">
-            <span className="not-italic">"What are you into?"</span>
+          <h2 className="font-display italic text-3xl sm:text-[2.25rem] text-plum leading-tight">
+            <span>"What are you into?"</span>
             <br />is not enough.
           </h2>
           <p className="text-sm text-foreground/70 max-w-md mx-auto mt-4 leading-snug">
             Real consent is in the details. They need to be agreed on, before the scene starts.
           </p>
-          <ul className="mt-7 space-y-3.5 text-left max-w-md mx-auto">
+          <p className="text-[11px] uppercase tracking-[0.14em] font-bold text-plum mt-7 mb-4">
+            So bring your answers to:
+          </p>
+          <ul className="space-y-3 text-left max-w-sm mx-auto">
             {QUESTIONS.map((q) => (
               <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
                 <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-coral text-white">
@@ -123,7 +128,7 @@ function Index() {
 
       {/* 3. How it works */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto relative">
-        <div className="text-center space-y-2 mb-8">
+        <div className="text-center space-y-2 mb-8 sm:mb-10">
           <h2 className="font-display text-4xl sm:text-5xl text-plum">How it works</h2>
           <p className="text-sm text-foreground/70 max-w-md mx-auto">
             A scene plan in four easy steps.
@@ -133,31 +138,31 @@ function Index() {
           {STEPS.map((s) => (
             <div key={s.n} className="feature-card p-6">
               <div className="text-[10px] uppercase tracking-[0.14em] font-bold text-coral mb-2">{s.n}</div>
-              <h3 className="font-display text-2xl text-plum leading-tight mb-2">{s.title}</h3>
-              <p className="text-sm text-foreground/70 leading-snug">{s.body}</p>
+              <h3 className="font-display text-[1.375rem] text-plum leading-tight mb-2">{s.title}</h3>
+              <p className="text-[13px] text-foreground/70 leading-snug">{s.body}</p>
             </div>
           ))}
         </div>
-        <div className="flex justify-center pt-8">
-          <img src={stickerBoundHands} alt="" aria-hidden className="w-28 sm:w-32 rotate-[3deg]" />
+        <div className="flex justify-center pt-8 sm:pt-10">
+          <img src={stickerBoundHands} alt="" aria-hidden className="w-24 sm:w-28 rotate-[3deg]" />
         </div>
       </section>
 
-      {/* 4. Feature cluster */}
-      <section className="px-5 sm:px-10 py-10 sm:py-20 max-w-5xl mx-auto relative">
-        <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-4 top-1/3 w-28 rotate-[-15deg] pointer-events-none" />
-        <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-4 top-1/4 w-28 rotate-[15deg] pointer-events-none" />
+      {/* 4. Feature cluster — staggered collage */}
+      <section className="px-5 sm:px-10 py-10 sm:py-20 max-w-4xl mx-auto relative">
+        <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-16 top-1/3 w-28 rotate-[-15deg] pointer-events-none" />
+        <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-16 top-12 w-32 rotate-[12deg] pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-7 md:gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-0 relative">
           {/* Personal kink menu */}
-          <div className="feature-card p-6 md:p-7 md:mt-0 md:translate-y-2">
+          <div className="feature-card p-6 md:p-7 md:mt-0">
             <div className="flex flex-wrap gap-1.5 mb-5">
               {["Impact", "Bondage", "Sensation", "Power", "Service", "Roleplay", "Edgeplay", "Verbal"].map((c) => (
                 <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-plum font-semibold">{c}</span>
               ))}
             </div>
-            <h3 className="font-display text-2xl sm:text-3xl text-plum leading-tight">Your personal<br />kink menu</h3>
-            <p className="text-sm text-foreground/70 mt-3 leading-snug">
+            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Your personal<br />kink menu</h3>
+            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
               Save your yes / maybe / no list once. Reuse it for every scene, every partner. Add custom kinks any time.
             </p>
             <ul className="mt-4 space-y-1.5 text-sm text-plum">
@@ -169,14 +174,14 @@ function Index() {
           </div>
 
           {/* Two-way consent */}
-          <div className="feature-card p-6 md:p-7 md:mt-12">
-            <div className="flex gap-1.5 mb-5">
+          <div className="feature-card p-6 md:p-7 md:mt-20">
+            <div className="flex flex-wrap gap-1.5 mb-5">
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-yes/30 border border-yes text-plum font-semibold">You: yes</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-maybe/30 border border-maybe text-plum font-semibold">Them: maybe</span>
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-plum font-semibold">Match</span>
             </div>
-            <h3 className="font-display text-2xl sm:text-3xl text-plum leading-tight">Two-way consent,<br />not one-way permission</h3>
-            <p className="text-sm text-foreground/70 mt-3 leading-snug">
+            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Two-way consent,<br />not one-way permission</h3>
+            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
               Both people fill out their side independently. The scene plan is the overlap — what you both actively want.
             </p>
             <div className="mt-4 text-sm">
@@ -191,10 +196,10 @@ function Index() {
           </div>
 
           {/* Scene cards */}
-          <div className="feature-card p-6 md:p-7 md:mt-0">
+          <div className="feature-card p-6 md:p-7 md:-mt-6">
             <div className="text-[10px] uppercase tracking-wider font-bold text-coral mb-2">Scene card · Saturday</div>
-            <h3 className="font-display text-2xl sm:text-3xl text-plum leading-tight">Scene cards for when<br />brains stop working</h3>
-            <p className="text-sm text-foreground/70 mt-3 leading-snug">
+            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
+            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
               The plan you already agreed on, formatted for fast reading. Pull it up mid-scene, no scrolling required.
             </p>
             <ul className="mt-4 space-y-1.5 text-sm text-plum">
@@ -207,10 +212,10 @@ function Index() {
           </div>
 
           {/* Aftercare */}
-          <div className="feature-card p-6 md:p-7 md:mt-12 md:-translate-y-4">
+          <div className="feature-card p-6 md:p-7 md:mt-12">
             <div className="text-[10px] uppercase tracking-wider font-bold text-coral mb-3">Aftercare checklist</div>
-            <h3 className="font-display text-2xl sm:text-3xl text-plum leading-tight">Aftercare doesn't<br />have to be improvised</h3>
-            <p className="text-sm text-foreground/70 mt-3 leading-snug">
+            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Aftercare doesn't<br />have to be improvised</h3>
+            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
               Pick what you need ahead of time. Water. Snacks. Quiet. A specific person. A check-in tomorrow.
             </p>
             <ul className="mt-4 space-y-1.5 text-sm text-plum">
@@ -225,11 +230,11 @@ function Index() {
 
       {/* 5. Built for kinky people */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden bg-plum text-white">
+        <div className="relative rounded-3xl overflow-hidden bg-plum text-white min-h-[280px] sm:min-h-[360px] flex items-center">
           <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/75 to-plum/40" />
+          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/80 to-plum/40" />
           <div className="relative p-8 sm:p-12 lg:p-16 max-w-xl">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-tight">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05]">
               Built for kinky people who take consent seriously.
             </h2>
             <p className="text-sm sm:text-base text-white/85 mt-5 leading-snug max-w-md">
@@ -237,7 +242,7 @@ function Index() {
               and to take care of each other after.
             </p>
             <div className="mt-6 flex items-center gap-3">
-              <img src={flag} alt="Trans pride flag" className="h-5 w-auto" />
+              <img src={flag} alt="Trans pride flag" className="h-5 w-auto rounded-sm" />
               <p className="text-xs sm:text-sm text-white/85">
                 Department of Consent is proudly trans owned and operated.
               </p>
@@ -248,17 +253,17 @@ function Index() {
 
       {/* 6. Mint CTA */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto relative">
-        <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 top-6 w-28 rotate-[-12deg] pointer-events-none" />
-        <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-4 -top-2 w-24 rotate-[18deg] pointer-events-none" />
+        <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-8 top-4 w-32 rotate-[-12deg] pointer-events-none z-10" />
+        <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-6 -bottom-2 w-28 rotate-[18deg] pointer-events-none z-10" />
         <div className="relative rounded-3xl bg-mint text-plum p-10 sm:p-14 text-center overflow-hidden">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl leading-tight max-w-xl mx-auto">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-xl mx-auto">
             Make the scene clear before you start.
           </h2>
           <p className="text-sm sm:text-base text-plum/80 mt-4 max-w-md mx-auto leading-snug">
             Build a shared scene plan in a few minutes. Free to try, no card required.
           </p>
           <div className="flex justify-center pt-6">
-            <CloudButton to={startTo} variant="outline" className="!max-w-[16rem]">Create a scene</CloudButton>
+            <CloudButton to={startTo} variant="outline" className="!max-w-[15rem]">Create a scene</CloudButton>
           </div>
           <p className="text-[10px] text-plum/60 mt-5 max-w-xs mx-auto leading-snug">
             By creating a scene you agree to our Terms of Service and Privacy Policy.
@@ -267,7 +272,7 @@ function Index() {
       </section>
 
       {/* 7. Giant wordmark */}
-      <section className="px-4 sm:px-8 pt-6 pb-10 max-w-7xl mx-auto">
+      <section className="px-4 sm:px-8 pt-8 pb-10 max-w-[920px] mx-auto">
         <img src={footerWordmark} alt="Dept of Consent" className="w-full h-auto block" />
         <div className="text-center text-xs text-muted-foreground pt-6 space-y-2">
           <p>Copyright Department of Consent {new Date().getFullYear()}</p>
