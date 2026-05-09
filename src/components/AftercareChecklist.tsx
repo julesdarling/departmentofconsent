@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { DEFAULT_AFTERCARE_ITEMS } from "@/lib/storage";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+
 import { cn } from "@/lib/utils";
 
 export function AftercareChecklist({
@@ -80,9 +80,13 @@ export function AftercareChecklist({
           }}
           placeholder="Add another aftercare item…"
         />
-        <Button type="button" variant="secondary" onClick={addCustom}>
+        <button
+          type="button"
+          onClick={addCustom}
+          className="rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/80 px-4 py-2 text-sm font-medium shrink-0"
+        >
           Add
-        </Button>
+        </button>
       </div>
     </div>
   );
