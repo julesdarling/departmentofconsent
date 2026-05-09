@@ -346,6 +346,24 @@ function Detail({ title, value }: { title: string; value: string }) {
   );
 }
 
+function formatDateTime(input: string): string {
+  const d = new Date(input);
+  if (isNaN(d.getTime())) return input;
+  const month = d.toLocaleString("en-US", { month: "long" });
+  const day = d.getDate();
+  const suffix = (n: number) => {
+    const v = n % 100;
+    if (v >= 11 && v <= 13) return "th";
+    switch (n % 10) { case 1: return "st"; case 2: return "nd"; case 3: return "rd"; default: return "th"; }
+  };
+  let h = d.getHours();
+  const m = d.getMinutes();
+  const ampm = h >= 12 ? "pm" : "am";
+  h = h % 12 || 12;
+  const mm = m === 0 ? "" : `:${m.toString().padStart(2, "0")}`;
+  return `${month} ${day}${suffix(day)}, ${d.getFullYear()} at ${h}${mm}${ampm}`;
+}
+
 function RateRow({ name, value, onChange }: { name: string; value: Rating | undefined; onChange: (r: Rating) => void }) {
   return (
     <div className="flex items-center justify-between gap-2 py-1.5 border-b border-border/40 last:border-0">
@@ -473,12 +491,13 @@ function SceneDetailsBlock({
           const theirVal = (ownerSide[i.field] as string | undefined)?.trim();
           if (!theirVal) return null;
           const myVal = (mySide[i.field] as string | undefined) ?? "";
+          const display = i.field === "timeOfPlay" ? formatDateTime(theirVal) : theirVal;
           return (
             <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
               <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
                 {i.label}
               </div>
-              <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl px-3 py-1.5 mb-2 font-medium">{theirVal}</div>
+              <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-2xl px-3 py-1.5 mb-2 font-medium">{display}</div>
               <Input
                 value={myVal}
                 onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
