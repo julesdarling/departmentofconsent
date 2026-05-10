@@ -179,25 +179,25 @@ function Index() {
 
 
       {/* 1b. Testimonials */}
-      <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-5xl mx-auto">
-        <h2 className="font-sans font-bold uppercase tracking-wide text-sm sm:text-base text-plum text-center max-w-2xl mx-auto mb-8">
+      <section className="px-5 sm:px-10 py-6 sm:py-10 max-w-4xl mx-auto">
+        <h2 className="font-sans font-bold uppercase tracking-wide text-xs sm:text-sm text-plum text-center max-w-2xl mx-auto mb-6">
           People are tired of guessing about sex and kink.
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[
             { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31", avatar: avatarJ, pos: "center 20%" },
             { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26", avatar: avatarR, pos: "center 22%" },
             { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29", avatar: avatarA, pos: "center 30%" },
           ].map((t) => (
-            <figure key={t.author} className="rounded-xl bg-white p-5 flex flex-col">
-              <blockquote className="font-sans italic text-sm sm:text-base text-plum leading-snug">
+            <figure key={t.author} className="rounded-xl bg-white p-4 flex flex-col">
+              <blockquote className="font-sans italic text-xs sm:text-sm text-plum leading-snug">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="flex items-center gap-2.5 mt-4">
-                <span className="w-10 h-10 rounded-full bg-blush overflow-hidden shrink-0">
+              <figcaption className="flex items-center gap-2 mt-3">
+                <span className="w-8 h-8 rounded-full bg-blush overflow-hidden shrink-0">
                   <img src={t.avatar} alt="" aria-hidden className="w-full h-full object-cover" style={{ objectPosition: t.pos }} />
                 </span>
-                <span className="font-sans text-xs text-muted-foreground">— {t.author}</span>
+                <span className="font-sans text-[11px] text-muted-foreground">— {t.author}</span>
               </figcaption>
             </figure>
           ))}
