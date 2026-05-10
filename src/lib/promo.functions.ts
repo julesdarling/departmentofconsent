@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import { createClient } from "@supabase/supabase-js";
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const VALID_CODES: Record<string, { days: number }> = {
@@ -7,19 +7,31 @@ const VALID_CODES: Record<string, { days: number }> = {
 };
 
 export const redeemPromoCode = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((data: { code: string; environment: "sandbox" | "live" }) => {
-    if (typeof data.code !== "string" || data.code.length > 64) throw new Error("Invalid code");
-    if (data.environment !== "sandbox" && data.environment !== "live") throw new Error("Invalid environment");
-    return data;
-  })
-  .handler(async ({ data, context }) => {
-    const { userId } = context;
+  .inputValidator(
+    (data: { code: string; environment: "sandbox" | "live"; accessToken: string }) => {
+      if (typeof data.code !== "string" || data.code.length > 64) throw new Error("Invalid code");
+      if (data.environment !== "sandbox" && data.environment !== "live") throw new Error("Invalid environment");
+      if (typeof data.accessToken !== "string" || !data.accessToken) throw new Error("Not authenticated");
+      return data;
+    },
+  )
+  .handler(async ({ data }) => {
+    // Verify the access token server-side using the publishable key client.
+    const SUPABASE_URL = process.env.SUPABASE_URL!;
+    const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY!;
+    const verifier = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+    const { data: claims, error: claimsError } = await verifier.auth.getClaims(data.accessToken);
+    if (claimsError || !claims?.claims?.sub) {
+      throw new Error("Not authenticated");
+    }
+    const userId = claims.claims.sub as string;
+
     const code = data.code.trim().toUpperCase();
     const promo = VALID_CODES[code];
     if (!promo) throw new Error("Invalid promo code");
 
-    // Check if user already has an active sub in this environment
     const { data: existing } = await supabaseAdmin
       .from("subscriptions")
       .select("*")
@@ -36,16 +48,11 @@ export const redeemPromoCode = createServerFn({ method: "POST" })
         : now;
     const newEnd = new Date(baseEnd + promo.days * 24 * 60 * 60 * 1000).toISOString();
     const startIso = new Date(now).toISOString();
-    const promoSubId = `promo_${code}_${userId}`;
-
-    // Block re-redeeming the same promo code by the same user
-    if (existing?.stripe_subscription_id === promoSubId) {
-      throw new Error("This promo code was already redeemed");
-    }
+    const promoSubId = `promo_${code}_${userId}_${now}`;
 
     const { error } = await supabaseAdmin.from("subscriptions").insert({
       user_id: userId,
-      stripe_subscription_id: `${promoSubId}_${now}`,
+      stripe_subscription_id: promoSubId,
       stripe_customer_id: `promo_customer_${userId}`,
       product_id: "promo",
       price_id: `promo_${code.toLowerCase()}`,

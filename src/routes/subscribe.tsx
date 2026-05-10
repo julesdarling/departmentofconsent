@@ -15,6 +15,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { redeemPromoCode } from "@/lib/promo.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/subscribe")({
   head: () => ({ meta: [{ title: "Subscribe — Department of Consent" }] }),
@@ -45,8 +46,11 @@ function SubscribePage() {
     }
     setRedeeming(true);
     try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData.session?.access_token;
+      if (!accessToken) throw new Error("Please sign in again");
       const result = await redeemFn({
-        data: { code: promoCode, environment: getStripeEnvironment() },
+        data: { code: promoCode, environment: getStripeEnvironment(), accessToken },
       });
       const days = result?.daysGranted ?? 30;
       toast.success(`Promo code applied — ${days} days unlocked!`);
