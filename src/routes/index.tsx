@@ -303,12 +303,12 @@ function Index() {
               ].map((row, i) => (
                 <div key={row.label} className={i > 0 ? "pt-4 border-t border-plum/10" : ""}>
                   <div className="text-[13px] text-plum mb-2">{row.label}</div>
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[11px]">
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[10px] sm:text-[11px]">
                       {["Yes", "Maybe", "No"].map((opt) => (
                         <span
                           key={opt}
-                          className={`px-3 py-1 ${
+                          className={`px-2 sm:px-3 py-1 ${
                             row.yn === opt ? "bg-yes/30 text-plum font-semibold" : "text-plum/60"
                           }`}
                         >
@@ -316,11 +316,11 @@ function Index() {
                         </span>
                       ))}
                     </div>
-                    <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[11px]">
+                    <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[10px] sm:text-[11px]">
                       {["Give", "Receive", "Both"].map((opt) => (
                         <span
                           key={opt}
-                          className={`px-3 py-1 ${
+                          className={`px-2 sm:px-3 py-1 ${
                             row.gr === opt ? "bg-yes/30 text-plum font-semibold" : "text-plum/60"
                           }`}
                         >
