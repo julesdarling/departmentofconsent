@@ -93,20 +93,20 @@ function Index() {
 
 
       {/* 2. "What are you into?" is not enough */}
-      <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-2xl mx-auto relative">
+      <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-xl mx-auto relative">
         
         <img src={stickerWand} alt="" aria-hidden className="absolute -left-4 sm:-left-8 -bottom-6 sm:-bottom-10 w-20 sm:w-24 rotate-[-18deg] pointer-events-none z-10" />
         <div className="feature-card p-8 sm:p-12">
           <div className="text-center">
-            <h2 className="font-display italic text-3xl sm:text-[2.5rem] text-plum leading-tight">
-              <span>"What are you into?"</span>
+            <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-tight">
+              <span className="italic">"What are you into?"</span>
               <br />is not enough.
             </h2>
             <p className="text-[15px] text-foreground/75 max-w-md mx-auto mt-4 leading-snug">
               Good scenes need more than vibes.<br />They need shared expectations.
             </p>
           </div>
-          <hr className="my-7 border-plum/10" />
+          <hr className="my-7 border-plum/10 -mx-8 sm:-mx-12" />
           <div className="max-w-sm mx-auto">
             <p className="text-[13px] font-bold text-plum mb-4">
               Before play, you need to know:
