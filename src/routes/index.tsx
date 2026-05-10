@@ -516,6 +516,28 @@ function Index() {
         </div>
       </section>
 
+      {/* 5c. Trust / Safety */}
+      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
+        <div className="rounded-xl bg-white p-8 sm:p-12 shadow-sm">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] text-plum text-center max-w-2xl mx-auto">
+            Built for privacy and clarity.
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 mt-10">
+            {[
+              { title: "Private by default", body: "Profiles are only shared intentionally." },
+              { title: "No public kink feed", body: "No follower counts. No performative social layer. No algorithm broadcasting your sexuality." },
+              { title: "Consent is revocable", body: "Anyone can change boundaries or withdraw consent at any time." },
+              { title: "Built to reduce pressure", body: "The goal is communication and compatibility, not convincing people to say yes." },
+            ].map((f) => (
+              <div key={f.title}>
+                <h3 className="font-display text-xl text-plum">{f.title}</h3>
+                <p className="text-sm text-muted-foreground mt-2 leading-snug">{f.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 6. Mint CTA */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto relative">
         <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
