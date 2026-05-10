@@ -322,7 +322,7 @@ function Index() {
                 <p>Just enough structure to make the conversation easier, safer, and less awkward.</p>
               </div>
               <div className="flex items-center gap-3 shrink-0">
-                <img src={flag} alt="Trans pride flag" className="h-5 w-auto rounded-sm" />
+                <img src={flag} alt="Trans pride flag" className="h-5 w-auto" />
                 <p className="text-xs sm:text-sm text-white/90 max-w-[16rem] leading-snug">
                   Department of Consent is proudly<br />trans owned and operated.
                 </p>
