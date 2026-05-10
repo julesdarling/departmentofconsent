@@ -302,7 +302,6 @@
   .feature-card {
     background: #ffffff;
     border-radius: 1.5rem;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 6px 24px -12px rgba(40,10,30,0.12);
   }
 }
 
