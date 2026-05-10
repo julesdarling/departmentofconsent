@@ -49,6 +49,46 @@ const QUESTIONS = [
   "What words, signals, or boundaries stop the scene immediately.",
 ];
 
+const KINK_CHIPS: { label: string; selected?: "give" | "receive" | "both" }[] = [
+  { label: "Hand stuff" },
+  { label: "Kissing" },
+  { label: "Cock sucking" },
+  { label: "Pussy eating", selected: "both" },
+  { label: "Fucking" },
+  { label: "Anal play" },
+  { label: "Toys" },
+  { label: "Sensation" },
+  { label: "Temperature play (ice/wax)" },
+  { label: "Scratching" },
+  { label: "Nails and scratching", selected: "give" },
+  { label: "Biting" },
+  { label: "Tickling" },
+  { label: "Ear licking" },
+  { label: "Electro" },
+  { label: "Impact" },
+  { label: "Spanking (hand)" },
+  { label: "Paddling" },
+  { label: "Flogging" },
+  { label: "Caning" },
+  { label: "Face slapping" },
+  { label: "Whipping" },
+  { label: "Body punching" },
+  { label: "Face punching" },
+  { label: "Rope bondage", selected: "receive" },
+  { label: "Cuffs / restraints" },
+  { label: "Blindfold" },
+  { label: "Grabbing / restraining" },
+  { label: "Hand over mouth" },
+  { label: "Saran Wrap" },
+];
+
+const KNOW_BEFORE = [
+  "Things get weird",
+  "Assumptions get made",
+  "Boundaries get crossed",
+  "Feelings get hurt",
+];
+
 const STEPS = [
   { n: "Step 1", title: "Choose your interests and limits", body: "Mark kinks, activities, roles, intensity, and boundaries as yes, maybe, or no." },
   { n: "Step 2", title: "Share with your play partner", body: "Send a private link or QR code. They fill out their side separately, so nobody has to negotiate under pressure." },
