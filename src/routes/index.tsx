@@ -180,12 +180,12 @@ function Index() {
         <div className="bg-white rounded-xl px-5 sm:px-10 py-10 sm:py-14">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Left card */}
-          <div className="bg-white rounded-xl p-7 sm:p-10">
-            <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-[1.05]">
+          <div className="bg-white rounded-xl p-5 md:p-6 lg:p-10">
+            <h2 className="font-display text-3xl md:text-2xl lg:text-[2.5rem] text-plum leading-[1.05]">
               <span className="italic">"What are you into?"</span>
               <br />is not enough.
             </h2>
-            <p className="text-[15px] text-foreground/75 mt-4 leading-snug">
+            <p className="text-[14px] md:text-[13px] lg:text-[15px] text-foreground/75 mt-4 leading-snug">
               Good sex needs more than vibes.<br />It needs shared expectations.
             </p>
             <hr className="my-7 border-plum/10" />
@@ -194,7 +194,7 @@ function Index() {
             </p>
             <ul className="space-y-3 text-left">
               {QUESTIONS.map((q) => (
-                <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
+                <li key={q} className="flex items-start gap-3 text-[14px] md:text-[13px] lg:text-[15px] text-plum">
                   <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
                   <span>{q}</span>
                 </li>
@@ -203,19 +203,19 @@ function Index() {
           </div>
 
           {/* Right pink box containing the kink menu screenshot */}
-          <div className="relative rounded-xl bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
-            <div className="relative z-0 bg-white rounded-xl p-5 sm:p-6 w-full flex flex-col">
+          <div className="relative rounded-xl bg-blush/70 p-4 md:p-5 lg:p-8 flex items-center overflow-hidden">
+            <div className="relative z-0 bg-white rounded-xl p-4 md:p-4 lg:p-6 w-full flex flex-col">
               <div className="flex flex-wrap gap-1.5">
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
                     return (
-                      <span key={c.label} className="text-[10px] sm:text-[12px] px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-plum/15 text-plum/80 bg-white whitespace-nowrap">
+                      <span key={c.label} className="text-[10px] md:text-[10px] lg:text-[12px] px-2 md:px-2 lg:px-2.5 py-0.5 sm:py-1 rounded-full border border-plum/15 text-plum/80 bg-white whitespace-nowrap">
                         + {c.label}
                       </span>
                     );
                   }
                   return (
-                    <span key={c.label} className="inline-flex items-center gap-1 text-[10px] sm:text-[12px] pl-2 sm:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum whitespace-nowrap">
+                    <span key={c.label} className="inline-flex items-center gap-1 text-[10px] md:text-[10px] lg:text-[12px] pl-2 md:pl-2 lg:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum">
                       <span className="flex items-center gap-1 whitespace-nowrap">
                         <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" strokeWidth={3} />
                         {c.label}
