@@ -390,21 +390,25 @@ function Index() {
           <div className="feature-card p-6 md:p-7 order-2 md:order-none">
             <div className="space-y-3 mb-2">
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-yes mb-1">BOTH WANT TO PLAY</div>
-                <p className="text-[12px] text-foreground/70 mb-1.5">Cravings you both picked for this scene.</p>
+                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">LAST STD TEST DATE</div>
                 <div className="flex flex-wrap gap-1.5">
-                  {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
-                    <span key={c} className="text-[11px] px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
-                  ))}
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> 2026-05-01</span>
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> 2026-04-29</span>
                 </div>
               </div>
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-maybe mb-1">DISCUSS</div>
-                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
+                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">STD TEST RESULTS</div>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> All Clear</span>
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> Clean</span>
+                </div>
               </div>
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-no mb-1">HARD LIMIT FROM ONE SIDE</div>
-                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum/60 inline-block">Tickling</span>
+                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">ON PREP / DOXYPEP</div>
+                <div className="flex flex-wrap gap-1.5">
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Creator:</span> Yes</span>
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Play partner 1:</span> No</span>
+                </div>
               </div>
             </div>
             <div className="text-center mt-5">
