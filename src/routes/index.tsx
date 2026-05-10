@@ -61,7 +61,7 @@ function Index() {
           to={user ? "/sessions" : "/auth"}
           className="text-sm font-semibold text-plum/70 hover:text-plum bg-blush hover:bg-blush/80 transition px-5 py-2.5 rounded-full"
         >
-          {user ? "My scenes" : "Sign in"}
+          {user ? "My scenes" : "Get started"}
         </Link>
       </header>
 
@@ -73,14 +73,13 @@ function Index() {
               A better way to talk about limits, kinks, and aftercare.
             </h1>
             <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
-              What words, signals, or boundaries stop the scene immediately?
+              Build a clear, cute, shareable scene agreement before you play.
             </p>
             <div className="pt-1">
               <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
             </div>
             <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-1">
-              Department of Consent is a tool for negotiating consent, not a substitute for it.
-              Your scene, your responsibility — please play safely with people you trust.
+              Choose your yes / maybe / no list, compare limits with a partner, plan the scene, and keep safewords, boundaries, and aftercare visible when they actually matter.
             </p>
           </div>
 
