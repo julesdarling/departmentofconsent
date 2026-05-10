@@ -110,6 +110,10 @@ function SideRecap({
       <Detail title="Intentions" value={side.intentions} />
       <Detail title="Privacy" value={side.privacy} />
       <Detail title="Penetrative sex" value={side.penetrativeSex} />
+      <Detail title="Last STD test date" value={side.stdTestDate || ""} />
+      <Detail title="STD test results" value={side.stdTestResults || ""} />
+      <Detail title="On PrEP / DoxyPEP" value={side.prepDoxypep || ""} />
+      <Detail title="On birth control" value={side.birthControl || ""} />
       <Detail title="Hard limits" value={side.hardLimits} />
       <Detail title="Soft limits" value={side.softLimits} />
       <Detail title="Enthusiastic Yes" value={side.yesList} />
