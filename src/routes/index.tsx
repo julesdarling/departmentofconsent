@@ -177,10 +177,10 @@ function Index() {
 
       {/* 2. "What are you into?" is not enough */}
       <section className="px-4 sm:px-8 py-10 sm:py-14 max-w-7xl mx-auto">
-        <div className="bg-white rounded-[28px] px-5 sm:px-10 py-10 sm:py-14">
+        <div className="bg-white rounded-xl px-5 sm:px-10 py-10 sm:py-14">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Left card */}
-          <div className="bg-white rounded-2xl p-7 sm:p-10">
+          <div className="bg-white rounded-xl p-7 sm:p-10">
             <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-[1.05]">
               <span className="italic">"What are you into?"</span>
               <br />is not enough.
@@ -203,8 +203,8 @@ function Index() {
           </div>
 
           {/* Right pink box containing the kink menu screenshot */}
-          <div className="relative rounded-[28px] bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
-            <div className="relative z-0 bg-white rounded-[20px] p-5 sm:p-6 w-full flex flex-col">
+          <div className="relative rounded-xl bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
+            <div className="relative z-0 bg-white rounded-xl p-5 sm:p-6 w-full flex flex-col">
               <div className="flex flex-wrap gap-1.5">
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
