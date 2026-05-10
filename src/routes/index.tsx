@@ -37,10 +37,10 @@ const QUESTIONS = [
 ];
 
 const STEPS = [
-  { n: "Step 1", title: "Choose your interests and limits", body: "No more guessing. No more vague “I’m into anything.” No more finding out a limit after it has already been crossed." },
-  { n: "Step 2", title: "Share with your play partner", body: "Send a link or QR. They fill out their side privately, on their own time." },
-  { n: "Step 3", title: "Compare and plan the scene", body: "See where you overlap. Talk through the details. Agree on what the scene is." },
-  { n: "Step 4", title: "Keep the scene card handy", body: "Big-type safewords, limits, and aftercare in your pocket when you need them." },
+  { n: "Step 1", title: "Choose your interests and limits", body: "Mark kinks, activities, roles, intensity, and boundaries as yes, maybe, or no." },
+  { n: "Step 2", title: "Share with your play partner", body: "Send a private link or QR code. They fill out their side separately, so nobody has to negotiate under pressure." },
+  { n: "Step 3", title: "Compare and plan the scene", body: "See where you match, where you need to talk, and what should stay off the table." },
+  { n: "Step 4", title: "Keep the scene card nearby", body: "Safewords, hard limits, soft limits, medical notes, aftercare needs, and scene agreements stay easy to check." },
 ];
 
 function Index() {
@@ -132,17 +132,19 @@ function Index() {
         <div className="text-center space-y-2 mb-8 sm:mb-10">
           <h2 className="font-display text-4xl sm:text-5xl text-plum">How it works</h2>
           <p className="text-sm text-foreground/70 max-w-md mx-auto">
-            A scene plan in four easy steps.
+            A consent flow you can actually use.
           </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {STEPS.map((s) => (
-            <div key={s.n} className="feature-card p-6">
-              <div className="text-[10px] uppercase tracking-[0.14em] font-bold text-coral mb-2">{s.n}</div>
-              <h3 className="font-display text-[1.375rem] text-plum leading-tight mb-2">{s.title}</h3>
-              <p className="text-[13px] text-foreground/70 leading-snug">{s.body}</p>
-            </div>
-          ))}
+        <div className="feature-card p-6 sm:p-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+            {STEPS.map((s) => (
+              <div key={s.n}>
+                <div className="text-[13px] font-bold text-plum mb-2">{s.n}</div>
+                <h3 className="font-display text-[1.5rem] text-plum leading-tight mb-3">{s.title}</h3>
+                <p className="text-[14px] text-foreground/70 leading-snug">{s.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex justify-center pt-8 sm:pt-10">
           <img src={stickerBoundHands} alt="" aria-hidden className="w-24 sm:w-28 rotate-[3deg]" />
