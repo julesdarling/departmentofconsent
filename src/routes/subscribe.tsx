@@ -15,6 +15,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { redeemPromoCode } from "@/lib/promo.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/subscribe")({
   head: () => ({ meta: [{ title: "Subscribe — Department of Consent" }] }),
