@@ -423,36 +423,36 @@ function Index() {
           <div className="feature-card p-6 md:p-7 order-2 md:order-none">
             <div className="space-y-3 mb-2">
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">LAST STD TEST DATE</div>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">Last STD test date</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> 2026-05-01</span>
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> 2026-04-29</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> 2026-05-01</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> 2026-04-29</span>
                 </div>
               </div>
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">STD TEST RESULTS</div>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">STD test results</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> All Clear</span>
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> Clean</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> All Clear</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> Clean</span>
                 </div>
               </div>
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">ON PREP / DOXYPEP</div>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">On PrEP / DoxyPEP</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Creator:</span> Yes</span>
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Play partner 1:</span> No</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Creator:</span> Yes</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Play partner 1:</span> No</span>
                 </div>
               </div>
             </div>
             <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Two-way consent, not<br />one-way permission</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Two-way consent, not<br />one-way permission</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Both people fill out their own side. The goal is not to pressure someone into agreement. The goal is to make overlap obvious and mismatches impossible to ignore.
               </p>
             </div>
             <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Use it to clarify:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+            <p className="text-sm font-bold text-plum mb-2">Use it to clarify:</p>
+            <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>Yes / maybe / no</li>
               <li>Hard limits</li>
               <li>Soft limits</li>
