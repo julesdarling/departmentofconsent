@@ -257,6 +257,7 @@ function Index() {
             <span key={k} className="text-plum/80">{k}</span>
           ))}
         </div>
+        </div>
       </section>
 
       {/* 3. How it works */}
