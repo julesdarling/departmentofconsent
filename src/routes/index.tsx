@@ -33,7 +33,6 @@ const QUESTIONS = [
   "What is a maybe.",
   "What is completely off limits.",
   "What needs discussion or aftercare.",
-  "What is enthusiastically on the table?",
   "What words, signals, or boundaries stop the scene immediately.",
 ];
 
@@ -120,9 +119,7 @@ function Index() {
             <ul className="space-y-3 text-left">
               {QUESTIONS.map((q) => (
                 <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
-                  <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full border-2 border-coral text-coral">
-                    <HelpCircle className="w-3.5 h-3.5" strokeWidth={2.5} />
-                  </span>
+                  <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
                   <span>{q}</span>
                 </li>
               ))}
