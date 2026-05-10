@@ -466,24 +466,6 @@ function Index() {
         </div>
       </section>
 
-      {/* 4b. Testimonials */}
-      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          {[
-            { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31" },
-            { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26" },
-            { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29" },
-          ].map((t) => (
-            <figure key={t.author} className="rounded-xl bg-white p-6 sm:p-8 flex flex-col">
-              <blockquote className="font-display italic text-xl sm:text-2xl text-plum leading-snug">
-                “{t.quote}”
-              </blockquote>
-              <figcaption className="text-sm text-muted-foreground mt-4">— {t.author}</figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
       {/* 5. Built for kinky people */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
         <div className="relative rounded-xl overflow-hidden bg-plum text-white min-h-[420px] sm:min-h-[520px] flex flex-col">
