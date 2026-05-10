@@ -152,9 +152,11 @@ function Index() {
         <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-16 top-1/3 w-28 rotate-[-15deg] pointer-events-none" />
         <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-16 top-12 w-32 rotate-[12deg] pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-x-10 md:gap-y-0 relative items-start">
+        <div className="flex flex-col gap-16 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-0 md:items-start relative">
+          {/* Left column */}
+          <div className="contents md:flex md:flex-col md:gap-16">
           {/* Personal kink menu */}
-          <div className="feature-card p-6 md:p-7 md:mt-0">
+          <div className="feature-card p-6 md:p-7 order-1 md:order-none">
             <div className="relative h-44 overflow-hidden mb-2">
               <div className="flex flex-wrap gap-1.5 justify-center">
                 {[
@@ -188,8 +190,47 @@ function Index() {
             </ul>
           </div>
 
+          {/* Scene cards */}
+          <div className="feature-card p-6 md:p-7 order-3 md:order-none">
+            <div className="font-mono text-[11px] leading-relaxed text-plum mb-2">
+              <div className="text-no font-bold tracking-wide mb-2">SAFEWORDS</div>
+              <div>Verbal:</div>
+              <div>Red — stop the scene, something is wrong and we can't continue.</div>
+              <div>Yellow — check in.</div>
+              <div>Green — good, keep going.</div>
+              <div>Mercy — no more on the same spot.</div>
+              <div className="h-3" />
+              <div>Non-verbal:</div>
+              <div>Thumb up — keep going.</div>
+              <div>Enthusiastic thumb up — more more more please.</div>
+              <div className="text-plum/40">Thumb side — right here is good, no more no less.</div>
+              <div className="text-plum/40">Thumb down, double tap — check in please.</div>
+            </div>
+            <div className="text-center mt-5">
+              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
+              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+                During play, details can get blurry. The scene card keeps the important stuff readable.
+              </p>
+            </div>
+            <hr className="my-5 border-plum/10" />
+            <p className="text-[13px] font-bold text-plum mb-2">Include:</p>
+            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+              <li>Safewords</li>
+              <li>Nonverbal signals</li>
+              <li>Hard limits</li>
+              <li>Intensity notes</li>
+              <li>Health or accessibility notes</li>
+              <li>Aftercare requests</li>
+              <li>Anything that must not be forgotten</li>
+            </ul>
+          </div>
+          </div>
+          {/* end left column */}
+
+          {/* Right column */}
+          <div className="contents md:flex md:flex-col md:gap-16 md:mt-20">
           {/* Two-way consent */}
-          <div className="feature-card p-6 md:p-7 md:mt-20">
+          <div className="feature-card p-6 md:p-7 order-2 md:order-none">
             <div className="space-y-3 mb-2">
               <div>
                 <div className="text-[11px] font-bold tracking-wide text-yes mb-1">BOTH WANT TO PLAY</div>
@@ -229,43 +270,8 @@ function Index() {
             </ul>
           </div>
 
-          {/* Scene cards */}
-          <div className="feature-card p-6 md:p-7 md:mt-8">
-            <div className="font-mono text-[11px] leading-relaxed text-plum mb-2">
-              <div className="text-no font-bold tracking-wide mb-2">SAFEWORDS</div>
-              <div>Verbal:</div>
-              <div>Red — stop the scene, something is wrong and we can't continue.</div>
-              <div>Yellow — check in.</div>
-              <div>Green — good, keep going.</div>
-              <div>Mercy — no more on the same spot.</div>
-              <div className="h-3" />
-              <div>Non-verbal:</div>
-              <div>Thumb up — keep going.</div>
-              <div>Enthusiastic thumb up — more more more please.</div>
-              <div className="text-plum/40">Thumb side — right here is good, no more no less.</div>
-              <div className="text-plum/40">Thumb down, double tap — check in please.</div>
-            </div>
-            <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
-                During play, details can get blurry. The scene card keeps the important stuff readable.
-              </p>
-            </div>
-            <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Include:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
-              <li>Safewords</li>
-              <li>Nonverbal signals</li>
-              <li>Hard limits</li>
-              <li>Intensity notes</li>
-              <li>Health or accessibility notes</li>
-              <li>Aftercare requests</li>
-              <li>Anything that must not be forgotten</li>
-            </ul>
-          </div>
-
           {/* Aftercare */}
-          <div className="feature-card p-6 md:p-7 md:mt-12">
+          <div className="feature-card p-6 md:p-7 order-4 md:order-none">
             <div className="mb-2">
               <div className="font-display text-[15px] text-plum mb-3">Your aftercare list</div>
               <ul className="space-y-2 text-[14px]">
@@ -299,6 +305,8 @@ function Index() {
               </p>
             </div>
           </div>
+          </div>
+          {/* end right column */}
         </div>
       </section>
 
