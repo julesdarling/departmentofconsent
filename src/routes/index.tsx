@@ -232,23 +232,30 @@ function Index() {
       </section>
 
       {/* 5. Built for kinky people */}
-      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden bg-plum text-white min-h-[280px] sm:min-h-[360px] flex items-center">
+      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
+        <div className="relative rounded-3xl overflow-hidden bg-plum text-white min-h-[420px] sm:min-h-[520px] flex flex-col">
           <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-plum/95 via-plum/80 to-plum/40" />
-          <div className="relative p-8 sm:p-12 lg:p-16 max-w-xl">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05]">
+          <div className="absolute inset-0 bg-plum/55" />
+          <div className="relative flex flex-col justify-between flex-1 p-8 sm:p-12 lg:p-14">
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-md">
               Built for kinky people who take consent seriously.
             </h2>
-            <p className="text-sm sm:text-base text-white/85 mt-5 leading-snug max-w-md">
-              Not a checklist. Not a contract. A shared place to get clear before the scene starts —
-              and to take care of each other after.
-            </p>
-            <div className="mt-6 flex items-center gap-3">
-              <img src={flag} alt="Trans pride flag" className="h-5 w-auto rounded-sm" />
-              <p className="text-xs sm:text-sm text-white/85">
-                Department of Consent is proudly trans owned and operated.
-              </p>
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mt-10">
+              <div className="text-[13px] sm:text-sm text-white/90 leading-snug max-w-sm space-y-4">
+                <p>Department of Consent is for adults who want play to feel hotter because it is clearer.</p>
+                <p>
+                  Not colder.<br />
+                  Not clinical.<br />
+                  Not overcomplicated.
+                </p>
+                <p>Just enough structure to make the conversation easier, safer, and less awkward.</p>
+              </div>
+              <div className="flex items-center gap-3 shrink-0">
+                <img src={flag} alt="Trans pride flag" className="h-5 w-auto rounded-sm" />
+                <p className="text-xs sm:text-sm text-white/90 max-w-[16rem] leading-snug">
+                  Department of Consent is proudly<br />trans owned and operated.
+                </p>
+              </div>
             </div>
           </div>
         </div>
