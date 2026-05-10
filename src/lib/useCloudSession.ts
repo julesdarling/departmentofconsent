@@ -22,6 +22,19 @@ export function useCloudSession(token: string | undefined) {
     refresh();
   }, [refresh]);
 
+  useEffect(() => {
+    if (!token) return;
+    const channel = supabase
+      .channel(`play_session:${token}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "play_sessions", filter: `share_token=eq.${token}` },
+        () => { refresh(); }
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [token, refresh]);
+
   const update = useCallback(
     async (
       patch: Partial<{
