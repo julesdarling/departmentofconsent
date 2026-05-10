@@ -4,6 +4,7 @@ import { supabaseAdmin } from "@/integrations/supabase/client.server";
 
 const VALID_CODES: Record<string, { days: number }> = {
   PLSDADDY: { days: 30 },
+  YESDADDY: { days: 30 },
 };
 
 export const redeemPromoCode = createServerFn({ method: "POST" })
