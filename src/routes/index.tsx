@@ -122,13 +122,13 @@ function Index() {
       <section className="px-5 sm:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-10 items-center">
           <div className="order-2 md:order-1 text-left">
-            <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum uppercase">
+            <p className="text-xs font-bold uppercase tracking-wide text-plum">
               Most people find out they're incompatible too late.
             </p>
-            <h1 className="font-display text-plum leading-[1.02] text-[1.875rem] sm:text-4xl lg:text-[2.75rem] tracking-tight font-normal mt-3">
+            <h1 className="font-display text-4xl sm:text-5xl text-plum leading-[1.05] mt-3">
               Don't discover hard limits <em className="italic">halfway</em> through a hookup.
             </h1>
-            <p className="text-foreground/80 max-w-md text-[15px] sm:text-base leading-snug mt-4">
+            <p className="text-base text-foreground/75 leading-snug mt-4 max-w-md">
               Compare boundaries, kinks, condom expectations, attachment styles, and dealbreakers before things get awkward, intense, or unsafe.
             </p>
             <div className="mt-5">
@@ -136,14 +136,14 @@ function Index() {
             </div>
 
             <div className="mt-7">
-              <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum mb-3">
+              <p className="text-xs font-bold uppercase tracking-wide text-plum mb-3">
                 Trusted by communities worldwide
               </p>
               <ul className="grid grid-cols-5 gap-3 max-w-md">
                 {COMMUNITIES.map((c) => (
                   <li key={c.label} className="flex flex-col items-center text-center gap-1.5">
                     <img src={c.icon} alt="" aria-hidden className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
-                    <span className="text-[10px] sm:text-[11px] text-plum/80 leading-tight whitespace-pre-line">{c.label}</span>
+                    <span className="text-xs text-muted-foreground leading-tight whitespace-pre-line">{c.label}</span>
                   </li>
                 ))}
               </ul>
