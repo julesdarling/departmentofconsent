@@ -45,8 +45,11 @@ function SubscribePage() {
     }
     setRedeeming(true);
     try {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const accessToken = sessionData.session?.access_token;
+      if (!accessToken) throw new Error("Please sign in again");
       const result = await redeemFn({
-        data: { code: promoCode, environment: getStripeEnvironment() },
+        data: { code: promoCode, environment: getStripeEnvironment(), accessToken },
       });
       const days = result?.daysGranted ?? 30;
       toast.success(`Promo code applied — ${days} days unlocked!`);
