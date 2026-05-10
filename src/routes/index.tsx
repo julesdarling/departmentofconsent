@@ -344,7 +344,7 @@ function Index() {
             Create a shareable consent card in a few minutes.
           </p>
           <div className="flex justify-center pt-6">
-            <CloudButton to={startTo} variant="outline" className="!max-w-[15rem]">Create a scene</CloudButton>
+            <CloudButton to={startTo} className="cloud-btn-white !max-w-[15rem]">Create a scene</CloudButton>
           </div>
           <p className="text-[11px] text-white/80 mt-6 max-w-sm mx-auto leading-snug">
             No more guessing. No more vague "I'm into anything." No more finding out a limit after it has already been crossed.
