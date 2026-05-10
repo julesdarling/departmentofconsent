@@ -230,7 +230,7 @@ function Index() {
           </div>
 
           {/* Scene cards */}
-          <div className="feature-card p-6 md:p-7 md:-mt-6">
+          <div className="feature-card p-6 md:p-7 md:mt-8">
             <div className="font-mono text-[11px] leading-relaxed text-plum mb-2">
               <div className="text-no font-bold tracking-wide mb-2">SAFEWORDS</div>
               <div>Verbal:</div>
