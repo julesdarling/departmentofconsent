@@ -17,6 +17,7 @@ import stickerCollar from "@/assets/sticker-collar.png";
 import stickerBoundHands from "@/assets/sticker-bound-hands.png";
 import stickerRope from "@/assets/sticker-rope.png";
 import stickerFeather from "@/assets/sticker-feather.png";
+import stickerWandPink from "@/assets/sticker-wand-pink.png";
 import iconFlogger from "@/assets/icon-flogger.png";
 import iconBunnies from "@/assets/icon-bunnies.png";
 import iconPup from "@/assets/icon-pup.png";
