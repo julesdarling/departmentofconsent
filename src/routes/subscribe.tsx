@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
+import { CloudButton } from "@/components/CloudButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
@@ -79,9 +80,11 @@ function SubscribePage() {
         </div>
 
         {!checkoutOpen ? (
-          <Button size="lg" className="w-full" onClick={() => setCheckoutOpen(true)}>
-            Subscribe — $9/mo
-          </Button>
+          <div className="flex justify-center">
+            <CloudButton onClick={() => setCheckoutOpen(true)}>
+              Subscribe — $9/mo
+            </CloudButton>
+          </div>
         ) : (
           <Sticker className="p-2">
             <StripeEmbeddedCheckout
