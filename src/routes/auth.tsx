@@ -22,11 +22,22 @@ const schema = z.object({
   password: z.string().min(8, "At least 8 characters").max(72),
 });
 
+function calculateAge(dobIso: string): number {
+  const dob = new Date(dobIso);
+  if (Number.isNaN(dob.getTime())) return -1;
+  const now = new Date();
+  let age = now.getFullYear() - dob.getFullYear();
+  const m = now.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age--;
+  return age;
+}
+
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [dob, setDob] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
