@@ -382,8 +382,8 @@ function Index() {
 
           {/* Scene cards */}
           <div className="feature-card p-6 md:p-7 order-3 md:order-none">
-            <div className="font-mono text-[11px] leading-relaxed text-plum mb-2">
-              <div className="text-no font-bold tracking-wide mb-2">SAFEWORDS</div>
+            <div className="font-mono text-xs leading-relaxed text-plum mb-2">
+              <div className="text-no font-bold uppercase tracking-wide mb-2">Safewords</div>
               <div>Verbal:</div>
               <div>Red — stop the scene, something is wrong and we can't continue.</div>
               <div>Yellow — check in.</div>
@@ -397,14 +397,14 @@ function Index() {
               <div className="text-plum/40">Thumb down, double tap — check in please.</div>
             </div>
             <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Scene cards for when<br />brains stop working</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 During play, details can get blurry. The scene card keeps the important stuff readable.
               </p>
             </div>
             <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Include:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+            <p className="text-sm font-bold text-plum mb-2">Include:</p>
+            <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>Safewords</li>
               <li>Nonverbal signals</li>
               <li>Hard limits</li>
