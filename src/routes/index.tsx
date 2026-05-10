@@ -91,10 +91,6 @@ function Index() {
         </div>
       </section>
 
-      {/* Bridge sticker */}
-      <div className="flex justify-center mt-8 mb-2 sm:mt-10 sm:mb-4">
-        <img src={stickerGag} alt="" aria-hidden className="w-16 sm:w-20 rotate-[10deg] pointer-events-none" />
-      </div>
 
       {/* 2. "What are you into?" is not enough */}
       <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-2xl mx-auto relative">
