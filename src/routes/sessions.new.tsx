@@ -275,6 +275,36 @@ function NewSession() {
               value={side.penetrativeSex}
               onChange={(v) => update("penetrativeSex", v)}
             />
+            {side.penetrativeSex === "yes" && (
+              <div className="space-y-4 pl-3 border-l-2 border-yes/40">
+                <Field label="When were you last tested for STDs?">
+                  <Input
+                    type="date"
+                    value={side.stdTestDate || ""}
+                    onChange={(e) => update("stdTestDate", e.target.value)}
+                    max={new Date().toISOString().slice(0, 10)}
+                  />
+                </Field>
+                <Field label="What were the results of your STD test?">
+                  <Textarea
+                    value={side.stdTestResults || ""}
+                    onChange={(e) => update("stdTestResults", e.target.value)}
+                    rows={2}
+                    placeholder="e.g. all negative on 4-panel"
+                  />
+                </Field>
+                <YesNoSelect
+                  label="Are you on PrEP / DoxyPEP?"
+                  value={side.prepDoxypep || ""}
+                  onChange={(v) => update("prepDoxypep", v)}
+                />
+                <YesNoSelect
+                  label="Are you on birth control?"
+                  value={side.birthControl || ""}
+                  onChange={(v) => update("birthControl", v)}
+                />
+              </div>
+            )}
           </Sticker>
         )}
 
