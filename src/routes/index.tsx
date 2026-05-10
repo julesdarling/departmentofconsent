@@ -215,7 +215,7 @@ function Index() {
                     );
                   }
                   return (
-                    <span key={c.label} className="inline-flex items-center gap-1 text-[10px] md:text-[10px] lg:text-[12px] pl-2 md:pl-2 lg:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum">
+                    <span key={c.label} className="inline-flex flex-wrap items-center gap-1 max-w-full text-[10px] md:text-[10px] lg:text-[12px] pl-2 md:pl-2 lg:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum">
                       <span className="flex items-center gap-1 whitespace-nowrap">
                         <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" strokeWidth={3} />
                         {c.label}
