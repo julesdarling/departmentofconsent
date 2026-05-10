@@ -175,32 +175,87 @@ function Index() {
 
 
       {/* 2. "What are you into?" is not enough */}
-      <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-xl mx-auto relative">
-        
-        <img src={stickerWand} alt="" aria-hidden className="absolute -left-4 sm:-left-8 -bottom-6 sm:-bottom-10 w-20 sm:w-24 rotate-[-18deg] pointer-events-none z-10" />
-        <div className="feature-card p-8 sm:p-12">
-          <div className="text-center">
-            <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-tight">
-              <span className="italic">"What are you into?"</span>
-              <br />is not enough.
-            </h2>
-            <p className="text-[15px] text-foreground/75 max-w-md mx-auto mt-4 leading-snug">
-              Good scenes need more than vibes.<br />They need shared expectations.
-            </p>
+      <section className="px-4 sm:px-8 py-10 sm:py-14 max-w-7xl mx-auto">
+        <div className="relative rounded-[28px] bg-blush/70 px-5 sm:px-10 py-10 sm:py-14 overflow-hidden">
+          <img src={stickerWand} alt="" aria-hidden className="absolute right-4 sm:right-10 bottom-16 sm:bottom-20 w-24 sm:w-36 rotate-[8deg] pointer-events-none z-10" />
+
+          <div className="grid md:grid-cols-2 gap-5 md:gap-8 items-stretch">
+            {/* Left card */}
+            <div className="bg-white rounded-2xl p-7 sm:p-10">
+              <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-[1.05]">
+                <span className="italic">"What are you into?"</span>
+                <br />is not enough.
+              </h2>
+              <p className="text-[15px] text-foreground/75 mt-4 leading-snug">
+                Good sex needs more than vibes.<br />It needs shared expectations.
+              </p>
+              <hr className="my-7 border-plum/10" />
+              <p className="text-[13px] font-bold text-plum mb-4">
+                Before play, you need to know:
+              </p>
+              <ul className="space-y-3 text-left">
+                {QUESTIONS.map((q) => (
+                  <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
+                    <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
+                    <span>{q}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Right card — kink menu */}
+            <div className="bg-white rounded-2xl p-5 sm:p-7 flex flex-col">
+              <div className="flex flex-wrap gap-1.5">
+                {KINK_CHIPS.map((c) => {
+                  if (!c.selected) {
+                    return (
+                      <span key={c.label} className="text-[12px] px-2.5 py-1 rounded-full border border-plum/15 text-plum/80 bg-white">
+                        + {c.label}
+                      </span>
+                    );
+                  }
+                  return (
+                    <span key={c.label} className="inline-flex items-center gap-1 text-[12px] pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum">
+                      <span className="flex items-center gap-1">
+                        <Check className="w-3 h-3" strokeWidth={3} />
+                        {c.label}
+                      </span>
+                      <span className="flex items-center gap-0.5 ml-1">
+                        {(["give", "receive", "both"] as const).map((opt) => (
+                          <span
+                            key={opt}
+                            className={`text-[10px] px-1.5 py-0.5 rounded-full capitalize ${
+                              c.selected === opt ? "bg-yes/60 text-plum font-semibold" : "text-plum/60"
+                            }`}
+                          >
+                            {opt}
+                          </span>
+                        ))}
+                      </span>
+                    </span>
+                  );
+                })}
+              </div>
+              <div className="mt-auto pt-6 flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Add your own kink..."
+                  readOnly
+                  className="flex-1 text-[13px] px-3 py-2 rounded-full border border-plum/15 bg-white text-plum/60 placeholder:text-plum/40 focus:outline-none"
+                />
+                <button type="button" disabled className="text-[13px] px-5 py-2 rounded-full bg-yes/40 text-plum/70 font-semibold">
+                  Add
+                </button>
+              </div>
+            </div>
           </div>
-          <hr className="my-7 border-plum/10 -mx-8 sm:-mx-12" />
-          <div className="max-w-sm mx-auto">
-            <p className="text-[13px] font-bold text-plum mb-4">
-              Before play, you need to know:
-            </p>
-            <ul className="space-y-3 text-left">
-              {QUESTIONS.map((q) => (
-                <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
-                  <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
-                  <span>{q}</span>
-                </li>
-              ))}
-            </ul>
+
+          {/* Know before row */}
+          <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-plum">
+            <span className="font-bold">Know before:</span>
+            {KNOW_BEFORE.map((k) => (
+              <span key={k} className="text-plum/80">{k}</span>
+            ))}
           </div>
         </div>
       </section>
