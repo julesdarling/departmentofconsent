@@ -434,7 +434,6 @@ function Index() {
           {/* Aftercare */}
           <div className="feature-card p-6 md:p-7 order-4 md:order-none">
             <div className="mb-2">
-              <div className="font-display text-[15px] text-plum mb-3">Your aftercare list</div>
               <ul className="space-y-2 text-[14px]">
                 <li className="flex items-center gap-2.5">
                   <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-no text-white shrink-0">
@@ -442,16 +441,10 @@ function Index() {
                   </span>
                   <span className="text-plum/60 line-through">Water and electrolytes</span>
                 </li>
-                {["Cuddling", "Debrief scene", "Thorns and roses?"].map((item) => (
+                {["Cuddling", "Debrief scene", "Thorns and roses?", "Make a check-in plan", "Monitor for drop and do self care"].map((item) => (
                   <li key={item} className="flex items-center gap-2.5">
                     <span className="inline-block w-4 h-4 rounded-full border-2 border-no shrink-0" />
                     <span className="text-plum">{item}</span>
-                  </li>
-                ))}
-                {["Make a check-in plan", "Monitor for drop and do self care"].map((item) => (
-                  <li key={item} className="flex items-center gap-2.5">
-                    <span className="inline-block w-4 h-4 rounded-full border-2 border-plum/20 shrink-0" />
-                    <span className="text-plum/40">{item}</span>
                   </li>
                 ))}
               </ul>
