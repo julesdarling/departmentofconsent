@@ -229,7 +229,7 @@ function JoinPage() {
             value={side.penetrativeSex}
             onChange={(v) => updateField("penetrativeSex", v)}
           />
-          {side.penetrativeSex === "yes" && (
+          {(side.penetrativeSex === "yes" || side.penetrativeSex === "maybe") && (
             <div className="space-y-4 pl-3 border-l-2 border-yes/40">
               <Field label="When were you last tested for STDs?">
                 <Input
