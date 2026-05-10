@@ -189,9 +189,12 @@ function Index() {
               <li>People who freeze when asked, "So what are you into?"</li>
             </ul>
           </div>
+          {/* end left column */}
 
+          {/* Right column */}
+          <div className="contents md:flex md:flex-col md:gap-16 md:mt-20">
           {/* Two-way consent */}
-          <div className="feature-card p-6 md:p-7 md:mt-20">
+          <div className="feature-card p-6 md:p-7 order-2 md:order-none">
             <div className="space-y-3 mb-2">
               <div>
                 <div className="text-[11px] font-bold tracking-wide text-yes mb-1">BOTH WANT TO PLAY</div>
