@@ -56,12 +56,9 @@ function Index() {
         <Link to="/" aria-label="Dept of Consent — Home" className="block">
           <img src={wordmark} alt="Dept of Consent" className="h-7 sm:h-8 w-auto" />
         </Link>
-        <Link
-          to={user ? "/sessions" : "/auth"}
-          className="text-sm font-semibold text-plum/70 hover:text-plum bg-blush hover:bg-blush/80 transition px-5 py-2.5 rounded-full"
-        >
+        <CloudButton to={user ? "/sessions" : "/auth"} variant="outline" className="cloud-btn-sm">
           {user ? "My scenes" : "Get started"}
-        </Link>
+        </CloudButton>
       </header>
 
       {/* 1. Hero */}
