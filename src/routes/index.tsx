@@ -75,30 +75,30 @@ function Index() {
       </header>
 
       {/* 1. Hero */}
-      <section className="px-5 sm:px-10 pt-4 sm:pt-10 pb-6 sm:pb-12 max-w-6xl mx-auto">
+      <section className="px-5 sm:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-10 items-center">
           <div className="order-2 md:order-1 text-left">
             <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum uppercase">
               Most people find out they're incompatible too late.
             </p>
-            <h1 className="font-display text-plum leading-[1.02] text-[2.25rem] sm:text-5xl lg:text-[3.5rem] tracking-tight font-normal mt-4">
+            <h1 className="font-display text-plum leading-[1.02] text-[1.875rem] sm:text-4xl lg:text-[2.75rem] tracking-tight font-normal mt-3">
               Don't discover hard limits <em className="italic">halfway</em> through a hookup.
             </h1>
-            <p className="text-foreground/80 max-w-md text-[15px] sm:text-base leading-snug mt-5">
+            <p className="text-foreground/80 max-w-md text-[15px] sm:text-base leading-snug mt-4">
               Compare boundaries, kinks, condom expectations, attachment styles, and dealbreakers before things get awkward, intense, or unsafe.
             </p>
-            <div className="mt-6">
+            <div className="mt-5">
               <CloudButton to={startTo} className="!max-w-full sm:!max-w-[18rem]">Start playing safer</CloudButton>
             </div>
 
-            <div className="mt-10">
-              <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum mb-4">
+            <div className="mt-7">
+              <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum mb-3">
                 Trusted by communities worldwide
               </p>
               <ul className="grid grid-cols-5 gap-3 max-w-md">
                 {COMMUNITIES.map((c) => (
                   <li key={c.label} className="flex flex-col items-center text-center gap-1.5">
-                    <img src={c.icon} alt="" aria-hidden className="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
+                    <img src={c.icon} alt="" aria-hidden className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
                     <span className="text-[10px] sm:text-[11px] text-plum/80 leading-tight whitespace-pre-line">{c.label}</span>
                   </li>
                 ))}
@@ -107,7 +107,7 @@ function Index() {
           </div>
 
           <div className="relative order-1 md:order-2">
-            <div className="relative rounded-xl overflow-hidden aspect-[4/5] sm:aspect-[5/6] bg-blush">
+            <div className="relative rounded-xl overflow-hidden aspect-[4/5] sm:aspect-[4/5] bg-blush">
               <img src={heroImg} alt="Two partners resting together on soft sheets" className="w-full h-full object-cover" />
               <div className="absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 bg-white rounded-md shadow-xl p-5 sm:p-6 space-y-4">
                 <div>
