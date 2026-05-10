@@ -179,23 +179,25 @@ function Index() {
 
 
       {/* 1b. Testimonials */}
-      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] text-plum text-center max-w-3xl mx-auto mb-10">
+      <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-5xl mx-auto">
+        <h2 className="font-sans text-xl sm:text-2xl leading-snug text-plum text-center max-w-2xl mx-auto mb-8">
           People are tired of guessing about sex and kink.
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31", avatar: avatarJ },
             { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26", avatar: avatarR },
             { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29", avatar: avatarA },
           ].map((t) => (
-            <figure key={t.author} className="rounded-xl bg-white p-6 sm:p-8 flex flex-col">
-              <blockquote className="font-display italic text-xl sm:text-2xl text-plum leading-snug">
+            <figure key={t.author} className="rounded-xl bg-white p-5 flex flex-col">
+              <blockquote className="font-sans text-sm sm:text-base text-plum leading-snug">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="flex items-center gap-3 mt-5">
-                <img src={t.avatar} alt="" aria-hidden className="w-12 h-12 object-contain shrink-0" />
-                <span className="text-sm text-muted-foreground">— {t.author}</span>
+              <figcaption className="flex items-center gap-2.5 mt-4">
+                <span className="w-9 h-9 rounded-full bg-blush flex items-center justify-center overflow-hidden shrink-0">
+                  <img src={t.avatar} alt="" aria-hidden className="w-full h-full object-cover" />
+                </span>
+                <span className="font-sans text-xs text-muted-foreground">— {t.author}</span>
               </figcaption>
             </figure>
           ))}
