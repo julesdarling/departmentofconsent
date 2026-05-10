@@ -52,7 +52,7 @@ function Index() {
   return (
     <Layout fullBleed>
       {/* Top header */}
-      <header className="w-full px-5 sm:px-10 pt-6 sm:pt-8 pb-2 flex items-center justify-between max-w-7xl mx-auto">
+      <header className="w-full px-5 sm:px-10 pt-6 sm:pt-8 pb-2 flex items-center justify-between max-w-6xl mx-auto">
         <Link to="/" aria-label="Dept of Consent — Home" className="block">
           <img src={wordmark} alt="Dept of Consent" className="h-7 sm:h-8 w-auto" />
         </Link>
