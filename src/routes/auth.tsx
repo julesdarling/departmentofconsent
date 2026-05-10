@@ -73,13 +73,31 @@ function AuthPage() {
       toast.error(parsed.error.issues[0].message);
       return;
     }
+    if (mode === "signup") {
+      if (!dob) {
+        toast.error("Enter your date of birth");
+        return;
+      }
+      const age = calculateAge(dob);
+      if (age < 0) {
+        toast.error("Enter a valid date of birth");
+        return;
+      }
+      if (age < 18) {
+        toast.error("You must be at least 18 to sign up");
+        return;
+      }
+    }
     setBusy(true);
     try {
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email: parsed.data.email,
           password: parsed.data.password,
-          options: { emailRedirectTo: `${window.location.origin}${REDIRECT_AFTER_AUTH}` },
+          options: {
+            emailRedirectTo: `${window.location.origin}${REDIRECT_AFTER_AUTH}`,
+            data: { dob, age_confirmed_18_plus: true },
+          },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
