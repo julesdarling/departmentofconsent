@@ -349,6 +349,10 @@ const PRIVACY_FIELDS: { key: keyof SessionSide; label: string }[] = [
   { key: "privacy", label: "Photos / videos" },
   { key: "talkingAfter", label: "Talking about it after" },
   { key: "penetrativeSex", label: "Penetrative sex" },
+  { key: "stdTestDate", label: "Last STD test date" },
+  { key: "stdTestResults", label: "STD test results" },
+  { key: "prepDoxypep", label: "On PrEP / DoxyPEP" },
+  { key: "birthControl", label: "On birth control" },
 ];
 
 function PrivacySexConsensus({
