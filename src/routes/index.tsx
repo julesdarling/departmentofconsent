@@ -166,7 +166,7 @@ function Index() {
                 </div>
                 <div>
                   <div className="text-[9px] sm:text-xs font-bold tracking-wide text-no mb-1 sm:mb-1.5">HARD LIMIT FROM ONE SIDE</div>
-                  <span className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-no/15 border border-no/30 text-plum/60 inline-block">Tickling</span>
+                  <span className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-no/15 border border-no/30 text-plum inline-block">Tickling</span>
                 </div>
               </div>
             </div>
