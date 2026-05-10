@@ -88,8 +88,8 @@ function Index() {
             <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-blush">
               <img src={heroImg} alt="Friends laughing in a soft pile" className="w-full h-full object-cover" />
             </div>
-            <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 -bottom-10 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none drop-shadow-sm" />
-            <img src={stickerHandcuffs} alt="" aria-hidden className="absolute -right-4 sm:-right-8 -bottom-6 sm:-bottom-10 w-24 sm:w-32 lg:w-36 rotate-[8deg] pointer-events-none drop-shadow-sm" />
+            <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 -bottom-10 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none" />
+            <img src={stickerHandcuffs} alt="" aria-hidden className="absolute -right-4 sm:-right-8 -bottom-6 sm:-bottom-10 w-24 sm:w-32 lg:w-36 rotate-[8deg] pointer-events-none" />
           </div>
         </div>
       </section>
