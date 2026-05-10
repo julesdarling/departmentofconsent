@@ -155,21 +155,21 @@ function Index() {
               <img src={heroImg} alt="Two partners resting together on soft sheets" className="w-full h-full object-cover" />
               <div className="absolute left-3 right-3 sm:inset-x-8 top-1/2 -translate-y-1/2 max-w-[16rem] sm:max-w-none mx-auto bg-white rounded-md p-3 sm:p-6 space-y-2.5 sm:space-y-4">
                 <div>
-                  <div className="text-[9px] sm:text-xs font-bold tracking-wide text-yes mb-0.5 sm:mb-1">BOTH WANT TO PLAY</div>
-                  <p className="text-[10px] sm:text-[13px] text-foreground/70 mb-1.5 sm:mb-2">Cravings you both picked for this scene.</p>
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-yes mb-1">Both want to play</div>
+                  <p className="text-xs sm:text-sm text-foreground/75 leading-snug mb-2">Cravings you both picked for this scene.</p>
                   <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
-                      <span key={c} className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
+                      <span key={c} className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[9px] sm:text-xs font-bold tracking-wide text-maybe mb-1 sm:mb-1.5">DISCUSS</div>
-                  <span className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-maybe mb-1.5">Discuss</div>
+                  <span className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
                 </div>
                 <div>
-                  <div className="text-[9px] sm:text-xs font-bold tracking-wide text-no mb-1 sm:mb-1.5">HARD LIMIT FROM ONE SIDE</div>
-                  <span className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-no/15 border border-no/30 text-plum inline-block">Tickling</span>
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-no mb-1.5">Hard limit from one side</div>
+                  <span className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-no/15 border border-no/30 text-plum inline-block">Tickling</span>
                 </div>
               </div>
             </div>
