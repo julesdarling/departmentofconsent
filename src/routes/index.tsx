@@ -180,7 +180,7 @@ function Index() {
 
       {/* 1b. Testimonials */}
       <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-5xl mx-auto">
-        <h2 className="font-sans text-xl sm:text-2xl leading-snug text-plum text-center max-w-2xl mx-auto mb-8">
+        <h2 className="font-sans font-bold uppercase tracking-wide text-sm sm:text-base text-plum text-center max-w-2xl mx-auto mb-8">
           People are tired of guessing about sex and kink.
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
