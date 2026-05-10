@@ -241,9 +241,9 @@ function Index() {
                   type="text"
                   placeholder="Add your own kink..."
                   readOnly
-                  className="flex-1 text-[13px] px-3 py-2 rounded-full border border-plum/15 bg-white text-plum/60 placeholder:text-plum/40 focus:outline-none"
+                  className="flex-1 min-w-0 text-[13px] px-3 py-2 rounded-full border border-plum/15 bg-white text-plum/60 placeholder:text-plum/40 focus:outline-none"
                 />
-                <button type="button" disabled className="text-[13px] px-5 py-2 rounded-full bg-yes/40 text-plum/70 font-semibold">
+                <button type="button" disabled className="shrink-0 text-[13px] px-5 py-2 rounded-full bg-yes/40 text-plum/70 font-semibold">
                   Add
                 </button>
               </div>
