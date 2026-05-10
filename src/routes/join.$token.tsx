@@ -229,6 +229,36 @@ function JoinPage() {
             value={side.penetrativeSex}
             onChange={(v) => updateField("penetrativeSex", v)}
           />
+          {side.penetrativeSex === "yes" && (
+            <div className="space-y-4 pl-3 border-l-2 border-yes/40">
+              <Field label="When were you last tested for STDs?">
+                <Input
+                  type="date"
+                  value={side.stdTestDate || ""}
+                  onChange={(e) => updateField("stdTestDate", e.target.value)}
+                  max={new Date().toISOString().slice(0, 10)}
+                />
+              </Field>
+              <Field label="What were the results of your STD test?">
+                <Textarea
+                  value={side.stdTestResults || ""}
+                  onChange={(e) => updateField("stdTestResults", e.target.value)}
+                  rows={2}
+                  placeholder="e.g. all negative on 4-panel"
+                />
+              </Field>
+              <YesNoSelect
+                label="Are you on PrEP / DoxyPEP?"
+                value={side.prepDoxypep || ""}
+                onChange={(v) => updateField("prepDoxypep", v)}
+              />
+              <YesNoSelect
+                label="Are you on birth control?"
+                value={side.birthControl || ""}
+                onChange={(v) => updateField("birthControl", v)}
+              />
+            </div>
+          )}
         </Sticker>
 
         <Sticker variant="coral" className="space-y-3">
@@ -532,6 +562,33 @@ function YesNoMaybeMatch({
           </div>
         </div>
       )}
+      <div className="flex gap-2 justify-end">
+        {opts.map((o) => (
+          <button
+            key={o.v}
+            type="button"
+            onClick={() => onChange(o.v)}
+            className={cn(
+              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
+              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
+            )}
+          >
+            {o.v}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function YesNoSelect({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  const opts: { v: string; cls: string }[] = [
+    { v: "yes", cls: "bg-yes/20 border-yes" },
+    { v: "no", cls: "bg-no/20 border-no" },
+  ];
+  return (
+    <div className="space-y-1.5">
+      <Label className="doc-label">{label}</Label>
       <div className="flex gap-2 justify-end">
         {opts.map((o) => (
           <button

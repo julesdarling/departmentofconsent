@@ -53,6 +53,10 @@ export interface SessionSide {
   privacy: string;
   talkingAfter?: string;
   penetrativeSex: string;
+  stdTestDate?: string;
+  stdTestResults?: string;
+  prepDoxypep?: string;
+  birthControl?: string;
   timeOfPlay?: string;
   safewords: string;
   safewordItems?: string[];
@@ -442,6 +446,10 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     badTime: "",
     privacy: "",
     penetrativeSex: "",
+    stdTestDate: "",
+    stdTestResults: "",
+    prepDoxypep: "",
+    birthControl: "",
     timeOfPlay: "",
     safewords: profile?.defaultSafewords ?? DEFAULT_SAFEWORDS,
     safewordItems: [...DEFAULT_SAFEWORD_ITEMS],
