@@ -333,7 +333,7 @@ function Index() {
                 { label: "Cuffs / restraints", yn: "Yes", gr: "Receive" },
               ].map((row, i) => (
                 <div key={row.label} className={i > 0 ? "pt-4 border-t border-plum/10" : ""}>
-                  <div className="text-[13px] text-plum mb-2">{row.label}</div>
+                  <div className="text-sm text-plum mb-2">{row.label}</div>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                     <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[10px] sm:text-[11px]">
                       {["Yes", "Maybe", "No"].map((opt) => (
