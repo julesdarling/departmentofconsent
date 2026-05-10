@@ -180,7 +180,7 @@ function Index() {
         <div className="bg-white rounded-xl px-5 sm:px-10 py-10 sm:py-14">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Left card */}
-          <div className="bg-white rounded-xl p-7 sm:p-10">
+          <div className="bg-white rounded-xl p-5 md:p-6 lg:p-10">
             <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-[1.05]">
               <span className="italic">"What are you into?"</span>
               <br />is not enough.
