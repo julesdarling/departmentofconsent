@@ -107,7 +107,7 @@ function Index() {
           </div>
 
           <div className="relative order-1 md:order-2">
-            <div className="relative rounded-xl overflow-hidden aspect-[4/5] sm:aspect-[4/5] bg-blush">
+            <div className="relative rounded-xl overflow-hidden aspect-[4/3] sm:aspect-[5/4] bg-blush">
               <img src={heroImg} alt="Two partners resting together on soft sheets" className="w-full h-full object-cover" />
               <div className="absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 bg-white rounded-md shadow-xl p-5 sm:p-6 space-y-4">
                 <div>
