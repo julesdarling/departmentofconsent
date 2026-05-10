@@ -175,7 +175,8 @@ function Index() {
 
 
       {/* 2. "What are you into?" is not enough */}
-      <section className="px-4 sm:px-8 py-10 sm:py-14 max-w-7xl mx-auto bg-white">
+      <section className="px-4 sm:px-8 py-10 sm:py-14 max-w-7xl mx-auto">
+        <div className="bg-white rounded-[28px] px-5 sm:px-10 py-10 sm:py-14">
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Left card */}
           <div className="bg-white rounded-2xl p-7 sm:p-10">
@@ -255,6 +256,7 @@ function Index() {
           {KNOW_BEFORE.map((k) => (
             <span key={k} className="text-plum/80">{k}</span>
           ))}
+        </div>
         </div>
       </section>
 
