@@ -271,6 +271,13 @@
   .cloud-btn-sm.cloud-btn-outline {
     background-image: url("/smallbutton.svg");
   }
+  .cloud-btn-white {
+    background-image: url("/button_white.svg") !important;
+    color: var(--color-coral) !important;
+  }
+  .cloud-btn-white:hover {
+    filter: brightness(0.97);
+  }
   .cloud-btn-block {
     width: 100%;
   }
