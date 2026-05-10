@@ -562,7 +562,7 @@ function Index() {
         <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-4 -bottom-8 w-40 rotate-[18deg] pointer-events-none z-10" />
         <div className="relative rounded-xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
           <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-2xl mx-auto text-white">
-            Modern intimacy needs better communication.
+            Your sex life deserves better communication
           </h2>
           <div className="text-sm sm:text-base text-white/90 mt-4 max-w-md mx-auto leading-snug space-y-3">
             <p>
@@ -571,7 +571,7 @@ function Index() {
             <p>That's usually when communication gets hardest.</p>
           </div>
           <div className="flex justify-center pt-6">
-            <CloudButton to={startTo} className="cloud-btn-white !max-w-[16rem]">Start with clarity.</CloudButton>
+            <CloudButton to={startTo} className="cloud-btn-white !max-w-[16rem]">Start with clarity</CloudButton>
           </div>
         </div>
       </section>
