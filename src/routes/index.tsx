@@ -571,7 +571,7 @@ function Index() {
             <p>That's usually when communication gets hardest.</p>
           </div>
           <div className="flex justify-center pt-6">
-            <CloudButton to={startTo} className="cloud-btn-white !max-w-[16rem]">Start with clarity.</CloudButton>
+            <CloudButton to={startTo} className="cloud-btn-white !max-w-[16rem]">Start with clarity</CloudButton>
           </div>
         </div>
       </section>
