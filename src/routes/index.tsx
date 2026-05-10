@@ -149,7 +149,7 @@ function Index() {
           <div className="relative order-1 md:order-2">
             <div className="relative rounded-xl overflow-hidden aspect-[4/3] sm:aspect-[5/4] bg-blush">
               <img src={heroImg} alt="Two partners resting together on soft sheets" className="w-full h-full object-cover" />
-              <div className="absolute left-3 right-3 sm:inset-x-8 top-1/2 -translate-y-1/2 max-w-[16rem] sm:max-w-none mx-auto bg-white rounded-md shadow-xl p-3 sm:p-6 space-y-2.5 sm:space-y-4">
+              <div className="absolute left-3 right-3 sm:inset-x-8 top-1/2 -translate-y-1/2 max-w-[16rem] sm:max-w-none mx-auto bg-white rounded-md p-3 sm:p-6 space-y-2.5 sm:space-y-4">
                 <div>
                   <div className="text-[9px] sm:text-xs font-bold tracking-wide text-yes mb-0.5 sm:mb-1">BOTH WANT TO PLAY</div>
                   <p className="text-[10px] sm:text-[13px] text-foreground/70 mb-1.5 sm:mb-2">Cravings you both picked for this scene.</p>
@@ -203,7 +203,7 @@ function Index() {
 
           {/* Right pink box containing the kink menu screenshot */}
           <div className="relative rounded-[28px] bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
-            <div className="relative z-0 bg-white rounded-[20px] p-5 sm:p-6 w-full flex flex-col shadow-sm">
+            <div className="relative z-0 bg-white rounded-[20px] p-5 sm:p-6 w-full flex flex-col">
               <div className="flex flex-wrap gap-1.5">
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
@@ -472,7 +472,7 @@ function Index() {
             { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26" },
             { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29" },
           ].map((t) => (
-            <figure key={t.author} className="rounded-xl bg-white p-6 sm:p-8 shadow-sm flex flex-col">
+            <figure key={t.author} className="rounded-xl bg-white p-6 sm:p-8 flex flex-col">
               <blockquote className="font-display italic text-xl sm:text-2xl text-plum leading-snug">
                 “{t.quote}”
               </blockquote>
@@ -526,7 +526,7 @@ function Index() {
             { title: "Dynamic preferences", body: "Discuss dominance, submission, praise, degradation, service, ownership, and more." },
             { title: "Revocable anytime", body: "Boundaries can change at any moment." },
           ].map((f) => (
-            <div key={f.title} className="rounded-xl bg-white p-6 shadow-sm">
+            <div key={f.title} className="rounded-xl bg-white p-6">
               <h3 className="font-display text-xl text-plum">{f.title}</h3>
               <p className="text-sm text-muted-foreground mt-2 leading-snug">{f.body}</p>
             </div>
@@ -536,7 +536,7 @@ function Index() {
 
       {/* 5c. Trust / Safety */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
-        <div className="rounded-xl bg-white p-8 sm:p-12 shadow-sm">
+        <div className="rounded-xl bg-white p-8 sm:p-12">
           <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] text-plum text-center max-w-2xl mx-auto">
             Built for privacy and clarity.
           </h2>
