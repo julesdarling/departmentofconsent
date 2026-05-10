@@ -23,6 +23,9 @@ import iconBunnies from "@/assets/icon-bunnies.png";
 import iconPup from "@/assets/icon-pup.png";
 import iconMartini from "@/assets/icon-martini.png";
 import iconRing from "@/assets/icon-ring.png";
+import avatarJ from "@/assets/avatar-j.png";
+import avatarR from "@/assets/avatar-r.png";
+import avatarA from "@/assets/avatar-a.png";
 
 const COMMUNITIES = [
   { icon: iconFlogger, label: "Kink\npractitioners" },
