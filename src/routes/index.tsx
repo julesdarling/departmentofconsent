@@ -286,8 +286,8 @@ function Index() {
 
       {/* 4. Feature cluster — staggered collage */}
       <section className="px-5 sm:px-10 py-10 sm:py-20 max-w-4xl mx-auto relative">
-        <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-16 top-1/3 w-28 rotate-[-15deg] pointer-events-none" />
-        <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-16 top-12 w-32 rotate-[12deg] pointer-events-none" />
+        <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-32 lg:-left-40 top-1/3 w-56 lg:w-64 rotate-[-15deg] pointer-events-none" />
+        <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-32 lg:-right-40 top-12 w-60 lg:w-72 rotate-[12deg] pointer-events-none" />
 
         <div className="flex flex-col gap-16 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-0 md:items-start relative">
           {/* Left column */}
