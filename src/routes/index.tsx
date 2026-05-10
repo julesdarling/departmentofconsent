@@ -158,7 +158,7 @@ function Index() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-0 relative">
           {/* Personal kink menu */}
-          <div className="font-display sm:text-4xl lg:text-[2.75rem] leading-[1.05] font-normal text-5xl">
+          <div className="feature-card p-6 md:p-7 md:mt-0">
             <div className="flex flex-wrap gap-1.5 mb-5">
               {["Impact", "Bondage", "Sensation", "Power", "Service", "Roleplay", "Edgeplay", "Verbal"].map((c) => (
                 <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-plum font-semibold">{c}</span>
