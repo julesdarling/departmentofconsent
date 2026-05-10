@@ -155,6 +155,19 @@ function AuthPage() {
               <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
             </div>
           )}
+          {mode === "signup" && (
+            <div className="space-y-1.5">
+              <Label className="doc-label">Date of birth</Label>
+              <Input
+                type="date"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                max={new Date().toISOString().split("T")[0]}
+                autoComplete="bday"
+              />
+              <p className="text-xs text-muted-foreground">You must be at least 18 to sign up.</p>
+            </div>
+          )}
 
           <div className="flex flex-col items-center gap-3 pt-2">
             {mode === "forgot" ? (
