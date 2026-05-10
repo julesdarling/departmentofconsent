@@ -122,13 +122,13 @@ function Index() {
       <section className="px-5 sm:px-10 pt-4 sm:pt-6 pb-6 sm:pb-8 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-10 items-center">
           <div className="order-2 md:order-1 text-left">
-            <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum uppercase">
+            <p className="text-xs font-bold uppercase tracking-wide text-plum">
               Most people find out they're incompatible too late.
             </p>
-            <h1 className="font-display text-plum leading-[1.02] text-[1.875rem] sm:text-4xl lg:text-[2.75rem] tracking-tight font-normal mt-3">
+            <h1 className="font-display text-4xl sm:text-5xl text-plum leading-[1.05] mt-3">
               Don't discover hard limits <em className="italic">halfway</em> through a hookup.
             </h1>
-            <p className="text-foreground/80 max-w-md text-[15px] sm:text-base leading-snug mt-4">
+            <p className="text-base text-foreground/75 leading-snug mt-4 max-w-md">
               Compare boundaries, kinks, condom expectations, attachment styles, and dealbreakers before things get awkward, intense, or unsafe.
             </p>
             <div className="mt-5">
@@ -136,14 +136,14 @@ function Index() {
             </div>
 
             <div className="mt-7">
-              <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum mb-3">
+              <p className="text-xs font-bold uppercase tracking-wide text-plum mb-3">
                 Trusted by communities worldwide
               </p>
               <ul className="grid grid-cols-5 gap-3 max-w-md">
                 {COMMUNITIES.map((c) => (
                   <li key={c.label} className="flex flex-col items-center text-center gap-1.5">
                     <img src={c.icon} alt="" aria-hidden className="w-10 h-10 sm:w-12 sm:h-12 object-contain" />
-                    <span className="text-[10px] sm:text-[11px] text-plum/80 leading-tight whitespace-pre-line">{c.label}</span>
+                    <span className="text-xs text-muted-foreground leading-tight whitespace-pre-line">{c.label}</span>
                   </li>
                 ))}
               </ul>
@@ -155,21 +155,21 @@ function Index() {
               <img src={heroImg} alt="Two partners resting together on soft sheets" className="w-full h-full object-cover" />
               <div className="absolute left-3 right-3 sm:inset-x-8 top-1/2 -translate-y-1/2 max-w-[16rem] sm:max-w-none mx-auto bg-white rounded-md p-3 sm:p-6 space-y-2.5 sm:space-y-4">
                 <div>
-                  <div className="text-[9px] sm:text-xs font-bold tracking-wide text-yes mb-0.5 sm:mb-1">BOTH WANT TO PLAY</div>
-                  <p className="text-[10px] sm:text-[13px] text-foreground/70 mb-1.5 sm:mb-2">Cravings you both picked for this scene.</p>
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-yes mb-1">Both want to play</div>
+                  <p className="text-xs sm:text-sm text-foreground/75 leading-snug mb-2">Cravings you both picked for this scene.</p>
                   <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
-                      <span key={c} className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
+                      <span key={c} className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
                     ))}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[9px] sm:text-xs font-bold tracking-wide text-maybe mb-1 sm:mb-1.5">DISCUSS</div>
-                  <span className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-maybe mb-1.5">Discuss</div>
+                  <span className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
                 </div>
                 <div>
-                  <div className="text-[9px] sm:text-xs font-bold tracking-wide text-no mb-1 sm:mb-1.5">HARD LIMIT FROM ONE SIDE</div>
-                  <span className="text-[10px] sm:text-[13px] px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-no/15 border border-no/30 text-plum inline-block">Tickling</span>
+                  <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-no mb-1.5">Hard limit from one side</div>
+                  <span className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-no/15 border border-no/30 text-plum inline-block">Tickling</span>
                 </div>
               </div>
             </div>
@@ -210,20 +210,20 @@ function Index() {
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Left card */}
           <div className="bg-white rounded-xl p-5 md:p-6 lg:p-10">
-            <h2 className="font-display text-3xl md:text-2xl lg:text-[2.5rem] text-plum leading-[1.05]">
+            <h2 className="font-display text-3xl sm:text-4xl text-plum leading-[1.05]">
               <span className="italic">"What are you into?"</span>
               <br />is not enough.
             </h2>
-            <p className="text-[14px] md:text-[13px] lg:text-[15px] text-foreground/75 mt-4 leading-snug">
+            <p className="text-base text-foreground/75 leading-snug mt-4">
               Good sex needs more than vibes.<br />It needs shared expectations.
             </p>
             <hr className="my-7 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-4">
+            <p className="text-sm font-bold text-plum mb-4">
               Before play, you need to know:
             </p>
             <ul className="space-y-3 text-left">
               {QUESTIONS.map((q) => (
-                <li key={q} className="flex items-start gap-3 text-[14px] md:text-[13px] lg:text-[15px] text-plum">
+                <li key={q} className="flex items-start gap-3 text-sm text-plum">
                   <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
                   <span>{q}</span>
                 </li>
@@ -281,10 +281,10 @@ function Index() {
         </div>
 
         {/* Know before row */}
-        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-plum">
-          <span className="font-bold">Know before:</span>
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-foreground/75">
+          <span className="font-bold text-plum">Know before:</span>
           {KNOW_BEFORE.map((k) => (
-            <span key={k} className="text-plum/80">{k}</span>
+            <span key={k}>{k}</span>
           ))}
         </div>
         </div>
@@ -293,8 +293,8 @@ function Index() {
       {/* 3. How it works */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto relative">
         <div className="text-center space-y-2 mb-8 sm:mb-10">
-          <h2 className="font-display text-4xl sm:text-5xl text-plum">How it works</h2>
-          <p className="text-sm text-foreground/70 max-w-md mx-auto">
+          <h2 className="font-display text-3xl sm:text-4xl text-plum leading-[1.05]">How it works</h2>
+          <p className="text-base text-foreground/75 max-w-md mx-auto">
             A consent flow you can actually use.
           </p>
         </div>
@@ -302,9 +302,9 @@ function Index() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {STEPS.map((s) => (
               <div key={s.n}>
-                <div className="text-[13px] font-bold text-plum mb-2">{s.n}</div>
-                <h3 className="font-display text-[1.5rem] text-plum leading-tight mb-3">{s.title}</h3>
-                <p className="text-[14px] text-foreground/70 leading-snug">{s.body}</p>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-2">{s.n}</div>
+                <h3 className="font-display text-2xl text-plum leading-tight mb-3">{s.title}</h3>
+                <p className="text-sm text-foreground/75 leading-snug">{s.body}</p>
               </div>
             ))}
           </div>
@@ -333,7 +333,7 @@ function Index() {
                 { label: "Cuffs / restraints", yn: "Yes", gr: "Receive" },
               ].map((row, i) => (
                 <div key={row.label} className={i > 0 ? "pt-4 border-t border-plum/10" : ""}>
-                  <div className="text-[13px] text-plum mb-2">{row.label}</div>
+                  <div className="text-sm text-plum mb-2">{row.label}</div>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                     <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[10px] sm:text-[11px]">
                       {["Yes", "Maybe", "No"].map((opt) => (
@@ -364,14 +364,14 @@ function Index() {
               ))}
             </div>
             <div className="text-center">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Your personal<br />kink menu</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Your personal<br />kink menu</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Save your own interests, boundaries, and notes so you do not have to rebuild the conversation from scratch every time.
               </p>
             </div>
             <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Good for:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+            <p className="text-sm font-bold text-plum mb-2">Good for:</p>
+            <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>New partners</li>
               <li>Dungeon pickup play</li>
               <li>Recurring scenes</li>
@@ -382,8 +382,8 @@ function Index() {
 
           {/* Scene cards */}
           <div className="feature-card p-6 md:p-7 order-3 md:order-none">
-            <div className="font-mono text-[11px] leading-relaxed text-plum mb-2">
-              <div className="text-no font-bold tracking-wide mb-2">SAFEWORDS</div>
+            <div className="font-mono text-xs leading-relaxed text-plum mb-2">
+              <div className="text-no font-bold uppercase tracking-wide mb-2">Safewords</div>
               <div>Verbal:</div>
               <div>Red — stop the scene, something is wrong and we can't continue.</div>
               <div>Yellow — check in.</div>
@@ -397,14 +397,14 @@ function Index() {
               <div className="text-plum/40">Thumb down, double tap — check in please.</div>
             </div>
             <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Scene cards for when<br />brains stop working</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 During play, details can get blurry. The scene card keeps the important stuff readable.
               </p>
             </div>
             <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Include:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+            <p className="text-sm font-bold text-plum mb-2">Include:</p>
+            <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>Safewords</li>
               <li>Nonverbal signals</li>
               <li>Hard limits</li>
@@ -423,36 +423,36 @@ function Index() {
           <div className="feature-card p-6 md:p-7 order-2 md:order-none">
             <div className="space-y-3 mb-2">
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">LAST STD TEST DATE</div>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">Last STD test date</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> 2026-05-01</span>
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> 2026-04-29</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> 2026-05-01</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> 2026-04-29</span>
                 </div>
               </div>
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">STD TEST RESULTS</div>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">STD test results</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> All Clear</span>
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> Clean</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> All Clear</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> Clean</span>
                 </div>
               </div>
               <div>
-                <div className="text-[11px] font-bold tracking-wide text-plum/70 mb-1.5">ON PREP / DOXYPEP</div>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">On PrEP / DoxyPEP</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Creator:</span> Yes</span>
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Play partner 1:</span> No</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Creator:</span> Yes</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Play partner 1:</span> No</span>
                 </div>
               </div>
             </div>
             <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Two-way consent, not<br />one-way permission</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Two-way consent, not<br />one-way permission</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Both people fill out their own side. The goal is not to pressure someone into agreement. The goal is to make overlap obvious and mismatches impossible to ignore.
               </p>
             </div>
             <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Use it to clarify:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+            <p className="text-sm font-bold text-plum mb-2">Use it to clarify:</p>
+            <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>Yes / maybe / no</li>
               <li>Hard limits</li>
               <li>Soft limits</li>
@@ -467,7 +467,7 @@ function Index() {
           {/* Aftercare */}
           <div className="feature-card p-6 md:p-7 order-4 md:order-none">
             <div className="mb-2">
-              <ul className="space-y-2 text-[14px]">
+              <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2.5">
                   <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-no text-white shrink-0">
                     <Check className="w-2.5 h-2.5" strokeWidth={3} />
@@ -483,11 +483,11 @@ function Index() {
               </ul>
             </div>
             <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Aftercare does not have<br />to be improvised</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Aftercare does not have<br />to be improvised</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Water, food, blankets, shower, silence, cuddling, space, check-ins, reassurance, grounding, or anything else each person needs to come down safely.
               </p>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 You can also keep private reflection notes afterward, so future scenes get better instead of messier.
               </p>
             </div>
@@ -503,11 +503,11 @@ function Index() {
           <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-plum/55" />
           <div className="relative flex flex-col justify-between flex-1 p-8 sm:p-12 lg:p-14">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-md">
+            <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] max-w-md">
               Built for kinky people who take consent seriously.
             </h2>
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mt-10">
-              <div className="text-[13px] sm:text-sm text-white/90 leading-snug max-w-sm space-y-4">
+              <div className="text-sm text-white/90 leading-snug max-w-sm space-y-4">
                 <p>Department of Consent is for adults who want play to feel hotter because it is clearer.</p>
                 <p>
                   Not colder.<br />
@@ -518,7 +518,7 @@ function Index() {
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <img src={flag} alt="Trans pride flag" className="h-5 w-auto" />
-                <p className="text-xs sm:text-sm text-white/90 max-w-[16rem] leading-snug">
+                <p className="text-sm text-white/90 max-w-[16rem] leading-snug">
                   Department of Consent is proudly<br />trans owned and operated.
                 </p>
               </div>
@@ -529,7 +529,7 @@ function Index() {
 
       {/* 5b. Feature grid */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
-        <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] text-plum text-center max-w-2xl mx-auto">
+        <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] text-plum text-center max-w-2xl mx-auto">
           Everything you'd rather know beforehand.
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
@@ -543,7 +543,7 @@ function Index() {
           ].map((f) => (
             <div key={f.title} className="rounded-xl bg-white p-6">
               <h3 className="font-display text-xl text-plum">{f.title}</h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-snug">{f.body}</p>
+              <p className="text-sm text-foreground/75 mt-2 leading-snug">{f.body}</p>
             </div>
           ))}
         </div>
@@ -552,7 +552,7 @@ function Index() {
       {/* 5c. Trust / Safety */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto">
         <div className="rounded-xl bg-white p-8 sm:p-12">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] text-plum text-center max-w-2xl mx-auto">
+          <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] text-plum text-center max-w-2xl mx-auto">
             Built for privacy and clarity.
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-8 mt-10">
@@ -564,7 +564,7 @@ function Index() {
             ].map((f) => (
               <div key={f.title}>
                 <h3 className="font-display text-xl text-plum">{f.title}</h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-snug">{f.body}</p>
+                <p className="text-sm text-foreground/75 mt-2 leading-snug">{f.body}</p>
               </div>
             ))}
           </div>
@@ -576,10 +576,10 @@ function Index() {
         <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
         <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-4 -bottom-8 w-40 rotate-[18deg] pointer-events-none z-10" />
         <div className="relative rounded-xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-2xl mx-auto text-white">
+          <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] max-w-2xl mx-auto text-white">
             Your sex life deserves better communication
           </h2>
-          <div className="text-sm sm:text-base text-white/90 mt-4 max-w-md mx-auto leading-snug space-y-3">
+          <div className="text-base text-white/90 mt-4 max-w-md mx-auto leading-snug space-y-3">
             <p>
               Most people wait until they're already naked, pressured, emotionally attached, or halfway through a hookup to communicate clearly.
             </p>
