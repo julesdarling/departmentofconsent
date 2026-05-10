@@ -5,7 +5,7 @@ import { useProfile } from "@/lib/storage";
 import { useAuth } from "@/lib/useAuth";
 import { Check, HelpCircle } from "lucide-react";
 import heroImg from "@/assets/hero-couple.jpg";
-import sectionBg from "@/assets/section-bg.jpg";
+import sectionBg from "@/assets/built-for-bg.png";
 import wordmark from "@/assets/site-logo.svg";
 import footerWordmark from "@/assets/footer-wordmark.svg";
 import flag from "@/assets/trans-flag.svg";
