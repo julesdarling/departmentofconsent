@@ -153,8 +153,10 @@ function Index() {
         <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-16 top-12 w-32 rotate-[12deg] pointer-events-none" />
 
         <div className="flex flex-col gap-16 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-0 md:items-start relative">
+          {/* Left column */}
+          <div className="contents md:flex md:flex-col md:gap-16">
           {/* Personal kink menu */}
-          <div className="feature-card p-6 md:p-7 md:mt-0">
+          <div className="feature-card p-6 md:p-7 order-1 md:order-none">
             <div className="relative h-44 overflow-hidden mb-2">
               <div className="flex flex-wrap gap-1.5 justify-center">
                 {[
