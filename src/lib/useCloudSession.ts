@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { apiGetSession, apiUpdateSession, apiAddPartnerSide } from "./sessionsApi";
 import type { PlaySession, SessionSide } from "./storage";
+import { supabase } from "@/integrations/supabase/client";
 
 export function useCloudSession(token: string | undefined) {
   const [session, setSession] = useState<PlaySession | null | undefined>(undefined);
