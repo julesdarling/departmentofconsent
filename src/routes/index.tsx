@@ -271,7 +271,7 @@ function Index() {
           </div>
 
           {/* Aftercare */}
-          <div className="feature-card p-6 md:p-7 md:mt-12">
+          <div className="feature-card p-6 md:p-7 order-4 md:order-none">
             <div className="mb-2">
               <div className="font-display text-[15px] text-plum mb-3">Your aftercare list</div>
               <ul className="space-y-2 text-[14px]">
@@ -305,6 +305,8 @@ function Index() {
               </p>
             </div>
           </div>
+          </div>
+          {/* end right column */}
         </div>
       </section>
 
