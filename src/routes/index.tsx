@@ -4,7 +4,7 @@ import { CloudButton } from "@/components/CloudButton";
 import { useProfile } from "@/lib/storage";
 import { useAuth } from "@/lib/useAuth";
 import { Check, HelpCircle } from "lucide-react";
-import heroImg from "@/assets/hero-friends.jpg";
+import heroImg from "@/assets/hero-couple.jpg";
 import sectionBg from "@/assets/section-bg.jpg";
 import wordmark from "@/assets/site-logo.svg";
 import footerWordmark from "@/assets/footer-wordmark.svg";
@@ -17,6 +17,19 @@ import stickerCollar from "@/assets/sticker-collar.png";
 import stickerBoundHands from "@/assets/sticker-bound-hands.png";
 import stickerRope from "@/assets/sticker-rope.png";
 import stickerFeather from "@/assets/sticker-feather.png";
+import iconFlogger from "@/assets/icon-flogger.png";
+import iconBunnies from "@/assets/icon-bunnies.png";
+import iconPup from "@/assets/icon-pup.png";
+import iconMartini from "@/assets/icon-martini.png";
+import iconRing from "@/assets/icon-ring.png";
+
+const COMMUNITIES = [
+  { icon: iconFlogger, label: "Kink\npractitioners" },
+  { icon: iconBunnies, label: "Polyamorous\npartners" },
+  { icon: iconPup, label: "Queer\ncommunities" },
+  { icon: iconMartini, label: "Casual daters" },
+  { icon: iconRing, label: "Long term\ncouples" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
