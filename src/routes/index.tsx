@@ -210,20 +210,20 @@ function Index() {
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
           {/* Left card */}
           <div className="bg-white rounded-xl p-5 md:p-6 lg:p-10">
-            <h2 className="font-display text-3xl md:text-2xl lg:text-[2.5rem] text-plum leading-[1.05]">
+            <h2 className="font-display text-3xl sm:text-4xl text-plum leading-[1.05]">
               <span className="italic">"What are you into?"</span>
               <br />is not enough.
             </h2>
-            <p className="text-[14px] md:text-[13px] lg:text-[15px] text-foreground/75 mt-4 leading-snug">
+            <p className="text-base text-foreground/75 leading-snug mt-4">
               Good sex needs more than vibes.<br />It needs shared expectations.
             </p>
             <hr className="my-7 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-4">
+            <p className="text-sm font-bold text-plum mb-4">
               Before play, you need to know:
             </p>
             <ul className="space-y-3 text-left">
               {QUESTIONS.map((q) => (
-                <li key={q} className="flex items-start gap-3 text-[14px] md:text-[13px] lg:text-[15px] text-plum">
+                <li key={q} className="flex items-start gap-3 text-sm text-plum">
                   <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
                   <span>{q}</span>
                 </li>
