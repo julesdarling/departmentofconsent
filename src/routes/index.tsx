@@ -503,11 +503,11 @@ function Index() {
           <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-plum/55" />
           <div className="relative flex flex-col justify-between flex-1 p-8 sm:p-12 lg:p-14">
-            <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-md">
+            <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] max-w-md">
               Built for kinky people who take consent seriously.
             </h2>
             <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mt-10">
-              <div className="text-[13px] sm:text-sm text-white/90 leading-snug max-w-sm space-y-4">
+              <div className="text-sm text-white/90 leading-snug max-w-sm space-y-4">
                 <p>Department of Consent is for adults who want play to feel hotter because it is clearer.</p>
                 <p>
                   Not colder.<br />
@@ -518,7 +518,7 @@ function Index() {
               </div>
               <div className="flex items-center gap-3 shrink-0">
                 <img src={flag} alt="Trans pride flag" className="h-5 w-auto" />
-                <p className="text-xs sm:text-sm text-white/90 max-w-[16rem] leading-snug">
+                <p className="text-sm text-white/90 max-w-[16rem] leading-snug">
                   Department of Consent is proudly<br />trans owned and operated.
                 </p>
               </div>
