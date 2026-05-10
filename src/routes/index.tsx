@@ -17,6 +17,7 @@ import stickerCollar from "@/assets/sticker-collar.png";
 import stickerBoundHands from "@/assets/sticker-bound-hands.png";
 import stickerRope from "@/assets/sticker-rope.png";
 import stickerFeather from "@/assets/sticker-feather.png";
+import stickerWandPink from "@/assets/sticker-wand-pink.png";
 import iconFlogger from "@/assets/icon-flogger.png";
 import iconBunnies from "@/assets/icon-bunnies.png";
 import iconPup from "@/assets/icon-pup.png";
@@ -288,6 +289,7 @@ function Index() {
       <section className="px-5 sm:px-10 py-10 sm:py-20 max-w-4xl mx-auto relative">
         <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-32 lg:-left-40 top-1/3 w-56 lg:w-64 rotate-[-15deg] pointer-events-none" />
         <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-32 lg:-right-40 top-12 w-60 lg:w-72 rotate-[12deg] pointer-events-none" />
+        <img src={stickerWandPink} alt="" aria-hidden className="hidden md:block absolute -right-24 lg:-right-32 bottom-8 w-64 lg:w-80 rotate-[18deg] pointer-events-none" />
 
         <div className="flex flex-col gap-16 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-0 md:items-start relative">
           {/* Left column */}
