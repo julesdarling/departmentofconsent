@@ -67,17 +67,19 @@ function Index() {
       {/* 1. Hero */}
       <section className="px-5 sm:px-10 pt-4 sm:pt-10 pb-6 sm:pb-12 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-12 items-center">
-          <div className="space-y-6 order-2 md:order-1 relative">
-            <h1 className="font-display text-plum leading-[1.02] sm:text-5xl lg:text-[3.75rem] tracking-tight font-normal text-4xl">
-              A better way to talk about limits, kinks, and aftercare.
-            </h1>
-            <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
-              Build a clear, cute, shareable scene agreement before you play.
-            </p>
-            <div className="pt-1">
-              <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
+          <div className="order-2 md:order-1 relative">
+            <div className="space-y-3">
+              <h1 className="font-display text-plum leading-[1.05] sm:text-4xl lg:text-[2.75rem] tracking-tight font-normal text-3xl">
+                A better way to talk about limits, kinks, and aftercare.
+              </h1>
+              <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
+                Build a clear, cute, shareable scene agreement before you play.
+              </p>
+              <div>
+                <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
+              </div>
             </div>
-            <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-1">
+            <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-8">
               Choose your yes / maybe / no list, compare limits with a partner, plan the scene, and keep safewords, boundaries, and aftercare visible when they actually matter.
             </p>
           </div>
