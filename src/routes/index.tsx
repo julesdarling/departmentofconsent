@@ -364,14 +364,14 @@ function Index() {
               ))}
             </div>
             <div className="text-center">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Your personal<br />kink menu</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Your personal<br />kink menu</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Save your own interests, boundaries, and notes so you do not have to rebuild the conversation from scratch every time.
               </p>
             </div>
             <hr className="my-5 border-plum/10" />
-            <p className="text-[13px] font-bold text-plum mb-2">Good for:</p>
-            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+            <p className="text-sm font-bold text-plum mb-2">Good for:</p>
+            <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>New partners</li>
               <li>Dungeon pickup play</li>
               <li>Recurring scenes</li>
