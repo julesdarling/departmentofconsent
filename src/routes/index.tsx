@@ -99,7 +99,7 @@ function Index() {
 
       {/* 2. "What are you into?" is not enough */}
       <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-2xl mx-auto relative">
-        <img src={stickerCollar} alt="" aria-hidden className="absolute -right-4 sm:-right-8 -top-6 sm:-top-10 w-24 sm:w-28 rotate-[14deg] pointer-events-none z-10" />
+        
         <img src={stickerWand} alt="" aria-hidden className="absolute -left-4 sm:-left-8 -bottom-6 sm:-bottom-10 w-20 sm:w-24 rotate-[-18deg] pointer-events-none z-10" />
         <div className="feature-card p-8 sm:p-12">
           <div className="text-center">
