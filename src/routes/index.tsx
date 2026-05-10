@@ -152,7 +152,7 @@ function Index() {
         <img src={stickerFeather} alt="" aria-hidden className="hidden md:block absolute -left-16 top-1/3 w-28 rotate-[-15deg] pointer-events-none" />
         <img src={stickerRope} alt="" aria-hidden className="hidden md:block absolute -right-16 top-12 w-32 rotate-[12deg] pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-0 relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-x-10 md:gap-y-0 relative">
           {/* Personal kink menu */}
           <div className="feature-card p-6 md:p-7 md:mt-0">
             <div className="relative h-44 overflow-hidden mb-2">
