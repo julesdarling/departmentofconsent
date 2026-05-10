@@ -82,7 +82,7 @@ function Index() {
           </div>
 
           <div className="relative order-1 md:order-2">
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-blush">
+            <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-blush">
               <img src={heroImg} alt="Friends laughing in a soft pile" className="w-full h-full object-cover" />
             </div>
             <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 -bottom-10 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none" />
@@ -304,7 +304,7 @@ function Index() {
 
       {/* 5. Built for kinky people */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
-        <div className="relative rounded-3xl overflow-hidden bg-plum text-white min-h-[420px] sm:min-h-[520px] flex flex-col">
+        <div className="relative rounded-xl overflow-hidden bg-plum text-white min-h-[420px] sm:min-h-[520px] flex flex-col">
           <img src={sectionBg} alt="" aria-hidden className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-plum/55" />
           <div className="relative flex flex-col justify-between flex-1 p-8 sm:p-12 lg:p-14">
@@ -336,7 +336,7 @@ function Index() {
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto relative">
         <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
         <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-4 -bottom-8 w-40 rotate-[18deg] pointer-events-none z-10" />
-        <div className="relative rounded-3xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
+        <div className="relative rounded-xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
           <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-xl mx-auto text-white">
             Make the scene clear before you start.
           </h2>
