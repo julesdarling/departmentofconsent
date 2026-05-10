@@ -73,7 +73,7 @@ function Index() {
                 Build a clear, cute, shareable scene agreement before you play.
               </p>
               <div>
-                <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
+                <CloudButton to={startTo} className="!max-w-full sm:!max-w-[15rem]">Create a scene</CloudButton>
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-8">
