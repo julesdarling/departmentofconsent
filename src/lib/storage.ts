@@ -53,6 +53,10 @@ export interface SessionSide {
   privacy: string;
   talkingAfter?: string;
   penetrativeSex: string;
+  stdTestDate?: string;
+  stdTestResults?: string;
+  prepDoxypep?: string;
+  birthControl?: string;
   timeOfPlay?: string;
   safewords: string;
   safewordItems?: string[];
