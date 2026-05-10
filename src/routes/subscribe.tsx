@@ -50,6 +50,7 @@ function SubscribePage() {
       });
       toast.success(`Promo code applied — ${result.daysGranted} days unlocked!`);
       setPromoCode("");
+      navigate({ to: "/onboarding" });
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Could not redeem code");
     } finally {
