@@ -263,20 +263,20 @@ function Index() {
 
       {/* 6. Mint CTA */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto relative">
-        <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-8 top-4 w-32 rotate-[-12deg] pointer-events-none z-10" />
-        <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-6 -bottom-2 w-28 rotate-[18deg] pointer-events-none z-10" />
-        <div className="relative rounded-3xl bg-mint text-plum p-10 sm:p-14 text-center overflow-hidden">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-xl mx-auto">
+        <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
+        <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-4 -bottom-8 w-40 rotate-[18deg] pointer-events-none z-10" />
+        <div className="relative rounded-3xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-xl mx-auto text-white">
             Make the scene clear before you start.
           </h2>
-          <p className="text-sm sm:text-base text-plum/80 mt-4 max-w-md mx-auto leading-snug">
-            Build a shared scene plan in a few minutes. Free to try, no card required.
+          <p className="text-sm sm:text-base text-white/90 mt-4 max-w-xs mx-auto leading-snug">
+            Create a shareable consent card in a few minutes.
           </p>
           <div className="flex justify-center pt-6">
             <CloudButton to={startTo} variant="outline" className="!max-w-[15rem]">Create a scene</CloudButton>
           </div>
-          <p className="text-[10px] text-plum/60 mt-5 max-w-xs mx-auto leading-snug">
-            By creating a scene you agree to our Terms of Service and Privacy Policy.
+          <p className="text-[11px] text-white/80 mt-6 max-w-sm mx-auto leading-snug">
+            No more guessing. No more vague "I'm into anything." No more finding out a limit after it has already been crossed.
           </p>
         </div>
       </section>
