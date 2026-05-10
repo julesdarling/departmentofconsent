@@ -576,10 +576,10 @@ function Index() {
         <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
         <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-4 -bottom-8 w-40 rotate-[18deg] pointer-events-none z-10" />
         <div className="relative rounded-xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-2xl mx-auto text-white">
+          <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] max-w-2xl mx-auto text-white">
             Your sex life deserves better communication
           </h2>
-          <div className="text-sm sm:text-base text-white/90 mt-4 max-w-md mx-auto leading-snug space-y-3">
+          <div className="text-base text-white/90 mt-4 max-w-md mx-auto leading-snug space-y-3">
             <p>
               Most people wait until they're already naked, pressured, emotionally attached, or halfway through a hookup to communicate clearly.
             </p>
