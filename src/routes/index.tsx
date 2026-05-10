@@ -203,19 +203,19 @@ function Index() {
           </div>
 
           {/* Right pink box containing the kink menu screenshot */}
-          <div className="relative rounded-xl bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
-            <div className="relative z-0 bg-white rounded-xl p-5 sm:p-6 w-full flex flex-col">
+          <div className="relative rounded-xl bg-blush/70 p-4 md:p-5 lg:p-8 flex items-center overflow-hidden">
+            <div className="relative z-0 bg-white rounded-xl p-4 md:p-4 lg:p-6 w-full flex flex-col">
               <div className="flex flex-wrap gap-1.5">
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
                     return (
-                      <span key={c.label} className="text-[10px] sm:text-[12px] px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-plum/15 text-plum/80 bg-white whitespace-nowrap">
+                      <span key={c.label} className="text-[10px] md:text-[10px] lg:text-[12px] px-2 md:px-2 lg:px-2.5 py-0.5 sm:py-1 rounded-full border border-plum/15 text-plum/80 bg-white whitespace-nowrap">
                         + {c.label}
                       </span>
                     );
                   }
                   return (
-                    <span key={c.label} className="inline-flex items-center gap-1 text-[10px] sm:text-[12px] pl-2 sm:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum whitespace-nowrap">
+                    <span key={c.label} className="inline-flex items-center gap-1 text-[10px] md:text-[10px] lg:text-[12px] pl-2 md:pl-2 lg:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum">
                       <span className="flex items-center gap-1 whitespace-nowrap">
                         <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" strokeWidth={3} />
                         {c.label}
