@@ -185,7 +185,7 @@ function Index() {
               <span className="italic">"What are you into?"</span>
               <br />is not enough.
             </h2>
-            <p className="text-[15px] text-foreground/75 mt-4 leading-snug">
+            <p className="text-[14px] md:text-[13px] lg:text-[15px] text-foreground/75 mt-4 leading-snug">
               Good sex needs more than vibes.<br />It needs shared expectations.
             </p>
             <hr className="my-7 border-plum/10" />
@@ -194,7 +194,7 @@ function Index() {
             </p>
             <ul className="space-y-3 text-left">
               {QUESTIONS.map((q) => (
-                <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
+                <li key={q} className="flex items-start gap-3 text-[14px] md:text-[13px] lg:text-[15px] text-plum">
                   <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
                   <span>{q}</span>
                 </li>
