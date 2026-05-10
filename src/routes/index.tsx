@@ -561,18 +561,18 @@ function Index() {
         <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
         <img src={stickerHandcuffs} alt="" aria-hidden className="hidden md:block absolute -right-4 -bottom-8 w-40 rotate-[18deg] pointer-events-none z-10" />
         <div className="relative rounded-xl bg-mint text-white p-10 sm:p-14 text-center overflow-hidden">
-          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-xl mx-auto text-white">
-            Make the scene clear before you start.
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] max-w-2xl mx-auto text-white">
+            Modern intimacy needs better communication.
           </h2>
-          <p className="text-sm sm:text-base text-white/90 mt-4 max-w-xs mx-auto leading-snug">
-            Create a shareable consent card in a few minutes.
-          </p>
-          <div className="flex justify-center pt-6">
-            <CloudButton to={startTo} className="cloud-btn-white !max-w-[15rem]">Create a scene</CloudButton>
+          <div className="text-sm sm:text-base text-white/90 mt-4 max-w-md mx-auto leading-snug space-y-3">
+            <p>
+              Most people wait until they're already naked, pressured, emotionally attached, or halfway through a hookup to communicate clearly.
+            </p>
+            <p>That's usually when communication gets hardest.</p>
           </div>
-          <p className="text-[11px] text-white/80 mt-6 max-w-sm mx-auto leading-snug">
-            No more guessing. No more vague "I'm into anything." No more finding out a limit after it has already been crossed.
-          </p>
+          <div className="flex justify-center pt-6">
+            <CloudButton to={startTo} className="cloud-btn-white !max-w-[16rem]">Start with clarity.</CloudButton>
+          </div>
         </div>
       </section>
 
