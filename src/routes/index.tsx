@@ -73,7 +73,7 @@ function Index() {
                 Build a clear, cute, shareable scene agreement before you play.
               </p>
               <div>
-                <CloudButton to={startTo} className="!max-w-[15rem]">Create a scene</CloudButton>
+                <CloudButton to={startTo} className="!max-w-full sm:!max-w-[15rem]">Create a scene</CloudButton>
               </div>
             </div>
             <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-8">
@@ -85,8 +85,8 @@ function Index() {
             <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-blush">
               <img src={heroImg} alt="Friends laughing in a soft pile" className="w-full h-full object-cover" />
             </div>
-            <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 -bottom-10 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none" />
-            <img src={stickerHandcuffs} alt="" aria-hidden className="absolute -right-4 sm:-right-8 -bottom-6 sm:-bottom-10 w-24 sm:w-32 lg:w-36 rotate-[8deg] pointer-events-none" />
+            <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 bottom-4 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none" />
+            <img src={stickerHandcuffs} alt="" aria-hidden className="absolute -right-4 sm:-right-8 bottom-6 sm:-bottom-10 w-24 sm:w-32 lg:w-36 rotate-[8deg] pointer-events-none" />
           </div>
         </div>
       </section>
