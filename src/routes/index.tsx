@@ -293,8 +293,8 @@ function Index() {
       {/* 3. How it works */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto relative">
         <div className="text-center space-y-2 mb-8 sm:mb-10">
-          <h2 className="font-display text-4xl sm:text-5xl text-plum">How it works</h2>
-          <p className="text-sm text-foreground/70 max-w-md mx-auto">
+          <h2 className="font-display text-3xl sm:text-4xl text-plum leading-[1.05]">How it works</h2>
+          <p className="text-base text-foreground/75 max-w-md mx-auto">
             A consent flow you can actually use.
           </p>
         </div>
@@ -302,9 +302,9 @@ function Index() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {STEPS.map((s) => (
               <div key={s.n}>
-                <div className="text-[13px] font-bold text-plum mb-2">{s.n}</div>
-                <h3 className="font-display text-[1.5rem] text-plum leading-tight mb-3">{s.title}</h3>
-                <p className="text-[14px] text-foreground/70 leading-snug">{s.body}</p>
+                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-2">{s.n}</div>
+                <h3 className="font-display text-2xl text-plum leading-tight mb-3">{s.title}</h3>
+                <p className="text-sm text-foreground/75 leading-snug">{s.body}</p>
               </div>
             ))}
           </div>
