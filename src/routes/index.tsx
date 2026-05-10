@@ -202,8 +202,7 @@ function Index() {
 
           {/* Right pink box containing the kink menu screenshot */}
           <div className="relative rounded-[28px] bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
-            <img src={stickerWand} alt="" aria-hidden className="absolute -right-3 -bottom-4 w-24 sm:w-32 rotate-[8deg] pointer-events-none z-10" />
-            <div className="relative z-0 bg-white rounded-2xl p-5 sm:p-6 w-full flex flex-col shadow-sm">
+            <div className="relative z-0 bg-white rounded-[20px] p-5 sm:p-6 w-full flex flex-col shadow-sm">
               <div className="flex flex-wrap gap-1.5">
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
