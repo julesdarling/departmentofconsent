@@ -96,6 +96,8 @@ function SubscribePage() {
           </Sticker>
         )}
 
+        <PricingCard />
+
         <Sticker className="space-y-3">
           <div className="space-y-1.5">
             <Label className="doc-label">Have a promo code?</Label>
@@ -118,8 +120,6 @@ function SubscribePage() {
             Valid codes unlock the app for a limited time.
           </p>
         </Sticker>
-
-        <PricingCard />
       </div>
     </Layout>
   );
