@@ -194,7 +194,7 @@ function Index() {
                 “{t.quote}”
               </blockquote>
               <figcaption className="flex items-center gap-2 mt-3">
-                <span className="w-8 h-8 rounded-full bg-blush overflow-hidden shrink-0">
+                <span className="w-8 h-8 rounded-full bg-[oklch(0.86_0.10_5)] overflow-hidden shrink-0">
                   <img src={t.avatar} alt="" aria-hidden className="w-full h-full object-cover" style={{ objectPosition: t.pos }} />
                 </span>
                 <span className="font-sans text-[11px] text-muted-foreground">— {t.author}</span>
