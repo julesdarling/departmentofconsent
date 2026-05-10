@@ -182,15 +182,18 @@ function Index() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {[
-            { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31" },
-            { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26" },
-            { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29" },
+            { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31", avatar: avatarJ },
+            { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26", avatar: avatarR },
+            { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29", avatar: avatarA },
           ].map((t) => (
             <figure key={t.author} className="rounded-xl bg-white p-6 sm:p-8 flex flex-col">
               <blockquote className="font-display italic text-xl sm:text-2xl text-plum leading-snug">
                 “{t.quote}”
               </blockquote>
-              <figcaption className="text-sm text-muted-foreground mt-4">— {t.author}</figcaption>
+              <figcaption className="flex items-center gap-3 mt-5">
+                <img src={t.avatar} alt="" aria-hidden className="w-12 h-12 object-contain shrink-0" />
+                <span className="text-sm text-muted-foreground">— {t.author}</span>
+              </figcaption>
             </figure>
           ))}
         </div>
