@@ -467,7 +467,7 @@ function Index() {
           {/* Aftercare */}
           <div className="feature-card p-6 md:p-7 order-4 md:order-none">
             <div className="mb-2">
-              <ul className="space-y-2 text-[14px]">
+              <ul className="space-y-2 text-sm">
                 <li className="flex items-center gap-2.5">
                   <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-no text-white shrink-0">
                     <Check className="w-2.5 h-2.5" strokeWidth={3} />
@@ -483,11 +483,11 @@ function Index() {
               </ul>
             </div>
             <div className="text-center mt-5">
-              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Aftercare does not have<br />to be improvised</h3>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Aftercare does not have<br />to be improvised</h3>
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Water, food, blankets, shower, silence, cuddling, space, check-ins, reassurance, grounding, or anything else each person needs to come down safely.
               </p>
-              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+              <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 You can also keep private reflection notes afterward, so future scenes get better instead of messier.
               </p>
             </div>
