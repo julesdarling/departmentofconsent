@@ -494,6 +494,28 @@ function Index() {
         </div>
       </section>
 
+      {/* 5b. Feature grid */}
+      <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-6xl mx-auto">
+        <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.05] text-plum text-center max-w-2xl mx-auto">
+          Everything you'd rather know beforehand.
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
+          {[
+            { title: "Hard limits", body: "Communicate non-negotiables clearly before meeting." },
+            { title: "Kink compatibility", body: "See mutual interests and mismatches instantly." },
+            { title: "Protection preferences", body: "Reduce awkward condom and STI conversations." },
+            { title: "Aftercare expectations", body: "Clarify emotional and physical needs afterward." },
+            { title: "Dynamic preferences", body: "Discuss dominance, submission, praise, degradation, service, ownership, and more." },
+            { title: "Revocable anytime", body: "Boundaries can change at any moment." },
+          ].map((f) => (
+            <div key={f.title} className="rounded-xl bg-white p-6 shadow-sm">
+              <h3 className="font-display text-xl text-plum">{f.title}</h3>
+              <p className="text-sm text-muted-foreground mt-2 leading-snug">{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* 6. Mint CTA */}
       <section className="px-5 sm:px-10 py-10 sm:py-16 max-w-5xl mx-auto relative">
         <img src={stickerCollar} alt="" aria-hidden className="hidden md:block absolute -left-4 -top-6 w-40 rotate-[-12deg] pointer-events-none z-10" />
