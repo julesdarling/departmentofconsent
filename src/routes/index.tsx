@@ -367,14 +367,3 @@ function Index() {
   );
 }
 
-function Dot({ className = "" }: { className?: string }) {
-  return <span className={`inline-block w-2 h-2 rounded-full ${className}`} />;
-}
-
-function Tick() {
-  return (
-    <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-yes/30 border border-yes shrink-0">
-      <Check className="w-2.5 h-2.5 text-plum" strokeWidth={3} />
-    </span>
-  );
-}
