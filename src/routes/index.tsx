@@ -69,7 +69,7 @@ function Index() {
       <section className="px-5 sm:px-10 pt-4 sm:pt-10 pb-6 sm:pb-12 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-12 items-center">
           <div className="space-y-6 order-2 md:order-1 relative">
-            <h1 className="font-display text-plum leading-[1.02] text-[2.5rem] sm:text-5xl lg:text-[3.75rem] tracking-tight">
+            <h1 className="font-display text-plum leading-[1.02] sm:text-5xl lg:text-[3.75rem] tracking-tight font-normal text-4xl">
               A better way to talk about limits, kinks, and aftercare.
             </h1>
             <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
