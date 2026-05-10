@@ -281,10 +281,10 @@ function Index() {
         </div>
 
         {/* Know before row */}
-        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-plum">
-          <span className="font-bold">Know before:</span>
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-sm text-foreground/75">
+          <span className="font-bold text-plum">Know before:</span>
           {KNOW_BEFORE.map((k) => (
-            <span key={k} className="text-plum/80">{k}</span>
+            <span key={k}>{k}</span>
           ))}
         </div>
         </div>
