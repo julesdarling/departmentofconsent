@@ -3,7 +3,7 @@ import { Layout } from "@/components/Layout";
 import { CloudButton } from "@/components/CloudButton";
 import { useProfile } from "@/lib/storage";
 import { useAuth } from "@/lib/useAuth";
-import { Check } from "lucide-react";
+import { Check, HelpCircle } from "lucide-react";
 import heroImg from "@/assets/hero-friends.jpg";
 import sectionBg from "@/assets/section-bg.jpg";
 import wordmark from "@/assets/site-logo.svg";
@@ -29,12 +29,12 @@ export const Route = createFileRoute("/")({
 });
 
 const QUESTIONS = [
-  "What turns you on, and how?",
-  "What's a hard no?",
-  "What scenes do you fantasize about?",
-  "What do you need to feel safe?",
-  "What kind of aftercare do you want?",
-  "What words make you feel hot — or shut down?",
+  "What is enthusiastically on the table.",
+  "What is a maybe.",
+  "What is completely off limits.",
+  "What needs discussion or aftercare.",
+  "What is enthusiastically on the table?",
+  "What words, signals, or boundaries stop the scene immediately.",
 ];
 
 const STEPS = [
@@ -100,28 +100,34 @@ function Index() {
 
       {/* 2. "What are you into?" is not enough */}
       <section className="px-5 sm:px-10 py-8 sm:py-12 max-w-2xl mx-auto relative">
-        <img src={stickerWand} alt="" aria-hidden className="hidden md:block absolute -left-20 bottom-12 w-24 rotate-[-18deg] pointer-events-none" />
-        <div className="feature-card p-8 sm:p-12 text-center">
-          <h2 className="font-display italic text-3xl sm:text-[2.25rem] text-plum leading-tight">
-            <span>"What are you into?"</span>
-            <br />is not enough.
-          </h2>
-          <p className="text-sm text-foreground/70 max-w-md mx-auto mt-4 leading-snug">
-            Real consent is in the details. They need to be agreed on, before the scene starts.
-          </p>
-          <p className="text-[11px] uppercase tracking-[0.14em] font-bold text-plum mt-7 mb-4">
-            So bring your answers to:
-          </p>
-          <ul className="space-y-3 text-left max-w-sm mx-auto">
-            {QUESTIONS.map((q) => (
-              <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
-                <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-coral text-white">
-                  <Check className="w-3 h-3" strokeWidth={3} />
-                </span>
-                <span>{q}</span>
-              </li>
-            ))}
-          </ul>
+        <img src={stickerCollar} alt="" aria-hidden className="absolute -right-4 sm:-right-8 -top-6 sm:-top-10 w-24 sm:w-28 rotate-[14deg] pointer-events-none z-10" />
+        <img src={stickerWand} alt="" aria-hidden className="absolute -left-4 sm:-left-8 -bottom-6 sm:-bottom-10 w-20 sm:w-24 rotate-[-18deg] pointer-events-none z-10" />
+        <div className="feature-card p-8 sm:p-12">
+          <div className="text-center">
+            <h2 className="font-display italic text-3xl sm:text-[2.5rem] text-plum leading-tight">
+              <span>"What are you into?"</span>
+              <br />is not enough.
+            </h2>
+            <p className="text-[15px] text-foreground/75 max-w-md mx-auto mt-4 leading-snug">
+              Good scenes need more than vibes.<br />They need shared expectations.
+            </p>
+          </div>
+          <hr className="my-7 border-plum/10" />
+          <div className="max-w-sm mx-auto">
+            <p className="text-[13px] font-bold text-plum mb-4">
+              Before play, you need to know:
+            </p>
+            <ul className="space-y-3 text-left">
+              {QUESTIONS.map((q) => (
+                <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
+                  <span className="shrink-0 mt-0.5 inline-flex items-center justify-center w-6 h-6 rounded-full border-2 border-coral text-coral">
+                    <HelpCircle className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  </span>
+                  <span>{q}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
