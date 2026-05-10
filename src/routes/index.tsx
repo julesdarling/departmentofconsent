@@ -155,74 +155,149 @@ function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-x-10 md:gap-y-0 relative">
           {/* Personal kink menu */}
           <div className="feature-card p-6 md:p-7 md:mt-0">
-            <div className="flex flex-wrap gap-1.5 mb-5">
-              {["Impact", "Bondage", "Sensation", "Power", "Service", "Roleplay", "Edgeplay", "Verbal"].map((c) => (
-                <span key={c} className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-plum font-semibold">{c}</span>
-              ))}
+            <div className="relative h-44 overflow-hidden mb-2">
+              <div className="flex flex-wrap gap-1.5 justify-center">
+                {[
+                  "+ Hand stuff", "+ Kissing", "+ Cock sucking", "+ Pussy eating", "+ Fucking",
+                  "+ Anal play", "+ Toys", "+ Sensation", "+ Temperature play (ice/wax)",
+                  "+ Scratching", "+ Nails and scratching", "+ Biting", "+ Tickling", "+ Ear licking",
+                  "+ Electro", "+ Impact", "+ Spanking (hand)", "+ Paddling", "+ Flogging",
+                  "+ Caning", "+ Face slapping", "+ Whipping", "+ Body punching",
+                  "+ Face punching", "+ Rope bondage", "+ Cuffs / restraints", "+ Blindfold",
+                  "+ Grabbing / restraining", "+ Hand over mouth", "+ Saran Wrap", "+ Dominance",
+                ].map((c) => (
+                  <span key={c} className="text-[10px] px-2 py-0.5 rounded-full border border-blush text-plum/80">{c}</span>
+                ))}
+              </div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-white" />
             </div>
-            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Your personal<br />kink menu</h3>
-            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
-              Save your yes / maybe / no list once. Reuse it for every scene, every partner. Add custom kinks any time.
-            </p>
-            <ul className="mt-4 space-y-1.5 text-sm text-plum">
-              <li className="flex items-center gap-2"><Dot className="bg-yes" /> Impact play</li>
-              <li className="flex items-center gap-2"><Dot className="bg-yes" /> Rope bondage</li>
-              <li className="flex items-center gap-2"><Dot className="bg-maybe" /> Wax play</li>
-              <li className="flex items-center gap-2"><Dot className="bg-no" /> Choking</li>
+            <div className="text-center">
+              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Your personal<br />kink menu</h3>
+              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+                Save your own interests, boundaries, and notes so you do not have to rebuild the conversation from scratch every time.
+              </p>
+            </div>
+            <hr className="my-5 border-plum/10" />
+            <p className="text-[13px] font-bold text-plum mb-2">Good for:</p>
+            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+              <li>New partners</li>
+              <li>Dungeon pickup play</li>
+              <li>Recurring scenes</li>
+              <li>Long-term dynamics</li>
+              <li>People who freeze when asked, "So what are you into?"</li>
             </ul>
           </div>
 
           {/* Two-way consent */}
           <div className="feature-card p-6 md:p-7 md:mt-20">
-            <div className="flex flex-wrap gap-1.5 mb-5">
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-yes/30 border border-yes text-plum font-semibold">You: yes</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-maybe/30 border border-maybe text-plum font-semibold">Them: maybe</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blush text-plum font-semibold">Match</span>
+            <div className="space-y-3 mb-2">
+              <div>
+                <div className="text-[11px] font-bold tracking-wide text-yes mb-1">BOTH WANT TO PLAY</div>
+                <p className="text-[12px] text-foreground/70 mb-1.5">Cravings you both picked for this scene.</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
+                    <span key={c} className="text-[11px] px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="text-[11px] font-bold tracking-wide text-maybe mb-1">DISCUSS</div>
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
+              </div>
+              <div>
+                <div className="text-[11px] font-bold tracking-wide text-no mb-1">HARD LIMIT FROM ONE SIDE</div>
+                <span className="text-[11px] px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum/60 inline-block">Tickling</span>
+              </div>
             </div>
-            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Two-way consent,<br />not one-way permission</h3>
-            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
-              Both people fill out their side independently. The scene plan is the overlap — what you both actively want.
-            </p>
-            <div className="mt-4 text-sm">
-              <div className="text-[10px] uppercase font-bold text-plum/60 tracking-wider mb-1">You both said yes to</div>
-              <ul className="space-y-1 text-plum">
-                <li>• Impact play</li>
-                <li>• Spanking</li>
-                <li>• Praise</li>
-                <li>• Aftercare cuddles</li>
-              </ul>
+            <div className="text-center mt-5">
+              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Two-way consent, not<br />one-way permission</h3>
+              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+                Both people fill out their own side. The goal is not to pressure someone into agreement. The goal is to make overlap obvious and mismatches impossible to ignore.
+              </p>
             </div>
+            <hr className="my-5 border-plum/10" />
+            <p className="text-[13px] font-bold text-plum mb-2">Use it to clarify:</p>
+            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+              <li>Yes / maybe / no</li>
+              <li>Hard limits</li>
+              <li>Soft limits</li>
+              <li>Intensity levels</li>
+              <li>Role preferences</li>
+              <li>Safewords and signals</li>
+              <li>Aftercare needs</li>
+              <li>Things that require a longer conversation</li>
+            </ul>
           </div>
 
           {/* Scene cards */}
           <div className="feature-card p-6 md:p-7 md:-mt-6">
-            <div className="text-[10px] uppercase tracking-wider font-bold text-coral mb-2">Scene card · Saturday</div>
-            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
-            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
-              The plan you already agreed on, formatted for fast reading. Pull it up mid-scene, no scrolling required.
-            </p>
-            <ul className="mt-4 space-y-1.5 text-sm text-plum">
-              <li>• Safeword: <strong>red</strong></li>
-              <li>• Slow down: <strong>yellow</strong></li>
-              <li>• Hard limits this scene</li>
-              <li>• Aftercare needs</li>
-              <li>• Emergency contact</li>
+            <div className="font-mono text-[11px] leading-relaxed text-plum mb-2">
+              <div className="text-no font-bold tracking-wide mb-2">SAFEWORDS</div>
+              <div>Verbal:</div>
+              <div>Red — stop the scene, something is wrong and we can't continue.</div>
+              <div>Yellow — check in.</div>
+              <div>Green — good, keep going.</div>
+              <div>Mercy — no more on the same spot.</div>
+              <div className="h-3" />
+              <div>Non-verbal:</div>
+              <div>Thumb up — keep going.</div>
+              <div>Enthusiastic thumb up — more more more please.</div>
+              <div className="text-plum/40">Thumb side — right here is good, no more no less.</div>
+              <div className="text-plum/40">Thumb down, double tap — check in please.</div>
+            </div>
+            <div className="text-center mt-5">
+              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Scene cards for when<br />brains stop working</h3>
+              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+                During play, details can get blurry. The scene card keeps the important stuff readable.
+              </p>
+            </div>
+            <hr className="my-5 border-plum/10" />
+            <p className="text-[13px] font-bold text-plum mb-2">Include:</p>
+            <ul className="space-y-1.5 text-[14px] text-plum list-disc pl-5">
+              <li>Safewords</li>
+              <li>Nonverbal signals</li>
+              <li>Hard limits</li>
+              <li>Intensity notes</li>
+              <li>Health or accessibility notes</li>
+              <li>Aftercare requests</li>
+              <li>Anything that must not be forgotten</li>
             </ul>
           </div>
 
           {/* Aftercare */}
           <div className="feature-card p-6 md:p-7 md:mt-12">
-            <div className="text-[10px] uppercase tracking-wider font-bold text-coral mb-3">Aftercare checklist</div>
-            <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Aftercare doesn't<br />have to be improvised</h3>
-            <p className="text-[13px] text-foreground/70 mt-3 leading-snug">
-              Pick what you need ahead of time. Water. Snacks. Quiet. A specific person. A check-in tomorrow.
-            </p>
-            <ul className="mt-4 space-y-1.5 text-sm text-plum">
-              <li className="flex items-center gap-2"><Tick /> Water + electrolytes</li>
-              <li className="flex items-center gap-2"><Tick /> Cuddles, no talking</li>
-              <li className="flex items-center gap-2"><Tick /> Snack within 30 min</li>
-              <li className="flex items-center gap-2"><Tick /> Check-in next day</li>
-            </ul>
+            <div className="mb-2">
+              <div className="font-display text-[15px] text-plum mb-3">Your aftercare list</div>
+              <ul className="space-y-2 text-[14px]">
+                <li className="flex items-center gap-2.5">
+                  <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-no text-white shrink-0">
+                    <Check className="w-2.5 h-2.5" strokeWidth={3} />
+                  </span>
+                  <span className="text-plum/60 line-through">Water and electrolytes</span>
+                </li>
+                {["Cuddling", "Debrief scene", "Thorns and roses?"].map((item) => (
+                  <li key={item} className="flex items-center gap-2.5">
+                    <span className="inline-block w-4 h-4 rounded-full border-2 border-no shrink-0" />
+                    <span className="text-plum">{item}</span>
+                  </li>
+                ))}
+                {["Make a check-in plan", "Monitor for drop and do self care"].map((item) => (
+                  <li key={item} className="flex items-center gap-2.5">
+                    <span className="inline-block w-4 h-4 rounded-full border-2 border-plum/20 shrink-0" />
+                    <span className="text-plum/40">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="text-center mt-5">
+              <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Aftercare does not have<br />to be improvised</h3>
+              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+                Water, food, blankets, shower, silence, cuddling, space, check-ins, reassurance, grounding, or anything else each person needs to come down safely.
+              </p>
+              <p className="text-[13px] text-foreground/70 mt-3 leading-snug max-w-xs mx-auto">
+                You can also keep private reflection notes afterward, so future scenes get better instead of messier.
+              </p>
+            </div>
           </div>
         </div>
       </section>
