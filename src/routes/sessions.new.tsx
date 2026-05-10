@@ -239,8 +239,8 @@ function NewSession() {
               <Label className="text-sm">Substance use is a hard limit for me</Label>
               <Switch checked={side.substancesHardLimit} onCheckedChange={(v) => update("substancesHardLimit", v)} />
             </div>
-            <Field label="Medical concerns specific to this scene">
-              <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, on my period, new meds..." />
+            <Field label="Any physical concerns specific to this scene">
+              <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, new meds..." />
             </Field>
             <Field label="Other play partners / dynamics to be aware of">
               <Textarea value={side.partnerDynamics} onChange={(e) => update("partnerDynamics", e.target.value)} rows={2} />
