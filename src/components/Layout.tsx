@@ -8,7 +8,7 @@ export function Layout({ children, fullBleed = false, showFooter = false }: { ch
   const { pathname } = useLocation();
   const isHome = pathname === "/";
   return (
-    <div className="min-h-screen grain bg-background flex flex-col">
+    <div className="min-h-screen grain bg-background flex flex-col overflow-x-hidden">
       {!isHome && (
         <header className="w-full flex justify-center pt-6 pb-2">
           <Link to="/" aria-label="Dept of Consent — Home">
