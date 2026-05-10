@@ -208,22 +208,22 @@ function Index() {
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
                     return (
-                      <span key={c.label} className="text-[12px] px-2.5 py-1 rounded-full border border-plum/15 text-plum/80 bg-white">
+                      <span key={c.label} className="text-[10px] sm:text-[12px] px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border border-plum/15 text-plum/80 bg-white whitespace-nowrap">
                         + {c.label}
                       </span>
                     );
                   }
                   return (
-                    <span key={c.label} className="inline-flex items-center gap-1 text-[12px] pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum">
-                      <span className="flex items-center gap-1">
-                        <Check className="w-3 h-3" strokeWidth={3} />
+                    <span key={c.label} className="inline-flex items-center gap-1 text-[10px] sm:text-[12px] pl-2 sm:pl-2.5 pr-1 py-0.5 rounded-full border border-yes/40 bg-yes/15 text-plum whitespace-nowrap">
+                      <span className="flex items-center gap-1 whitespace-nowrap">
+                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3" strokeWidth={3} />
                         {c.label}
                       </span>
                       <span className="flex items-center gap-0.5 ml-1">
                         {(["give", "receive", "both"] as const).map((opt) => (
                           <span
                             key={opt}
-                            className={`text-[10px] px-1.5 py-0.5 rounded-full capitalize ${
+                            className={`text-[9px] sm:text-[10px] px-1 sm:px-1.5 py-0.5 rounded-full capitalize ${
                               c.selected === opt ? "bg-yes/60 text-plum font-semibold" : "text-plum/60"
                             }`}
                           >
