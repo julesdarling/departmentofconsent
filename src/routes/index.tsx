@@ -175,36 +175,35 @@ function Index() {
 
 
       {/* 2. "What are you into?" is not enough */}
-      <section className="px-4 sm:px-8 py-10 sm:py-14 max-w-7xl mx-auto">
-        <div className="relative rounded-[28px] bg-blush/70 px-5 sm:px-10 py-10 sm:py-14 overflow-hidden">
-          <img src={stickerWand} alt="" aria-hidden className="absolute right-4 sm:right-10 bottom-16 sm:bottom-20 w-24 sm:w-36 rotate-[8deg] pointer-events-none z-10" />
+      <section className="px-4 sm:px-8 py-10 sm:py-14 max-w-7xl mx-auto bg-white">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-stretch">
+          {/* Left card */}
+          <div className="bg-white rounded-2xl p-7 sm:p-10">
+            <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-[1.05]">
+              <span className="italic">"What are you into?"</span>
+              <br />is not enough.
+            </h2>
+            <p className="text-[15px] text-foreground/75 mt-4 leading-snug">
+              Good sex needs more than vibes.<br />It needs shared expectations.
+            </p>
+            <hr className="my-7 border-plum/10" />
+            <p className="text-[13px] font-bold text-plum mb-4">
+              Before play, you need to know:
+            </p>
+            <ul className="space-y-3 text-left">
+              {QUESTIONS.map((q) => (
+                <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
+                  <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
+                  <span>{q}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-5 md:gap-8 items-stretch">
-            {/* Left card */}
-            <div className="bg-white rounded-2xl p-7 sm:p-10">
-              <h2 className="font-display text-3xl sm:text-[2.5rem] text-plum leading-[1.05]">
-                <span className="italic">"What are you into?"</span>
-                <br />is not enough.
-              </h2>
-              <p className="text-[15px] text-foreground/75 mt-4 leading-snug">
-                Good sex needs more than vibes.<br />It needs shared expectations.
-              </p>
-              <hr className="my-7 border-plum/10" />
-              <p className="text-[13px] font-bold text-plum mb-4">
-                Before play, you need to know:
-              </p>
-              <ul className="space-y-3 text-left">
-                {QUESTIONS.map((q) => (
-                  <li key={q} className="flex items-start gap-3 text-[15px] text-plum">
-                    <HelpCircle className="shrink-0 mt-0.5 w-5 h-5 text-coral" strokeWidth={2.25} />
-                    <span>{q}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Right card — kink menu */}
-            <div className="bg-white rounded-2xl p-5 sm:p-7 flex flex-col">
+          {/* Right pink box containing the kink menu screenshot */}
+          <div className="relative rounded-[28px] bg-blush/70 p-5 sm:p-8 flex items-center overflow-hidden">
+            <img src={stickerWand} alt="" aria-hidden className="absolute -right-3 -bottom-4 w-24 sm:w-32 rotate-[8deg] pointer-events-none z-10" />
+            <div className="relative z-0 bg-white rounded-2xl p-5 sm:p-6 w-full flex flex-col shadow-sm">
               <div className="flex flex-wrap gap-1.5">
                 {KINK_CHIPS.map((c) => {
                   if (!c.selected) {
@@ -236,7 +235,7 @@ function Index() {
                   );
                 })}
               </div>
-              <div className="mt-auto pt-6 flex items-center gap-2">
+              <div className="mt-6 flex items-center gap-2">
                 <input
                   type="text"
                   placeholder="Add your own kink..."
@@ -249,14 +248,14 @@ function Index() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Know before row */}
-          <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-plum">
-            <span className="font-bold">Know before:</span>
-            {KNOW_BEFORE.map((k) => (
-              <span key={k} className="text-plum/80">{k}</span>
-            ))}
-          </div>
+        {/* Know before row */}
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-2 text-[13px] text-plum">
+          <span className="font-bold">Know before:</span>
+          {KNOW_BEFORE.map((k) => (
+            <span key={k} className="text-plum/80">{k}</span>
+          ))}
         </div>
       </section>
 
