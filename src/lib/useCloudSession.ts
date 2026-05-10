@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { apiGetSession, apiUpdateSession, apiAddPartnerSide } from "./sessionsApi";
 import type { PlaySession, SessionSide } from "./storage";
+import { supabase } from "@/integrations/supabase/client";
 
 export function useCloudSession(token: string | undefined) {
   const [session, setSession] = useState<PlaySession | null | undefined>(undefined);
@@ -20,6 +21,19 @@ export function useCloudSession(token: string | undefined) {
   useEffect(() => {
     refresh();
   }, [refresh]);
+
+  useEffect(() => {
+    if (!token) return;
+    const channel = supabase
+      .channel(`play_session:${token}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "play_sessions", filter: `share_token=eq.${token}` },
+        () => { refresh(); }
+      )
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [token, refresh]);
 
   const update = useCallback(
     async (
