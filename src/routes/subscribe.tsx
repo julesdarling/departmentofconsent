@@ -48,7 +48,8 @@ function SubscribePage() {
       const result = await redeemFn({
         data: { code: promoCode, environment: getStripeEnvironment() },
       });
-      toast.success(`Promo code applied — ${result.daysGranted} days unlocked!`);
+      const days = result?.daysGranted ?? 30;
+      toast.success(`Promo code applied — ${days} days unlocked!`);
       setPromoCode("");
       navigate({ to: "/onboarding" });
     } catch (e) {
