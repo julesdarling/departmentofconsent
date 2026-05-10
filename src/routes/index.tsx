@@ -76,30 +76,59 @@ function Index() {
 
       {/* 1. Hero */}
       <section className="px-5 sm:px-10 pt-4 sm:pt-10 pb-6 sm:pb-12 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-12 items-center">
-          <div className="order-2 md:order-1 relative text-center md:text-left">
-            <div className="space-y-3">
-              <h1 className="font-display text-plum leading-[1.05] sm:text-4xl lg:text-[2.75rem] tracking-tight font-normal text-3xl">
-                A better way to talk about limits, kinks, and aftercare.
-              </h1>
-              <p className="text-foreground/85 max-w-md mx-auto md:mx-0 text-base sm:text-[17px] leading-snug">
-                Build a clear, cute, shareable scene agreement before you play.
-              </p>
-              <div className="flex justify-center md:block">
-                <CloudButton to={startTo} className="!max-w-full sm:!max-w-[15rem]">Create a scene</CloudButton>
-              </div>
-            </div>
-            <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] mx-auto md:mx-0 leading-snug pt-8">
-              Choose your yes / maybe / no list, compare limits with a partner, plan the scene, and keep safewords, boundaries, and aftercare visible when they actually matter.
+        <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-10 items-center">
+          <div className="order-2 md:order-1 text-left">
+            <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum uppercase">
+              Most people find out they're incompatible too late.
             </p>
+            <h1 className="font-display text-plum leading-[1.02] text-[2.25rem] sm:text-5xl lg:text-[3.5rem] tracking-tight font-normal mt-4">
+              Don't discover hard limits <em className="italic">halfway</em> through a hookup.
+            </h1>
+            <p className="text-foreground/80 max-w-md text-[15px] sm:text-base leading-snug mt-5">
+              Compare boundaries, kinks, condom expectations, attachment styles, and dealbreakers before things get awkward, intense, or unsafe.
+            </p>
+            <div className="mt-6">
+              <CloudButton to={startTo} className="!max-w-full sm:!max-w-[18rem]">Start playing safer</CloudButton>
+            </div>
+
+            <div className="mt-10">
+              <p className="text-[11px] sm:text-xs font-bold tracking-wide text-plum mb-4">
+                Trusted by communities worldwide
+              </p>
+              <ul className="grid grid-cols-5 gap-3 max-w-md">
+                {COMMUNITIES.map((c) => (
+                  <li key={c.label} className="flex flex-col items-center text-center gap-1.5">
+                    <img src={c.icon} alt="" aria-hidden className="w-12 h-12 sm:w-14 sm:h-14 object-contain" />
+                    <span className="text-[10px] sm:text-[11px] text-plum/80 leading-tight whitespace-pre-line">{c.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div className="relative order-1 md:order-2">
-            <div className="relative rounded-xl overflow-hidden aspect-[4/3] bg-blush">
-              <img src={heroImg} alt="Friends laughing in a soft pile" className="w-full h-full object-cover" />
+            <div className="relative rounded-xl overflow-hidden aspect-[4/5] sm:aspect-[5/6] bg-blush">
+              <img src={heroImg} alt="Two partners resting together on soft sheets" className="w-full h-full object-cover" />
+              <div className="absolute inset-x-4 sm:inset-x-8 top-1/2 -translate-y-1/2 bg-white rounded-xl shadow-xl p-5 sm:p-6 space-y-4">
+                <div>
+                  <div className="text-[11px] sm:text-xs font-bold tracking-wide text-yes mb-1">BOTH WANT TO PLAY</div>
+                  <p className="text-[12px] sm:text-[13px] text-foreground/70 mb-2">Cravings you both picked for this scene.</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
+                      <span key={c} className="text-[12px] sm:text-[13px] px-3 py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[11px] sm:text-xs font-bold tracking-wide text-maybe mb-1.5">DISCUSS</div>
+                  <span className="text-[12px] sm:text-[13px] px-3 py-1 rounded-full bg-maybe/20 border border-maybe/40 text-plum inline-block">Hand stuff</span>
+                </div>
+                <div>
+                  <div className="text-[11px] sm:text-xs font-bold tracking-wide text-no mb-1.5">HARD LIMIT FROM ONE SIDE</div>
+                  <span className="text-[12px] sm:text-[13px] px-3 py-1 rounded-full bg-no/15 border border-no/30 text-plum/60 inline-block">Tickling</span>
+                </div>
+              </div>
             </div>
-            <img src={stickerWhip} alt="" aria-hidden className="absolute -left-6 sm:-left-10 bottom-4 sm:-bottom-14 w-24 sm:w-32 lg:w-36 rotate-[-18deg] pointer-events-none" />
-            <img src={stickerHandcuffs} alt="" aria-hidden className="absolute -right-4 sm:-right-8 bottom-6 sm:-bottom-10 w-24 sm:w-32 lg:w-36 rotate-[8deg] pointer-events-none" />
           </div>
         </div>
       </section>
