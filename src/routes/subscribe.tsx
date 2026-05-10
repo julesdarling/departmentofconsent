@@ -80,9 +80,11 @@ function SubscribePage() {
         </div>
 
         {!checkoutOpen ? (
-          <Button size="lg" className="w-full" onClick={() => setCheckoutOpen(true)}>
-            Subscribe — $9/mo
-          </Button>
+          <div className="flex justify-center">
+            <CloudButton onClick={() => setCheckoutOpen(true)}>
+              Subscribe — $9/mo
+            </CloudButton>
+          </div>
         ) : (
           <Sticker className="p-2">
             <StripeEmbeddedCheckout
