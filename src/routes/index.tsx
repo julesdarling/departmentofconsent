@@ -57,7 +57,7 @@ function Index() {
           <img src={wordmark} alt="Dept of Consent" className="h-7 sm:h-8 w-auto" />
         </Link>
         <CloudButton to={user ? "/sessions" : "/auth"} variant="outline" className="cloud-btn-sm">
-          {user ? "My scenes" : "Get started"}
+          Get started
         </CloudButton>
       </header>
 
