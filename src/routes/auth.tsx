@@ -22,11 +22,22 @@ const schema = z.object({
   password: z.string().min(8, "At least 8 characters").max(72),
 });
 
+function calculateAge(dobIso: string): number {
+  const dob = new Date(dobIso);
+  if (Number.isNaN(dob.getTime())) return -1;
+  const now = new Date();
+  let age = now.getFullYear() - dob.getFullYear();
+  const m = now.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < dob.getDate())) age--;
+  return age;
+}
+
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup" | "forgot">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [dob, setDob] = useState("");
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -62,13 +73,31 @@ function AuthPage() {
       toast.error(parsed.error.issues[0].message);
       return;
     }
+    if (mode === "signup") {
+      if (!dob) {
+        toast.error("Enter your date of birth");
+        return;
+      }
+      const age = calculateAge(dob);
+      if (age < 0) {
+        toast.error("Enter a valid date of birth");
+        return;
+      }
+      if (age < 18) {
+        toast.error("You must be at least 18 to sign up");
+        return;
+      }
+    }
     setBusy(true);
     try {
       if (mode === "signup") {
         const { error } = await supabase.auth.signUp({
           email: parsed.data.email,
           password: parsed.data.password,
-          options: { emailRedirectTo: `${window.location.origin}${REDIRECT_AFTER_AUTH}` },
+          options: {
+            emailRedirectTo: `${window.location.origin}${REDIRECT_AFTER_AUTH}`,
+            data: { dob, age_confirmed_18_plus: true },
+          },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account.");
@@ -124,6 +153,19 @@ function AuthPage() {
             <div className="space-y-1.5">
               <Label className="doc-label">Password</Label>
               <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+            </div>
+          )}
+          {mode === "signup" && (
+            <div className="space-y-1.5">
+              <Label className="doc-label">Date of birth</Label>
+              <Input
+                type="date"
+                value={dob}
+                onChange={(e) => setDob(e.target.value)}
+                max={new Date().toISOString().split("T")[0]}
+                autoComplete="bday"
+              />
+              <p className="text-xs text-muted-foreground">You must be at least 18 to sign up.</p>
             </div>
           )}
 
