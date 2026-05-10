@@ -64,19 +64,19 @@ function Index() {
       {/* 1. Hero */}
       <section className="px-5 sm:px-10 pt-4 sm:pt-10 pb-6 sm:pb-12 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-12 items-center">
-          <div className="order-2 md:order-1 relative">
+          <div className="order-2 md:order-1 relative text-center md:text-left">
             <div className="space-y-3">
               <h1 className="font-display text-plum leading-[1.05] sm:text-4xl lg:text-[2.75rem] tracking-tight font-normal text-3xl">
                 A better way to talk about limits, kinks, and aftercare.
               </h1>
-              <p className="text-foreground/85 max-w-md text-base sm:text-[17px] leading-snug">
+              <p className="text-foreground/85 max-w-md mx-auto md:mx-0 text-base sm:text-[17px] leading-snug">
                 Build a clear, cute, shareable scene agreement before you play.
               </p>
-              <div>
+              <div className="flex justify-center md:block">
                 <CloudButton to={startTo} className="!max-w-full sm:!max-w-[15rem]">Create a scene</CloudButton>
               </div>
             </div>
-            <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] leading-snug pt-8">
+            <p className="text-[10px] text-muted-foreground/80 max-w-[18rem] mx-auto md:mx-0 leading-snug pt-8">
               Choose your yes / maybe / no list, compare limits with a partner, plan the scene, and keep safewords, boundaries, and aftercare visible when they actually matter.
             </p>
           </div>
