@@ -294,21 +294,41 @@ function Index() {
           <div className="contents md:flex md:flex-col md:gap-16">
           {/* Personal kink menu */}
           <div className="feature-card p-6 md:p-7 order-1 md:order-none">
-            <div className="relative h-44 overflow-hidden mb-2">
-              <div className="flex flex-wrap gap-1.5 justify-center">
-                {[
-                  "+ Hand stuff", "+ Kissing", "+ Cock sucking", "+ Pussy eating", "+ Fucking",
-                  "+ Anal play", "+ Toys", "+ Sensation", "+ Temperature play (ice/wax)",
-                  "+ Scratching", "+ Nails and scratching", "+ Biting", "+ Tickling", "+ Ear licking",
-                  "+ Electro", "+ Impact", "+ Spanking (hand)", "+ Paddling", "+ Flogging",
-                  "+ Caning", "+ Face slapping", "+ Whipping", "+ Body punching",
-                  "+ Face punching", "+ Rope bondage", "+ Cuffs / restraints", "+ Blindfold",
-                  "+ Grabbing / restraining", "+ Hand over mouth", "+ Saran Wrap", "+ Dominance",
-                ].map((c) => (
-                  <span key={c} className="text-[10px] px-2 py-0.5 rounded-full border border-blush text-plum/80">{c}</span>
-                ))}
-              </div>
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-white" />
+            <div className="mb-2 space-y-4">
+              {[
+                { label: "Rope bondage", yn: "Yes", gr: "Receive" },
+                { label: "Cuffs / restraints", yn: "Yes", gr: "Receive" },
+              ].map((row, i) => (
+                <div key={row.label} className={i > 0 ? "pt-4 border-t border-plum/10" : ""}>
+                  <div className="text-[13px] text-plum mb-2">{row.label}</div>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[11px]">
+                      {["Yes", "Maybe", "No"].map((opt) => (
+                        <span
+                          key={opt}
+                          className={`px-3 py-1 ${
+                            row.yn === opt ? "bg-yes/30 text-plum font-semibold" : "text-plum/60"
+                          }`}
+                        >
+                          {opt}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="inline-flex rounded-full border border-plum/15 overflow-hidden text-[11px]">
+                      {["Give", "Receive", "Both"].map((opt) => (
+                        <span
+                          key={opt}
+                          className={`px-3 py-1 ${
+                            row.gr === opt ? "bg-yes/30 text-plum font-semibold" : "text-plum/60"
+                          }`}
+                        >
+                          {opt}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="text-center">
               <h3 className="font-display text-[1.75rem] sm:text-3xl text-plum leading-[1.05]">Your personal<br />kink menu</h3>
