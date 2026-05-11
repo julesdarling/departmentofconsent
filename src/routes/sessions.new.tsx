@@ -80,36 +80,34 @@ function NewSession() {
   const [showNames, setShowNames] = useState(false);
   const [extraNote, setExtraNote] = useState("");
 
-  // Swipe deck state
+  // Chip-based cravings selection
   const interestedKinks = useMemo(
     () => kinks.filter((k) => ratings[k.id] === "yes" || ratings[k.id] === "maybe"),
     [kinks, ratings],
   );
-  const deckCards = useMemo<DeckCard[]>(
-    () => interestedKinks.map((k) => ({ id: k.id, name: k.name, direction: directions[k.id] })),
-    [interestedKinks, directions],
-  );
   const [hellYesIds, setHellYesIds] = useState<string[]>([]);
   const [newKink, setNewKink] = useState("");
 
-  const handleSwipe = (cardId: string, choice: SwipeChoice, direction?: Direction) => {
+  const toggleKink = (id: string) => {
     setSide((p) => {
-      const sel = new Set(p.selectedKinks);
+      const has = p.selectedKinks.includes(id);
       const dirs = { ...(p.directions || {}) };
-      if (choice === "no") {
-        sel.delete(cardId);
-        delete dirs[cardId];
-      } else {
-        sel.add(cardId);
-        if (direction) dirs[cardId] = direction;
+      if (has) {
+        delete dirs[id];
+        return { ...p, selectedKinks: p.selectedKinks.filter((x) => x !== id), directions: dirs };
       }
-      return { ...p, selectedKinks: Array.from(sel), directions: dirs };
+      if (!dirs[id]) dirs[id] = "both";
+      return { ...p, selectedKinks: [...p.selectedKinks, id], directions: dirs };
     });
-    setHellYesIds((prev) => {
-      const next = prev.filter((id) => id !== cardId);
-      if (choice === "hellyes") next.push(cardId);
-      return next;
-    });
+    setHellYesIds((prev) => prev.filter((x) => x !== id));
+  };
+
+  const setKinkDirection = (id: string, d: Direction) => {
+    setSide((p) => ({ ...p, directions: { ...(p.directions || {}), [id]: d } }));
+  };
+
+  const toggleHellYes = (id: string) => {
+    setHellYesIds((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
   const addCustomKink = () => {
