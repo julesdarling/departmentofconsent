@@ -76,8 +76,6 @@ const KINK_CHIPS: { label: string; selected?: "give" | "receive" | "both" }[] = 
   { label: "Caning" },
   { label: "Face slapping" },
   { label: "Whipping" },
-  { label: "Body punching" },
-  { label: "Face punching" },
   { label: "Rope bondage", selected: "receive" },
   { label: "Cuffs / restraints" },
   { label: "Blindfold" },
