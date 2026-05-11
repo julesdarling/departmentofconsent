@@ -292,7 +292,7 @@ function NewSession() {
                         <span>{k.name}</span>
                       </button>
                       {selected && (
-                        <div className="flex border-2 border-t-0 border-yes rounded-b-full overflow-hidden text-[11px]">
+                        <div className="flex border-2 border-t-0 border-yes rounded-b-xl overflow-hidden text-[11px]">
                           {(["give", "receive", "both"] as Direction[]).map((d) => (
                             <button
                               key={d}
