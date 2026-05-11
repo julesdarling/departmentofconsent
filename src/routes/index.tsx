@@ -536,8 +536,8 @@ function Index() {
         <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] text-plum text-center max-w-2xl mx-auto">
           Everything you'd rather know beforehand.
         </h2>
-        <div className="rounded-xl overflow-hidden bg-plum/10 mt-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px">
+        <div className="rounded-xl overflow-hidden bg-white mt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { title: "Hard limits", body: "Communicate non-negotiables clearly before meeting." },
               { title: "Kink compatibility", body: "See mutual interests and mismatches instantly." },
@@ -546,7 +546,7 @@ function Index() {
               { title: "Dynamic preferences", body: "Discuss dominance, submission, praise, degradation, service, ownership, and more." },
               { title: "Revocable anytime", body: "Boundaries can change at any moment." },
             ].map((f) => (
-              <div key={f.title} className="bg-white p-6 sm:p-8">
+              <div key={f.title} className="p-6 sm:p-8">
                 <h3 className="font-display text-xl text-plum">{f.title}</h3>
                 <p className="text-sm text-foreground/75 mt-2 leading-snug">{f.body}</p>
               </div>
