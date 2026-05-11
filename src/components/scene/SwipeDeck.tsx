@@ -19,6 +19,7 @@ export function SwipeDeck({
   noLabel = "Not tonight",
   yesLabel = "Yes please",
   hellYesLabel = "Hell yes",
+  hideHellYes = false,
 }: {
   cards: DeckCard[];
   onChoice: (cardId: string, choice: SwipeChoice, direction?: Direction) => void;
@@ -27,6 +28,7 @@ export function SwipeDeck({
   noLabel?: string;
   yesLabel?: string;
   hellYesLabel?: string;
+  hideHellYes?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [drag, setDrag] = useState({ x: 0, y: 0 });
@@ -63,7 +65,7 @@ export function SwipeDeck({
     if (!startRef.current) return;
     const { x, y } = drag;
     startRef.current = null;
-    if (y < -100 && Math.abs(y) > Math.abs(x)) advance("hellyes");
+    if (!hideHellYes && y < -100 && Math.abs(y) > Math.abs(x)) advance("hellyes");
     else if (x > 110) advance("yes");
     else if (x < -110) advance("no");
     else setDrag({ x: 0, y: 0 });
@@ -143,16 +145,18 @@ export function SwipeDeck({
           >
             NOPE
           </div>
-          <div
-            style={{ opacity: opacityUp }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg border-4 border-coral text-coral font-display text-2xl px-3 py-1 pointer-events-none"
-          >
-            🔥 HELL YES
-          </div>
+          {!hideHellYes && (
+            <div
+              style={{ opacity: opacityUp }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg border-4 border-coral text-coral font-display text-2xl px-3 py-1 pointer-events-none"
+            >
+              🔥 HELL YES
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className={cn("grid gap-2", hideHellYes ? "grid-cols-2" : "grid-cols-3")}>
         <button
           type="button"
           onClick={() => advance("no")}
@@ -167,13 +171,15 @@ export function SwipeDeck({
         >
           {yesLabel}
         </button>
-        <button
-          type="button"
-          onClick={() => advance("hellyes")}
-          className="h-14 rounded-2xl border-2 border-coral bg-coral/15 text-plum font-semibold hover:bg-coral/25 transition"
-        >
-          {hellYesLabel}
-        </button>
+        {!hideHellYes && (
+          <button
+            type="button"
+            onClick={() => advance("hellyes")}
+            className="h-14 rounded-2xl border-2 border-coral bg-coral/15 text-plum font-semibold hover:bg-coral/25 transition"
+          >
+            {hellYesLabel}
+          </button>
+        )}
       </div>
     </div>
   );
