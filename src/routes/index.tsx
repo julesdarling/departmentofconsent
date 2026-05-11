@@ -121,13 +121,13 @@ function Index() {
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-10 items-center">
           <div className="order-2 md:order-1 text-left">
             <p className="text-xs font-bold uppercase tracking-wide text-plum">
-              Most people find out they're incompatible too late.
+              Plan the scene before you're in it.
             </p>
             <h1 className="font-display text-4xl sm:text-5xl text-plum leading-[1.05] mt-3">
-              Don't discover hard limits <em className="italic">halfway</em> through a hookup.
+              Build the kink scene you both actually want.
             </h1>
             <p className="text-base text-foreground/75 leading-snug mt-4 max-w-md">
-              Compare boundaries, kinks, condom expectations, attachment styles, and dealbreakers before things get awkward, intense, or unsafe.
+              Compare boundaries, kinks, condom expectations, and dealbreakers before things get awkward, intense, or unsafe.
             </p>
             <div className="mt-5">
               <CloudButton to={startTo} className="!max-w-full sm:!max-w-[18rem]">Start playing safer</CloudButton>
