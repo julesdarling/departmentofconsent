@@ -88,6 +88,7 @@ function JoinPage() {
 
   // Swipe through creator's selected kinks
   const [hellYesIds, setHellYesIds] = useState<string[]>([]);
+  const [respondedKinkIds, setRespondedKinkIds] = useState<Set<string>>(() => new Set());
 
   useEffect(() => {
     if (!token) return;
