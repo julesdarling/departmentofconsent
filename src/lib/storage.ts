@@ -120,9 +120,6 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_cane", name: "Caning", category: "Impact" },
   { id: "k_slap_face", name: "Face slapping", category: "Impact" },
   { id: "k_whipping", name: "Whipping", category: "Impact" },
-  { id: "k_body_punching", name: "Body punching", category: "Impact" },
-  { id: "k_face_punching", name: "Face punching", category: "Impact" },
-
   // Bondage
   { id: "k_rope", name: "Rope bondage", category: "Bondage" },
   { id: "k_cuffs", name: "Cuffs / restraints", category: "Bondage" },
@@ -139,7 +136,7 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_brat", name: "Brat / bratty play", category: "Power exchange" },
   { id: "k_service", name: "Service", category: "Power exchange" },
   { id: "k_humil", name: "Humiliation (light)", category: "Power exchange" },
-  { id: "k_degrade", name: "Degradation", category: "Power exchange" },
+  
   { id: "k_praise", name: "Praise", category: "Power exchange" },
 
   // Sensory
@@ -161,13 +158,13 @@ export const DEFAULT_KINKS: KinkItem[] = [
   { id: "k_fire", name: "Fire play", category: "Edge" },
   { id: "k_fingers_throat", name: "Fingers down throat", category: "Edge" },
   { id: "k_spitting", name: "Spitting", category: "Edge" },
-  { id: "k_throat_fucking", name: "Throat fucking", category: "Edge" },
+  
   { id: "k_deepthroat_training", name: "Deepthroat training", category: "Edge" },
   { id: "k_tit_torture", name: "Tit torture", category: "Edge" },
   { id: "k_pussy_torture", name: "Pussy torture", category: "Edge" },
   { id: "k_orgasm_control", name: "Orgasm control", category: "Edge" },
   { id: "k_hypno", name: "Hypno", category: "Edge" },
-  { id: "k_unconscious", name: "Unconscious play and fucking", category: "Edge" },
+  
   { id: "k_cnc", name: "Cnc / rape play", category: "Edge" },
   { id: "k_incest", name: "Incest play", category: "Edge" },
   { id: "k_molestation", name: "Molestation", category: "Edge" },
