@@ -19,6 +19,7 @@ export function SwipeDeck({
   noLabel = "Not tonight",
   yesLabel = "Yes please",
   hellYesLabel = "Hell yes",
+  hideHellYes = false,
 }: {
   cards: DeckCard[];
   onChoice: (cardId: string, choice: SwipeChoice, direction?: Direction) => void;
@@ -27,6 +28,7 @@ export function SwipeDeck({
   noLabel?: string;
   yesLabel?: string;
   hellYesLabel?: string;
+  hideHellYes?: boolean;
 }) {
   const [index, setIndex] = useState(0);
   const [drag, setDrag] = useState({ x: 0, y: 0 });
