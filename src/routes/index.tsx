@@ -361,13 +361,13 @@ function Index() {
                 </div>
               ))}
             </div>
-            <div className="text-center">
+            <div className="text-center mt-8">
               <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Your personal<br />kink menu</h3>
               <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Save your own interests, boundaries, and notes so you do not have to rebuild the conversation from scratch every time.
               </p>
             </div>
-            <hr className="my-5 border-plum/10" />
+            <hr className="my-5 -mx-6 md:-mx-7 border-plum/10" />
             <p className="text-sm font-bold text-plum mb-2">Good for:</p>
             <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>New partners</li>
@@ -394,13 +394,13 @@ function Index() {
               <div className="text-plum/40">Thumb side — right here is good, no more no less.</div>
               <div className="text-plum/40">Thumb down, double tap — check in please.</div>
             </div>
-            <div className="text-center mt-5">
+            <div className="text-center mt-8">
               <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Scene cards for when<br />brains stop working</h3>
               <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 During play, details can get blurry. The scene card keeps the important stuff readable.
               </p>
             </div>
-            <hr className="my-5 border-plum/10" />
+            <hr className="my-5 -mx-6 md:-mx-7 border-plum/10" />
             <p className="text-sm font-bold text-plum mb-2">Include:</p>
             <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>Safewords</li>
@@ -442,13 +442,13 @@ function Index() {
                 </div>
               </div>
             </div>
-            <div className="text-center mt-5">
+            <div className="text-center mt-8">
               <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Two-way consent, not<br />one-way permission</h3>
               <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Both people fill out their own side. The goal is not to pressure someone into agreement. The goal is to make overlap obvious and mismatches impossible to ignore.
               </p>
             </div>
-            <hr className="my-5 border-plum/10" />
+            <hr className="my-5 -mx-6 md:-mx-7 border-plum/10" />
             <p className="text-sm font-bold text-plum mb-2">Use it to clarify:</p>
             <ul className="space-y-1.5 text-sm text-plum list-disc pl-5">
               <li>Yes / maybe / no</li>
@@ -480,7 +480,7 @@ function Index() {
                 ))}
               </ul>
             </div>
-            <div className="text-center mt-5">
+            <div className="text-center mt-8">
               <h3 className="font-display text-2xl sm:text-[1.75rem] text-plum leading-tight">Aftercare does not have<br />to be improvised</h3>
               <p className="text-sm text-foreground/75 mt-3 leading-snug max-w-xs mx-auto">
                 Water, food, blankets, shower, silence, cuddling, space, check-ins, reassurance, grounding, or anything else each person needs to come down safely.
