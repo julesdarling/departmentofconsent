@@ -250,15 +250,70 @@ function NewSession() {
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum">What are you craving?</h2>
             <p className="text-xs text-muted-foreground">
-              Swipe through your yes & maybes. Right = yes, up = hell yes, left = not tonight. Tap a direction on the card.
+              Tap to add to your scene. Then choose give / receive / both. Star a hell-yes.
             </p>
-            {deckCards.length === 0 ? (
+            {interestedKinks.length === 0 ? (
               <div className="rounded-2xl border-2 border-dashed border-border/40 p-6 text-center text-sm text-muted-foreground">
                 Rate some kinks on your{" "}
-                <Link to="/kinks" className="underline text-link">kinks page</Link> first to swipe through them here.
+                <Link to="/kinks" className="underline text-link">kinks page</Link> first.
               </div>
             ) : (
-              <SwipeDeck cards={deckCards} onChoice={handleSwipe} />
+              <div className="flex flex-wrap gap-2">
+                {interestedKinks.map((k) => {
+                  const selected = side.selectedKinks.includes(k.id);
+                  const dir = side.directions?.[k.id] ?? "both";
+                  const isHellYes = hellYesIds.includes(k.id);
+                  return (
+                    <div key={k.id} className="flex flex-col">
+                      <button
+                        type="button"
+                        onClick={() => toggleKink(k.id)}
+                        className={cn(
+                          "text-sm px-3 py-1.5 rounded-full border-2 transition flex items-center gap-1.5",
+                          selected
+                            ? "bg-yes/30 border-yes text-plum font-semibold rounded-b-none"
+                            : "border-border/60 text-muted-foreground hover:border-primary/50",
+                        )}
+                      >
+                        {selected && (
+                          <span
+                            role="button"
+                            tabIndex={0}
+                            onClick={(e) => { e.stopPropagation(); toggleHellYes(k.id); }}
+                            onKeyDown={(e) => { if (e.key === "Enter") { e.stopPropagation(); toggleHellYes(k.id); } }}
+                            aria-label={isHellYes ? "Remove hell-yes" : "Mark hell-yes"}
+                            className="cursor-pointer"
+                          >
+                            <Star
+                              className={cn("h-3.5 w-3.5", isHellYes ? "fill-coral text-coral" : "text-plum/40")}
+                            />
+                          </span>
+                        )}
+                        <span>{k.name}</span>
+                      </button>
+                      {selected && (
+                        <div className="flex border-2 border-t-0 border-yes rounded-b-full overflow-hidden text-[11px]">
+                          {(["give", "receive", "both"] as Direction[]).map((d) => (
+                            <button
+                              key={d}
+                              type="button"
+                              onClick={() => setKinkDirection(k.id, d)}
+                              className={cn(
+                                "flex-1 px-2 py-1 transition",
+                                dir === d
+                                  ? "bg-yes/40 text-plum font-semibold"
+                                  : "bg-background/50 text-muted-foreground hover:bg-yes/20",
+                              )}
+                            >
+                              {d}
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             )}
             <div className="flex gap-2 pt-2">
               <Input
