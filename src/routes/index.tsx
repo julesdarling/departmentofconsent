@@ -154,7 +154,7 @@ function Index() {
               <div className="absolute left-3 right-3 sm:inset-x-8 top-1/2 -translate-y-1/2 max-w-[16rem] sm:max-w-none mx-auto bg-white rounded-md p-3 sm:p-6 space-y-2.5 sm:space-y-4">
                 <div>
                   <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-yes mb-1">Both want to play</div>
-                  <p className="text-xs sm:text-sm text-foreground/75 leading-snug mb-2">Cravings you both picked for this scene.</p>
+                  <div className="mb-2" />
                   <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
                       <span key={c} className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
