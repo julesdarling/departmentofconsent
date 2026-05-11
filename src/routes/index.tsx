@@ -296,20 +296,26 @@ function Index() {
             A consent flow you can actually use.
           </p>
         </div>
-        <div className="feature-card p-6 sm:p-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-            {STEPS.map((s) => (
-              <div key={s.n}>
-                <div className="text-xs font-bold uppercase tracking-wide text-plum mb-2">{s.n}</div>
-                <h3 className="font-display text-2xl text-plum leading-tight mb-3">{s.title}</h3>
-                <p className="text-sm text-foreground/75 leading-snug">{s.body}</p>
-              </div>
-            ))}
+        <div className="relative">
+          <div className="feature-card p-6 sm:p-10 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+              {STEPS.map((s) => (
+                <div key={s.n}>
+                  <div className="text-xs font-bold uppercase tracking-wide text-plum mb-2">{s.n}</div>
+                  <h3 className="font-display text-2xl text-plum leading-tight mb-3">{s.title}</h3>
+                  <p className="text-sm text-foreground/75 leading-snug">{s.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
+          <img
+            src={stickerBoundHands}
+            alt=""
+            aria-hidden
+            className="absolute left-1/2 -translate-x-1/2 -bottom-16 sm:-bottom-24 w-44 sm:w-56 rotate-[3deg] pointer-events-none z-0"
+          />
         </div>
-        <div className="flex justify-center pt-8 sm:pt-10">
-          <img src={stickerBoundHands} alt="" aria-hidden className="w-24 sm:w-28 rotate-[3deg]" />
-        </div>
+        <div className="h-20 sm:h-28" />
       </section>
 
       {/* removed - moved under hero */}
