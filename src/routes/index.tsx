@@ -429,8 +429,8 @@ function Index() {
               <div>
                 <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">Last STD test date</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Maddie:</span> 2026-05-01</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Cass:</span> 2026-04-29</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Maddie:</span> May 1, 2026</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Cass:</span> Apr 29, 2026</span>
                 </div>
               </div>
               <div>
