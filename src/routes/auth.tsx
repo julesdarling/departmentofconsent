@@ -17,9 +17,27 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const schema = z.object({
+const PASSWORD_RULES = [
+  { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
+  { label: "One uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
+  { label: "One lowercase letter", test: (p: string) => /[a-z]/.test(p) },
+  { label: "One number", test: (p: string) => /\d/.test(p) },
+];
+
+const signinSchema = z.object({
   email: z.string().trim().email("Enter a valid email").max(255),
-  password: z.string().min(8, "At least 8 characters").max(72),
+  password: z.string().min(1, "Enter your password").max(72),
+});
+
+const signupSchema = z.object({
+  email: z.string().trim().email("Enter a valid email").max(255),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(72, "Password must be less than 72 characters")
+    .regex(/[A-Z]/, "Password must include an uppercase letter")
+    .regex(/[a-z]/, "Password must include a lowercase letter")
+    .regex(/\d/, "Password must include a number"),
 });
 
 function calculateAge(dobIso: string): number {
@@ -68,7 +86,7 @@ function AuthPage() {
   };
 
   const submit = async () => {
-    const parsed = schema.safeParse({ email, password });
+    const parsed = (mode === "signup" ? signupSchema : signinSchema).safeParse({ email, password });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
@@ -152,7 +170,29 @@ function AuthPage() {
           {mode !== "forgot" && (
             <div className="space-y-1.5">
               <Label className="doc-label">Password</Label>
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={mode === "signup" ? "Create a strong password" : "Your password"}
+                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              />
+              {mode === "signup" && (
+                <ul className="text-xs space-y-0.5 pt-1">
+                  {PASSWORD_RULES.map((r) => {
+                    const ok = r.test(password);
+                    return (
+                      <li
+                        key={r.label}
+                        className={ok ? "text-yes" : "text-muted-foreground"}
+                      >
+                        <span className="inline-block w-4">{ok ? "✓" : "○"}</span>
+                        {r.label}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </div>
           )}
           {mode === "signup" && (
