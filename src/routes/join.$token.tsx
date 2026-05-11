@@ -1,48 +1,93 @@
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
+
 import { WhipLoader } from "@/components/WhipLoader";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
-import { Button } from "@/components/ui/button";
 import { CloudButton } from "@/components/CloudButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checklist } from "@/components/Checklist";
+import { AftercareChecklist } from "@/components/AftercareChecklist";
+
+import { ChipRow } from "@/components/scene/ChipRow";
+import { IntensitySlider } from "@/components/scene/IntensitySlider";
+import { SwipeDeck, type DeckCard, type SwipeChoice } from "@/components/scene/SwipeDeck";
+import { YnmCard, type Ynm } from "@/components/scene/YnmCard";
+import { ReactionRow, type Reaction } from "@/components/scene/ReactionRow";
+
 import {
   useProfile,
+  useKinks,
   emptySide,
-  useRatings,
   DEFAULT_SAFEWORD_ITEMS,
   type SessionSide,
-  type Rating,
   type Direction,
 } from "@/lib/storage";
-import { DirectionRow } from "./sessions.new";
-import { useEffect, useState } from "react";
-import { useKinks } from "@/lib/storage";
 import { useCloudSession } from "@/lib/useCloudSession";
-import { cn } from "@/lib/utils";
-import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
-import { AftercareChecklist } from "@/components/AftercareChecklist";
-import { Checklist } from "@/components/Checklist";
+import {
+  MOODS,
+  SETTINGS,
+  DRESS,
+  TIME_CONSTRAINTS,
+  SUBSTANCES,
+  BODY_CHECKINS,
+  PARTNER_DYNAMICS,
+  decodeVibe,
+  decodeChips,
+  encodeVibe,
+  encodeChips,
+  type Vibe,
+} from "@/lib/sceneVocab";
 
 export const Route = createFileRoute("/join/$token")({
   head: () => ({ meta: [{ title: "Join a scene" }] }),
   component: JoinPage,
 });
 
+const STEPS = ["Vibe", "Cravings", "Logistics", "Boundaries", "Care"];
+
 function JoinPage() {
   const { token } = Route.useParams();
   const [profile] = useProfile();
   const [kinks] = useKinks();
-  const [savedRatings] = useRatings();
   const navigate = useNavigate();
 
   const { session, error, addPartner } = useCloudSession(token);
 
   const [side, setSide] = useState<SessionSide | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [step, setStep] = useState(0);
   const [ownerProfileName, setOwnerProfileName] = useState<string | null>(null);
+
+  // Decoded creator state
+  const ownerSide = session?.ownerSide;
+  const ownerVibe = useMemo<Vibe>(() => decodeVibe(ownerSide?.vision), [ownerSide?.vision]);
+  const ownerSetting = useMemo(() => decodeChips(ownerSide?.setting, SETTINGS), [ownerSide?.setting]);
+  const ownerDress = useMemo(() => decodeChips(ownerSide?.dress, DRESS), [ownerSide?.dress]);
+  const ownerTime = useMemo(() => decodeChips(ownerSide?.timeConstraints, TIME_CONSTRAINTS), [ownerSide?.timeConstraints]);
+  const ownerSubstances = useMemo(() => decodeChips(ownerSide?.substances, SUBSTANCES), [ownerSide?.substances]);
+  const ownerBody = useMemo(() => decodeChips(ownerSide?.medicalConcerns, BODY_CHECKINS), [ownerSide?.medicalConcerns]);
+  const ownerDynamics = useMemo(() => decodeChips(ownerSide?.partnerDynamics, PARTNER_DYNAMICS), [ownerSide?.partnerDynamics]);
+
+  // My state
+  const [vibe, setVibe] = useState<Vibe>({ moods: [], intensity: 3, note: "" });
+  const [vibeReact, setVibeReact] = useState<Reaction>("");
+
+  const [settingChips, setSettingChips] = useState<string[]>([]);
+  const [dressChips, setDressChips] = useState<string[]>([]);
+  const [timeChips, setTimeChips] = useState<string[]>([]);
+  const [substanceChips, setSubstanceChips] = useState<string[]>([]);
+  const [bodyChips, setBodyChips] = useState<string[]>([]);
+  const [bodyNote, setBodyNote] = useState("");
+  const [dynamicsChips, setDynamicsChips] = useState<string[]>([]);
+  const [musicNote, setMusicNote] = useState("");
+  const [extraNote, setExtraNote] = useState("");
+
+  // Swipe through creator's selected kinks
+  const [hellYesIds, setHellYesIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (!token) return;
@@ -53,16 +98,13 @@ function JoinPage() {
 
   useEffect(() => {
     if (session && !side) {
-      // Pre-fill profile fields only — do NOT inherit saved kink ratings/directions.
-      // Only kinks the partner explicitly rates in this invite should be on their side.
-      const initial = session.partnerSide ?? emptySide(profile);
-      setSide(initial);
+      setSide(session.partnerSide ?? emptySide(profile));
     }
   }, [session, side, profile]);
 
-
-  if (session === undefined) return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
-
+  if (session === undefined) {
+    return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
+  }
   if (!session) {
     return (
       <Layout>
@@ -76,257 +118,414 @@ function JoinPage() {
       </Layout>
     );
   }
-
-  if (!side) return null;
+  if (!side || !ownerSide) return null;
 
   const updateField = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
     setSide((p) => (p ? { ...p, [k]: v } : p));
 
-  const setRating = (id: string, r: Rating) =>
-    setSide((p) => (p ? { ...p, ratings: { ...p.ratings, [id]: r } } : p));
+  const setYnm = (key: "privacy" | "talkingAfter" | "penetrativeSex", v: Ynm) =>
+    updateField(key, v);
 
-  const setDirection = (id: string, d: Direction) =>
-    setSide((p) => (p ? { ...p, directions: { ...(p.directions || {}), [id]: d } } : p));
+  const creatorName = ownerProfileName || ownerSide.name?.trim() || "Your play partner";
+
+  const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
+  const ownerSelectedIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
+  const deckCards: DeckCard[] = ownerSelectedIds.map((id) => ({
+    id,
+    name: ownerKinkMap[id],
+    direction: ownerSide.directions?.[id],
+  }));
+
+  const handleSwipe = (cardId: string, choice: SwipeChoice, direction?: Direction) => {
+    setSide((p) => {
+      if (!p) return p;
+      const ratings = { ...p.ratings };
+      const dirs = { ...(p.directions || {}) };
+      const sel = new Set(p.selectedKinks);
+      if (choice === "no") {
+        ratings[cardId] = "no";
+        sel.delete(cardId);
+        delete dirs[cardId];
+      } else {
+        ratings[cardId] = "yes";
+        sel.add(cardId);
+        if (direction) dirs[cardId] = direction;
+      }
+      return { ...p, ratings, directions: dirs, selectedKinks: Array.from(sel) };
+    });
+    setHellYesIds((prev) => {
+      const next = prev.filter((id) => id !== cardId);
+      if (choice === "hellyes") next.push(cardId);
+      return next;
+    });
+  };
+
+  // When invitee taps "I'm in" on a section, copy creator's chips.
+  const applyVibeReaction = (r: Reaction) => {
+    setVibeReact(r);
+    if (r === "agree") {
+      setVibe({ moods: ownerVibe.moods, intensity: ownerVibe.intensity, note: "" });
+    } else if (r === "tweak" && vibe.moods.length === 0) {
+      setVibe({ moods: ownerVibe.moods, intensity: ownerVibe.intensity, note: "" });
+    } else if (r === "different") {
+      setVibe({ moods: [], intensity: 3, note: "" });
+    }
+  };
+
+  const buildSideForSave = (): SessionSide => {
+    const yesList = hellYesIds.map((id) => ownerKinkMap[id]).filter(Boolean).join(", ");
+    return {
+      ...side,
+      vision: encodeVibe(vibe),
+      setting: encodeChips(settingChips),
+      dress: encodeChips(dressChips),
+      timeConstraints: encodeChips(timeChips),
+      substances: encodeChips(substanceChips),
+      medicalConcerns: encodeChips(bodyChips, bodyNote),
+      partnerDynamics: encodeChips(dynamicsChips),
+      music: musicNote,
+      yesList,
+      brainstorm: extraNote,
+      intentions: "",
+      goodTime: "",
+      badTime: "",
+      hardLimits: "",
+      softLimits: "",
+      filledAt: new Date().toISOString(),
+    };
+  };
 
   const submit = async () => {
-    if (!side) return;
     setSubmitting(true);
     try {
-      await addPartner({ ...side, filledAt: new Date().toISOString() });
+      await addPartner(buildSideForSave());
       navigate({ to: "/sessions/$sessionId", params: { sessionId: token } });
     } finally {
       setSubmitting(false);
     }
   };
 
-  const creatorName = ownerProfileName || session.ownerSide.name?.trim() || "Your play partner";
-  const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
-  const ownerSide = session.ownerSide;
-  const visionKinkIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
-  const sideKinkIds = Object.entries(ownerSide.ratings || {})
-    .filter(([, r]) => r === "yes" || r === "maybe")
-    .map(([id]) => id)
-    .filter((id) => ownerKinkMap[id] && !visionKinkIds.includes(id));
+  const goNext = () => {
+    setStep((s) => Math.min(STEPS.length - 1, s + 1));
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const goBack = () => {
+    setStep((s) => Math.max(0, s - 1));
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const pct = ((step + 1) / STEPS.length) * 100;
 
   return (
     <Layout>
       <div className="space-y-5">
-        <Sticker className="text-center space-y-3">
+        <Sticker className="text-center space-y-2">
           <h1 className="font-display text-3xl text-plum">
-            {creatorName} has invited you to play together!
+            {creatorName} invited you
           </h1>
           <p className="text-sm text-muted-foreground">
-            Their answers are shown for each item — add yours underneath.
+            Their picks are highlighted — react and add yours.
           </p>
         </Sticker>
 
-        {(ownerSide.vision?.trim() || visionKinkIds.length > 0) && (
-          <Sticker variant="coral" className="space-y-3">
-            <div className="text-center font-display text-2xl text-plum">Scene vision</div>
-            {ownerSide.vision?.trim() && (
-              <div className="space-y-2">
-                <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
-                  {creatorName}'s vision
-                </div>
-                <p className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-lg rounded-bl-none px-3 py-1.5 font-medium">{ownerSide.vision}</p>
+        <div>
+          <div className="flex justify-between text-xs text-muted-foreground mb-1">
+            <span className="font-semibold text-plum">{STEPS[step]}</span>
+            <span>{step + 1} / {STEPS.length}</span>
+          </div>
+          <div className="h-2 rounded-full bg-secondary overflow-hidden">
+            <div className="h-full bg-coral transition-all" style={{ width: `${pct}%` }} />
+          </div>
+        </div>
+
+        {step === 0 && (
+          <Sticker className="space-y-5">
+            <h2 className="font-display text-2xl text-plum">{creatorName}'s vibe</h2>
+
+            <div className="rounded-2xl bg-blush/50 border-2 border-coral/30 p-4 space-y-3">
+              <div className="text-[10px] uppercase tracking-wider text-plum font-bold">{creatorName} picked</div>
+              <div className="flex flex-wrap gap-1.5">
+                {ownerVibe.moods.length > 0 ? ownerVibe.moods.map((m) => (
+                  <span key={m} className="text-sm px-3 py-1 rounded-full bg-white border border-coral/40 font-semibold">{m}</span>
+                )) : <span className="text-sm text-muted-foreground italic">No mood picks</span>}
+                <span className="text-sm px-3 py-1 rounded-full bg-coral/15 border border-coral/40 font-semibold">
+                  Intensity {ownerVibe.intensity}/5
+                </span>
+              </div>
+              {ownerVibe.note && (
+                <p className="text-sm whitespace-pre-wrap italic text-plum">"{ownerVibe.note}"</p>
+              )}
+            </div>
+
+            <Field label="Your reaction">
+              <ReactionRow value={vibeReact} onChange={applyVibeReaction} />
+            </Field>
+
+            {(vibeReact === "tweak" || vibeReact === "different") && (
+              <>
+                <Field label="Your moods">
+                  <ChipRow
+                    options={MOODS}
+                    selected={vibe.moods}
+                    onChange={(moods) => setVibe((v) => ({ ...v, moods }))}
+                    highlightOptions={ownerVibe.moods}
+                  />
+                </Field>
+                <Field label="Your intensity">
+                  <IntensitySlider
+                    value={vibe.intensity}
+                    onChange={(intensity) => setVibe((v) => ({ ...v, intensity }))}
+                    ghostValue={ownerVibe.intensity}
+                  />
+                </Field>
+                <Field label="Note (optional)">
+                  <Textarea
+                    value={vibe.note}
+                    onChange={(e) => setVibe((v) => ({ ...v, note: e.target.value }))}
+                    rows={3}
+                  />
+                </Field>
+              </>
+            )}
+          </Sticker>
+        )}
+
+        {step === 1 && (
+          <Sticker variant="coral" className="space-y-4">
+            <h2 className="font-display text-2xl text-plum">{creatorName}'s cravings</h2>
+            <p className="text-xs text-muted-foreground">
+              Swipe through what they picked. Right = yes with you, up = especially yes, left = not for me.
+            </p>
+            {deckCards.length === 0 ? (
+              <div className="rounded-2xl border-2 border-dashed border-border/40 p-6 text-center text-sm text-muted-foreground">
+                {creatorName} didn't pick any specific kinks for this scene.
+              </div>
+            ) : (
+              <SwipeDeck
+                cards={deckCards}
+                onChoice={handleSwipe}
+                noLabel="Not for me"
+                yesLabel="Yes with you"
+                hellYesLabel="Especially yes"
+              />
+            )}
+            {side.selectedKinks.length > 0 && (
+              <div className="text-xs text-center text-muted-foreground">
+                {side.selectedKinks.length} on your list · {hellYesIds.length} especially yes
               </div>
             )}
-            <Field label="Your vision for this scene">
-              <Input
-                value={side.vision}
-                onChange={(e) => updateField("vision", e.target.value)}
-                placeholder="Set the mood in your own words…"
+          </Sticker>
+        )}
+
+        {step === 2 && (
+          <Sticker className="space-y-5">
+            <h2 className="font-display text-2xl text-plum">Where & how</h2>
+
+            <ReactiveChipField
+              label="Setting"
+              creatorName={creatorName}
+              creatorChips={ownerSetting.chips}
+              creatorNote={ownerSetting.note}
+              options={SETTINGS}
+              selected={settingChips}
+              onChange={setSettingChips}
+            />
+            <ReactiveChipField
+              label="What they're wearing"
+              creatorName={creatorName}
+              creatorChips={ownerDress.chips}
+              creatorNote={ownerDress.note}
+              options={DRESS}
+              selected={dressChips}
+              onChange={setDressChips}
+            />
+            {ownerSide.music?.trim() && (
+              <div className="space-y-1">
+                <div className="text-[10px] uppercase tracking-wider text-plum/60 font-semibold">{creatorName}'s music</div>
+                <div className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium">{ownerSide.music}</div>
+              </div>
+            )}
+            <Field label="Your music vibe (optional)">
+              <Input value={musicNote} onChange={(e) => setMusicNote(e.target.value)} />
+            </Field>
+
+            <ReactiveChipField
+              label="Time constraints"
+              creatorName={creatorName}
+              creatorChips={ownerTime.chips}
+              creatorNote={ownerTime.note}
+              options={TIME_CONSTRAINTS}
+              selected={timeChips}
+              onChange={setTimeChips}
+            />
+            <ReactiveChipField
+              label="Substances"
+              creatorName={creatorName}
+              creatorChips={ownerSubstances.chips}
+              creatorNote={ownerSubstances.note}
+              options={SUBSTANCES}
+              selected={substanceChips}
+              onChange={setSubstanceChips}
+            />
+            {ownerSide.substancesHardLimit && (
+              <div className="text-[11px] uppercase tracking-wider text-no font-bold">
+                ⚠ Substance use is a hard limit for {creatorName}
+              </div>
+            )}
+
+            <ReactiveChipField
+              label="Body check-ins"
+              creatorName={creatorName}
+              creatorChips={ownerBody.chips}
+              creatorNote={ownerBody.note}
+              options={BODY_CHECKINS}
+              selected={bodyChips}
+              onChange={setBodyChips}
+            />
+            {bodyChips.length > 0 && (
+              <Textarea
+                value={bodyNote}
+                onChange={(e) => setBodyNote(e.target.value)}
+                rows={2}
+                placeholder="Any details? (optional)"
+              />
+            )}
+
+            <ReactiveChipField
+              label="Other partners / dynamics"
+              creatorName={creatorName}
+              creatorChips={ownerDynamics.chips}
+              creatorNote={ownerDynamics.note}
+              options={PARTNER_DYNAMICS}
+              selected={dynamicsChips}
+              onChange={setDynamicsChips}
+            />
+          </Sticker>
+        )}
+
+        {step === 3 && (
+          <Sticker variant="coral" className="space-y-4">
+            <h2 className="font-display text-2xl text-plum">Quick boundaries</h2>
+            <YnmCard
+              label="Photos or videos during the scene?"
+              value={(side.privacy || "") as Ynm}
+              onChange={(v) => setYnm("privacy", v)}
+              theirName={creatorName}
+              theirValue={ownerSide.privacy}
+            />
+            <YnmCard
+              label="Talking about it with others after?"
+              value={(side.talkingAfter || "") as Ynm}
+              onChange={(v) => setYnm("talkingAfter", v)}
+              theirName={creatorName}
+              theirValue={ownerSide.talkingAfter}
+            />
+            <YnmCard
+              label="Penetrative sex during the scene?"
+              value={(side.penetrativeSex || "") as Ynm}
+              onChange={(v) => setYnm("penetrativeSex", v)}
+              theirName={creatorName}
+              theirValue={ownerSide.penetrativeSex}
+            />
+            {(side.penetrativeSex === "yes" || side.penetrativeSex === "maybe") && (
+              <div className="rounded-2xl bg-blush/40 border-2 border-coral/30 p-4 space-y-3">
+                <Field label="Last STD test">
+                  <Input
+                    type="date"
+                    value={side.stdTestDate || ""}
+                    onChange={(e) => updateField("stdTestDate", e.target.value)}
+                    max={new Date().toISOString().slice(0, 10)}
+                  />
+                </Field>
+                <Field label="Test results">
+                  <Textarea
+                    value={side.stdTestResults || ""}
+                    onChange={(e) => updateField("stdTestResults", e.target.value)}
+                    rows={2}
+                  />
+                </Field>
+                <YesNo label="On PrEP / DoxyPEP?" value={side.prepDoxypep || ""} onChange={(v) => updateField("prepDoxypep", v)} />
+                <YesNo label="On birth control?" value={side.birthControl || ""} onChange={(v) => updateField("birthControl", v)} />
+              </div>
+            )}
+          </Sticker>
+        )}
+
+        {step === 4 && (
+          <Sticker className="space-y-5">
+            <h2 className="font-display text-2xl text-plum">About you & care</h2>
+
+            <Field label="Your name / handle">
+              <Input value={side.name} onChange={(e) => updateField("name", e.target.value)} />
+            </Field>
+            <Field label="Pronouns">
+              <Input value={side.pronouns} onChange={(e) => updateField("pronouns", e.target.value)} />
+            </Field>
+            <Field label="Emergency contact">
+              <Textarea value={side.emergencyContact} onChange={(e) => updateField("emergencyContact", e.target.value)} rows={2} />
+            </Field>
+
+            {(ownerSide.aftercareItems?.length ?? 0) > 0 && (
+              <div className="space-y-1.5">
+                <div className="text-[10px] uppercase tracking-wider text-plum font-bold">{creatorName} wants for aftercare</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {ownerSide.aftercareItems!.map((item) => (
+                    <span key={item} className="text-xs px-2 py-1 rounded-full bg-blush border border-coral/40 font-medium text-plum">
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <Field label="What you'd like for aftercare">
+              <AftercareChecklist
+                selected={side.aftercareItems ?? []}
+                onChange={(next: string[]) => updateField("aftercareItems", next)}
+                extraItems={ownerSide.aftercareItems ?? []}
               />
             </Field>
-            {visionKinkIds.length > 0 && (
-              <div className="space-y-3">
-                <div className="text-xs text-muted-foreground pb-1">
-                  {creatorName} picked these for the scene — how do you feel?
+
+            {(ownerSide.safewordItems?.length ?? 0) > 0 && (
+              <div className="space-y-1.5">
+                <div className="text-[10px] uppercase tracking-wider text-plum font-bold">{creatorName} uses</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {ownerSide.safewordItems!.map((item) => (
+                    <span key={item} className="text-xs px-2 py-1 rounded-full bg-blush border border-coral/40 font-medium text-plum">
+                      {item}
+                    </span>
+                  ))}
                 </div>
-                {visionKinkIds.map((id) => (
-                  <KinkBlock
-                    key={id}
-                    name={ownerKinkMap[id]}
-                    creatorDirection={ownerSide.directions?.[id]}
-                    creatorName={creatorName}
-                    rating={side.ratings[id]}
-                    direction={side.directions?.[id]}
-                    onRating={(r) => setRating(id, r)}
-                    onDirection={(d) => setDirection(id, d)}
-                  />
-                ))}
               </div>
             )}
+            <Field label="Safewords you'll use">
+              <Checklist
+                defaultItems={DEFAULT_SAFEWORD_ITEMS}
+                selected={side.safewordItems ?? []}
+                onChange={(next: string[]) => updateField("safewordItems", next)}
+                extraItems={ownerSide.safewordItems ?? []}
+                addPlaceholder="Add another safeword…"
+              />
+            </Field>
+
+            <Field label="Anything else? (optional)">
+              <Textarea value={extraNote} onChange={(e) => setExtraNote(e.target.value)} rows={3} />
+            </Field>
           </Sticker>
         )}
 
-        <SceneDetailsBlock
-          ownerSide={ownerSide}
-          mySide={side}
-          updateField={updateField}
-          creatorName={creatorName}
-        />
-
-        {sideKinkIds.length > 0 && (
-          <Sticker className="space-y-2">
-            <div className="text-center font-display text-2xl text-plum">{creatorName}'s kinks</div>
-            <p className="text-xs text-muted-foreground text-center">
-              Other things on their side. Rate each one.
-            </p>
-            <div className="space-y-3 pt-1">
-              {sideKinkIds.map((id) => (
-                <KinkBlock
-                  key={id}
-                  name={ownerKinkMap[id]}
-                  creatorDirection={ownerSide.directions?.[id]}
-                  creatorName={creatorName}
-                  rating={side.ratings[id]}
-                  direction={side.directions?.[id]}
-                  onRating={(r) => setRating(id, r)}
-                  onDirection={(d) => setDirection(id, d)}
-                />
-              ))}
-            </div>
-          </Sticker>
-        )}
-
-        <Sticker variant="coral" className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">About you</h2>
-          <Field label="Your name / handle">
-            <Input value={side.name} onChange={(e) => updateField("name", e.target.value)} />
-          </Field>
-          <Field label="Pronouns">
-            <Input value={side.pronouns} onChange={(e) => updateField("pronouns", e.target.value)} />
-          </Field>
-          <Field label="Do you have health insurance? Who is your provider?">
-            <Input value={side.healthcare} onChange={(e) => updateField("healthcare", e.target.value)} />
-          </Field>
-          <Field label="Emergency contact">
-            <Textarea value={side.emergencyContact} onChange={(e) => updateField("emergencyContact", e.target.value)} rows={2} />
-          </Field>
-        </Sticker>
-
-        <Sticker className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">Privacy & sex</h2>
-          <YesNoMaybeMatch
-            label="Photos / videos during the scene?"
-            theirName={creatorName}
-            theirValue={ownerSide.privacy}
-            value={side.privacy}
-            onChange={(v) => updateField("privacy", v)}
-          />
-          <YesNoMaybeMatch
-            label="Talking about it with others after?"
-            theirName={creatorName}
-            theirValue={ownerSide.talkingAfter}
-            value={side.talkingAfter || ""}
-            onChange={(v) => updateField("talkingAfter", v)}
-          />
-          <YesNoMaybeMatch
-            label="Penetrative sex during the scene?"
-            theirName={creatorName}
-            theirValue={ownerSide.penetrativeSex}
-            value={side.penetrativeSex}
-            onChange={(v) => updateField("penetrativeSex", v)}
-          />
-          {(side.penetrativeSex === "yes" || side.penetrativeSex === "maybe") && (
-            <div className="space-y-4 pl-3 border-l-2 border-yes/40">
-              <Field label="When were you last tested for STDs?">
-                <Input
-                  type="date"
-                  value={side.stdTestDate || ""}
-                  onChange={(e) => updateField("stdTestDate", e.target.value)}
-                  max={new Date().toISOString().slice(0, 10)}
-                />
-              </Field>
-              <Field label="What were the results of your STD test?">
-                <Textarea
-                  value={side.stdTestResults || ""}
-                  onChange={(e) => updateField("stdTestResults", e.target.value)}
-                  rows={2}
-                  placeholder="e.g. all negative on 4-panel"
-                />
-              </Field>
-              <YesNoSelect
-                label="Are you on PrEP / DoxyPEP?"
-                value={side.prepDoxypep || ""}
-                onChange={(v) => updateField("prepDoxypep", v)}
-              />
-              <YesNoSelect
-                label="Are you on birth control?"
-                value={side.birthControl || ""}
-                onChange={(v) => updateField("birthControl", v)}
-              />
-            </div>
+        <div className="flex flex-col items-center gap-2">
+          {step < STEPS.length - 1 && (
+            <CloudButton onClick={goNext}>Next</CloudButton>
           )}
-        </Sticker>
-
-        <Sticker variant="coral" className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">Your safewords</h2>
-          {(ownerSide.safewordItems?.length ?? 0) > 0 && (
-            <div className="space-y-2">
-              <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
-                {creatorName} uses
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {ownerSide.safewordItems!.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
+          {step === STEPS.length - 1 && (
+            <CloudButton onClick={submitting ? undefined : submit}>
+              {submitting ? "Submitting..." : "Submit my side"}
+            </CloudButton>
           )}
-          <div className="space-y-2 pt-1">
-            <Label className="doc-label block">Safewords you'll use</Label>
-            <Checklist
-              defaultItems={DEFAULT_SAFEWORD_ITEMS}
-              selected={side.safewordItems ?? []}
-              onChange={(next: string[]) => updateField("safewordItems", next)}
-              extraItems={ownerSide.safewordItems ?? []}
-              addPlaceholder="Add another safeword…"
-            />
-          </div>
-        </Sticker>
-
-        <Sticker className="space-y-3">
-          <h2 className="font-display text-2xl text-plum text-center">Aftercare</h2>
-          {(ownerSide.aftercareItems?.length ?? 0) > 0 && (
-            <div className="space-y-2">
-              <div className="text-[11px] uppercase tracking-wider text-plum font-bold">
-                {creatorName} wants
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                {ownerSide.aftercareItems!.map((item) => (
-                  <span
-                    key={item}
-                    className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
+          {step > 0 && (
+            <CloudButton variant="outline" onClick={goBack}>Back</CloudButton>
           )}
-          <div className="space-y-2 pt-1">
-            <Label className="doc-label block">What you'd like for aftercare</Label>
-            <AftercareChecklist
-              selected={side.aftercareItems ?? []}
-              onChange={(next: string[]) => updateField("aftercareItems", next)}
-              extraItems={ownerSide.aftercareItems ?? []}
-            />
-          </div>
-        </Sticker>
-
-
-
-        <div className="flex justify-center pt-2">
-          <CloudButton onClick={submitting ? undefined : submit}>
-            {submitting ? "Submitting..." : "Submit my side"}
-          </CloudButton>
+          <Link to="/" className="text-xs text-muted-foreground underline pt-1">Cancel</Link>
         </div>
       </div>
     </Layout>
@@ -342,54 +541,23 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function Detail({ title, value }: { title: string; value: string }) {
-  if (!value?.trim()) return null;
+function YesNo({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
   return (
-    <div className="border-b border-border/40 pb-2">
-      <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{title}</div>
-      <div className="text-sm whitespace-pre-wrap">{value}</div>
-    </div>
-  );
-}
-
-function formatDateTime(input: string): string {
-  const d = new Date(input);
-  if (isNaN(d.getTime())) return input;
-  const month = d.toLocaleString("en-US", { month: "long" });
-  const day = d.getDate();
-  const suffix = (n: number) => {
-    const v = n % 100;
-    if (v >= 11 && v <= 13) return "th";
-    switch (n % 10) { case 1: return "st"; case 2: return "nd"; case 3: return "rd"; default: return "th"; }
-  };
-  let h = d.getHours();
-  const m = d.getMinutes();
-  const ampm = h >= 12 ? "pm" : "am";
-  h = h % 12 || 12;
-  const mm = m === 0 ? "" : `:${m.toString().padStart(2, "0")}`;
-  return `${month} ${day}${suffix(day)}, ${d.getFullYear()} at ${h}${mm}${ampm}`;
-}
-
-function RateRow({ name, value, onChange }: { name: string; value: Rating | undefined; onChange: (r: Rating) => void }) {
-  return (
-    <div className="flex items-center justify-between gap-2 py-1.5 border-b border-border/40 last:border-0">
-      <div className="text-sm flex-1 min-w-0 truncate">{name}</div>
-      <div className="flex gap-1">
-        {(["yes", "maybe", "no"] as Rating[]).map((r) => (
+    <div className="space-y-1.5">
+      <Label className="doc-label">{label}</Label>
+      <div className="flex gap-2">
+        {["yes", "no"].map((v) => (
           <button
-            key={r}
+            key={v}
             type="button"
-            onClick={() => onChange(r)}
-            className={cn(
-              "h-7 px-2.5 rounded-full text-xs font-semibold border-2 transition capitalize",
-              value === r
-                ? r === "yes" ? "bg-yes/20 border-yes"
-                : r === "maybe" ? "bg-maybe/20 border-maybe"
-                : "bg-no/20 border-no"
+            onClick={() => onChange(v)}
+            className={`h-10 px-5 rounded-full text-sm font-semibold border-2 transition capitalize ${
+              value === v
+                ? v === "yes" ? "bg-yes/25 border-yes" : "bg-no/20 border-no"
                 : "border-border/60 text-muted-foreground"
-            )}
+            }`}
           >
-            {r}
+            {v}
           </button>
         ))}
       </div>
@@ -397,213 +565,45 @@ function RateRow({ name, value, onChange }: { name: string; value: Rating | unde
   );
 }
 
-const DIRECTION_LABELS: Record<Direction, string> = { give: "Give", receive: "Receive", both: "Both" };
-
-function KinkBlock({
-  name,
-  creatorDirection,
-  creatorName,
-  rating,
-  direction,
-  onRating,
-  onDirection,
-}: {
-  name: string;
-  creatorDirection?: Direction;
-  creatorName?: string;
-  rating: Rating | undefined;
-  direction: Direction | undefined;
-  onRating: (r: Rating) => void;
-  onDirection: (d: Direction) => void;
-}) {
-  return (
-    <div className="py-2">
-      <div className="flex flex-col gap-2">
-        <div className="text-sm font-medium flex flex-col gap-0.5 min-w-0">
-          {creatorDirection ? (
-            <>
-              {creatorName && (
-                <span className="text-[9px] uppercase tracking-wide text-plum/60 font-semibold px-1">
-                  {creatorName}
-                </span>
-              )}
-              <span className="text-sm px-3 py-1.5 rounded-lg rounded-bl-none bg-blush text-plum font-medium self-start max-w-full">
-                {`I want to ${creatorDirection === "both" ? "give and receive" : creatorDirection} ${name.toLowerCase()}`}
-              </span>
-            </>
-          ) : (
-            <span className="break-words">{name}</span>
-          )}
-        </div>
-        <div className="flex gap-2 justify-end">
-          {(["yes", "maybe", "no"] as Rating[]).map((r) => (
-            <button
-              key={r}
-              type="button"
-              onClick={() => onRating(r)}
-              className={cn(
-                "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
-                rating === r
-                  ? r === "yes" ? "bg-yes/20 border-yes"
-                  : r === "maybe" ? "bg-maybe/20 border-maybe"
-                  : "bg-no/20 border-no"
-                  : "border-border/60 text-muted-foreground"
-              )}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SceneDetailsBlock({
-  ownerSide,
-  mySide,
-  updateField,
-  creatorName,
-}: {
-  ownerSide: SessionSide;
-  mySide: SessionSide;
-  updateField: <K extends keyof SessionSide>(k: K, v: SessionSide[K]) => void;
-  creatorName: string;
-}) {
-  const items: { label: string; field: keyof SessionSide }[] = [
-    { label: "Date / time of play", field: "timeOfPlay" },
-    { label: "Time constraints", field: "timeConstraints" },
-    { label: "Setting", field: "setting" },
-    { label: "Music", field: "music" },
-    { label: "Dress", field: "dress" },
-    { label: "Substances", field: "substances" },
-    { label: "Medical concerns", field: "medicalConcerns" },
-    { label: "Other partners / dynamics", field: "partnerDynamics" },
-    { label: "Intentions — how they want to feel", field: "intentions" },
-    { label: "What a good time looks like", field: "goodTime" },
-    { label: "…and a bad time", field: "badTime" },
-    { label: "Names they want to be called", field: "callMe" },
-    { label: "Off-limits names", field: "dontCallMe" },
-    { label: "Hard limits", field: "hardLimits" },
-    { label: "Soft limits", field: "softLimits" },
-    { label: "Enthusiastic yes", field: "yesList" },
-    { label: "Aftercare", field: "aftercare" },
-    { label: "Brainstorm", field: "brainstorm" },
-  ];
-
-  return (
-    <Sticker className="space-y-3">
-      <div className="text-center font-display text-2xl text-plum">{creatorName}'s scene details</div>
-      <p className="text-xs text-muted-foreground text-center">
-        Their answer is shown for each — add yours underneath.
-      </p>
-      {ownerSide.substancesHardLimit && (
-        <div className="text-[11px] uppercase tracking-wider text-plum font-semibold">
-          Substance use is a hard limit for them
-        </div>
-      )}
-      <div className="space-y-4 pt-1">
-        {items.map((i) => {
-          const theirVal = (ownerSide[i.field] as string | undefined)?.trim();
-          const myVal = (mySide[i.field] as string | undefined) ?? "";
-          const display = theirVal && i.field === "timeOfPlay" ? formatDateTime(theirVal) : theirVal;
-          return (
-            <div key={i.field} className="border-b border-border/40 pb-3 last:border-0">
-              <Label className="doc-label block mb-1.5">{i.label}</Label>
-              {display && (
-                <div className="mb-2">
-                  <div className="text-[9px] uppercase tracking-wide text-plum/60 font-semibold px-1 mb-0.5">
-                    {creatorName}
-                  </div>
-                  <div className="inline-block bg-blush text-plum text-sm whitespace-pre-wrap rounded-lg rounded-bl-none px-3 py-1.5 font-medium">{display}</div>
-                </div>
-              )}
-              <Input
-                value={myVal}
-                onChange={(e) => updateField(i.field, e.target.value as SessionSide[typeof i.field])}
-                placeholder="Your response…"
-              />
-            </div>
-          );
-        })}
-      </div>
-    </Sticker>
-  );
-}
-
-function YesNoMaybeMatch({
+function ReactiveChipField({
   label,
-  theirName,
-  theirValue,
-  value,
+  creatorName,
+  creatorChips,
+  creatorNote,
+  options,
+  selected,
   onChange,
 }: {
   label: string;
-  theirName?: string;
-  theirValue?: string;
-  value: string;
-  onChange: (v: string) => void;
+  creatorName: string;
+  creatorChips: string[];
+  creatorNote: string;
+  options: string[];
+  selected: string[];
+  onChange: (next: string[]) => void;
 }) {
-  const opts: { v: string; cls: string }[] = [
-    { v: "yes", cls: "bg-yes/20 border-yes" },
-    { v: "maybe", cls: "bg-maybe/20 border-maybe" },
-    { v: "no", cls: "bg-no/20 border-no" },
-  ];
+  const hasCreatorPicks = creatorChips.length > 0 || !!creatorNote.trim();
   return (
-    <div className="space-y-1.5">
+    <div className="space-y-2">
       <Label className="doc-label">{label}</Label>
-      {theirValue?.trim() && (
-        <div className="space-y-1">
-          {theirName && (
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{theirName}</div>
-          )}
-          <div className="inline-block bg-blush text-plum text-sm rounded-lg rounded-bl-none px-3 py-1.5 font-medium capitalize">
-            {theirValue}
+      {hasCreatorPicks && (
+        <div className="rounded-xl bg-blush/40 border border-coral/30 p-2.5 space-y-1">
+          <div className="text-[10px] uppercase tracking-wider text-plum/70 font-bold">{creatorName}</div>
+          <div className="flex flex-wrap gap-1.5">
+            {creatorChips.map((c) => (
+              <span key={c} className="text-xs px-2 py-1 rounded-full bg-white border border-coral/40 font-semibold text-plum">{c}</span>
+            ))}
           </div>
+          {creatorNote && <p className="text-xs italic text-plum/80">{creatorNote}</p>}
         </div>
       )}
-      <div className="flex gap-2 justify-end">
-        {opts.map((o) => (
-          <button
-            key={o.v}
-            type="button"
-            onClick={() => onChange(o.v)}
-            className={cn(
-              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
-              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
-            )}
-          >
-            {o.v}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function YesNoSelect({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
-  const opts: { v: string; cls: string }[] = [
-    { v: "yes", cls: "bg-yes/20 border-yes" },
-    { v: "no", cls: "bg-no/20 border-no" },
-  ];
-  return (
-    <div className="space-y-1.5">
-      <Label className="doc-label">{label}</Label>
-      <div className="flex gap-2 justify-end">
-        {opts.map((o) => (
-          <button
-            key={o.v}
-            type="button"
-            onClick={() => onChange(o.v)}
-            className={cn(
-              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
-              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
-            )}
-          >
-            {o.v}
-          </button>
-        ))}
-      </div>
+      <ChipRow
+        options={options}
+        selected={selected}
+        onChange={onChange}
+        highlightOptions={creatorChips}
+        addPlaceholder="Something else…"
+      />
     </div>
   );
 }

@@ -1,4 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useMemo, useState } from "react";
+import { nanoid } from "nanoid";
+import { toast } from "sonner";
+
 import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
@@ -7,6 +11,16 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Progress } from "@/components/ui/progress";
+import { CloudButton } from "@/components/CloudButton";
+import { RequireAuth } from "@/components/RequireAuth";
+import { AftercareChecklist } from "@/components/AftercareChecklist";
+import { Checklist } from "@/components/Checklist";
+
+import { ChipRow } from "@/components/scene/ChipRow";
+import { IntensitySlider } from "@/components/scene/IntensitySlider";
+import { SwipeDeck, type DeckCard, type SwipeChoice } from "@/components/scene/SwipeDeck";
+import { YnmCard, type Ynm } from "@/components/scene/YnmCard";
+
 import {
   useProfile,
   useRatings,
@@ -17,30 +31,27 @@ import {
   type SessionSide,
   type Direction,
 } from "@/lib/storage";
-import { Link } from "@tanstack/react-router";
 import { apiCreateSession } from "@/lib/sessionsApi";
-import { useMemo, useState } from "react";
-import { nanoid } from "nanoid";
-import { cn } from "@/lib/utils";
-import { toast } from "sonner";
-import { CloudButton } from "@/components/CloudButton";
-import { AftercareChecklist } from "@/components/AftercareChecklist";
-import { Checklist } from "@/components/Checklist";
-
-import { RequireAuth } from "@/components/RequireAuth";
+import {
+  MOODS,
+  SETTINGS,
+  DRESS,
+  TIME_CONSTRAINTS,
+  SUBSTANCES,
+  BODY_CHECKINS,
+  PARTNER_DYNAMICS,
+  encodeVibe,
+  encodeChips,
+  decodeVibe,
+  type Vibe,
+} from "@/lib/sceneVocab";
 
 export const Route = createFileRoute("/sessions/new")({
   head: () => ({ meta: [{ title: "New scene — Department of Consent" }] }),
   component: () => <RequireAuth><NewSession /></RequireAuth>,
 });
 
-const STEPS = [
-  "Scene vision",
-  "Scene & logistics",
-  "Privacy & sex",
-  "For this scene",
-  "Review",
-];
+const STEPS = ["Vibe", "Cravings", "Logistics", "Boundaries", "Care", "Review"];
 
 function NewSession() {
   const [profile] = useProfile();
@@ -50,30 +61,57 @@ function NewSession() {
   const navigate = useNavigate();
 
   const [session] = useState(() => newSession(profile, ratings, "", directions));
-  const [date, setDate] = useState(session.date);
   const [side, setSide] = useState<SessionSide>(session.ownerSide);
+  const [date, setDate] = useState(session.date);
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
 
-  const setDirection = (id: string, d: Direction) =>
-    setSide((p) => ({ ...p, directions: { ...(p.directions || {}), [id]: d } }));
+  // Structured chip state — serialized into SessionSide on save.
+  const [vibe, setVibe] = useState<Vibe>(() => decodeVibe(session.ownerSide.vision));
+  const [settingChips, setSettingChips] = useState<string[]>([]);
+  const [dressChips, setDressChips] = useState<string[]>([]);
+  const [timeChips, setTimeChips] = useState<string[]>([]);
+  const [substanceChips, setSubstanceChips] = useState<string[]>([]);
+  const [bodyChips, setBodyChips] = useState<string[]>([]);
+  const [bodyNote, setBodyNote] = useState("");
+  const [dynamicsChips, setDynamicsChips] = useState<string[]>([]);
+  const [musicNote, setMusicNote] = useState("");
+  const [showNames, setShowNames] = useState(false);
+  const [extraNote, setExtraNote] = useState("");
 
-  const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
-    setSide((p) => ({ ...p, [k]: v }));
-
+  // Swipe deck state
   const interestedKinks = useMemo(
     () => kinks.filter((k) => ratings[k.id] === "yes" || ratings[k.id] === "maybe"),
-    [kinks, ratings]
+    [kinks, ratings],
   );
-
-  const toggleKink = (id: string) =>
-    setSide((p) => {
-      const has = p.selectedKinks.includes(id);
-      return { ...p, selectedKinks: has ? p.selectedKinks.filter((x) => x !== id) : [...p.selectedKinks, id] };
-    });
-
+  const deckCards = useMemo<DeckCard[]>(
+    () => interestedKinks.map((k) => ({ id: k.id, name: k.name, direction: directions[k.id] })),
+    [interestedKinks, directions],
+  );
+  const [hellYesIds, setHellYesIds] = useState<string[]>([]);
   const [newKink, setNewKink] = useState("");
-  const addKink = () => {
+
+  const handleSwipe = (cardId: string, choice: SwipeChoice, direction?: Direction) => {
+    setSide((p) => {
+      const sel = new Set(p.selectedKinks);
+      const dirs = { ...(p.directions || {}) };
+      if (choice === "no") {
+        sel.delete(cardId);
+        delete dirs[cardId];
+      } else {
+        sel.add(cardId);
+        if (direction) dirs[cardId] = direction;
+      }
+      return { ...p, selectedKinks: Array.from(sel), directions: dirs };
+    });
+    setHellYesIds((prev) => {
+      const next = prev.filter((id) => id !== cardId);
+      if (choice === "hellyes") next.push(cardId);
+      return next;
+    });
+  };
+
+  const addCustomKink = () => {
     const name = newKink.trim();
     if (!name) return;
     const id = "c_" + nanoid(8);
@@ -81,6 +119,38 @@ function NewSession() {
     setRatings((p) => ({ ...p, [id]: "yes" }));
     setSide((p) => ({ ...p, selectedKinks: [...p.selectedKinks, id] }));
     setNewKink("");
+  };
+
+  // YNM state lives directly on `side` (privacy/talkingAfter/penetrativeSex).
+  const setYnm = (key: "privacy" | "talkingAfter" | "penetrativeSex", v: Ynm) =>
+    setSide((p) => ({ ...p, [key]: v }));
+
+  const update = <K extends keyof SessionSide>(k: K, v: SessionSide[K]) =>
+    setSide((p) => ({ ...p, [k]: v }));
+
+  const buildSideForSave = (): SessionSide => {
+    const kinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
+    const yesList = hellYesIds.map((id) => kinkMap[id]).filter(Boolean).join(", ");
+    return {
+      ...side,
+      vision: encodeVibe(vibe),
+      setting: encodeChips(settingChips),
+      dress: encodeChips(dressChips),
+      timeConstraints: encodeChips(timeChips),
+      substances: encodeChips(substanceChips),
+      medicalConcerns: encodeChips(bodyChips, bodyNote),
+      partnerDynamics: encodeChips(dynamicsChips),
+      music: musicNote,
+      yesList,
+      brainstorm: extraNote,
+      // explicitly clear the textarea-only fields the new flow doesn't collect
+      intentions: "",
+      goodTime: "",
+      badTime: "",
+      hardLimits: "",
+      softLimits: "",
+      filledAt: new Date().toISOString(),
+    };
   };
 
   const save = async (status: "draft" | "shared" = "shared") => {
@@ -91,7 +161,7 @@ function NewSession() {
         partnerHandle: "",
         date,
         status,
-        ownerSide: { ...side, filledAt: new Date().toISOString() },
+        ownerSide: buildSideForSave(),
       });
       navigate({ to: "/sessions/$sessionId", params: { sessionId: created.shareToken } });
     } catch (e) {
@@ -102,6 +172,14 @@ function NewSession() {
   };
 
   const pct = ((step + 1) / STEPS.length) * 100;
+  const goNext = () => {
+    setStep((s) => Math.min(STEPS.length - 1, s + 1));
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const goBack = () => {
+    setStep((s) => Math.max(0, s - 1));
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <Layout>
@@ -115,10 +193,10 @@ function NewSession() {
         </div>
 
         {step === 0 && (
-          <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum">Scene vision</h2>
+          <Sticker className="space-y-5">
+            <h2 className="font-display text-2xl text-plum">What's the vibe?</h2>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Date of play">
+              <Field label="Date">
                 <Input
                   type="date"
                   value={side.timeOfPlay ? side.timeOfPlay.slice(0, 10) : date}
@@ -142,142 +220,132 @@ function NewSession() {
                 />
               </Field>
             </div>
-            <Field label="What are you imagining for this scene?">
-              <Textarea
-                value={side.vision}
-                onChange={(e) => update("vision", e.target.value)}
-                rows={5}
-                placeholder="Soft and slow… rough and bratty… a long bondage tease… set the mood in your own words."
+
+            <Field label="Pick the moods">
+              <ChipRow
+                options={MOODS}
+                selected={vibe.moods}
+                onChange={(moods) => setVibe((v) => ({ ...v, moods }))}
               />
             </Field>
-            <div className="space-y-2">
-              <Label className="doc-label">Pick what you're craving for this scene</Label>
-              <p className="text-xs text-muted-foreground">
-                From your kink list (yes & maybes). Tap to add. Your play partner will see what overlaps.
-              </p>
-              {interestedKinks.length === 0 ? (
-                <p className="text-xs text-muted-foreground italic">
-                  Rate some kinks on your <Link to="/kinks" className="underline text-link">kinks page</Link> to pick from them here.
-                </p>
-              ) : (
-                <div className="flex flex-wrap gap-2 pt-1">
-                  {interestedKinks.map((k) => {
-                    const selected = side.selectedKinks.includes(k.id);
-                    const dir = side.directions?.[k.id];
-                    return (
-                      <div
-                        key={k.id}
-                        className={cn(
-                          "rounded-full border-2 transition flex items-center overflow-hidden",
-                          selected ? "bg-yes/30 border-yes" : "border-border/60"
-                        )}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => toggleKink(k.id)}
-                          className={cn(
-                            "text-sm px-3 py-1.5",
-                            selected ? "text-plum font-semibold" : "text-muted-foreground"
-                          )}
-                        >
-                          {selected ? "✓ " : "+ "}{k.name}
-                        </button>
-                        {selected && (
-                          <div className="flex border-l-2 border-yes/60">
-                            {(["give", "receive", "both"] as Direction[]).map((d) => (
-                              <button
-                                key={d}
-                                type="button"
-                                onClick={() => setDirection(k.id, d)}
-                                className={cn(
-                                  "text-[11px] font-semibold px-2 py-1.5 capitalize transition border-r border-yes/40 last:border-r-0",
-                                  dir === d ? "bg-yes/60 text-plum" : "text-plum/60 hover:bg-yes/20"
-                                )}
-                              >
-                                {d}
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-              <div className="flex gap-2 pt-2">
-                <Input
-                  value={newKink}
-                  onChange={(e) => setNewKink(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addKink(); } }}
-                  placeholder="Add your own kink…"
-                />
-                <Button type="button" onClick={addKink} disabled={!newKink.trim()}>Add</Button>
-              </div>
-            </div>
+
+            <Field label="How intense?">
+              <IntensitySlider
+                value={vibe.intensity}
+                onChange={(intensity) => setVibe((v) => ({ ...v, intensity }))}
+              />
+            </Field>
+
+            <Disclosure label="Add a note about the vibe (optional)">
+              <Textarea
+                value={vibe.note}
+                onChange={(e) => setVibe((v) => ({ ...v, note: e.target.value }))}
+                rows={3}
+                placeholder="Anything specific you want to say in your own words…"
+              />
+            </Disclosure>
           </Sticker>
         )}
 
         {step === 1 && (
           <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-2xl text-plum">Scene & logistics</h2>
-            <Field label="Setting (where is it happening?)">
-              <Input value={side.setting} onChange={(e) => update("setting", e.target.value)} />
+            <h2 className="font-display text-2xl text-plum">What are you craving?</h2>
+            <p className="text-xs text-muted-foreground">
+              Swipe through your yes & maybes. Right = yes, up = hell yes, left = not tonight. Tap a direction on the card.
+            </p>
+            {deckCards.length === 0 ? (
+              <div className="rounded-2xl border-2 border-dashed border-border/40 p-6 text-center text-sm text-muted-foreground">
+                Rate some kinks on your{" "}
+                <Link to="/kinks" className="underline text-link">kinks page</Link> first to swipe through them here.
+              </div>
+            ) : (
+              <SwipeDeck cards={deckCards} onChoice={handleSwipe} />
+            )}
+            <div className="flex gap-2 pt-2">
+              <Input
+                value={newKink}
+                onChange={(e) => setNewKink(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addCustomKink(); } }}
+                placeholder="Add your own kink to the scene…"
+              />
+              <Button type="button" onClick={addCustomKink} disabled={!newKink.trim()}>Add</Button>
+            </div>
+            {side.selectedKinks.length > 0 && (
+              <div className="text-xs text-center text-muted-foreground">
+                {side.selectedKinks.length} on your list · {hellYesIds.length} hell-yeses
+              </div>
+            )}
+          </Sticker>
+        )}
+
+        {step === 2 && (
+          <Sticker className="space-y-5">
+            <h2 className="font-display text-2xl text-plum">Where & how</h2>
+
+            <Field label="Setting">
+              <ChipRow options={SETTINGS} selected={settingChips} onChange={setSettingChips} addPlaceholder="Somewhere else…" />
             </Field>
+
+            <Field label="What you'll wear">
+              <ChipRow options={DRESS} selected={dressChips} onChange={setDressChips} addPlaceholder="Something else…" />
+            </Field>
+
+            <Field label="Music vibe">
+              <Input value={musicNote} onChange={(e) => setMusicNote(e.target.value)} placeholder="A playlist, an artist, or 'silence'…" />
+            </Field>
+
             <Field label="Time constraints">
-              <Input value={side.timeConstraints} onChange={(e) => update("timeConstraints", e.target.value)} placeholder="e.g. need to leave by 10pm" />
+              <ChipRow options={TIME_CONSTRAINTS} selected={timeChips} onChange={setTimeChips} addPlaceholder="Something else…" />
             </Field>
-            <Field label="Music">
-              <Input value={side.music} onChange={(e) => update("music", e.target.value)} />
-            </Field>
-            <Field label="Dress (what do you want to wear?)">
-              <Input value={side.dress} onChange={(e) => update("dress", e.target.value)} />
-            </Field>
-            <Field label="Substances during play">
-              <Textarea value={side.substances} onChange={(e) => update("substances", e.target.value)} placeholder="What, how much, when" rows={2} />
+
+            <Field label="Substances">
+              <ChipRow options={SUBSTANCES} selected={substanceChips} onChange={setSubstanceChips} addPlaceholder="Something else…" />
             </Field>
             <div className="flex items-center justify-between">
               <Label className="text-sm">Substance use is a hard limit for me</Label>
               <Switch checked={side.substancesHardLimit} onCheckedChange={(v) => update("substancesHardLimit", v)} />
             </div>
-            <Field label="Any physical concerns specific to this scene">
-              <Textarea value={side.medicalConcerns} onChange={(e) => update("medicalConcerns", e.target.value)} rows={2} placeholder="Sore shoulder, new meds..." />
+
+            <Field label="Body check-ins">
+              <ChipRow options={BODY_CHECKINS} selected={bodyChips} onChange={setBodyChips} addPlaceholder="Something else…" />
+              {bodyChips.length > 0 && (
+                <Textarea
+                  value={bodyNote}
+                  onChange={(e) => setBodyNote(e.target.value)}
+                  rows={2}
+                  placeholder="Any details? (optional)"
+                  className="mt-2"
+                />
+              )}
             </Field>
-            <Field label="Other play partners / dynamics to be aware of">
-              <Textarea value={side.partnerDynamics} onChange={(e) => update("partnerDynamics", e.target.value)} rows={2} />
-            </Field>
-            <Field label="Intentions — how do you want to feel?">
-              <Textarea value={side.intentions} onChange={(e) => update("intentions", e.target.value)} rows={3} />
-            </Field>
-            <Field label="What does it look like when you're having a good time?">
-              <Textarea value={side.goodTime} onChange={(e) => update("goodTime", e.target.value)} rows={2} />
-            </Field>
-            <Field label="…and a bad time?">
-              <Textarea value={side.badTime} onChange={(e) => update("badTime", e.target.value)} rows={2} />
+
+            <Field label="Other partners / dynamics">
+              <ChipRow options={PARTNER_DYNAMICS} selected={dynamicsChips} onChange={setDynamicsChips} addPlaceholder="Something else…" />
             </Field>
           </Sticker>
         )}
 
-        {step === 2 && (
-          <Sticker className="space-y-4">
-            <h2 className="font-display text-2xl text-plum">Privacy & sex</h2>
-            <YesNoMaybe
-              label="Photos / videos during the scene?"
-              value={side.privacy}
-              onChange={(v) => update("privacy", v)}
+        {step === 3 && (
+          <Sticker variant="coral" className="space-y-4">
+            <h2 className="font-display text-2xl text-plum">Quick boundaries</h2>
+            <YnmCard
+              label="Photos or videos during the scene?"
+              value={(side.privacy || "") as Ynm}
+              onChange={(v) => setYnm("privacy", v)}
             />
-            <YesNoMaybe
+            <YnmCard
               label="Talking about it with others after?"
-              value={side.talkingAfter || ""}
-              onChange={(v) => update("talkingAfter", v)}
+              value={(side.talkingAfter || "") as Ynm}
+              onChange={(v) => setYnm("talkingAfter", v)}
             />
-            <YesNoMaybe
+            <YnmCard
               label="Penetrative sex during the scene?"
-              value={side.penetrativeSex}
-              onChange={(v) => update("penetrativeSex", v)}
+              value={(side.penetrativeSex || "") as Ynm}
+              onChange={(v) => setYnm("penetrativeSex", v)}
             />
             {(side.penetrativeSex === "yes" || side.penetrativeSex === "maybe") && (
-              <div className="space-y-4 pl-3 border-l-2 border-yes/40">
-                <Field label="When were you last tested for STDs?">
+              <div className="rounded-2xl bg-blush/40 border-2 border-coral/30 p-4 space-y-3">
+                <Field label="Last STD test">
                   <Input
                     type="date"
                     value={side.stdTestDate || ""}
@@ -285,7 +353,7 @@ function NewSession() {
                     max={new Date().toISOString().slice(0, 10)}
                   />
                 </Field>
-                <Field label="What were the results of your STD test?">
+                <Field label="Test results">
                   <Textarea
                     value={side.stdTestResults || ""}
                     onChange={(e) => update("stdTestResults", e.target.value)}
@@ -293,13 +361,13 @@ function NewSession() {
                     placeholder="e.g. all negative on 4-panel"
                   />
                 </Field>
-                <YesNoSelect
-                  label="Are you on PrEP / DoxyPEP?"
+                <YesNo
+                  label="On PrEP / DoxyPEP?"
                   value={side.prepDoxypep || ""}
                   onChange={(v) => update("prepDoxypep", v)}
                 />
-                <YesNoSelect
-                  label="Are you on birth control?"
+                <YesNo
+                  label="On birth control?"
                   value={side.birthControl || ""}
                   onChange={(v) => update("birthControl", v)}
                 />
@@ -308,39 +376,18 @@ function NewSession() {
           </Sticker>
         )}
 
-        {step === 3 && (
-          <Sticker variant="coral" className="space-y-4">
-            <h2 className="font-display text-2xl text-plum">For this scene</h2>
-            <p className="text-xs text-muted-foreground">
-              Your saved kinks ratings are already attached.{" "}
-              <Link to="/kinks" className="underline text-link">Edit your kinks library</Link>{" "}
-              if you need to. Below: only what's different about this scene.
-            </p>
-            <Field label="Names you want to be called for this scene (override)">
-              <Input value={side.callMe} onChange={(e) => update("callMe", e.target.value)} placeholder={profile.callMe || "from your profile"} />
-            </Field>
-            <Field label="Off-limits names for this scene (override)">
-              <Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} placeholder={profile.dontCallMe || "from your profile"} />
-            </Field>
-            <Field label="Extra hard limits for this scene">
-              <Textarea value={side.hardLimits} onChange={(e) => update("hardLimits", e.target.value)} rows={2} />
-            </Field>
-            <Field label="Soft limits / Maybes for this scene">
-              <Textarea value={side.softLimits} onChange={(e) => update("softLimits", e.target.value)} rows={2} />
-            </Field>
-            <Field label="Enthusiastic Yes for this scene">
-              <Textarea value={side.yesList} onChange={(e) => update("yesList", e.target.value)} rows={2} />
-            </Field>
-            <Field label="Anything else to brainstorm">
-              <Textarea value={side.brainstorm} onChange={(e) => update("brainstorm", e.target.value)} rows={3} />
-            </Field>
-            <Field label="Aftercare — pick what matters for this scene">
+        {step === 4 && (
+          <Sticker className="space-y-5">
+            <h2 className="font-display text-2xl text-plum">Care</h2>
+
+            <Field label="Aftercare — what matters tonight">
               <AftercareChecklist
                 selected={side.aftercareItems ?? []}
                 onChange={(next: string[]) => update("aftercareItems", next)}
               />
             </Field>
-            <Field label="Safewords — pick the ones you'll use">
+
+            <Field label="Safewords you'll use">
               <Checklist
                 defaultItems={DEFAULT_SAFEWORD_ITEMS}
                 selected={side.safewordItems ?? []}
@@ -348,16 +395,55 @@ function NewSession() {
                 addPlaceholder="Add another safeword…"
               />
             </Field>
+
+            <Disclosure
+              label="Set scene-specific names? (optional)"
+              open={showNames}
+              onToggle={() => setShowNames((s) => !s)}
+            >
+              <Field label="Names you want to be called">
+                <Input value={side.callMe} onChange={(e) => update("callMe", e.target.value)} placeholder={profile.callMe || "e.g. babe, sir, kitten"} />
+              </Field>
+              <Field label="Names that are off-limits">
+                <Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} placeholder={profile.dontCallMe || "e.g. don't call me…"} />
+              </Field>
+            </Disclosure>
+
+            <Disclosure label="Anything else? (optional)">
+              <Textarea
+                value={extraNote}
+                onChange={(e) => setExtraNote(e.target.value)}
+                rows={3}
+                placeholder="A specific scene, a fantasy, anything to brainstorm…"
+              />
+            </Disclosure>
           </Sticker>
         )}
 
-        {step === 4 && (
-          <Sticker className="space-y-3 text-center">
-            <h2 className="font-display text-2xl text-plum">All set</h2>
-            <p className="text-sm text-muted-foreground">
-              Save your side and get a share link + QR for your partner to fill out theirs.
-            </p>
-            <div className="flex flex-col items-center gap-3">
+        {step === 5 && (
+          <Sticker variant="coral" className="space-y-4">
+            <h2 className="font-display text-2xl text-plum text-center">Looks good?</h2>
+            <ReviewSummary
+              vibe={vibe}
+              chips={{
+                Setting: settingChips,
+                Wearing: dressChips,
+                Time: timeChips,
+                Substances: substanceChips,
+                Body: bodyChips,
+                Dynamics: dynamicsChips,
+              }}
+              cravings={side.selectedKinks
+                .map((id) => kinks.find((k) => k.id === id)?.name)
+                .filter(Boolean) as string[]}
+              hellYesCount={hellYesIds.length}
+              boundaries={{
+                Photos: side.privacy,
+                "Talk after": side.talkingAfter || "",
+                "Penetrative sex": side.penetrativeSex,
+              }}
+            />
+            <div className="flex flex-col items-center gap-3 pt-2">
               <CloudButton onClick={saving ? undefined : () => save("shared")}>
                 {saving ? "Saving..." : "Save & get share link"}
               </CloudButton>
@@ -370,25 +456,10 @@ function NewSession() {
 
         <div className="flex flex-col items-center gap-2">
           {step < STEPS.length - 1 && (
-            <CloudButton
-              onClick={() => {
-                setStep((s) => Math.min(STEPS.length - 1, s + 1));
-                if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              Next
-            </CloudButton>
+            <CloudButton onClick={goNext}>Next</CloudButton>
           )}
           {step > 0 && (
-            <CloudButton
-              variant="outline"
-              onClick={() => {
-                setStep((s) => Math.max(0, s - 1));
-                if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              Back
-            </CloudButton>
+            <CloudButton variant="outline" onClick={goBack}>Back</CloudButton>
           )}
         </div>
       </div>
@@ -405,102 +476,135 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-const DIRECTIONS: { value: Direction; label: string }[] = [
-  { value: "give", label: "Give" },
-  { value: "receive", label: "Receive" },
-  { value: "both", label: "Both" },
-];
+function Disclosure({
+  label,
+  children,
+  open: openProp,
+  onToggle,
+}: {
+  label: string;
+  children: React.ReactNode;
+  open?: boolean;
+  onToggle?: () => void;
+}) {
+  const [openLocal, setOpenLocal] = useState(false);
+  const open = openProp ?? openLocal;
+  const toggle = onToggle ?? (() => setOpenLocal((o) => !o));
+  return (
+    <div className="border-t border-border/40 pt-3">
+      <button
+        type="button"
+        onClick={toggle}
+        className="w-full text-left text-sm font-semibold text-plum/80 flex items-center justify-between"
+      >
+        <span>{label}</span>
+        <span className="text-xs">{open ? "−" : "+"}</span>
+      </button>
+      {open && <div className="pt-3 space-y-3">{children}</div>}
+    </div>
+  );
+}
 
-export function DirectionRow({
-  name,
+function YesNo({
+  label,
   value,
   onChange,
-  badge,
 }: {
-  name: string;
-  value: Direction | undefined;
-  onChange: (d: Direction) => void;
-  badge?: string;
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-2 py-1.5">
-      <div className="text-sm flex-1 min-w-0 truncate flex items-center gap-2">
-        <span className="truncate">{name}</span>
-        {badge && (
-          <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-blush text-plum font-semibold shrink-0">
-            {badge}
+    <div className="space-y-1.5">
+      <Label className="doc-label">{label}</Label>
+      <div className="flex gap-2">
+        {["yes", "no"].map((v) => (
+          <button
+            key={v}
+            type="button"
+            onClick={() => onChange(v)}
+            className={`h-10 px-5 rounded-full text-sm font-semibold border-2 transition capitalize ${
+              value === v
+                ? v === "yes" ? "bg-yes/25 border-yes" : "bg-no/20 border-no"
+                : "border-border/60 text-muted-foreground"
+            }`}
+          >
+            {v}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ReviewSummary({
+  vibe,
+  chips,
+  cravings,
+  hellYesCount,
+  boundaries,
+}: {
+  vibe: Vibe;
+  chips: Record<string, string[]>;
+  cravings: string[];
+  hellYesCount: number;
+  boundaries: Record<string, string>;
+}) {
+  return (
+    <div className="space-y-4 text-left">
+      <div>
+        <div className="section-label">Vibe</div>
+        <div className="flex flex-wrap gap-1.5">
+          {vibe.moods.map((m) => (
+            <span key={m} className="text-xs px-2 py-1 rounded-full bg-yes/20 border border-yes/40 font-semibold">
+              {m}
+            </span>
+          ))}
+          <span className="text-xs px-2 py-1 rounded-full bg-coral/15 border border-coral/40 font-semibold">
+            Intensity {vibe.intensity}/5
           </span>
-        )}
+        </div>
+        {vibe.note && <p className="text-sm mt-2 whitespace-pre-wrap text-muted-foreground italic">"{vibe.note}"</p>}
       </div>
-      <div className="inline-flex rounded-full border border-border/60 overflow-hidden shrink-0">
-        {DIRECTIONS.map((d) => (
-          <button
-            key={d.value}
-            type="button"
-            onClick={() => onChange(d.value)}
-            className={cn(
-              "h-7 px-2.5 text-[11px] font-semibold transition border-r border-border/60 last:border-r-0",
-              value === d.value ? "bg-yes/20 text-foreground" : "text-muted-foreground hover:text-foreground"
-            )}
-          >
-            {d.label}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
 
-function YesNoMaybe({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
-  const opts: { v: string; cls: string }[] = [
-    { v: "yes", cls: "bg-yes/20 border-yes" },
-    { v: "maybe", cls: "bg-maybe/20 border-maybe" },
-    { v: "no", cls: "bg-no/20 border-no" },
-  ];
-  return (
-    <div className="space-y-1.5">
-      <Label className="doc-label">{label}</Label>
-      <div className="flex gap-2">
-        {opts.map((o) => (
-          <button
-            key={o.v}
-            type="button"
-            onClick={() => onChange(o.v)}
-            className={cn(
-              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
-              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
-            )}
-          >
-            {o.v}
-          </button>
-        ))}
+      <div>
+        <div className="section-label">Cravings ({cravings.length})</div>
+        <div className="flex flex-wrap gap-1.5">
+          {cravings.slice(0, 12).map((c) => (
+            <span key={c} className="text-xs px-2 py-1 rounded-full bg-blush border border-coral/40 font-semibold text-plum">
+              {c}
+            </span>
+          ))}
+          {cravings.length > 12 && <span className="text-xs text-muted-foreground self-center">+{cravings.length - 12} more</span>}
+        </div>
+        {hellYesCount > 0 && <p className="text-xs mt-1 text-coral font-semibold">🔥 {hellYesCount} hell yes</p>}
       </div>
-    </div>
-  );
-}
 
-function YesNoSelect({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
-  const opts: { v: string; cls: string }[] = [
-    { v: "yes", cls: "bg-yes/20 border-yes" },
-    { v: "no", cls: "bg-no/20 border-no" },
-  ];
-  return (
-    <div className="space-y-1.5">
-      <Label className="doc-label">{label}</Label>
-      <div className="flex gap-2">
-        {opts.map((o) => (
-          <button
-            key={o.v}
-            type="button"
-            onClick={() => onChange(o.v)}
-            className={cn(
-              "h-9 px-4 rounded-full text-sm font-semibold border-2 transition capitalize",
-              value === o.v ? o.cls : "border-border/60 text-muted-foreground hover:text-foreground"
-            )}
-          >
-            {o.v}
-          </button>
-        ))}
+      {Object.entries(chips).map(([label, list]) =>
+        list.length > 0 ? (
+          <div key={label}>
+            <div className="section-label">{label}</div>
+            <div className="flex flex-wrap gap-1.5">
+              {list.map((c) => (
+                <span key={c} className="text-xs px-2 py-1 rounded-full bg-secondary border border-border font-medium">
+                  {c}
+                </span>
+              ))}
+            </div>
+          </div>
+        ) : null,
+      )}
+
+      <div>
+        <div className="section-label">Boundaries</div>
+        <div className="space-y-1 text-sm">
+          {Object.entries(boundaries).map(([label, val]) => (
+            <div key={label} className="flex justify-between border-b border-border/40 py-1">
+              <span className="text-muted-foreground">{label}</span>
+              <span className="font-semibold capitalize">{val || "—"}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

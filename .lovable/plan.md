@@ -1,71 +1,103 @@
-## New homepage — desktop + mobile
 
-Rebuild `src/routes/index.tsx` to match the mockups closely. Reorganized into 7 stacked sections, fully responsive (single column on mobile, multi-column with floating stickers on desktop).
+# Scene flow redesign — tap, swipe, react
 
-### Layout & header
+Replace the current 5-step textarea-heavy form with a tap-first creator flow built on chips, sliders, yes/no/maybe toggles, and a swipe deck for kinks. The invitee no longer fills the same form — they see the creator's picks and react (agree / tweak / add / hard-no). Free-text becomes optional "add a note" attached to any chip, never the primary input.
 
-- Add a top header to the homepage only (wordmark left, "Sign In" / "My scenes" pill right). Hide the bottom nav on `/` (it stays on every other route).
-- Cream background throughout, sections separated by generous vertical padding. No full-bleed hero image — the hero photo sits inside a rounded card on the right.
+No data is pre-filled from past scenes or profile (per your call). Profile defaults still seed the kink library and aftercare/safeword item lists, but each scene starts blank.
 
-### Sections (top → bottom)
+## Creator flow — new shape
 
-1. **Hero (split)** — Left: H1 *"A better way to talk about limits, kinks, and aftercare."*, supporting paragraph, mint **Create a scene** cloud CTA, tiny disclaimer line. Right: rounded photo of friends with the existing `hero.jpg`. Floating sticker decorations (whip, handcuffs) absolutely positioned around the photo on `md+`. On mobile: stacks photo above text.
+Six short screens, each one decision per screen. Mobile-first, thumb-reachable. "Add a note" is always available but never required. Progress bar stays.
 
-2. **"What are you into? is not enough." card** — White rounded card, centered, italic display headline + subtitle. Then a checklist of 6 nuanced questions (each with a coral check-bullet):
-   - "What turns you on, and how?"
-   - "What's a hard no?"
-   - "What scenes do you fantasize about?"
-   - "What do you need to feel safe?"
-   - "What kind of aftercare do you want?"
-   - "What words make you feel hot — or shut down?"
-   Floating wand sticker bottom-left.
+### 1. Vibe
+- Date + time (existing inputs, kept as-is)
+- **Mood chips** (multi-select, 2–4 picks): `Soft`, `Slow`, `Rough`, `Bratty`, `Tender`, `Dirty`, `Playful`, `Ritualistic`, `Service`, `Primal`, `Worship`, `Tease`
+- **Intensity slider** 1–5: `Cozy → Edge`
+- Optional: "Add a note about the vibe" (collapsed by default)
 
-3. **How it works** — Section heading + short subtitle. 4 short white step cards in a row on desktop, stacked on mobile:
-   - Step 1 — Choose your interests and limits
-   - Step 2 — Share with your play partner
-   - Step 3 — Compare and plan the scene
-   - Step 4 — Keep the scene card nearby
-   Floating bound-hands sticker centered below.
+→ Replaces: `vision`, `intentions`, `goodTime`, `badTime` textareas. Stored as structured fields plus optional note. Backwards-compat: serialize chip picks into `vision` on save so existing reads still work.
 
-4. **Feature cluster (4 stylized illustrative cards)** — White rounded cards with a small hint of mocked app UI inside each (chips, bullet lists), arranged in an asymmetric collage on desktop, stacked on mobile. Floating rope (right) and feather (left) stickers.
-   - **Your personal kink menu** — small chip row + bullet list of categories.
-   - **Two-way consent, not one-way permission** — paired yes/maybe/no chips.
-   - **Scene cards for when brains stop working** — title + bullet list (safeword, limits, aftercare, etc.).
-   - **Aftercare does not have to be improvised** — checklist mock + tagline.
+### 2. Cravings (swipe deck)
+- Card stack of the user's `yes` + `maybe` kinks from their library
+- Swipe **right = in for this scene**, **left = not tonight**, **up = enthusiastic yes**, tap to flip card for direction (give / receive / both)
+- "+" button at top to add a custom kink mid-deck
+- Counter: "12 cards left"
+- Skippable once 5+ are sorted
 
-5. **"Built for kinky people who take consent seriously"** — Dark photo card (uses `hero.jpg` desaturated/overlay or a dedicated photo), white headline + supporting paragraph + small trans-flag icon line ("Department of Consent is built by + for the queer, kinky, and trans communities.") Single rounded card, full width on mobile, max-w container on desktop.
+→ Replaces the current chip grid in Step 0. Same data shape (`selectedKinks` + `directions`).
 
-6. **Mint CTA card** — Mint card, white display headline *"Make the scene clear before you start."*, short supporting line, white-fill cloud **Create a scene** button. Floating collar stickers (left) and heart-harness (right) on desktop.
+### 3. Logistics (chip-first)
+- **Setting**: chip row of common picks (`Home`, `Their place`, `Hotel`, `Outside`, `Play space`) + custom input
+- **Dress**: chip row (`Naked`, `Lingerie`, `Streetwear`, `Gear`, `Their choice`) + custom
+- **Music**: single text input (low friction, kept)
+- **Time constraints**: chip row (`No rush`, `Done by 10pm`, `Done by midnight`) + custom
+- **Substances**: chip row (`None`, `Weed`, `Alcohol`, `Other`) + toggle "Hard limit for me"
+- **Body check-ins**: chip row of common ones (`Sore back`, `New meds`, `On period`, `Recent injury`) + "Add" — only renders an expanded note if a chip is picked
 
-7. **Giant wordmark footer** — Massive multi-color "Dept of / Consent" rendered in CSS using Instrument Serif, per-letter spans colored blue / coral / teal / purple. Scales fluidly with `clamp()`. Below it: small footer line ("Copyright Department of Consent" + Privacy / Terms links).
+→ Replaces 6 textareas with chips. `medicalConcerns`, `partnerDynamics`, `timeConstraints`, `setting`, `dress` all become chip-arrays serialized to existing string fields (joined with `, `) for backwards compat.
 
-### Assets
+### 4. Boundaries (yes / no / maybe deck)
+- 6–10 quick prompts shown one at a time as YNM cards:
+  - Photos / videos during?
+  - Talking about it after?
+  - Penetrative sex?
+  - Marks visible the next day?
+  - Filming sound only?
+  - Recording for our eyes only?
+- If "yes/maybe" on penetrative sex → reveal STD test date + results + PrEP/birth control on the same card (existing fields, kept)
 
-Use existing assets in `src/assets/`:
-- `hero.jpg`, `logo.svg`, `trans-flag.svg`
-- `icon-whip.png`, `icon-hearts.png`, `icon-checklist.png`, `icon-bunnies.png`, `icon-bunny-cuddle.png`, `icon-heart-harness.png`, `icon-step1.png`, `icon-step2.png`
+→ Replaces the YesNoMaybe stack on Step 2 with one-at-a-time cards.
 
-No new generated images required. Stickers are positioned with `absolute` + responsive offsets and hidden below `md` where they'd crowd mobile.
+### 5. Care
+- **Aftercare**: existing checklist, but presented as 2-column toggleable chips with icons
+- **Safewords**: existing checklist, same chip treatment
+- **Names**: two short inputs (call me / don't call me) — kept, but collapsed under "Want to set scene-specific names?" disclosure
 
-### Layout component change
+→ Replaces Step 3's `hardLimits`, `softLimits`, `yesList`, `brainstorm` textareas. Hard/soft/yes lists are derived from the swipe deck (left swipe = hard limit, up-swipe = enthusiastic yes, right = yes-with-direction). The four free-text fields collapse into one optional "Anything else?" note.
 
-Update `src/components/Layout.tsx` so the bottom nav is hidden on `/` (homepage gets its own top header rendered inside `index.tsx`). All other pages unchanged.
+### 6. Review & share
+- Visual summary card (mood chips, intensity bar, top cravings, settings, YNM answers)
+- Same "Save & get share link" / "Save as draft" buttons
 
-### Styles
+## Invitee flow — react to creator
 
-- Add a couple of utility classes in `src/styles.css`:
-  - `.giant-wordmark` — display serif, fluid `clamp(4rem, 18vw, 14rem)`, tight leading.
-  - `.feature-card` — white card, soft shadow, rounded-3xl.
-  - per-letter color helpers (`.lt-blue`, `.lt-coral`, `.lt-teal`, `.lt-purple`).
-- Add a `--color-display-blue` and `--color-display-purple` token.
+New route component (reuse `scene.$token.tsx` or new `respond.$token.tsx`). Invitee sees the creator's picks rendered as cards and reacts per item rather than filling a parallel form.
 
-### Responsive behavior
+For each section:
+- **Vibe**: Sees creator's mood chips + intensity. Taps `I'm in` / `Tweak` (opens chip picker pre-filled with creator's picks) / `Different vibe` (own picker)
+- **Cravings**: Swipe deck of creator's selected kinks. Right = `Yes, with you`, left = `Not for me`, up = `Especially yes`. New screen at the end: "Anything you want to add?" → small swipe deck from invitee's own library that creator didn't pick.
+- **Logistics**: Each chip row shows creator's pick highlighted. Invitee taps `Works for me` or picks alternates.
+- **Boundaries**: Same YNM cards but show creator's answer; invitee picks own answer. Mismatches surface visually after.
+- **Care**: Invitee picks own aftercare/safewords from same chip lists. Creator's selection is shown muted as reference.
+- **Review**: Side-by-side overlap view (already exists in current scene view) — keep, adapt to new chip data.
 
-- Mobile (`< md`): single column everywhere, photo above text in hero, stickers hidden or scaled down, feature collage becomes vertical stack matching the mobile mockup.
-- Desktop (`md+`): hero is 2-col, feature cards stagger left/right, stickers float at edges.
+## Data model
 
-### Out of scope
+No DB migration required. All new chip selections serialize into existing `SessionSide` string/array fields:
+- `vision` ← JSON-stringified `{ moods: string[], intensity: number, note: string }` OR human-readable join (TBD during build; pick one and stick to it)
+- `setting`, `dress`, `timeConstraints`, `substances`, `medicalConcerns`, `partnerDynamics` ← comma-joined chip labels + optional note
+- `hardLimits`, `softLimits`, `yesList` ← derived from swipe results, joined kink names
+- `intentions`, `goodTime`, `badTime`, `brainstorm` ← either dropped from UI (still in DB, blank) or merged into one optional "note" field
 
-- No backend, route, or auth changes.
-- No new generated images — all marketing copy + CSS only.
-- Bottom nav behavior on other routes unchanged.
+This keeps existing scene view, edit, and join routes readable without schema changes. A follow-up migration can promote chips to first-class JSONB columns once the new shape settles.
+
+## Build steps
+
+1. Build a small library of new primitives in `src/components/scene/`:
+   - `ChipRow` (multi-select chips with optional custom add)
+   - `IntensitySlider`
+   - `SwipeDeck` (gesture-based, with keyboard fallback for desktop)
+   - `YnmCard` (one-at-a-time yes/no/maybe with optional reveal)
+   - `ReactionRow` (invitee's `Works for me / Tweak / Different`)
+2. Define chip vocabularies in `src/lib/sceneVocab.ts` (moods, settings, dress, substances, body check-ins, YNM prompts) so they're easy to edit.
+3. Rebuild `src/routes/sessions.new.tsx` with the 6 new steps, serializing into existing `SessionSide`.
+4. Build new invitee response route (extend `join.$token.tsx` or replace its body) using `ReactionRow` over creator's picks.
+5. Update the scene summary view (`scene.$token.tsx`, `sessions.$sessionId.scene.tsx`) to render chips visually and surface mismatches.
+6. Keep `sessions.$sessionId.edit.tsx` as a fallback "advanced" editor that exposes the underlying text fields for power users / corrections.
+
+## Out of scope for this pass
+
+- Voice notes + AI summary (rejected option, can revisit)
+- Pre-fill from past scenes (per your call: no prefill)
+- Promoting chip data to dedicated JSONB columns (follow-up migration once shape settles)
+- Realtime "watch your partner respond" — separate feature
