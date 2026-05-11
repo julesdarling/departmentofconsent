@@ -65,7 +65,7 @@ export function SwipeDeck({
     if (!startRef.current) return;
     const { x, y } = drag;
     startRef.current = null;
-    if (y < -100 && Math.abs(y) > Math.abs(x)) advance("hellyes");
+    if (!hideHellYes && y < -100 && Math.abs(y) > Math.abs(x)) advance("hellyes");
     else if (x > 110) advance("yes");
     else if (x < -110) advance("no");
     else setDrag({ x: 0, y: 0 });
