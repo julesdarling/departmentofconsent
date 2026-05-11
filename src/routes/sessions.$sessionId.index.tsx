@@ -4,7 +4,7 @@ import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useKinks, useProfile, generateSceneTitle, DEFAULT_SAFEWORD_ITEMS, type SessionSide } from "@/lib/storage";
-import { decodeVibe, formatVibeHuman } from "@/lib/sceneVocab";
+import { decodeVibe } from "@/lib/sceneVocab";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -328,18 +328,39 @@ function VisionBlock({
   side: SessionSide;
   kinkMap: Record<string, string>;
 }) {
-  if (!side.vision && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
   const v = decodeVibe(side.vision);
-  const hasStructured = v.moods.length > 0 || v.note.trim().length > 0;
+  const hasVibe = !!side.vision;
+  const intensityStyles: Record<number, string> = {
+    1: "bg-yes/25 border-yes text-plum",
+    2: "bg-maybe/30 border-maybe text-plum",
+    3: "bg-blush border-coral/50 text-plum",
+    4: "bg-coral/25 border-coral text-plum",
+    5: "bg-no/25 border-no text-plum",
+  };
+  const intensityLabels = ["Cozy", "Warm", "Heated", "Intense", "Edge"];
+  if (!hasVibe && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
   return (
     <div className="space-y-2">
       <div className="text-[11px] uppercase tracking-wider text-plum font-bold">{name}</div>
-      {side.vision && (
-        hasStructured ? (
-          <p className="text-sm whitespace-pre-wrap">{formatVibeHuman(v)}</p>
-        ) : (
-          <p className="text-sm whitespace-pre-wrap">{side.vision}</p>
-        )
+      {hasVibe && (
+        <div className="flex flex-wrap gap-1.5">
+          {v.moods.map((m) => (
+            <span
+              key={m}
+              className="text-xs px-2.5 py-1 rounded-full border border-plum/20 bg-white font-semibold text-plum"
+            >
+              {m}
+            </span>
+          ))}
+          <span
+            className={`text-xs px-2.5 py-1 rounded-full border-2 font-semibold ${intensityStyles[v.intensity] ?? intensityStyles[3]}`}
+          >
+            Intensity {v.intensity}/5 · {intensityLabels[v.intensity - 1] ?? ""}
+          </span>
+        </div>
+      )}
+      {hasVibe && v.note.trim() && (
+        <p className="text-sm italic text-plum/80 whitespace-pre-wrap">"{v.note.trim()}"</p>
       )}
       {side.selectedKinks?.length > 0 && (
         <div className="flex flex-wrap gap-1.5 pt-1">
