@@ -536,20 +536,34 @@ function Index() {
         <h2 className="font-display text-3xl sm:text-4xl leading-[1.05] text-plum text-center max-w-2xl mx-auto">
           Everything you'd rather know beforehand.
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-          {[
-            { title: "Hard limits", body: "Communicate non-negotiables clearly before meeting." },
-            { title: "Kink compatibility", body: "See mutual interests and mismatches instantly." },
-            { title: "Protection preferences", body: "Reduce awkward condom and STI conversations." },
-            { title: "Aftercare expectations", body: "Clarify emotional and physical needs afterward." },
-            { title: "Dynamic preferences", body: "Discuss dominance, submission, praise, degradation, service, ownership, and more." },
-            { title: "Revocable anytime", body: "Boundaries can change at any moment." },
-          ].map((f) => (
-            <div key={f.title} className="rounded-xl bg-white p-6">
-              <h3 className="font-display text-xl text-plum">{f.title}</h3>
-              <p className="text-sm text-foreground/75 mt-2 leading-snug">{f.body}</p>
-            </div>
-          ))}
+        <div className="rounded-xl bg-white mt-10 overflow-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              { title: "Hard limits", body: "Communicate non-negotiables clearly before meeting." },
+              { title: "Kink compatibility", body: "See mutual interests and mismatches instantly." },
+              { title: "Protection preferences", body: "Reduce awkward condom and STI conversations." },
+              { title: "Aftercare expectations", body: "Clarify emotional and physical needs afterward." },
+              { title: "Dynamic preferences", body: "Discuss dominance, submission, praise, degradation, service, ownership, and more." },
+              { title: "Revocable anytime", body: "Boundaries can change at any moment." },
+            ].map((f, i) => (
+              <div
+                key={f.title}
+                className={[
+                  "p-6 sm:p-8 border-plum/10",
+                  // left vertical divider for non-first column
+                  i % 2 === 1 ? "sm:border-l lg:border-l-0" : "",
+                  i % 3 !== 0 ? "lg:border-l" : "",
+                  // top horizontal divider for rows beyond the first
+                  i >= 1 ? "border-t sm:border-t-0" : "",
+                  i >= 2 ? "sm:border-t lg:border-t-0" : "",
+                  i >= 3 ? "lg:border-t" : "",
+                ].join(" ")}
+              >
+                <h3 className="font-display text-xl text-plum">{f.title}</h3>
+                <p className="text-sm text-foreground/75 mt-2 leading-snug">{f.body}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
