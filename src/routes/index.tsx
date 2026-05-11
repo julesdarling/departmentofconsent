@@ -127,7 +127,7 @@ function Index() {
               Build the kink scene you both actually want.
             </h1>
             <p className="text-base text-foreground/75 leading-snug mt-4 max-w-md">
-              Compare boundaries, kinks, condom expectations, and dealbreakers before things get awkward, intense, or unsafe.
+              Compare boundaries, kinks, sex expectations, and dealbreakers before things get awkward, intense, or unsafe.
             </p>
             <div className="mt-5">
               <CloudButton to={startTo} className="!max-w-full sm:!max-w-[18rem]">Start playing safer</CloudButton>
