@@ -423,22 +423,22 @@ function Index() {
               <div>
                 <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">Last STD test date</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> 2026-05-01</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> 2026-04-29</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Maddie:</span> 2026-05-01</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Cass:</span> 2026-04-29</span>
                 </div>
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">STD test results</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Creator:</span> All Clear</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Play partner 1:</span> Clean</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Maddie:</span> All Clear</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full border border-plum/15 text-plum"><span className="font-semibold">Cass:</span> Clean</span>
                 </div>
               </div>
               <div>
                 <div className="text-xs font-bold uppercase tracking-wide text-plum mb-1.5">On PrEP / DoxyPEP</div>
                 <div className="flex flex-wrap gap-1.5">
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Creator:</span> Yes</span>
-                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Play partner 1:</span> No</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-yes/20 border border-yes/40 text-plum"><span className="font-semibold">Maddie:</span> Yes</span>
+                  <span className="text-xs px-2.5 py-0.5 rounded-full bg-no/15 border border-no/30 text-plum"><span className="font-semibold">Cass:</span> No</span>
                 </div>
               </div>
             </div>
