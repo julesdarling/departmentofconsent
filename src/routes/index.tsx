@@ -121,13 +121,13 @@ function Index() {
         <div className="grid md:grid-cols-[5fr_6fr] gap-8 md:gap-10 items-center">
           <div className="order-2 md:order-1 text-left">
             <p className="text-xs font-bold uppercase tracking-wide text-plum">
-              Most people find out they're incompatible too late.
+              Plan the scene before you're in it.
             </p>
             <h1 className="font-display text-4xl sm:text-5xl text-plum leading-[1.05] mt-3">
-              Don't discover hard limits <em className="italic">halfway</em> through a hookup.
+              Build the kink scene you both actually want.
             </h1>
             <p className="text-base text-foreground/75 leading-snug mt-4 max-w-md">
-              Compare boundaries, kinks, condom expectations, attachment styles, and dealbreakers before things get awkward, intense, or unsafe.
+              Compare boundaries, kinks, condom expectations, and dealbreakers before things get awkward, intense, or unsafe.
             </p>
             <div className="mt-5">
               <CloudButton to={startTo} className="!max-w-full sm:!max-w-[18rem]">Start playing safer</CloudButton>
@@ -154,7 +154,7 @@ function Index() {
               <div className="absolute left-3 right-3 sm:inset-x-8 top-1/2 -translate-y-1/2 max-w-[16rem] sm:max-w-none mx-auto bg-white rounded-md p-3 sm:p-6 space-y-2.5 sm:space-y-4">
                 <div>
                   <div className="text-[10px] sm:text-xs font-bold uppercase tracking-wide text-yes mb-1">Both want to play</div>
-                  <p className="text-xs sm:text-sm text-foreground/75 leading-snug mb-2">Cravings you both picked for this scene.</p>
+                  
                   <div className="flex flex-wrap gap-1 sm:gap-1.5">
                     {["Paddling", "Whipping", "Cuffs / restraints"].map((c) => (
                       <span key={c} className="text-[11px] sm:text-xs px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-yes/20 border border-yes/40 text-plum">{c}</span>
