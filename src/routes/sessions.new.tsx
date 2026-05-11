@@ -269,7 +269,7 @@ function NewSession() {
                         type="button"
                         onClick={() => toggleKink(k.id)}
                         className={cn(
-                          "text-sm px-3 py-1.5 rounded-full border-2 transition flex items-center gap-1.5",
+                          "text-sm px-3 py-1.5 rounded-xl border-2 transition flex items-center gap-1.5",
                           selected
                             ? "bg-yes/30 border-yes text-plum font-semibold rounded-b-none"
                             : "border-border/60 text-muted-foreground hover:border-primary/50",
