@@ -159,6 +159,11 @@ function JoinPage() {
       if (choice === "hellyes") next.push(cardId);
       return next;
     });
+    setRespondedKinkIds((prev) => {
+      const next = new Set(prev);
+      next.add(cardId);
+      return next;
+    });
   };
 
   // When invitee taps "I'm in" on a section, copy creator's chips.
