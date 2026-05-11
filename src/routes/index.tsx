@@ -185,7 +185,7 @@ function Index() {
           {[
             { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31", avatar: avatarJ, pos: "center" },
             { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26", avatar: avatarR, pos: "center" },
-            { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29", avatar: avatarA, pos: "center" },
+            { quote: "This was the first time I felt completely comfortable being honest about my limits.", author: "A, 29", avatar: avatarA, pos: "center" },
           ].map((t) => (
             <figure key={t.author} className="rounded-xl bg-white p-4 flex flex-col">
               <blockquote className="font-sans italic text-xs sm:text-sm text-plum leading-snug">
