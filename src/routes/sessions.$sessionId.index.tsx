@@ -4,6 +4,7 @@ import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useKinks, useProfile, generateSceneTitle, DEFAULT_SAFEWORD_ITEMS, type SessionSide } from "@/lib/storage";
+import { decodeVibe, formatVibeHuman } from "@/lib/sceneVocab";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -328,10 +329,18 @@ function VisionBlock({
   kinkMap: Record<string, string>;
 }) {
   if (!side.vision && (!side.selectedKinks || side.selectedKinks.length === 0)) return null;
+  const v = decodeVibe(side.vision);
+  const hasStructured = v.moods.length > 0 || v.note.trim().length > 0;
   return (
     <div className="space-y-2">
       <div className="text-[11px] uppercase tracking-wider text-plum font-bold">{name}</div>
-      {side.vision && <p className="text-sm whitespace-pre-wrap">{side.vision}</p>}
+      {side.vision && (
+        hasStructured ? (
+          <p className="text-sm whitespace-pre-wrap">{formatVibeHuman(v)}</p>
+        ) : (
+          <p className="text-sm whitespace-pre-wrap">{side.vision}</p>
+        )
+      )}
       {side.selectedKinks?.length > 0 && (
         <div className="flex flex-wrap gap-1.5 pt-1">
           {side.selectedKinks.map((id) => (
