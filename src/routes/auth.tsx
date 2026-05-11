@@ -86,7 +86,7 @@ function AuthPage() {
   };
 
   const submit = async () => {
-    const parsed = schema.safeParse({ email, password });
+    const parsed = (mode === "signup" ? signupSchema : signinSchema).safeParse({ email, password });
     if (!parsed.success) {
       toast.error(parsed.error.issues[0].message);
       return;
