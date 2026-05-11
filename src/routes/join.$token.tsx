@@ -312,12 +312,12 @@ function JoinPage() {
                 onChoice={handleSwipe}
                 noLabel="Not for me"
                 yesLabel="Yes with you"
-                hellYesLabel="Especially yes"
+                hideHellYes
               />
             )}
             {side.selectedKinks.length > 0 && (
               <div className="text-xs text-center text-muted-foreground">
-                {side.selectedKinks.length} on your list · {hellYesIds.length} especially yes
+                {side.selectedKinks.length} on your list
               </div>
             )}
           </Sticker>
