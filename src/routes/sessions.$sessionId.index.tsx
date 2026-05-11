@@ -4,7 +4,7 @@ import { Layout } from "@/components/Layout";
 import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useKinks, useProfile, generateSceneTitle, DEFAULT_SAFEWORD_ITEMS, type SessionSide } from "@/lib/storage";
-import { decodeVibe, formatVibeHuman } from "@/lib/sceneVocab";
+import { decodeVibe } from "@/lib/sceneVocab";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
