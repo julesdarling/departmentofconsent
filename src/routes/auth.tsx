@@ -170,7 +170,29 @@ function AuthPage() {
           {mode !== "forgot" && (
             <div className="space-y-1.5">
               <Label className="doc-label">Password</Label>
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 8 characters" autoComplete={mode === "signin" ? "current-password" : "new-password"} />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder={mode === "signup" ? "Create a strong password" : "Your password"}
+                autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              />
+              {mode === "signup" && (
+                <ul className="text-xs space-y-0.5 pt-1">
+                  {PASSWORD_RULES.map((r) => {
+                    const ok = r.test(password);
+                    return (
+                      <li
+                        key={r.label}
+                        className={ok ? "text-yes" : "text-muted-foreground"}
+                      >
+                        <span className="inline-block w-4">{ok ? "✓" : "○"}</span>
+                        {r.label}
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </div>
           )}
           {mode === "signup" && (
