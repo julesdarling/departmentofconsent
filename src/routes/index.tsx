@@ -312,10 +312,10 @@ function Index() {
             src={stickerBoundHands}
             alt=""
             aria-hidden
-            className="absolute left-1/2 -translate-x-1/2 -bottom-16 sm:-bottom-24 w-44 sm:w-56 rotate-[3deg] pointer-events-none z-0"
+            className="absolute left-1/2 -translate-x-1/2 -bottom-32 sm:-bottom-44 w-44 sm:w-56 rotate-[3deg] pointer-events-none z-0"
           />
         </div>
-        <div className="h-20 sm:h-28" />
+        <div className="h-32 sm:h-44" />
       </section>
 
       {/* removed - moved under hero */}
