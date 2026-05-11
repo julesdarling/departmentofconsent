@@ -18,8 +18,9 @@ import { Checklist } from "@/components/Checklist";
 
 import { ChipRow } from "@/components/scene/ChipRow";
 import { IntensitySlider } from "@/components/scene/IntensitySlider";
-import { SwipeDeck, type DeckCard, type SwipeChoice } from "@/components/scene/SwipeDeck";
 import { YnmCard, type Ynm } from "@/components/scene/YnmCard";
+import { Star } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 import {
   useProfile,
