@@ -145,16 +145,18 @@ export function SwipeDeck({
           >
             NOPE
           </div>
-          <div
-            style={{ opacity: opacityUp }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg border-4 border-coral text-coral font-display text-2xl px-3 py-1 pointer-events-none"
-          >
-            🔥 HELL YES
-          </div>
+          {!hideHellYes && (
+            <div
+              style={{ opacity: opacityUp }}
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-lg border-4 border-coral text-coral font-display text-2xl px-3 py-1 pointer-events-none"
+            >
+              🔥 HELL YES
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-2">
+      <div className={cn("grid gap-2", hideHellYes ? "grid-cols-2" : "grid-cols-3")}>
         <button
           type="button"
           onClick={() => advance("no")}
@@ -169,13 +171,15 @@ export function SwipeDeck({
         >
           {yesLabel}
         </button>
-        <button
-          type="button"
-          onClick={() => advance("hellyes")}
-          className="h-14 rounded-2xl border-2 border-coral bg-coral/15 text-plum font-semibold hover:bg-coral/25 transition"
-        >
-          {hellYesLabel}
-        </button>
+        {!hideHellYes && (
+          <button
+            type="button"
+            onClick={() => advance("hellyes")}
+            className="h-14 rounded-2xl border-2 border-coral bg-coral/15 text-plum font-semibold hover:bg-coral/25 transition"
+          >
+            {hellYesLabel}
+          </button>
+        )}
       </div>
     </div>
   );
