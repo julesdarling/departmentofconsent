@@ -183,9 +183,9 @@ function Index() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {[
-            { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31", avatar: avatarJ, pos: "center 20%" },
-            { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26", avatar: avatarR, pos: "center 22%" },
-            { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29", avatar: avatarA, pos: "center 30%" },
+            { quote: "This removed so much awkwardness from kink negotiation.", author: "J, 31", avatar: avatarJ, pos: "center" },
+            { quote: "I feel safer using this with people I meet on dating apps.", author: "R, 26", avatar: avatarR, pos: "center" },
+            { quote: "It made bringing up condoms and hard limits dramatically easier.", author: "A, 29", avatar: avatarA, pos: "center" },
           ].map((t) => (
             <figure key={t.author} className="rounded-xl bg-white p-4 flex flex-col">
               <blockquote className="font-sans italic text-xs sm:text-sm text-plum leading-snug">
