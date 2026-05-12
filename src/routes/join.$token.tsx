@@ -13,7 +13,7 @@ import { AftercareChecklist } from "@/components/AftercareChecklist";
 
 import { ChipRow } from "@/components/scene/ChipRow";
 import { IntensitySlider } from "@/components/scene/IntensitySlider";
-import { SwipeDeck, type DeckCard, type SwipeChoice } from "@/components/scene/SwipeDeck";
+import { CravingsPicker } from "@/components/scene/CravingsPicker";
 import { YnmCard, type Ynm } from "@/components/scene/YnmCard";
 import { ReactionRow, type Reaction } from "@/components/scene/ReactionRow";
 
@@ -131,38 +131,39 @@ function JoinPage() {
 
   const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
   const ownerSelectedIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
-  const deckCards: DeckCard[] = ownerSelectedIds.map((id) => ({
-    id,
-    name: ownerKinkMap[id],
-    direction: ownerSide.directions?.[id],
-  }));
+  const cravingItems = ownerSelectedIds.map((id) => ({ id, name: ownerKinkMap[id] }));
 
-  const handleSwipe = (cardId: string, choice: SwipeChoice, direction?: Direction) => {
+  const toggleCraving = (id: string) => {
     setSide((p) => {
       if (!p) return p;
       const ratings = { ...p.ratings };
       const dirs = { ...(p.directions || {}) };
       const sel = new Set(p.selectedKinks);
-      if (choice === "no") {
-        ratings[cardId] = "no";
-        sel.delete(cardId);
-        delete dirs[cardId];
+      if (sel.has(id)) {
+        sel.delete(id);
+        delete dirs[id];
+        ratings[id] = "no";
       } else {
-        ratings[cardId] = "yes";
-        sel.add(cardId);
-        if (direction) dirs[cardId] = direction;
+        sel.add(id);
+        if (!dirs[id]) dirs[id] = "both";
+        ratings[id] = "yes";
       }
       return { ...p, ratings, directions: dirs, selectedKinks: Array.from(sel) };
     });
-    setHellYesIds((prev) => {
-      const next = prev.filter((id) => id !== cardId);
-      if (choice === "hellyes") next.push(cardId);
-      return next;
-    });
+    setHellYesIds((prev) => prev.filter((x) => x !== id));
     setRespondedKinkIds((prev) => {
       const next = new Set(prev);
-      next.add(cardId);
+      next.add(id);
       return next;
+    });
+  };
+
+  const setCravingDirection = (id: string, d: Direction) => {
+    setSide((p) => {
+      if (!p) return p;
+      const dirs = { ...(p.directions || {}) };
+      dirs[id] = d;
+      return { ...p, directions: dirs };
     });
   };
 
@@ -300,24 +301,30 @@ function JoinPage() {
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum">{creatorName}'s cravings</h2>
             <p className="text-xs text-muted-foreground">
-              Swipe through what they picked. Right = yes with you, up = especially yes, left = not for me.
+              Tap any you're into. Then choose give / receive / both. Star a hell-yes.
             </p>
-            {deckCards.length === 0 ? (
+            {cravingItems.length === 0 ? (
               <div className="rounded-2xl border-2 border-dashed border-border/40 p-6 text-center text-sm text-muted-foreground">
                 {creatorName} didn't pick any specific kinks for this scene.
               </div>
             ) : (
-              <SwipeDeck
-                cards={deckCards}
-                onChoice={handleSwipe}
-                noLabel="Not for me"
-                yesLabel="Yes with you"
-                hideHellYes
+              <CravingsPicker
+                items={cravingItems}
+                selectedIds={side.selectedKinks}
+                directions={side.directions || {}}
+                onToggle={toggleCraving}
+                onSetDirection={setCravingDirection}
+                hellYesIds={hellYesIds}
+                onToggleHellYes={(id) =>
+                  setHellYesIds((prev) =>
+                    prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+                  )
+                }
               />
             )}
             {side.selectedKinks.length > 0 && (
               <div className="text-xs text-center text-muted-foreground">
-                {side.selectedKinks.length} on your list
+                {side.selectedKinks.length} on your list · {hellYesIds.length} hell-yeses
               </div>
             )}
           </Sticker>
@@ -520,23 +527,13 @@ function JoinPage() {
         )}
 
         <div className="flex flex-col items-center gap-2">
-          {(() => {
-            const cravingsIncomplete = step === 1 && deckCards.length > 0 && respondedKinkIds.size < deckCards.length;
-            if (step < STEPS.length - 1) {
-              return cravingsIncomplete ? (
-                <p className="text-xs text-muted-foreground italic">
-                  Respond to all {deckCards.length} cravings to continue ({respondedKinkIds.size}/{deckCards.length})
-                </p>
-              ) : (
-                <CloudButton onClick={goNext}>Next</CloudButton>
-              );
-            }
-            return (
-              <CloudButton onClick={submitting ? undefined : submit}>
-                {submitting ? "Submitting..." : "Submit my side"}
-              </CloudButton>
-            );
-          })()}
+          {step < STEPS.length - 1 ? (
+            <CloudButton onClick={goNext}>Next</CloudButton>
+          ) : (
+            <CloudButton onClick={submitting ? undefined : submit}>
+              {submitting ? "Submitting..." : "Submit my side"}
+            </CloudButton>
+          )}
           {step > 0 && (
             <CloudButton variant="outline" onClick={goBack}>Back</CloudButton>
           )}
