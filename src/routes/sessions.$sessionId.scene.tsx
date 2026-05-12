@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { DEFAULT_SAFEWORD_ITEMS, useProfile, useKinks, type SessionSide } from "@/lib/storage";
-import { decodeVibe, formatVibeHuman } from "@/lib/sceneVocab";
+import { VibePills } from "@/components/scene/VibePills";
 import { Phone } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -193,7 +193,7 @@ function ScenePage() {
             {o.vision && (
               <div>
                 <div className="section-label">{ownerName}'s vibe for the scene</div>
-                <p className="text-sm whitespace-pre-wrap">{formatVibeHuman(decodeVibe(o.vision))}</p>
+                <VibePills raw={o.vision} />
               </div>
             )}
             {partners.map((ps, i) => ps.vision && (
@@ -201,7 +201,7 @@ function ScenePage() {
                 <div className="section-label">
                   {(ps.name?.trim() || `Play partner ${i + 1}`)}'s vibe for the scene
                 </div>
-                <p className="text-sm whitespace-pre-wrap">{formatVibeHuman(decodeVibe(ps.vision))}</p>
+                <VibePills raw={ps.vision} />
               </div>
             ))}
           </Sticker>
