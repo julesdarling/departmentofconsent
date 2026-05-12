@@ -47,6 +47,7 @@ export interface SessionSide {
   dress: string;
   callMe: string;
   dontCallMe: string;
+  genitalsRefer?: string;
   intentions: string;
   goodTime: string;
   badTime: string;
