@@ -301,24 +301,30 @@ function JoinPage() {
           <Sticker variant="coral" className="space-y-4">
             <h2 className="font-display text-2xl text-plum">{creatorName}'s cravings</h2>
             <p className="text-xs text-muted-foreground">
-              Swipe through what they picked. Right = yes with you, up = especially yes, left = not for me.
+              Tap any you're into. Then choose give / receive / both. Star a hell-yes.
             </p>
-            {deckCards.length === 0 ? (
+            {cravingItems.length === 0 ? (
               <div className="rounded-2xl border-2 border-dashed border-border/40 p-6 text-center text-sm text-muted-foreground">
                 {creatorName} didn't pick any specific kinks for this scene.
               </div>
             ) : (
-              <SwipeDeck
-                cards={deckCards}
-                onChoice={handleSwipe}
-                noLabel="Not for me"
-                yesLabel="Yes with you"
-                hideHellYes
+              <CravingsPicker
+                items={cravingItems}
+                selectedIds={side.selectedKinks}
+                directions={side.directions || {}}
+                onToggle={toggleCraving}
+                onSetDirection={setCravingDirection}
+                hellYesIds={hellYesIds}
+                onToggleHellYes={(id) =>
+                  setHellYesIds((prev) =>
+                    prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+                  )
+                }
               />
             )}
             {side.selectedKinks.length > 0 && (
               <div className="text-xs text-center text-muted-foreground">
-                {side.selectedKinks.length} on your list
+                {side.selectedKinks.length} on your list · {hellYesIds.length} hell-yeses
               </div>
             )}
           </Sticker>
