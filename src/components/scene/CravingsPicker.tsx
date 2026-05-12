@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { Star } from "lucide-react";
 import type { Direction } from "@/lib/storage";
 
 export interface CravingItem {
@@ -12,6 +13,8 @@ export function CravingsPicker({
   directions,
   onToggle,
   onSetDirection,
+  hellYesIds,
+  onToggleHellYes,
   className,
 }: {
   items: CravingItem[];
@@ -19,6 +22,8 @@ export function CravingsPicker({
   directions: Record<string, Direction | undefined>;
   onToggle: (id: string) => void;
   onSetDirection: (id: string, dir: Direction) => void;
+  hellYesIds?: string[];
+  onToggleHellYes?: (id: string) => void;
   className?: string;
 }) {
   return (
