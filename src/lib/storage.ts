@@ -442,6 +442,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     dress: "",
     callMe: profile?.callMe ?? "",
     dontCallMe: profile?.dontCallMe ?? "",
+    genitalsRefer: "",
     intentions: "",
     goodTime: "",
     badTime: "",
