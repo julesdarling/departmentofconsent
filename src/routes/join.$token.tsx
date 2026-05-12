@@ -13,7 +13,7 @@ import { AftercareChecklist } from "@/components/AftercareChecklist";
 
 import { ChipRow } from "@/components/scene/ChipRow";
 import { IntensitySlider } from "@/components/scene/IntensitySlider";
-import { SwipeDeck, type DeckCard, type SwipeChoice } from "@/components/scene/SwipeDeck";
+import { CravingsPicker } from "@/components/scene/CravingsPicker";
 import { YnmCard, type Ynm } from "@/components/scene/YnmCard";
 import { ReactionRow, type Reaction } from "@/components/scene/ReactionRow";
 
