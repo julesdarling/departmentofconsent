@@ -131,38 +131,39 @@ function JoinPage() {
 
   const ownerKinkMap = Object.fromEntries(kinks.map((k) => [k.id, k.name]));
   const ownerSelectedIds = (ownerSide.selectedKinks || []).filter((id) => ownerKinkMap[id]);
-  const deckCards: DeckCard[] = ownerSelectedIds.map((id) => ({
-    id,
-    name: ownerKinkMap[id],
-    direction: ownerSide.directions?.[id],
-  }));
+  const cravingItems = ownerSelectedIds.map((id) => ({ id, name: ownerKinkMap[id] }));
 
-  const handleSwipe = (cardId: string, choice: SwipeChoice, direction?: Direction) => {
+  const toggleCraving = (id: string) => {
     setSide((p) => {
       if (!p) return p;
       const ratings = { ...p.ratings };
       const dirs = { ...(p.directions || {}) };
       const sel = new Set(p.selectedKinks);
-      if (choice === "no") {
-        ratings[cardId] = "no";
-        sel.delete(cardId);
-        delete dirs[cardId];
+      if (sel.has(id)) {
+        sel.delete(id);
+        delete dirs[id];
+        ratings[id] = "no";
       } else {
-        ratings[cardId] = "yes";
-        sel.add(cardId);
-        if (direction) dirs[cardId] = direction;
+        sel.add(id);
+        if (!dirs[id]) dirs[id] = "both";
+        ratings[id] = "yes";
       }
       return { ...p, ratings, directions: dirs, selectedKinks: Array.from(sel) };
     });
-    setHellYesIds((prev) => {
-      const next = prev.filter((id) => id !== cardId);
-      if (choice === "hellyes") next.push(cardId);
-      return next;
-    });
+    setHellYesIds((prev) => prev.filter((x) => x !== id));
     setRespondedKinkIds((prev) => {
       const next = new Set(prev);
-      next.add(cardId);
+      next.add(id);
       return next;
+    });
+  };
+
+  const setCravingDirection = (id: string, d: Direction) => {
+    setSide((p) => {
+      if (!p) return p;
+      const dirs = { ...(p.directions || {}) };
+      dirs[id] = d;
+      return { ...p, directions: dirs };
     });
   };
 
