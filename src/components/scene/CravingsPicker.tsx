@@ -71,6 +71,21 @@ export function CravingsPicker({
                 ))}
               </div>
             )}
+            {selected && onToggleHellYes && (
+              <button
+                type="button"
+                onClick={() => onToggleHellYes(k.id)}
+                aria-label={hellYesIds?.includes(k.id) ? "Remove hell-yes" : "Mark hell-yes"}
+                className="ml-0.5 mr-1 p-0.5"
+              >
+                <Star
+                  className={cn(
+                    "h-3.5 w-3.5",
+                    hellYesIds?.includes(k.id) ? "fill-coral text-coral" : "text-plum/40",
+                  )}
+                />
+              </button>
+            )}
           </div>
         );
       })}
