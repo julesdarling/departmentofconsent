@@ -19,7 +19,7 @@ import { Checklist } from "@/components/Checklist";
 import { ChipRow } from "@/components/scene/ChipRow";
 import { IntensitySlider } from "@/components/scene/IntensitySlider";
 import { YnmCard, type Ynm } from "@/components/scene/YnmCard";
-import { Star } from "lucide-react";
+import { CravingsPicker } from "@/components/scene/CravingsPicker";
 import { cn } from "@/lib/utils";
 
 import {
