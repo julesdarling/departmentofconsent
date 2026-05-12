@@ -47,6 +47,7 @@ export interface SessionSide {
   dress: string;
   callMe: string;
   dontCallMe: string;
+  genitalsRefer?: string;
   intentions: string;
   goodTime: string;
   badTime: string;
@@ -441,6 +442,7 @@ export function emptySide(profile?: Profile, ratings?: KinkRatings, directions?:
     dress: "",
     callMe: profile?.callMe ?? "",
     dontCallMe: profile?.dontCallMe ?? "",
+    genitalsRefer: "",
     intentions: "",
     goodTime: "",
     badTime: "",

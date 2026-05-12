@@ -118,6 +118,7 @@ function SideRecap({
       <Detail title="Dress" value={side.dress} />
       <Detail title="Call me" value={side.callMe} />
       <Detail title="Don't call me" value={side.dontCallMe} />
+      <Detail title="Genitals referred to as" value={side.genitalsRefer ?? ""} />
       <Detail title="Intentions" value={side.intentions} />
       <Detail title="Privacy" value={side.privacy} />
       <Detail title="Penetrative sex" value={side.penetrativeSex} />

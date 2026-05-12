@@ -474,6 +474,18 @@ function JoinPage() {
             <Field label="Pronouns">
               <Input value={side.pronouns} onChange={(e) => updateField("pronouns", e.target.value)} />
             </Field>
+            <Field label="How would you like your genitals referred to?">
+              <Input
+                value={side.genitalsRefer ?? ""}
+                onChange={(e) => updateField("genitalsRefer", e.target.value)}
+                placeholder="e.g. cock, pussy, parts, junk…"
+              />
+              {ownerSide.genitalsRefer?.trim() && (
+                <div className="mt-1 inline-block bg-blush text-plum text-xs rounded-lg rounded-bl-none px-2.5 py-1 font-medium">
+                  {creatorName}: {ownerSide.genitalsRefer}
+                </div>
+              )}
+            </Field>
             <Field label="Emergency contact">
               <Textarea value={side.emergencyContact} onChange={(e) => updateField("emergencyContact", e.target.value)} rows={2} />
             </Field>
