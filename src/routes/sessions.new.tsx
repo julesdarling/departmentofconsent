@@ -195,29 +195,35 @@ function NewSession() {
           <Sticker className="space-y-5">
             <h2 className="font-display text-2xl text-plum">What's the vibe?</h2>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Date">
-                <Input
-                  type="date"
-                  value={side.timeOfPlay ? side.timeOfPlay.slice(0, 10) : date}
-                  onChange={(e) => {
-                    const d = e.target.value;
-                    setDate(d);
-                    const t = side.timeOfPlay?.slice(11, 16) || "20:00";
-                    update("timeOfPlay", d ? `${d}T${t}` : "");
-                  }}
-                />
-              </Field>
-              <Field label="Time">
-                <Input
-                  type="time"
-                  value={side.timeOfPlay ? side.timeOfPlay.slice(11, 16) : ""}
-                  onChange={(e) => {
-                    const t = e.target.value;
-                    const d = side.timeOfPlay?.slice(0, 10) || date;
-                    update("timeOfPlay", d && t ? `${d}T${t}` : "");
-                  }}
-                />
-              </Field>
+              <div className="min-w-0">
+                <Field label="Date">
+                  <Input
+                    type="date"
+                    className="w-full min-w-0 block appearance-none"
+                    value={side.timeOfPlay ? side.timeOfPlay.slice(0, 10) : date}
+                    onChange={(e) => {
+                      const d = e.target.value;
+                      setDate(d);
+                      const t = side.timeOfPlay?.slice(11, 16) || "20:00";
+                      update("timeOfPlay", d ? `${d}T${t}` : "");
+                    }}
+                  />
+                </Field>
+              </div>
+              <div className="min-w-0">
+                <Field label="Time">
+                  <Input
+                    type="time"
+                    className="w-full min-w-0 block appearance-none"
+                    value={side.timeOfPlay ? side.timeOfPlay.slice(11, 16) : ""}
+                    onChange={(e) => {
+                      const t = e.target.value;
+                      const d = side.timeOfPlay?.slice(0, 10) || date;
+                      update("timeOfPlay", d && t ? `${d}T${t}` : "");
+                    }}
+                  />
+                </Field>
+              </div>
             </div>
 
             <Field label="Pick the moods">
