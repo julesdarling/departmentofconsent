@@ -414,6 +414,9 @@ function NewSession() {
               <Field label="Names that are off-limits">
                 <Input value={side.dontCallMe} onChange={(e) => update("dontCallMe", e.target.value)} placeholder={profile.dontCallMe || "e.g. don't call me…"} />
               </Field>
+              <Field label="How would you like your genitals referred to?">
+                <Input value={side.genitalsRefer ?? ""} onChange={(e) => update("genitalsRefer", e.target.value)} placeholder="e.g. cock, pussy, parts, junk…" />
+              </Field>
             </Disclosure>
 
             <Disclosure label="Anything else? (optional)">
