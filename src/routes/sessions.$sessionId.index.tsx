@@ -5,6 +5,7 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useKinks, useProfile, generateSceneTitle, DEFAULT_SAFEWORD_ITEMS, type SessionSide } from "@/lib/storage";
 import { decodeVibe } from "@/lib/sceneVocab";
+import { VibePills } from "@/components/scene/VibePills";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { apiDeleteSession } from "@/lib/sessionsApi";
 import { QRCodeSVG } from "qrcode.react";
@@ -671,7 +672,11 @@ function SideChat({
               {s.kind === "text"
                 ? s.replies.map(({ p, value }, i) => (
                     <ChatBubble key={i} name={p.name} isOwner={p.isOwner}>
-                      <p className="whitespace-pre-wrap">{value}</p>
+                      {s.label === "Vision" ? (
+                        <VibePills raw={value} size="sm" />
+                      ) : (
+                        <p className="whitespace-pre-wrap">{value}</p>
+                      )}
                     </ChatBubble>
                   ))
                 : s.replies.map(({ p, items }, i) => (
