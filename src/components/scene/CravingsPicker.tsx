@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Star } from "lucide-react";
 import type { Direction } from "@/lib/storage";
 
 export interface CravingItem {
@@ -13,8 +12,6 @@ export function CravingsPicker({
   directions,
   onToggle,
   onSetDirection,
-  hellYesIds,
-  onToggleHellYes,
   className,
 }: {
   items: CravingItem[];
@@ -35,7 +32,7 @@ export function CravingsPicker({
           <div
             key={k.id}
             className={cn(
-              "inline-flex items-center rounded-full border-2 transition text-sm",
+              "inline-flex items-center rounded-full border-2 transition",
               selected
                 ? "bg-yes/20 border-yes/70 pl-3 pr-1.5 py-1 gap-2"
                 : "border-border/60 text-muted-foreground hover:border-primary/50 px-3 py-1.5",
@@ -45,7 +42,7 @@ export function CravingsPicker({
               type="button"
               onClick={() => onToggle(k.id)}
               className={cn(
-                "font-medium",
+                "font-medium text-xs sm:text-sm",
                 selected ? "text-plum" : "text-muted-foreground",
               )}
             >
@@ -53,7 +50,7 @@ export function CravingsPicker({
               {k.name}
             </button>
             {selected && (
-              <div className="flex items-center gap-0.5 text-[11px]">
+              <div className="flex items-center gap-0.5 text-[10px] sm:text-[11px]">
                 {(["give", "receive", "both"] as Direction[]).map((d) => (
                   <button
                     key={d}
@@ -71,24 +68,10 @@ export function CravingsPicker({
                 ))}
               </div>
             )}
-            {selected && onToggleHellYes && (
-              <button
-                type="button"
-                onClick={() => onToggleHellYes(k.id)}
-                aria-label={hellYesIds?.includes(k.id) ? "Remove hell-yes" : "Mark hell-yes"}
-                className="ml-0.5 mr-1 p-0.5"
-              >
-                <Star
-                  className={cn(
-                    "h-3.5 w-3.5",
-                    hellYesIds?.includes(k.id) ? "fill-coral text-coral" : "text-plum/40",
-                  )}
-                />
-              </button>
-            )}
           </div>
         );
       })}
     </div>
   );
 }
+
