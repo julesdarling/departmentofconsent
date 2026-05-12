@@ -527,23 +527,13 @@ function JoinPage() {
         )}
 
         <div className="flex flex-col items-center gap-2">
-          {(() => {
-            const cravingsIncomplete = step === 1 && deckCards.length > 0 && respondedKinkIds.size < deckCards.length;
-            if (step < STEPS.length - 1) {
-              return cravingsIncomplete ? (
-                <p className="text-xs text-muted-foreground italic">
-                  Respond to all {deckCards.length} cravings to continue ({respondedKinkIds.size}/{deckCards.length})
-                </p>
-              ) : (
-                <CloudButton onClick={goNext}>Next</CloudButton>
-              );
-            }
-            return (
-              <CloudButton onClick={submitting ? undefined : submit}>
-                {submitting ? "Submitting..." : "Submit my side"}
-              </CloudButton>
-            );
-          })()}
+          {step < STEPS.length - 1 ? (
+            <CloudButton onClick={goNext}>Next</CloudButton>
+          ) : (
+            <CloudButton onClick={submitting ? undefined : submit}>
+              {submitting ? "Submitting..." : "Submit my side"}
+            </CloudButton>
+          )}
           {step > 0 && (
             <CloudButton variant="outline" onClick={goBack}>Back</CloudButton>
           )}
