@@ -5,7 +5,7 @@ import { Sticker } from "@/components/Sticker";
 import { Button } from "@/components/ui/button";
 import { useCloudSession } from "@/lib/useCloudSession";
 import { useKinks, type SessionSide } from "@/lib/storage";
-import { decodeVibe, formatVibeHuman } from "@/lib/sceneVocab";
+import { VibePills } from "@/components/scene/VibePills";
 import { useMemo, useState } from "react";
 import { Copy } from "lucide-react";
 
@@ -97,22 +97,12 @@ function SideRecap({
   return (
     <Sticker className="space-y-3">
       <div className="font-display text-lg text-plum">{title}</div>
-      {side.vision && (() => {
-        const v = decodeVibe(side.vision);
-        const hasStructured = v.moods.length > 0 || v.note.trim();
-        return (
-          <div>
-            <div className="text-[10px] uppercase tracking-wider text-plum font-bold">Vibe</div>
-            {hasStructured ? (
-              <div className="space-y-1">
-                <p className="text-sm">{formatVibeHuman(v)}</p>
-              </div>
-            ) : (
-              <p className="text-sm whitespace-pre-wrap">{side.vision}</p>
-            )}
-          </div>
-        );
-      })()}
+      {side.vision && (
+        <div>
+          <div className="text-[10px] uppercase tracking-wider text-plum font-bold">Vibe</div>
+          <VibePills raw={side.vision} />
+        </div>
+      )}
       <Detail title="Setting" value={side.setting} />
       <Detail title="Music" value={side.music} />
       <Detail title="Dress" value={side.dress} />
