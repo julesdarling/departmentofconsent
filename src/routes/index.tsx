@@ -601,6 +601,9 @@ function Index() {
       <section className="px-4 sm:px-8 pt-8 pb-10 max-w-[920px] mx-auto">
         <img src={footerWordmark} alt="Dept of Consent" className="w-full h-auto block" />
         <div className="text-center text-xs text-muted-foreground pt-6 space-y-2">
+          <p>
+            Questions? <a href="mailto:support@departmentofconsent.com" className="underline underline-offset-4 hover:opacity-80">support@departmentofconsent.com</a>
+          </p>
           <p>Copyright Department of Consent {new Date().getFullYear()}</p>
           <nav className="flex justify-center gap-6 font-semibold">
             <Link to="/privacy" className="hover:underline underline-offset-4">Privacy Policy</Link>
