@@ -11,6 +11,9 @@ export function Footer() {
         </p>
         <div className="pt-6 space-y-3">
           <p className="text-sm opacity-90">
+            Questions? <a href="mailto:support@departmentofconsent.com" className="underline underline-offset-4 hover:opacity-80">support@departmentofconsent.com</a>
+          </p>
+          <p className="text-sm opacity-90">
             Copyright Department of Consent {new Date().getFullYear()}
           </p>
           <nav className="flex justify-center gap-8 text-sm font-semibold">
