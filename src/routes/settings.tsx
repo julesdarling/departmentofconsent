@@ -76,7 +76,7 @@ function SettingsPage() {
         </Sticker>
 
         <Sticker variant="coral" className="space-y-2">
-          <div className="font-display text-plum text-center font-normal text-3xl">Your data</div>
+          <h2 className="font-display text-plum text-center font-normal text-3xl">Your data</h2>
           <p className="text-xs text-muted-foreground">
             Your profile, kinks, ratings, and scenes are saved to your account and synced across every device you sign in on.
           </p>
