@@ -55,7 +55,7 @@ function KinkRow({
       <div className="flex items-start justify-between gap-2">
         <div className="text-sm text-foreground flex-1 min-w-0">{item.name}</div>
         {onRemove && (
-          <button onClick={onRemove} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive shrink-0">
+          <button onClick={onRemove} aria-label={`Remove ${item.name}`} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive shrink-0">
             <X className="h-3.5 w-3.5" />
           </button>
         )}
