@@ -88,7 +88,7 @@ function SessionDetail() {
 
         {isOwner && (
           <Sticker className="text-center space-y-3">
-            <div className="font-display text-2xl text-plum text-center">Share with your play partner</div>
+            <h2 className="font-display text-2xl text-plum text-center">Share with your play partner</h2>
             <div className="flex justify-center bg-card p-3 rounded-xl">
               <QRCodeSVG value={shareUrl} size={180} fgColor="#c2185b" bgColor="transparent" />
             </div>
@@ -129,7 +129,7 @@ function SessionDetail() {
         {/* Visions per participant */}
         <Sticker variant="coral" className="space-y-4">
           <div className="text-center">
-            <div className="font-display text-2xl text-plum">Scene vision</div>
+            <h2 className="font-display text-2xl text-plum">Scene vision</h2>
           </div>
           <VisionBlock name={`${ownerName}'s vision for the scene`} side={o} kinkMap={kinkMap} />
           {partners.map((ps, i) => (
@@ -272,7 +272,7 @@ function Compare({
     <div className="space-y-4">
       {curious.length > 0 && (
         <Sticker className="space-y-2">
-          <div className="font-display text-2xl text-plum text-center">Curious to explore together</div>
+          <h2 className="font-display text-2xl text-plum text-center">Curious to explore together</h2>
           <p className="text-xs text-muted-foreground">
             At least one of you is a yes, the other a maybe — worth a chat.
           </p>
@@ -286,7 +286,7 @@ function Compare({
 
       {(negotiate.length > 0 || conflicts.length > 0 || bothWantToPlay.length > 0) && (
         <Sticker className="space-y-3">
-          <div className="font-display text-2xl text-plum text-center">Negotiate</div>
+          <h2 className="font-display text-2xl text-plum text-center">Negotiate</h2>
           {bothWantToPlay.length > 0 && (
             <div>
               <div className="text-xs font-semibold uppercase text-yes mb-1">Both want to play</div>
@@ -420,7 +420,7 @@ function PrivacySexConsensus({
 
   return (
     <Sticker className="space-y-3">
-      <div className="font-display text-2xl text-plum text-center">Privacy & sex</div>
+      <h2 className="font-display text-2xl text-plum text-center">Privacy & sex</h2>
       <div className="space-y-3">
         {rows.map((r) => (
           <div key={r.label} className="space-y-1">
@@ -479,7 +479,7 @@ function SafewordsSection({
 
   return (
     <Sticker className="space-y-3">
-      <div className="font-display text-2xl text-plum text-center">Safewords</div>
+      <h2 className="font-display text-2xl text-plum text-center">Safewords</h2>
 
       {allSameDefaults ? (
         perPerson[0].defaults.length > 0 && (
@@ -542,7 +542,7 @@ function ParticipantsSection({
 
   return (
     <Sticker className="space-y-3">
-      <div className="font-display text-2xl text-plum text-center">Participants</div>
+      <h2 className="font-display text-2xl text-plum text-center">Participants</h2>
       <div className="space-y-3">
         {visible.map((p, i) => {
           const hasContact = !!(p.side.healthcare?.trim() || p.side.emergencyContact?.trim());
