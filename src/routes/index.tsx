@@ -38,8 +38,10 @@ const COMMUNITIES = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Department of Consent — A better way to talk about limits, kinks, and aftercare" },
+      { title: "Department of Consent — Plan Kink Scenes Together" },
       { name: "description", content: "A soft place to negotiate the spicy stuff. For dungeon pickup play, first-time scenes, and growing with longer-term partners." },
+      { property: "og:title", content: "Department of Consent — Plan Kink Scenes Together" },
+      { property: "og:description", content: "A soft place to negotiate the spicy stuff. For dungeon pickup play, first-time scenes, and growing with longer-term partners." },
     ],
   }),
   component: Index,

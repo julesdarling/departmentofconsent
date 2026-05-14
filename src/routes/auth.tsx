@@ -13,9 +13,17 @@ import { PricingCard } from "@/components/PricingCard";
 const REDIRECT_AFTER_AUTH = "/subscribe";
 
 export const Route = createFileRoute("/auth")({
-  head: () => ({ meta: [{ title: "Sign in — Department of Consent" }] }),
+  head: () => ({
+    meta: [
+      { title: "Sign in — Department of Consent" },
+      { name: "description", content: "Sign in or create an account to save your kink profile, negotiate scenes, and share private scene links with play partners." },
+      { property: "og:title", content: "Sign in — Department of Consent" },
+      { property: "og:description", content: "Sign in or create an account to save your kink profile and share scenes with play partners." },
+    ],
+  }),
   component: AuthPage,
 });
+
 
 const PASSWORD_RULES = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },

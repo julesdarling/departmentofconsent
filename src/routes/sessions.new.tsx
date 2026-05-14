@@ -183,6 +183,7 @@ function NewSession() {
   return (
     <Layout>
       <div className="space-y-5">
+        <h1 className="sr-only">Plan a new scene</h1>
         <div>
           <div className="flex justify-between text-xs text-muted-foreground mb-1">
             <span className="font-semibold text-plum">{STEPS[step]}</span>

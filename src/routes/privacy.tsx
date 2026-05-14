@@ -6,6 +6,8 @@ export const Route = createFileRoute("/privacy")({
     meta: [
       { title: "Privacy Policy — Department of Consent" },
       { name: "description", content: "How Department of Consent collects, uses, and protects your information." },
+      { property: "og:title", content: "Privacy Policy — Department of Consent" },
+      { property: "og:description", content: "How Department of Consent collects, uses, and protects your information." },
     ],
   }),
   component: PrivacyPage,

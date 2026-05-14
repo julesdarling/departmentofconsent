@@ -1,0 +1,18 @@
+# Department of Consent
+
+> A consent and scene planning app for kink negotiation: pickup play, first-time partners, and ongoing partners. Compare boundaries, kinks, expectations, and aftercare before things get awkward, intense, or unsafe.
+
+## Pages
+
+- [Home](/): Overview of how Department of Consent helps partners plan kink scenes safely.
+- [Sign in or create account](/auth): Authenticate to save your profile and scenes.
+- [Subscribe](/subscribe): Plans and pricing for unlocking full scene planning.
+- [Privacy Policy](/privacy): How we collect, store, and protect your data.
+- [Terms of Service](/terms): Terms governing use of the app.
+
+## Optional
+
+- [Onboarding](/onboarding): Set up your profile (requires sign-in).
+- [Your kinks & limits](/kinks): Rate kinks as yes / maybe / no (requires sign-in).
+- [Your scenes](/sessions): List of your active and past negotiated scenes (requires sign-in).
+- [Profile & settings](/settings): Manage your profile and account (requires sign-in).

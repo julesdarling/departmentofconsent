@@ -10,7 +10,15 @@ import { useMemo, useState } from "react";
 import { Copy } from "lucide-react";
 
 export const Route = createFileRoute("/scene/$token")({
-  head: () => ({ meta: [{ title: "Scene recap" }] }),
+  head: () => ({
+    meta: [
+      { title: "Scene recap — Department of Consent" },
+      { name: "description", content: "A shared kink scene recap: limits, cravings, safewords, and aftercare agreements between play partners." },
+      { property: "og:title", content: "Scene recap — Department of Consent" },
+      { property: "og:description", content: "A shared kink scene recap: limits, cravings, safewords, and aftercare agreements between play partners." },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: SceneRecap,
 });
 

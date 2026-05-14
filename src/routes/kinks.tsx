@@ -12,7 +12,14 @@ import { cn } from "@/lib/utils";
 import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/kinks")({
-  head: () => ({ meta: [{ title: "Your kinks & limits — Department of Consent" }] }),
+  head: () => ({
+    meta: [
+      { title: "Your kinks & limits — Department of Consent" },
+      { name: "description", content: "Rate every kink as yes, maybe, or no, and mark whether you give, receive, or both. Your private menu, ready to share with a play partner." },
+      { property: "og:title", content: "Your kinks & limits — Department of Consent" },
+      { property: "og:description", content: "Rate every kink as yes, maybe, or no, and mark whether you give, receive, or both." },
+    ],
+  }),
   component: () => <RequireAuth><KinksPage /></RequireAuth>,
 });
 
@@ -48,7 +55,7 @@ function KinkRow({
       <div className="flex items-start justify-between gap-2">
         <div className="text-sm text-foreground flex-1 min-w-0">{item.name}</div>
         {onRemove && (
-          <button onClick={onRemove} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive shrink-0">
+          <button onClick={onRemove} aria-label={`Remove ${item.name}`} className="h-7 w-7 grid place-items-center text-muted-foreground hover:text-destructive shrink-0">
             <X className="h-3.5 w-3.5" />
           </button>
         )}
