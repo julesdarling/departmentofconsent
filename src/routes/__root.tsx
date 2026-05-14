@@ -100,6 +100,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Department of Consent",
+          url: "https://departmentofconsent.com",
+          logo: "https://departmentofconsent.com/favicon.png",
+          description: "Consent and scene planning app for kink negotiation.",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Department of Consent",
+          url: "https://departmentofconsent.com",
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
