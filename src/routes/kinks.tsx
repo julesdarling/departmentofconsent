@@ -12,7 +12,14 @@ import { cn } from "@/lib/utils";
 import { RequireAuth } from "@/components/RequireAuth";
 
 export const Route = createFileRoute("/kinks")({
-  head: () => ({ meta: [{ title: "Your kinks & limits — Department of Consent" }] }),
+  head: () => ({
+    meta: [
+      { title: "Your kinks & limits — Department of Consent" },
+      { name: "description", content: "Rate every kink as yes, maybe, or no, and mark whether you give, receive, or both. Your private menu, ready to share with a play partner." },
+      { property: "og:title", content: "Your kinks & limits — Department of Consent" },
+      { property: "og:description", content: "Rate every kink as yes, maybe, or no, and mark whether you give, receive, or both." },
+    ],
+  }),
   component: () => <RequireAuth><KinksPage /></RequireAuth>,
 });
 
