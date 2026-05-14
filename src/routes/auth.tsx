@@ -24,7 +24,6 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const _AUTH_END = true; void _AUTH_END;
 
 const PASSWORD_RULES = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
