@@ -85,6 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play." },
       { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp" },
       { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp" },
+      { name: "google-site-verification", content: "LUB9s3s53IiXuOCLky5t-49ByASpytHjLeco_ULPXqI" },
     ],
     links: [
       { rel: "icon", type: "image/png", href: "/favicon.png" },
