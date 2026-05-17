@@ -5,7 +5,7 @@ import { useSubscription } from "@/lib/useSubscription";
 import { Layout } from "@/components/Layout";
 import { WhipLoader } from "@/components/WhipLoader";
 
-export function RequireAuth({ children, requireSubscription = true }: { children: React.ReactNode; requireSubscription?: boolean }) {
+export function RequireAuth({ children, requireSubscription = false }: { children: React.ReactNode; requireSubscription?: boolean }) {
   const { user, loading } = useAuth();
   const { isActive, loading: subLoading } = useSubscription();
   const navigate = useNavigate();
