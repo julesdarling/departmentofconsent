@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { z } from "zod";
-import { PricingCard } from "@/components/PricingCard";
+
 const REDIRECT_AFTER_AUTH = "/onboarding";
 
 export const Route = createFileRoute("/auth")({
@@ -168,8 +168,6 @@ function AuthPage() {
           </p>
         </div>
 
-        {mode !== "forgot" && <PricingCard />}
-
         <Sticker className="space-y-4">
           <div className="space-y-1.5">
             <Label className="doc-label">Email</Label>
@@ -225,7 +223,7 @@ function AuthPage() {
             ) : (
               <>
                 <CloudButton onClick={submit} className="cloud-btn-fluid">
-                  {busy ? "..." : mode === "signin" ? "Sign in" : "Create account & subscribe"}
+                  {busy ? "..." : mode === "signin" ? "Sign in" : "Create account"}
                 </CloudButton>
                 <CloudButton onClick={google} variant="outline" className="cloud-btn-fluid">
                   Continue with Google
