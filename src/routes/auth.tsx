@@ -10,7 +10,7 @@ import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import { z } from "zod";
 import { PricingCard } from "@/components/PricingCard";
-const REDIRECT_AFTER_AUTH = "/subscribe";
+const REDIRECT_AFTER_AUTH = "/onboarding";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
