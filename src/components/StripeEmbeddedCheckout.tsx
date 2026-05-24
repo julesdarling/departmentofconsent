@@ -1,6 +1,6 @@
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
 import { getStripe, getStripeEnvironment } from "@/lib/stripe";
-import { createCheckoutSession } from "@/utils/payments.functions";
+import { invokeEdgeFunction } from "@/lib/edge-functions";
 
 interface Props {
   priceId: string;
@@ -11,16 +11,14 @@ interface Props {
 
 export function StripeEmbeddedCheckout({ priceId, customerEmail, userId, returnUrl }: Props) {
   const fetchClientSecret = async (): Promise<string> => {
-    const cs = await createCheckoutSession({
-      data: {
-        priceId,
-        customerEmail,
-        userId,
-        returnUrl: returnUrl || window.location.href,
-        environment: getStripeEnvironment(),
-      },
+    const result = await invokeEdgeFunction<{ clientSecret: string }>("create-checkout-session", {
+      priceId,
+      customerEmail,
+      userId,
+      returnUrl: returnUrl || window.location.href,
+      environment: getStripeEnvironment(),
     });
-    return cs as string;
+    return result.clientSecret;
   };
 
   return (

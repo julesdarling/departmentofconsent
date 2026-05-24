@@ -12,11 +12,10 @@ import { useSubscription } from "@/lib/useSubscription";
 import { PricingCard } from "@/components/PricingCard";
 import { StripeEmbeddedCheckout } from "@/components/StripeEmbeddedCheckout";
 import { PaymentTestModeBanner } from "@/components/PaymentTestModeBanner";
-import { useServerFn } from "@tanstack/react-start";
-import { redeemPromoCode } from "@/lib/promo.functions";
 import { getStripeEnvironment } from "@/lib/stripe";
+import { appUrl } from "@/lib/app-url";
+import { invokeEdgeFunction } from "@/lib/edge-functions";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/subscribe")({
   head: () => ({ meta: [{ title: "Subscribe — Department of Consent" }] }),
@@ -30,7 +29,6 @@ function SubscribePage() {
   const [checkoutOpen, setCheckoutOpen] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [redeeming, setRedeeming] = useState(false);
-  const redeemFn = useServerFn(redeemPromoCode);
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth" });
@@ -47,11 +45,9 @@ function SubscribePage() {
     }
     setRedeeming(true);
     try {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const accessToken = sessionData.session?.access_token;
-      if (!accessToken) throw new Error("Please sign in again");
-      const result = await redeemFn({
-        data: { code: promoCode, environment: getStripeEnvironment(), accessToken },
+      const result = await invokeEdgeFunction<{ daysGranted?: number }>("redeem-promo-code", {
+        code: promoCode,
+        environment: getStripeEnvironment(),
       });
       const days = result?.daysGranted ?? 30;
       toast.success(`Promo code applied — ${days} days unlocked!`);
@@ -65,7 +61,13 @@ function SubscribePage() {
   };
 
   if (loading || subLoading || !user) {
-    return <Layout><div className="flex items-center justify-center min-h-[60vh]"><WhipLoader /></div></Layout>;
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <WhipLoader />
+        </div>
+      </Layout>
+    );
   }
 
   return (
@@ -81,9 +83,7 @@ function SubscribePage() {
 
         {!checkoutOpen ? (
           <div className="flex justify-center">
-            <CloudButton onClick={() => setCheckoutOpen(true)}>
-              Subscribe — $9/mo
-            </CloudButton>
+            <CloudButton onClick={() => setCheckoutOpen(true)}>Subscribe — $9/mo</CloudButton>
           </div>
         ) : (
           <Sticker className="p-2">
@@ -91,7 +91,7 @@ function SubscribePage() {
               priceId="doc_pro_monthly"
               userId={user.id}
               customerEmail={user.email}
-              returnUrl={`${window.location.origin}/checkout/return?session_id={CHECKOUT_SESSION_ID}`}
+              returnUrl={`${appUrl("/checkout/return")}?session_id={CHECKOUT_SESSION_ID}`}
             />
           </Sticker>
         )}
@@ -124,4 +124,3 @@ function SubscribePage() {
     </Layout>
   );
 }
-

@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useProfile, emptyProfile } from "@/lib/storage";
 import { useAuth } from "@/lib/useAuth";
 import { useSubscription } from "@/lib/useSubscription";
-import { useServerFn } from "@tanstack/react-start";
-import { deleteOwnAccount } from "@/lib/account.functions";
+import { invokeEdgeFunction } from "@/lib/edge-functions";
+import { withBasePath } from "@/lib/app-url";
 import { useState } from "react";
 import {
   AlertDialog,
@@ -30,7 +30,6 @@ function SettingsPage() {
   const { signOut, user } = useAuth();
   const { isActive } = useSubscription();
   const navigate = useNavigate();
-  const deleteFn = useServerFn(deleteOwnAccount);
 
   const [showCancel, setShowCancel] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -45,9 +44,9 @@ function SettingsPage() {
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      await deleteFn();
+      await invokeEdgeFunction("delete-own-account");
       await supabase.auth.signOut();
-      window.location.href = "/";
+      window.location.href = withBasePath("/");
     } catch (err) {
       alert((err as Error).message || "Could not delete account.");
       setDeleting(false);
@@ -68,8 +67,13 @@ function SettingsPage() {
           <Row label="Emergency contact" value={profile.emergencyContact} />
           <Row label="Default aftercare" value={profile.defaultAftercare} />
           <div className="flex flex-col items-center gap-3 pt-2">
-            <Button asChild><Link to="/onboarding">Edit profile</Link></Button>
-            <Link to="/kinks" className="text-sm text-link underline underline-offset-4 hover:opacity-80">
+            <Button asChild>
+              <Link to="/onboarding">Edit profile</Link>
+            </Button>
+            <Link
+              to="/kinks"
+              className="text-sm text-link underline underline-offset-4 hover:opacity-80"
+            >
               Edit kinks
             </Link>
           </div>
@@ -78,7 +82,8 @@ function SettingsPage() {
         <Sticker variant="coral" className="space-y-2">
           <h2 className="font-display text-plum text-center font-normal text-3xl">Your data</h2>
           <p className="text-xs text-muted-foreground">
-            Your profile, kinks, ratings, and scenes are saved to your account and synced across every device you sign in on.
+            Your profile, kinks, ratings, and scenes are saved to your account and synced across
+            every device you sign in on.
           </p>
           <div className="flex flex-col items-center gap-2 pt-2">
             <Button variant="outline" onClick={() => setProfile(emptyProfile)}>
@@ -105,7 +110,10 @@ function SettingsPage() {
                 Cancel my subscription
               </button>
               <button
-                onClick={() => { setConfirmText(""); setShowDelete(true); }}
+                onClick={() => {
+                  setConfirmText("");
+                  setShowDelete(true);
+                }}
                 className="text-sm font-semibold text-destructive underline underline-offset-4 hover:opacity-80"
               >
                 Delete my account
@@ -126,7 +134,10 @@ function SettingsPage() {
                   <>
                     <p>To cancel your subscription:</p>
                     <ol className="list-decimal pl-5 space-y-1.5">
-                      <li>Email <span className="font-semibold">support@departmentofconsent.com</span> from the address you used to sign up.</li>
+                      <li>
+                        Email <span className="font-semibold">support@departmentofconsent.com</span>{" "}
+                        from the address you used to sign up.
+                      </li>
                       <li>Include the subject line "Cancel subscription".</li>
                       <li>We'll cancel and confirm via email within 1–2 business days.</li>
                     </ol>
@@ -147,7 +158,13 @@ function SettingsPage() {
       </AlertDialog>
 
       {/* Delete account confirmation */}
-      <AlertDialog open={showDelete} onOpenChange={(o) => { setShowDelete(o); if (!o) setConfirmText(""); }}>
+      <AlertDialog
+        open={showDelete}
+        onOpenChange={(o) => {
+          setShowDelete(o);
+          if (!o) setConfirmText("");
+        }}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-destructive">Delete your account?</AlertDialogTitle>
@@ -157,7 +174,9 @@ function SettingsPage() {
                   This permanently deletes your account, profile, and saved scenes. Active
                   subscriptions are not automatically refunded — cancel first if needed.
                 </p>
-                <p>Type <span className="font-mono font-bold">DELETE</span> to confirm.</p>
+                <p>
+                  Type <span className="font-mono font-bold">DELETE</span> to confirm.
+                </p>
                 <input
                   className="doc-input"
                   value={confirmText}
@@ -186,8 +205,12 @@ function SettingsPage() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="border-b border-border/40 pb-1.5">
-      <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">{label}</div>
-      <div className="text-sm whitespace-pre-wrap">{value || <span className="text-muted-foreground italic">not set</span>}</div>
+      <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
+        {label}
+      </div>
+      <div className="text-sm whitespace-pre-wrap">
+        {value || <span className="text-muted-foreground italic">not set</span>}
+      </div>
     </div>
   );
 }

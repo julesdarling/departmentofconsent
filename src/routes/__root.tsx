@@ -8,6 +8,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
+import { publicSiteUrl, withBasePath } from "@/lib/app-url";
 
 import appCss from "../styles.css?url";
 
@@ -57,7 +58,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             Try again
           </button>
           <a
-            href="/"
+            href={withBasePath("/")}
             className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
           >
             Go home
@@ -74,22 +75,41 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "Department of Consent — Kink & Limit Negotiation" },
-      { name: "description", content: "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play. Built for pickup play, first-time partners, and ongoing partners." },
+      {
+        name: "description",
+        content:
+          "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play. Built for pickup play, first-time partners, and ongoing partners.",
+      },
       { property: "og:title", content: "Department of Consent — Kink & Limit Negotiation" },
-      { property: "og:description", content: "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play." },
+      {
+        property: "og:description",
+        content:
+          "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play.",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Department of Consent" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Department of Consent — Kink & Limit Negotiation" },
-      { name: "twitter:description", content: "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp" },
+      {
+        name: "twitter:description",
+        content:
+          "Plan kink scenes together: compare limits, kinks, expectations, and aftercare before you play.",
+      },
+      {
+        property: "og:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp",
+      },
+      {
+        name: "twitter:image",
+        content:
+          "https://storage.googleapis.com/gpt-engineer-file-uploads/7Gl8U49tkmheLn97clBPRwfsv5B2/social-images/social-1778196294061-Frame_20.webp",
+      },
       { name: "google-site-verification", content: "LUB9s3s53IiXuOCLky5t-49ByASpytHjLeco_ULPXqI" },
     ],
     links: [
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "apple-touch-icon", href: "/favicon.png" },
+      { rel: "icon", type: "image/png", href: withBasePath("/favicon.png") },
+      { rel: "apple-touch-icon", href: withBasePath("/favicon.png") },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -108,8 +128,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Department of Consent",
-          url: "https://departmentofconsent.com",
-          logo: "https://departmentofconsent.com/favicon.png",
+          url: publicSiteUrl("/"),
+          logo: publicSiteUrl("/favicon.png"),
           description: "Consent and scene planning app for kink negotiation.",
         }),
       },
@@ -119,7 +139,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Department of Consent",
-          url: "https://departmentofconsent.com",
+          url: publicSiteUrl("/"),
         }),
       },
     ],

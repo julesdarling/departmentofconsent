@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable/index";
+import { appUrl } from "@/lib/app-url";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -16,14 +16,21 @@ export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign in — Department of Consent" },
-      { name: "description", content: "Sign in or create an account to save your kink profile, negotiate scenes, and share private scene links with play partners." },
+      {
+        name: "description",
+        content:
+          "Sign in or create an account to save your kink profile, negotiate scenes, and share private scene links with play partners.",
+      },
       { property: "og:title", content: "Sign in — Department of Consent" },
-      { property: "og:description", content: "Sign in or create an account to save your kink profile and share scenes with play partners." },
+      {
+        property: "og:description",
+        content:
+          "Sign in or create an account to save your kink profile and share scenes with play partners.",
+      },
     ],
   }),
   component: AuthPage,
 });
-
 
 const PASSWORD_RULES = [
   { label: "At least 8 characters", test: (p: string) => p.length >= 8 },
@@ -81,7 +88,7 @@ function AuthPage() {
     setBusy(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(emailParsed.data, {
-        redirectTo: `${window.location.origin}/reset-password`,
+        redirectTo: appUrl("/reset-password"),
       });
       if (error) throw error;
       toast.success("Password reset email sent. Check your inbox.");
@@ -121,7 +128,7 @@ function AuthPage() {
           email: parsed.data.email,
           password: parsed.data.password,
           options: {
-            emailRedirectTo: `${window.location.origin}${REDIRECT_AFTER_AUTH}`,
+            emailRedirectTo: appUrl(REDIRECT_AFTER_AUTH),
             data: { dob, age_confirmed_18_plus: true },
           },
         });
@@ -141,15 +148,16 @@ function AuthPage() {
 
   const google = async () => {
     setBusy(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin + REDIRECT_AFTER_AUTH,
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: appUrl(REDIRECT_AFTER_AUTH),
+      },
     });
-    if (result.error) {
-      toast.error("Google sign-in failed");
+    if (error) {
+      toast.error(error.message || "Google sign-in failed");
       setBusy(false);
-      return;
     }
-    if (!result.redirected) navigate({ to: REDIRECT_AFTER_AUTH });
   };
 
   return (
@@ -157,7 +165,11 @@ function AuthPage() {
       <div className="space-y-6">
         <div className="text-center pt-2">
           <h1 className="font-display text-5xl text-foreground tracking-tight">
-            {mode === "signin" ? "Start playing safely" : mode === "signup" ? "Create your account" : "Reset password"}
+            {mode === "signin"
+              ? "Start playing safely"
+              : mode === "signup"
+                ? "Create your account"
+                : "Reset password"}
           </h1>
           <p className="text-sm text-muted-foreground mt-2">
             {mode === "signin"
@@ -171,7 +183,13 @@ function AuthPage() {
         <Sticker className="space-y-4">
           <div className="space-y-1.5">
             <Label className="doc-label">Email</Label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" />
+            <Input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
+            />
           </div>
           {mode !== "forgot" && (
             <div className="space-y-1.5">
@@ -188,10 +206,7 @@ function AuthPage() {
                   {PASSWORD_RULES.map((r) => {
                     const ok = r.test(password);
                     return (
-                      <li
-                        key={r.label}
-                        className={ok ? "text-yes" : "text-muted-foreground"}
-                      >
+                      <li key={r.label} className={ok ? "text-yes" : "text-muted-foreground"}>
                         <span className="inline-block w-4">{ok ? "✓" : "○"}</span>
                         {r.label}
                       </li>
