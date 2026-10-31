@@ -40,7 +40,7 @@ jobs:
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY || secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
           VITE_SUPABASE_PROJECT_ID: ${{ vars.VITE_SUPABASE_PROJECT_ID || secrets.VITE_SUPABASE_PROJECT_ID }}
           VITE_PAYMENTS_CLIENT_TOKEN: ${{ vars.VITE_PAYMENTS_CLIENT_TOKEN || secrets.VITE_PAYMENTS_CLIENT_TOKEN }}
-          VITE_SITE_URL: https://juleshaggard.github.io/departmentofconsent
+          VITE_SITE_URL: https://julesdarling.github.io/departmentofconsent
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4

@@ -6,7 +6,7 @@ The app is currently a TanStack Start/Lovable full-stack project, but GitHub Pag
 
 ## Solution
 
-Publish the browser app to the default GitHub Pages project URL, `https://juleshaggard.github.io/departmentofconsent/`, using a GitHub Actions Pages workflow. Configure the Vite/TanStack build for a repository subpath, add SPA/deep-link fallback behavior, and make auth/payment return URLs base-path aware so `/departmentofconsent/...` is used during verification.
+Publish the browser app to the default GitHub Pages project URL, `https://julesdarling.github.io/departmentofconsent/`, using a GitHub Actions Pages workflow. Configure the Vite/TanStack build for a repository subpath, add SPA/deep-link fallback behavior, and make auth/payment return URLs base-path aware so `/departmentofconsent/...` is used during verification.
 
 Keep Supabase as the product backend for auth, account data, profiles, sessions, and RLS-protected RPCs. Move all secret-bearing server work out of TanStack Start server routes and into Supabase Edge Functions, then update the frontend to call those functions. Do not add a `CNAME` file or configure a GitHub Pages custom domain in this plan.
 
@@ -32,7 +32,7 @@ Keep Supabase as the product backend for auth, account data, profiles, sessions,
 
 ## Notes
 
-- Expected verification URL: `https://juleshaggard.github.io/departmentofconsent/`.
+- Expected verification URL: `https://julesdarling.github.io/departmentofconsent/`.
 - No custom domain should be configured yet: do not create `public/CNAME`, do not upload a `CNAME` artifact, and leave GitHub Pages custom domain settings blank until the user verifies the default Pages URL.
 - Current server-only surfaces that GitHub Pages cannot host include `src/routes/api/public/payments/webhook.ts`, `src/routes/lovable/email/**`, `src/utils/payments.functions.ts`, `src/lib/promo.functions.ts`, and `src/lib/account.functions.ts`.
 - Direct Supabase client features such as account creation, signin, profile storage, session RPCs, and realtime subscriptions can keep working from GitHub Pages when Supabase Auth redirect URLs and RLS policies are configured correctly.

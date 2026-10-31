@@ -39,7 +39,7 @@ Use GitHub's Pages Actions flow with `actions/configure-pages`, `actions/upload-
 
 - [ ] Tests pass: GitHub Actions lint/build job completes successfully (timeout: 10min)
 - [ ] Builds without errors: GitHub Pages deployment job completes successfully (timeout: 10min)
-- [ ] Works as expected: repository Environments shows a `github-pages` deployment with URL `https://juleshaggard.github.io/departmentofconsent/`.
+- [ ] Works as expected: repository Environments shows a `github-pages` deployment with URL `https://julesdarling.github.io/departmentofconsent/`.
 - [ ] Works as expected: GitHub Pages custom domain remains blank.
 
 ## Notes

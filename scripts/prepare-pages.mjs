@@ -14,7 +14,7 @@ await writeFile(path.join(clientDir, ".nojekyll"), "");
 await rm(path.join(clientDir, "CNAME"), { force: true });
 
 const siteUrl = (
-  process.env.VITE_SITE_URL || "https://juleshaggard.github.io/departmentofconsent"
+  process.env.VITE_SITE_URL || "https://julesdarling.github.io/departmentofconsent"
 ).replace(/\/$/, "");
 
 const paths = [

@@ -13,7 +13,7 @@ TODO
 
 ## Description
 
-Verify the deployed app at the default GitHub Pages project URL before any custom-domain work. This task proves that the static frontend, Supabase auth/account creation, data flows, backend functions, and deep links work together from `https://juleshaggard.github.io/departmentofconsent/`.
+Verify the deployed app at the default GitHub Pages project URL before any custom-domain work. This task proves that the static frontend, Supabase auth/account creation, data flows, backend functions, and deep links work together from `https://julesdarling.github.io/departmentofconsent/`.
 
 ## Proposed Solution
 
@@ -21,8 +21,8 @@ Use a fresh browser session and test each critical product flow against the depl
 
 ## Subtasks
 
-- [ ] Open `https://juleshaggard.github.io/departmentofconsent/` and confirm all assets load without console errors.
-- [ ] Hard-refresh `https://juleshaggard.github.io/departmentofconsent/auth` and confirm the SPA fallback works.
+- [ ] Open `https://julesdarling.github.io/departmentofconsent/` and confirm all assets load without console errors.
+- [ ] Hard-refresh `https://julesdarling.github.io/departmentofconsent/auth` and confirm the SPA fallback works.
 - [ ] Create a fresh email/password account and confirm the email.
 - [ ] Complete onboarding and save profile/kink data.
 - [ ] Sign out, sign back in, and confirm saved account data loads.
@@ -33,7 +33,7 @@ Use a fresh browser session and test each critical product flow against the depl
 - [ ] Test sandbox checkout, webhook-driven subscription state, and checkout return URL.
 - [ ] Test promo-code redemption.
 - [ ] Test account deletion with a disposable test account.
-- [ ] Confirm no network request targets `https://juleshaggard.github.io/departmentofconsent/api` or old Lovable-only server routes.
+- [ ] Confirm no network request targets `https://julesdarling.github.io/departmentofconsent/api` or old Lovable-only server routes.
 - [ ] Confirm GitHub Pages settings still have no custom domain and no deployed `CNAME` file.
 
 ## Files to Modify

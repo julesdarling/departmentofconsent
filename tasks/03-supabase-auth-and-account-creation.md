@@ -21,10 +21,10 @@ Update auth redirects to use the Pages-aware URL helper, then replace the Lovabl
 
 ## Subtasks
 
-- [ ] Change signup `emailRedirectTo` to `https://juleshaggard.github.io/departmentofconsent/onboarding` during Pages verification.
-- [ ] Change password reset `redirectTo` to `https://juleshaggard.github.io/departmentofconsent/reset-password` during Pages verification.
+- [ ] Change signup `emailRedirectTo` to `https://julesdarling.github.io/departmentofconsent/onboarding` during Pages verification.
+- [ ] Change password reset `redirectTo` to `https://julesdarling.github.io/departmentofconsent/reset-password` during Pages verification.
 - [ ] Replace `lovable.auth.signInWithOAuth("google")` with `supabase.auth.signInWithOAuth({ provider: "google", options: { redirectTo } })`, unless Lovable Cloud auth is intentionally retained and verified on the Pages origin.
-- [ ] Configure Supabase Auth Site URL as `https://juleshaggard.github.io/departmentofconsent/` for verification.
+- [ ] Configure Supabase Auth Site URL as `https://julesdarling.github.io/departmentofconsent/` for verification.
 - [ ] Add Supabase Auth redirect allow-list entries for `/departmentofconsent/onboarding`, `/departmentofconsent/reset-password`, and any OAuth callback return path the app uses.
 - [ ] Confirm the profile creation trigger and RLS policies still allow newly created users to save onboarding data.
 - [ ] Confirm local development still works with localhost redirect URLs after the Pages changes.
